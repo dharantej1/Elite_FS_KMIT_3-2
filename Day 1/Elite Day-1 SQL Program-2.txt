@@ -1,0 +1,17 @@
+/*
+Write an SQL query to display the unique names of employees who are working as clerk, 
+salesman or analyst and drawing a salary more than 1000.
+
+Note: Table names "emp","dept".
+
+Sample Output:
+-------------
+ename                                                                                                                   
+ALLEN                                                                                                                   
+MARTIN                                                                                                                  
+KEVIN                                                                                                                   
+
+
+*/
+-- select * from emp;
+select distinct ename from emp where (job="CLERK" or job="SALESMAN" or job="ANALYST") and sal>1000;
