@@ -53,3 +53,46 @@ Explanation:
 -------------
 You can grab the gold in KGF grid as follows:
 You can obtain like as follows: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7
+
+100/100
+m,n=map(int,input().split())
+l=[]
+for i in range(m):
+    t=list(map(int,input().split()))
+    l.append(t)
+def dfs(g,i,j):
+    if i<0 or j<0 or i>=len(g) or j>=len(g[i]) or g[i][j]<=0:
+        return 0
+    g[i][j]=-g[i][j]
+    res=max(dfs(g,i-1,j),dfs(g,i+1,j),dfs(g,i,j-1),dfs(g,i,j+1))
+    g[i][j]=-g[i][j]
+    return g[i][j]+res
+res=0
+for i in range(len(l)):
+    for j in range(len(l[i])):
+        res=max(res,dfs(l,i,j))
+print(res)
+
+
+
+50/100
+def getMaximumGold(grid):
+        gold = set()
+        for r, row in enumerate(grid):
+            for c, v in enumerate(row):
+                if v:
+                    gold.add((r, c))
+
+        def path(p, rest):
+            return (grid[p[0]][p[1]] +
+                    max([path((i, j), rest - {(i, j)})
+                        for i, j in [(p[0] + 1, p[1]), (p[0], p[1] + 1),
+                                     (p[0] - 1, p[1]), (p[0], p[1] - 1)]
+                        if (i, j) in rest] + [0]))
+
+        return max([path(c, gold - {c}) for c in gold] + [0])
+    
+if __name__=="__main__": 
+    r,c=map(int,input().split())
+    l=[list(map(int,input().split()))[:r] for _ in range(c)]
+    print(getMaximumGold(l))
