@@ -1,0 +1,123 @@
+/*
+Problem Statement:
+------------------
+Marripalem Obul (Mario) is playing with a numeric string.
+The string S consists only two digits in it 1 and 2.
+The string has following properties:
+	- The first few digits in the string as follows: 
+	    "1221121221221121122......"
+	- The string is originally formed as follows:
+		1 22 11 2 1 22 1 22 11 2 11 22 ......
+	and the count of '1's or '2's in each consecutive groups are:
+		1 2 2 1 1 2 1 2 2 1 2 2 ......
+	the count sequence above is in the string S itself.
+
+You are given an integer L, Your task is to help Mario to find and print
+the number of '1's in the substring of S of length L from index-0.
+
+Note: L will not exceed 100,000.
+
+Input Format:
+-------------
+An integer L
+
+Output Format:
+--------------
+Print an Integer.
+
+
+Sample Input-1:
+---------------
+7
+
+Sample Output-1:
+----------------
+4
+
+Explanation:
+------------
+The sustring of length 7 is "1221121".The count of 1's is 4.
+
+
+Sample Input-2:
+---------------
+12
+
+Sample Output-2:
+----------------
+5
+
+Explanation:
+------------
+The sustring of length 12 is "122112122122".The count of 1's is 5.
+
+
+Test Cases:
+----------
+case =1
+input =6
+output =3
+
+case =2
+input =8
+output =4
+
+case =3
+input =15
+output =7
+
+case =4
+input =25
+output =13
+
+case =5
+input =50
+output =25
+
+case =6
+input =13563
+output =6780
+
+case =7
+input =51745
+output =25855
+
+case =8
+input =99999
+output =49972
+
+
+*/
+
+Solution:
+---------
+import java.util.Scanner;
+
+class MagicalString {
+    public static int magicalString(int n) {
+        if (n <= 0) return 0;
+        if (n <= 3) return 1;
+        
+        int[] a = new int[n + 1];
+        a[0] = 1; a[1] = 2; a[2] = 2;
+        int head = 2, tail = 3, num = 1, result = 1;
+        
+        while (tail < n) {
+            for (int i = 0; i < a[head]; i++) {
+                a[tail] = num;
+                if (num == 1 && tail < n) result++;
+                tail++;
+            }
+            num = num ^ 3;
+            head++;
+        }
+        return result;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int N=sc.nextInt();
+		System.out.println(magicalString(N));
+	}
+}

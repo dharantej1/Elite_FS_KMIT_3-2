@@ -1,0 +1,129 @@
+/*
+Problem Statement:
+------------------
+Mounika is creating the binary strings using P 1's and Q 0's.
+A binary string contains only 0's and 1's.
+She has given a list of binary strings binStr[] to be formed.
+
+Her task is to find, the maximum number of binary strings can be formed, 
+with given P 1's and Q 0's only. She cannot use any more 1's or 0's.
+
+Input Format:
+-------------
+Line-1 -> A single line of space separated binary strings, binStr[].
+Line-2 -> Two integers P and Q, P number of 1's and Q number of 0's
+
+
+Output Format:
+--------------
+Print an integer as output, maximum number of binary strings can be formed.
+
+
+Sample Input-1:
+---------------
+10 0001 111001 1 0
+3 5
+
+Sample Output-1:
+----------------
+4
+
+Explanation:
+------------
+She can form 4 strings by the using of 3 1's and 5 0's
+strings are 10, 0001, 1, 0.
+
+
+Sample Input-2:
+---------------
+10 1 0
+1 1
+
+Sample Output-2:
+----------------
+2
+
+Explanation:
+------------
+She can form 2 strings by the using of 1 1's and 1 0's
+strings are 1, 0.
+
+
+Test Cases:
+----------
+case =1
+input =10 0001 111001 1 0
+3 5
+output =4
+
+case =2
+input =10 100 1000 10000 100000 1000000 11 10 101 10010 101001 1001001
+10 10
+output =6
+
+case =3
+input =10 0 1
+1 1
+output =2
+
+case =4
+input =010 1010 001 100 0101 101 1100 0011 000 001 010 011 110 111 10101 10110 01110 10011
+20 18
+output =11
+
+case =5
+input =010 1010 001 100 0101 101 1100 0011 000 001 010 011 110 111 10101 10110 01110 10011 11111 00 01 10 11 0 1 1000 1001 1011
+25 20
+output =16
+
+case =6
+input =010 1010 001 100 0101 101 1100 0011 000 001 010 011 110 111 10101 10110 01110 10011 11111 00 01 10 11 0 1 1000 1001 1011
+35 25
+output =20
+
+case =7
+input =0 1 00 01 10 11 000 001 010 011 100 101 110 111 0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111 00000 00001 00010 00011 00100 00101 00110 00111 01000 01001 01010 01011 01100 01101 01110 01111 10000 10001 10010 10011 10100 10101 10110 10111 11000 11001 11010 11011 11100 11101 11110 11111
+75 50
+output =35
+
+case =8
+input =0 1 00 01 10 11 000 001 010 011 100 101 110 111 0000 0001 0010 0011 0100 0101 0110 0111 1000 1001 1010 1011 1100 1101 1110 1111 00000 00001 00010 00011 00100 00101 00110 00111 01000 01001 01010 01011 01100 01101 01110 01111 10000 10001 10010 10011 10100 10101 10110 10111 11000 11001 11010 11011 11100 11101 11110 11111
+75 75
+output =40
+
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class BinaryStrings {
+	public int findMaxForm(String[] strs, int m, int n) {
+		int[][] dp = new int[m+1][n+1];
+		for (String s : strs) {
+			int[] count = count(s);
+			for (int i=m;i>=count[0];i--) 
+				for (int j=n;j>=count[1];j--) 
+					dp[i][j] = Math.max(1 + dp[i-count[0]][j-count[1]], dp[i][j]);
+		}
+		return dp[m][n];
+	}
+		
+	public int[] count(String str) {
+		int[] res = new int[2];
+		for (int i=0;i<str.length();i++)
+			res[str.charAt(i) - '0']++;
+		return res;
+	}
+	
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		String str[]=sc.nextLine().split(" ");
+		int Q=sc.nextInt();
+		int P=sc.nextInt();
+		System.out.println(new BinaryStrings().findMaxForm(str, P, Q));
+	}
+}
+

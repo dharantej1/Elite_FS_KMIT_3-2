@@ -47,3 +47,15 @@ Sample Output-2:
 Explanation:
 ------------
 The sustring of length 12 is "122112122122".The count of 1's is 5.
+
+
+l=int(input())
+t=1
+b=[1,2,2]
+no=2
+while len(b)<=l:
+    for i in range(b[no]):
+        b.append(t)
+    t=2 if t==1 else 1
+    no+=1
+print(b[0:l].count(1))

@@ -1,0 +1,32 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to list the details of employees who joined before 1996.
+
+Query:
+-----
+	select * from emp where hiredate < '1996-01-01'; 
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display the names of employees who are working as clerk, salesman or analyst and drawing a salary more than 1000.
+
+Query:
+-----
+	select ename from emp where (job=’CLERK’ or job=’SALESMAN’ or job=’ANALYST’) and sal>3000;
+						(or)
+	select ename from emp where job in(‘CLERK’,’SALESMAN’,’ANALYST’) and sal>3000;
+
+Query-3:
+=======
+Problem:
+-------
+Write an SQL query to display the employee number and name of employee working as CLERK and earning highest salary among CLERKS.
+
+Query:
+-----
+	select empno, ename from emp where job='CLERK' and sal=(select max(sal) from emp where job='CLERK');
+
