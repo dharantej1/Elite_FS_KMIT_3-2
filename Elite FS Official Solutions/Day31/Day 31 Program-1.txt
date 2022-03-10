@@ -1,0 +1,162 @@
+/*
+Problem Statement:
+------------------
+Kohinoor diamond is robbed by Hrithik, He kept the diamond in a suitcase, 
+the suitcase has a lock with 4 circular wheels, and each wheel consist of
+0-9 digits in the order 0,1,2,3,4,5,6,7,8,9 only.
+You can rotate a wheel from 0 to 9 or 9 to 0.
+
+As the diamond is most valuable, the lock has some traps,
+if anybody try to unlock the suitcase and reached any one of the traps,
+the suitcase will be blasted. And you will be dead.
+
+Initially, the suitcase lock is set to 0000.
+and you will be given the unlock key, your task to find and print
+the minimum number of rotations required to unlock the suitcase.
+If it is not possible to unlock the suitcase without blasting, print -1.
+
+NOTE:
+In one rotation you can choose any one wheel and 
+rotate to its next or previous digit.
+
+
+Input Format:
+-------------
+Line-1: space separated strings, each string of length 4 and contains only digits [0-9]
+Line-2: A string, key to unlock.
+
+Output Format:
+--------------
+Print an integer, the minimum number of rotations required to unlock.
+
+
+Sample Input-1:
+---------------
+0302 0202 0203 2323 3003
+0303 
+
+Sample Output-1:
+----------------
+8
+
+Explanation:
+------------
+To unlock the suitcase the valid rotations are as follows:
+0000 > 1000 > 1100 > 1200 > 1201 > 1202 > 1302 > 1303 > 0303.
+
+
+Sample Input-2:
+---------------
+6656 6676 6766 6566 5666 7666 6665 6667
+6666 
+
+Sample Output-2:
+----------------
+-1
+
+Explanation:
+------------
+You can't unlock the suitcase.
+
+
+Test Cases:
+----------
+case =1
+input =0302 0202 0203 2323 3003
+0303
+output =8
+
+case =2
+input =6656 6676 6766 6566 5666 7666
+6666
+output =16
+
+case =3
+input =6656 6676 6766 6566 5666 7666 6665 6667
+6666
+output =-1
+
+case =4
+input =1234 2345 3456 4567 5678 6789 0123
+4554
+output =18
+
+case =5
+input =1111 2222 3333 4444 5555 6666 7777 8888 9999
+5678
+output =14
+
+case =6
+input =1131 1303 3113 0132 1301 1303 2200 0232 0020 2223
+3312
+output =9
+
+case =7
+input =4464 4636 6446 3465 4634 5533 3565 3353 5556
+6645
+output =17
+
+case =8
+input =1110 1111 1112 1113 1114 1115 1116 1117 1118 1119 1121 1131 1141 1151 1161 1171 1181 1191 1211 1311 1411 1511 1611 1711 1811 1911 2111 3111 4111 5111 6111 7111 8111 9111 1101 1011 0111 2220 2212 2225 2226 2227 2228 2229 2221 2252 2262 2272 2282 2292 1222 2522 2622 2722 2822 2922 2122 5222 6222 7222 8222 9222 2202 2022 0222
+2222
+output =10
+
+case =9
+input =0000
+8888
+output =-1
+
+case =10
+input =0009 0090 0900 9000
+8888
+output =10
+
+*/
+
+Solution:
+---------
+
+import java.util.*;
+
+class OpenLock {
+    public int openLock(String[] deadends, String target) {
+        Set<String> begin = new HashSet<>();
+        Set<String> end = new HashSet<>();
+        Set<String> deads = new HashSet<>(Arrays.asList(deadends));
+        begin.add("0000");
+        end.add(target);
+        int level = 0;
+        while(!begin.isEmpty() && !end.isEmpty()) {
+            Set<String> temp = new HashSet<>();
+            for(String s : begin) {
+                if(end.contains(s)) return level;
+                if(deads.contains(s)) continue;
+                deads.add(s);
+                StringBuilder sb = new StringBuilder(s);
+                for(int i = 0; i < 4; i ++) {
+                    char c = sb.charAt(i);
+                    String s1 = sb.substring(0, i) + (c == '9' ? 0 : c - '0' + 1) + sb.substring(i + 1);
+                    String s2 = sb.substring(0, i) + (c == '0' ? 9 : c - '0' - 1) + sb.substring(i + 1);
+                    if(!deads.contains(s1))
+                        temp.add(s1);
+                    if(!deads.contains(s2))
+                        temp.add(s2);
+                }
+            }
+            level ++;
+            begin = end;
+            end = temp;
+        }
+        return -1;
+    }
+	
+	public static void main(String arg[]) 
+	{ 
+		Scanner sc=new Scanner(System.in);
+		String[] deadends=sc.nextLine().split(" ");
+		String target=sc.nextLine();
+				
+		System.out.print(new OpenLock().openLock(deadends,target)); 
+	} 
+}
+
