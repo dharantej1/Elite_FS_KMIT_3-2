@@ -1,0 +1,81 @@
+In Dubai's Burj Khalifa, there is an elevator moves only in upwards direction, 
+the elevator can carry N members.
+
+The people are waiting for the elevator at different floors, made P requests, 
+request[i] = [ num_people, enter_floor, exit_floor ], each request indicates, 
+number of people to enter into elevator, entering floor number, 
+exiting floor number.
+
+Initially the elevator is empty.
+
+Your task is to find and return true, iff it is possible to enter the people
+into elevator and exit from elevator of all the requests made by the people.
+
+
+Input Format:
+-------------
+Line-1 -> Two integers P and N, number of requests and number of members 
+          can be carried by elevator.
+Next N Lines -> three space separated integers, num_people, enter_floor, exit_floor.
+
+Output Format:
+--------------
+Print a boolean value.
+
+
+Sample Input-1:
+---------------
+2 5
+2 1 5
+3 3 7
+
+Sample Output-1:
+----------------
+true
+
+
+
+Sample Input-2:
+---------------
+2 4
+2 1 5
+3 3 7
+
+Sample Output-2:
+----------------
+false
+
+
+
+Sample Input-3:
+---------------
+3 11
+3 2 7
+3 7 9
+8 3 9
+
+Sample Output-3:
+----------------
+true
+
+
+
+
+def elevator():
+    p,n=map(int,input().split())
+    l=[list(map(int,input().split()))[:3] for _ in range(p)]
+    _in,_out={},{}
+    for i in l:
+        _in[i[1]]=_out[i[-1]]=i[0]
+    lower,upper=min(_in.keys()),max(_out.keys())
+    for i in range(lower,upper):
+        if i in _in.keys():
+            n-=_in[i]
+        if i in _out.keys():
+            n+=_out[i]
+        if n<0:
+            return False
+    return True
+    
+
+print(elevator())
