@@ -1,0 +1,15 @@
+/*
+Write a SQL query to display the names of the employees who earn highest salary
+in their respective departments.
+
+Sample Output:
+--------------
+ename   salary                                                                                                          
+BLAKE   2850.00
+FORD    3000.00
+
+*/
+-- select * from emp;
+-- Corelated from outer query to inner query just like a loop inside an another loop.
+
+select ename,sal as salary from emp e where e.sal=(select max(sal) from emp e1 where e1.deptno=e.deptno);
