@@ -1,0 +1,44 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to display the names of employees who are working in the 
+company for the past 25 years.
+
+Note: Table name "emp"
+
+Query:
+-----
+select distinct ename from emp where year(sysdate())-year(hiredate)>25;
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display uniue ename, dname, location of employee 
+( join ‘emp’ and ‘dept’ tables) where employee name starts with 'A'?
+
+Note: Table Name: "emp"
+
+Query:
+-----
+select distinct ename,dname,location from emp JOIN dept on(emp.deptno=dept.deptno)
+WHERE ename LIKE 'A%';
+
+Query-3:
+=======
+Problem:
+-------
+Write a query to find CTC to Company.
+
+Note: CTC is annual salary of all employees.
+Annual Salary is 12*sum(sal+comm); check if comm is null set to 0.
+
+Note:Table name: "emp"
+
+Query:
+-----
+select 12*sum(sal+comm) CTC from emp;
+	or
+select 12*sum(sal+ifnull(comm,0)) CTC from emp;
+

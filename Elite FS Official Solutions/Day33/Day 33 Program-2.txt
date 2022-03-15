@@ -1,0 +1,125 @@
+/*
+Problem Statement:
+------------------
+Kiran is playing with strings and its subsequences.
+A subsequence can be formed from a string by deleting some characters
+(may be string itself)
+
+Kiran has given two strings S and T, your task to form T by concatenating 
+the subsequences of S  
+
+Return the minimum number of subsequences required to form T.
+If the task is impossible, return -1 .
+
+
+Input Format:
+-------------
+Line-1 -> Two strings S and T
+
+Output Format:
+--------------
+Print an integer as result.
+
+
+Sample Input-1:
+---------------
+abc abcbc
+
+Sample Output-1:
+----------------
+2
+
+Explanation: 
+------------
+T = "abcbc" can be formed by "abc" and "bc",
+which are subsequences of S = "abc".
+
+
+Sample Input-2:
+---------------
+abc acdbc
+
+Sample Output-2:
+----------------
+-1
+
+Explanation: 
+------------
+string T cannot be constructed from the
+subsequences of string S due to the character "d" in string T.
+
+
+Test Cases:
+----------
+case =1
+input =abc abcbc
+output =2
+
+case =2
+input =abc acdbc
+output =-1
+
+case =3
+input =qwertyuiopasdfghjkl qwertyujhgfrtyuilgftyuioplkjgfdwertyuiooiuytasdfghjfwertyuioldfghjkqwertyuisdfghjk
+output =23
+
+case =4
+input =qazxswedcvfrtgbnhyujmkiolp qazxswedcvfrtgbhyujmiolwsxcderfvbgtyhnmjukvfrtgbhyujmkiklbcdertjkredfghjkoiuytrewasfg
+output =30
+
+case =5
+input =abcd abcdbabcbabcbdbabcbdbabcbdbbcbdcaddbcdacbcdcabcdcabcdcabcdbacdbccdacdbcadcdbcdacdbcdacdbcdacdbcdabacdbacd
+output =46
+
+case =6
+input =kmit kmitmitkmititmitmitmitkmitmkmtimtkmtimtmtktmittkmtkitkmtktmitmtkmtitmkmtkmitmm
+output =32
+
+case =7
+input =qwertyuiop qwertyuwertyuiqwertyuiqwertyuioertyuyuiopqwertyuiertyuioqwertyuioqwertyuiopoiuytrewqqwertyuiowertyurtyuioiowertyuiqwertyuiyuipoiuytrqwertyqwertyrtyui
+output =35
+
+case =8
+input =commitmenttowardsyourtarget yourtargedsyourtargetcommitysdrawottnemtincommitysdrawottnemtinttowttnemtinttowardsyouyourtargedsyourtargetcommitysdrawottnemtincommitysdrawottnemtinttowttnemtinttowardsyouttnemtinttowttnemtinttowardsyouyourtargedsyourtargetcommitysdrawottnemtincommitysdrawottnemtinttowttnemtinttowardsyottnemtinttowttnemtinttowardsyouyourtargedsyourtargetcommitysdrawottnemtincommitysdrawottnemtinttowttnemtinttowardsyotowardsyottnemtinttowttnemtinttowardsyouyourtargedsyourtargetcommitysdrawottnemtincom
+output =105
+
+*/
+
+Solution:
+---------
+
+import java.util.*;
+
+class ShortestWay{
+	public int shortestWay(String source, String target) {
+		char[] cs = source.toCharArray(), ts = target.toCharArray();
+		int[][] idx = new int[cs.length][26];
+		idx[cs.length - 1][cs[cs.length - 1] - 'a'] = cs.length; 
+		for (int i = cs.length - 2; i >= 0; i--) {
+			idx[i] = Arrays.copyOf(idx[i + 1],26);
+			idx[i][cs[i] - 'a'] = i + 1; 
+		}
+		int j = 0, res = 1;
+		for (int i = 0; i < ts.length; i++) {
+			if (j == cs.length) {
+				j = 0;
+				res++;
+			}
+			j = idx[j][ts[i] - 'a'];
+			if (idx[0][ts[i] - 'a'] == 0) return -1;
+			if (j == 0) {
+				res++;
+				i--;
+			}
+		}
+		return res;
+	}
+	
+	 public static void main(String args[] ) {
+
+		    Scanner sc = new Scanner(System.in);
+			String word1=sc.next();
+			String word2=sc.next();
+			System.out.println(new ShortestWay().shortestWay(word1,word2));
+	 } 	
+}

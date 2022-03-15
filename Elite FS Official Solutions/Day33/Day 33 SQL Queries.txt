@@ -1,0 +1,33 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to display all the details of employees 
+who are not working as managers.
+
+Query:
+-----
+select * from emp where empno not in (select mgr from emp where mgr is not null);
+
+Query-2:
+=======
+Problem:
+-------
+write an sql query to display the empno, ename, sal, dname of the employees 
+who is working as either 'MANAGER' or 'ANALYST' in ‘New York’ or ‘Dallas’
+and display in descending order of name.
+
+Query:
+-----
+select empno ,ename,sal,dname from emp e , dept d where (e.job='MANAGER' or e.job='ANALYST') and (d.location='New York'or location='Dallas') and e.deptno=d.deptno order by ename desc;
+
+Query-3:
+=======
+Problem:
+-------
+Write an SQL query to display all the details of employees who are in sales dept 
+and grade is 3.
+Query:
+-----
+select * from emp where sal>=(select losal from salgrade where grade=3) and sal<=(select hisal from salgrade where grade=3) and deptno=(select deptno from dept where dname='SALES');
+

@@ -1,0 +1,174 @@
+/*
+Problem Statement:
+------------------
+In Dubai's Burj Khalifa, there is an elevator moves only in upwards direction, 
+the elevator can carry N members.
+
+The people are waiting for the elevator at different floors, made P requests, 
+request[i] = [ num_people, enter_floor, exit_floor ], each request indicates, 
+number of people to enter into elevator, entering floor number, 
+exiting floor number.
+
+Initially the elevator is empty.
+
+Your task is to find and return true, iff it is possible to enter the people
+into elevator and exit from elevator of all the requests made by the people.
+
+
+Input Format:
+-------------
+Line-1 -> Two integers P and N, number of requests and number of members 
+          can be carried by elevator.
+Next N Lines -> three space separated integers, num_people, enter_floor, exit_floor.
+
+Output Format:
+--------------
+Print a boolean value.
+
+
+Sample Input-1:
+---------------
+2 5
+2 1 5
+3 3 7
+
+Sample Output-1:
+----------------
+true
+
+
+
+Sample Input-2:
+---------------
+2 4
+2 1 5
+3 3 7
+
+Sample Output-2:
+----------------
+false
+
+
+
+Sample Input-3:
+---------------
+3 11
+3 2 7
+3 7 9
+8 3 9
+
+Sample Output-3:
+----------------
+true
+
+
+Test Cases:
+----------
+case =1
+input =2 4
+2 1 5
+3 3 7
+output =false
+
+case =2
+input =2 5
+2 1 5
+3 3 7
+output =true
+
+case =3
+input =3 11
+3 2 7
+3 7 9
+8 3 9
+output =true
+
+case =4
+input =3 9
+3 2 7
+3 7 9
+8 3 9
+output =false
+
+case =5
+input =6 8
+4 1 5
+3 3 8
+5 6 12
+3 10 15
+3 13 17
+5 16 20
+output =true
+
+case =6
+input =6 8
+4 1 5
+3 3 8
+5 6 12
+4 10 15
+3 13 17
+5 16 20
+output =false
+
+case =7
+input =10 6
+4 1 5
+2 3 8
+3 6 12
+2 10 15
+4 13 17
+1 16 20
+2 19 22
+3 18 21
+4 23 26
+2 21 25
+output =true
+
+case =8
+input =10 6
+4 1 5
+2 3 8
+3 6 12
+2 10 15
+4 13 17
+1 16 20
+2 19 22
+4 18 21
+3 23 26
+2 22 25
+output =false
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class VehicleCapacity{
+	public boolean vehicleCapacity(int[][] bookings, int capacity) {    
+		int stops[] = new int[1001]; 
+		for (int t[] : bookings) {
+		  stops[t[1]] += t[0];
+		  stops[t[2]] -= t[0];
+		}
+		for (int i = 0; capacity >= 0 && i < 1001; ++i) capacity -= stops[i];
+		return capacity >= 0;
+	}
+	
+	public static void main(String args[] ) {
+
+		Scanner scan = new Scanner(System.in);
+		int N=scan.nextInt();
+		int Cap=scan.nextInt();      
+
+		int[][] bookings=new int[N][3];
+		for(int i=0; i<N; i++)
+		{
+			for(int j=0; j<3; j++)
+			{
+			   bookings[i][j] = scan.nextInt();
+			}
+		}
+		System.out.println(new VehicleCapacity().vehicleCapacity(bookings,Cap));
+	} 	
+}
