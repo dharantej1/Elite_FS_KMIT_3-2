@@ -1,0 +1,33 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQl query to display the department number, minimum salary,maximum salary of each department.
+Query:
+-----
+select deptno, min(sal) min_salary ,max(sal) max_salary from emp group by deptno;
+
+
+Query-2:
+=======
+Problem:
+-------
+Write a SQL query to display names of employee and their annual salary as ‘annual_salary’ of the employees, whose annual_salary is greater than 30000
+
+
+Query:
+-----
+select ename, (sal*12) as annual_salary from emp where (sal*12)>=30000 ;
+
+Query-3:
+=======
+Problem:
+-------
+Write a SQL query to display the names and salary of the employees who earn highest salary in their respective departments.
+
+Query:
+-----
+select ename, sal as salary from emp e where sal = (select max(sal) from emp where deptno=e.deptno)
+
+
+

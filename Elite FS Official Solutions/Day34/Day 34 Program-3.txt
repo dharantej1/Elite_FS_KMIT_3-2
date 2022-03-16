@@ -1,0 +1,164 @@
+/*
+Problem Statement:
+------------------
+In an examination hall, the seating is arranged in the form of a tree,
+based on the serial numbers allotted to that room.
+
+The seating arrangement is filled in the following way:
+	- left sub node data is always smaller than the current node data.
+	- right sub node data is always greater than the current node data.
+	
+You are given the final tree T.
+Your task is to convert the tree T to Altered Tree such that every data
+of the original tree T is changed to the original data plus sum of all data
+greater than the original data in tree T and return the Altered Tree T.
+and print the altered tree using in-order traversal.
+
+Your task is to implement the class Solution:
+	- public BinaryTreeNode alterTree(BinaryTreeNode root): 
+		return the root node of the altered tree.
+	- public void inOrder(BinaryTreeNode root):
+		print the node data of the altered tree.
+	
+NOTE: 
+The term data indicates serial number of the aspirant.
+
+
+Input Format:
+-------------
+Single line space separated integers, serial numbers of the aspirants.
+
+Output Format:
+--------------
+Print the inorder traversal of altered bst.
+
+
+Sample Input-1:
+---------------
+8 3 10 1 6 14 4 7 13
+
+Sample Output-1:
+----------------
+66 65 62 58 52 45 37 27 14
+
+
+Sample Input-2:
+---------------
+4 2 6 1 3 5 7
+
+Sample Output-2:
+----------------
+28 27 25 22 18 13 7
+
+
+Test Cases:
+----------
+case =1
+input =8 3 10 1 6 14 4 7 13
+output ="66 65 62 58 52 45 37 27 14 "
+
+case =2
+input =4 2 6 1 3 5 7
+output ="28 27 25 22 18 13 7 "
+
+case =3
+input =6 3 9 2 4
+output ="24 22 19 15 9 "
+
+case =4
+input =15 13 20 12 14 18 22 10 9 11 22 21 23
+output ="188 179 169 158 146 133 119 104 86 66 45 23 "
+
+case =5
+input =50 30 70 23 35 11 25 31 42 80 73 85
+output ="555 544 521 496 466 435 400 358 308 238 165 85 "
+
+case =6
+input =1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+output ="210 209 207 204 200 195 189 182 174 165 155 144 132 119 105 90 74 57 39 20 "
+
+case =7
+input =45 32 17 42 65 54 62 86 56 28 27 17 18 15 14 9 6 3
+output ="579 576 570 561 547 532 515 497 470 442 410 368 323 269 213 151 86 "
+
+case =8
+input =12 16 7 18 14 5 9 13 15 17 19 10 8 6 3 2 4 11
+output ="189 187 184 180 175 169 162 154 145 135 124 112 99 85 70 54 37 19 "
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+import java.util.*;
+
+class BinaryTreeNode{
+	public int data; 
+	public BinaryTreeNode left, right; 
+	public BinaryTreeNode(int data){
+		this.data = data; 
+		left = null; 
+		right = null; 
+	}
+}
+
+public class GreaterBST{
+	static BinaryTreeNode root;
+	GreaterBST() 
+    { 
+        root = null; 
+    }
+	void insert(int data) 
+    { 
+         root = insertRec(root, data); 
+    }
+	BinaryTreeNode insertRec(BinaryTreeNode root, int data)
+    {
+        if (root == null) 
+        {
+            root = new BinaryTreeNode(data);
+            return root;
+        }
+ 
+        /* Otherwise, recur down the tree */
+        if (data < root.data)
+            root.left = insertRec(root.left, data);
+        else if (data > root.data)
+            root.right = insertRec(root.right, data);
+ 
+        /* return the (unchanged) node pointer */
+        return root;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String str[]=sc.nextLine().split(" ");
+		GreaterBST sbt=new GreaterBST();
+		root=new BinaryTreeNode(Integer.parseInt(str[0]));
+		for(int i=1; i<str.length; i++)
+			sbt.insert(Integer.parseInt(str[i]));
+		Solution sol= new Solution();
+		root=sol.alterTree(root);
+		sol.inOrder(root);
+	}
+}
+class Solution {
+    int pre = 0;
+    public BinaryTreeNode alterTree(BinaryTreeNode root) {
+        if (root.right != null) 
+            alterTree(root.right);
+        pre = root.data = pre + root.data;
+        if (root.left != null) 
+            alterTree(root.left);
+        return root;
+    }
+	public void inOrder(BinaryTreeNode root){
+		if(root != null){
+			inOrder(root.left);
+			System.out.print(root.data+" ");
+			inOrder(root.right);
+		}
+	}
+}
