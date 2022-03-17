@@ -1,0 +1,10 @@
+/*
+Write an SQL query to display the common jobs from department number 10 and 20.
+
+Sample Output:
+-------------
+job                                                                                                                     
+CLERK                                                                                                                   
+
+*/
+select job from emp where deptno=10 and job in (select job from emp where deptno=20);
