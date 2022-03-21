@@ -1,0 +1,31 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to list the employee names starting with ‘S’ and ending with ‘H’ and having a length of 5 chars.
+
+Query:
+-----
+select ename from emp where length(ename)=5 and ename like 'S%H';
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display the names of employees from department number 10 with salary greater than that of any employee working in other departments.
+
+
+Query:
+-----
+select ename,sal,deptno from emp e where deptno=10 and sal >any(select sal from emp where e.deptno!=deptno);
+
+Query-3:
+=======
+Problem:
+-------
+Write an SQL query to display the names of the salesman who earns a salary more than the highest salary of any clerk.
+
+Query:
+-----
+select ename from emp where job='SALESMAN' and sal > (select max(sal) from emp where job='CLERK');
+

@@ -1,0 +1,32 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to display the job groups having total salary greater then
+the maximum salary for managers.
+
+Query:
+-----
+select job, sum(sal) from emp group by job having sum(sal) > (select max(sal) from emp where job='MANAGER');
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display the names of employee from department number 10 
+with salary greater then that of any employee working in other departments.
+
+Query:
+-----
+select ename, sal, deptno from emp e where deptno=10 and sal > any(select sal from emp where e.deptno != deptno);
+
+Query-3:
+=======
+Problem:
+-------
+Write an SQL query to display the common jobs from department number 10 and 20.
+
+Query:
+-----
+select job from emp where deptno=10 and job in(select job from emp where deptno=20);
+

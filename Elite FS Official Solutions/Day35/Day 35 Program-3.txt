@@ -1,0 +1,123 @@
+/*
+Problem Statement:
+------------------
+Given a bunch of baskets in a row, each basket contains few fruits in it.
+You can select K number of baskets, one after other.
+The selection of basket is either from beginning or from the end the row.
+
+Return the maximum number of fruits you have after K baskets collected.
+
+Input Format:
+-------------
+Line-1 -> Two integers N and K, N is no of baskets and 
+          K is the basket count you can pick.
+Line-2 -> N space separated integers fruits[], fruits in each basket.
+
+Output Format:
+--------------
+Print an integer, Maximum num of fruits you can collect.
+
+
+Sample Input-1:
+---------------
+7 3
+2 3 5 4 1 2 3 
+
+Sample Output-1:
+----------------
+10
+
+
+Sample Input-2:
+---------------
+5 3
+2 2 2 2 2
+
+Sample Output-2:
+----------------
+6
+
+
+Sample Input-3:
+---------------
+8 3
+1 79 80 1 1 1 200 1
+
+Sample Output-3:
+----------------
+202
+
+
+Test Cases:
+----------
+case =1
+input =7 3
+1 2 3 4 5 6 1
+output =12
+
+case =2
+input =5 3
+2 2 2 2 2
+output =6
+
+case =3
+input =20 6
+275 125 118 95 118 474 356 390 241 293 213 212 459 326 95 78 131 248 298 21
+output =1205
+
+case =4
+input =35 11
+373 208 339 249 194 187 210 270 191 120 498 203 75 146 432 405 478 476 194 485 93 269 68 210 153 135 387 334 141 384 11 374 187 76 338
+output =2839
+
+case =5
+input =50 14
+472 116 53 284 332 174 331 258 43 436 293 192 271 259 45 40 19 401 363 97 445 341 450 444 20 43 21 142 74 250 122 8 494 374 499 222 269 343 387 412 235 236 216 426 249 250 377 396 225 460
+output =4684
+
+case =6
+input =40 21
+194 168 51 285 441 487 451 327 100 473 97 287 330 349 248 218 102 386 211 342 434 19 483 152 253 229 108 144 461 362 312 152 379 1 111 331 75 375 291 145
+output =5981
+
+case =7
+input =100 23
+40 158 301 224 88 389 488 170 498 424 353 211 392 56 17 378 108 13 95 163 102 465 162 370 242 316 325 212 316 164 445 454 311 54 35 156 367 156 159 140 283 261 476 199 37 353 248 148 261 334 278 17 357 25 57 448 396 81 339 398 270 314 74 49 217 344 107 488 292 250 368 421 180 185 193 296 173 155 276 383 312 327 8 353 66 171 12 381 412 213 288 318 305 236 79 347 67 442 202 324
+output =6394
+
+case =8
+input =100 80
+40 158 301 224 88 389 488 170 498 424 353 211 392 56 17 378 108 13 95 163 102 465 162 370 242 316 325 212 316 164 445 454 311 54 35 156 367 156 159 140 283 261 476 199 37 353 248 148 261 334 278 17 357 25 57 448 396 81 339 398 270 314 74 49 217 344 107 488 292 250 368 421 180 185 193 296 173 155 276 383 312 327 8 353 66 171 12 381 412 213 288 318 305 236 79 347 67 442 202 324
+output =20138
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class BasketsandFruits {
+    public int maxFruits(int[] basket, int k) {
+        int n = basket.length, lSum = 0;
+        for(int i = 0; i < k; ++i){
+            lSum += basket[i];
+        }
+        int max = lSum;
+        for(int rSum = 0, i = 0; i < k; ++i){
+            rSum += basket[n-1-i];
+            lSum -= basket[k-1-i];
+            max = Math.max(max,lSum+rSum);
+        }
+        return max;
+    }
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int N=sc.nextInt();
+		int K=sc.nextInt();
+		int[] basket=new int[N];
+		for(int i=0;i<N;i++)
+				basket[i]=sc.nextInt();
+		System.out.println(new BasketsandFruits().maxFruits(basket, K));
+	}
+}

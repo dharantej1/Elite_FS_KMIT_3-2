@@ -1,0 +1,108 @@
+/*
+Problem Statement:
+------------------
+Venkat wants to create a unique name for his child for that he is referring 
+two names, one is traditonal name(TN) and other is modern name(MN).
+
+ - if traditional name TN is non empty, then add the first letter L of TN 
+     to unique name UN and remove the letter L from traditional name TN
+ 	e.g., if TN = "havi" and UN="anvika", then after adding L to UN and remove L 
+ 	from TN, the names updated as UN="anvikah", TN="avi".
+    
+    - if modern name MN is non empty, then add the first letter L of MN 
+     to unique name UN and remove the letter L from modern name MN
+     e.g., if MN = "ram" and UN="ao", then after adding L to UN and remove L 
+ 	from MN, the names updated as UN="aor", MN="am".
+	
+You are given two names, TN and MN, 
+Your task is to help venkat to generate the unique name for his child,
+and the name should be largest in the dictionary order.
+
+For example, "kmit" is larer than "kmec", as third letter is greater in "kmit".
+
+Input Format:
+-------------
+Two space separated names, TN and MN.
+
+Output Format:
+--------------
+Print a string, the laregst unique name possible.
+
+
+Sample Input-1:
+---------------
+sudha vivid
+
+Sample Output-1:
+----------------
+vsuividhda
+
+
+Sample Input-2:
+---------------
+appa banana
+
+Sample Output-2:
+----------------
+bappananaa
+
+
+Test Cases:
+----------
+case =1
+input =abcabca njasvnjoanvo
+output =njasvnjoanvoabcabca
+
+case =2
+input =nsbowhgjnzcynjnoi dnmvjiwhwdoskfpsfwfgwgsvsvsbebnnr
+output =nsdnmvjiwhwdoskfpsfwfgwgsvsvsbowhgjnzcynjnoibebnnr
+
+
+case =3
+input =hanvika reddy
+output =rheddyanvika
+
+case =4
+input =appireddynagireddyvenkata venkatanagasai
+output =venkatappireddynanagireddyvenkatagasaia
+
+case =5
+input =premacharitham nagabharavipraneeth
+output =prnemagacharithamabharavipraneeth
+
+case =6
+input =chidvilashavenkata saisuryanagasrinivasavenkatabhairavipraneeth
+output =schidvilashavenkataisuryanagasrinivasavenkatabhairavipraneetha
+
+case =7
+input =sudha vivid
+output =vsuividhda
+
+case =8
+input =nandanapriyankaavulamanda mihikapriya
+output =nmihikapriyandanapriyankaavulamandaa
+
+
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class LargestMerge {
+    public String largestMerge(String s1, String s2) {
+        if (s1.length() == 0  || s2.length() == 0)
+            return s1 + s2;
+        if (s1.compareTo(s2) > 0)
+            return s1.charAt(0) + largestMerge(s1.substring(1), s2);
+        return s2.charAt(0) + largestMerge(s1, s2.substring(1));
+    }
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		String s1=sc.next();
+		String s2=sc.next();
+		System.out.println(new LargestMerge().largestMerge(s1, s2));
+	}
+}
