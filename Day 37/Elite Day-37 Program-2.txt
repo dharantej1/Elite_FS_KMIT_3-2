@@ -58,3 +58,37 @@ Explanation:
 ------------
 In the given grid, each 1 is either at the boundary or connceted to 1 at boundary.
 So, number of people cannot be saved are '0'
+
+
+import java.util.*;
+
+class main{
+    static int n,arr[][];
+    static int numberOfPeopleSaved(int i,int j){
+        if( (i<0 || i>=n) || (j<0 || j>=n) || arr[i][j]<=0)
+            return 0;
+        arr[i][j]=-1;
+        return 1+numberOfPeopleSaved(i+1,j)+numberOfPeopleSaved(i-1,j)+numberOfPeopleSaved(i,j+1)+numberOfPeopleSaved(i,j-1);
+    }
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        arr = new int[n][n];
+        int totalPeople = 0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                arr[i][j] = sc.nextInt();
+                if(arr[i][j]==1)
+                    totalPeople++;
+            }
+        }
+        int totalPeopleSaved = 0;
+        for(int i=0;i<n;i++){
+            totalPeopleSaved += numberOfPeopleSaved(0,i);
+            totalPeopleSaved += numberOfPeopleSaved(i,0);
+            totalPeopleSaved += numberOfPeopleSaved(n-1,i);
+            totalPeopleSaved += numberOfPeopleSaved(i,n-1);
+        }
+        System.out.print(totalPeople-totalPeopleSaved);
+    }
+}

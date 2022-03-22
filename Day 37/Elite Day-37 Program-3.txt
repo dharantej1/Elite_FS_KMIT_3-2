@@ -37,14 +37,8 @@ kmit
 
 
 
-def modify():
-    i=0
-    while i<len(s):
-        for j in s[:i]:
-            
-
-
-
-s=str(input())
-l=list(map(int,input().split()))[:len(s)]
-alphabet="abcdefghijklmnopqrstuvwxyz"
+s=list(input())
+arr=list(map(int,input().split()))
+for i in range(len(s)):
+    s[i]=chr((ord(s[i])-97+sum(arr[i:]))%26+97)
+print(''.join(s))

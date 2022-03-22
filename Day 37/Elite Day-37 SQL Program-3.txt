@@ -1,0 +1,11 @@
+/*
+Write an SQL query to Display the department name(s), where the length of dept name is 
+equal to 'no of employees - 2' in any other department.
+
+Sample Output:
+-------------
+dname                                                                                                                   
+Research                                                                                                                
+
+*/
+select dname from emp e,dept d where length(d.dname)+2=(select count(*) from emp where d.deptno!=e.deptno group by e.deptno);

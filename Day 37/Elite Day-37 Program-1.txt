@@ -40,3 +40,19 @@ Sample Output-2:
 ----------------
 [14, 25, 30, 36, 41, 47, 52, 58, 63, 69, 74, 85, 96]
 
+
+def numbers(pos,diff,num):
+    if pos>=n:
+        res.append(num)
+    else:
+        n1=num%10-diff
+        n2=num%10+diff
+        if n1>=0 and n1<10:
+            numbers(pos+1,diff,num*10+n1)
+        if n2>=0 and n2<10 and n1!=n2:
+            numbers(pos+1,diff,num*10+n2)
+n,d=list(map(int,input().split()))
+res=[]
+for i in range(1,10):
+    numbers(1,d,i)
+print(res)
