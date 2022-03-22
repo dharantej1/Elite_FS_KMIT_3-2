@@ -1,0 +1,13 @@
+/*
+Write an SQL query to display the name of department where highest number of 
+employees are working.
+
+Sample Output:
+-------------
+dname                                                                                                                   
+Research
+
+*/
+
+select dname from dept join emp on emp.deptno=dept.deptno group by dname order by count(*) desc
+limit 1;

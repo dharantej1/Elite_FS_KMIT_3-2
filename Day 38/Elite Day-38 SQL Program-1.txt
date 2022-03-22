@@ -1,0 +1,14 @@
+/*
+Write an SQL query to list out(ename,mgr,and sal) the lowest paid employees 
+working for each manager,exclude any employee whose salary is less than 1000 
+sort the output by salary.
+
+Sample Output:
+-------------
+ename   mgr     sal                                                                                                     
+FORD    7782    1300.00                                                                                                 
+SCOTT   7566    3000.00                                                                                                 
+
+*/
+
+select e.ename,e.mgr,e.sal from emp e where e.sal>=1000 and sal in (select min(sal) from emp where mgr=e.mgr) order by e.sal asc;
