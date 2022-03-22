@@ -1,0 +1,71 @@
+Given a set of weights of n items weights[], and another item wieght w.
+Your task is to check if the sum of weights of continuous subset is equal to 
+one of the multiple of w, where subset size should be minimum 2.
+
+For example: Mulitple of w means, w=3 then multiple of w are
+3, 6, 9, 12, .... so on.
+
+Print true, if such subset sum is possible.
+Otherwise, print false.
+
+Input Format:
+-------------
+Line-1 : Two integers n and w, number of weights and weight to match.
+Line-2 : n space separated integers, weights of n items.
+
+Output Format:
+--------------
+Print a boolean value.
+
+
+Sample Input-1:
+---------------
+5 4
+1 2 3 5 6
+
+Sample Output-1:
+----------------
+false
+
+
+Sample Input-2:
+---------------
+5 4
+1 2 3 6 5
+
+Sample Output-2:
+----------------
+true
+
+Explanation: 
+------------
+sum of  continuous subset of weights [1,2,3,6]  equals to 12, multiple of 4.
+
+
+Approach 1
+def matchWeight(n,l):
+    if n==1:
+        return False
+    if sum(l)%w==0:
+        return True
+    else:
+        s1=matchWeight(n-1,l[1:])
+        s2=matchWeight(n-1,l[:n-1])
+        if s1 or s2:return True
+        else:return False
+n,w=map(int,input().split())
+l=list(map(int,input().split()))[:n]
+print(matchWeight(n,l))
+
+
+
+Approach 2
+def slide(i,j,l):
+    if(i>l-2): return False
+    if(sum(weigs[i:j])%w==0): return True
+    if(j==l): return slide(i+1,i+3,l)
+    else: return slide(i,j+1,l)
+
+n,w=map(int,input().split())
+weigs=list(map(int,input().split()))
+print(slide(0,2,len(weigs)))

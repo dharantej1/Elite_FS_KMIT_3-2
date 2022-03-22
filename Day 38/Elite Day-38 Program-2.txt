@@ -1,0 +1,60 @@
+For this challenge, a substring is defined as any contiuous group of one or more 
+characters of a string. For example, the unique substrings of "baca" are [b, ba, 
+bac, baca, a, ac, aca, c ,ca] . The list in alphabetical order is [a, ac, aca, b, 
+ba, bac, baca, c, ca]. in this case, the maximum substrin, alphabetically, is 'ca'.
+
+Given a string s, determine its maximum substring.
+
+Your task is to design a function, that return the maximum substring of s.
+
+NOTE:
+String s contains only lowercase alphabets.
+
+Input Format:
+-------------
+A string, s
+
+Output Format:
+--------------
+print a string, maximum substring.
+
+
+Sample Input-1:
+---------------
+baca
+
+Sample Output-1:
+----------------
+ca
+
+
+Sample Input-2:
+---------------
+banana
+
+Sample Output-2:
+----------------
+nana
+
+
+Approach 1
+s=str(input().lower())
+sample,arr="a",[]
+for i in s:
+    if i>sample[-1]:
+        sample+=i
+        sample=sample[1:]
+for i in range(len(s)):
+    if s[i]==sample:
+        arr.append(s[i:])
+print(max(arr))
+
+
+Approach 2
+s=input()
+m=max(s)
+ans=""
+for i,val in enumerate(s):
+    if(val==m):
+        ans=max(ans,s[i:])
+print(ans)
