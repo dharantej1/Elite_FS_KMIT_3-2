@@ -1,0 +1,29 @@
+Query-1:
+=======
+Problem:
+-------
+Write a SQL query to display the name(s) of the employee(s) who are getiing second highest salary.
+
+Query:
+-----
+select ename from emp where sal = (select max(sal) from emp where sal<(select max(sal) from emp)) ;
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display name and salary of ford if his Sal is equal to high Sal of his grade.
+
+Query:
+-----
+select job, sum(sal) from emp group by job having sum(sal) > (select max(sal) from emp where job='MANAGER');
+
+Query-3:
+=======
+Problem:
+-------
+Write an SQL query to Display the department name(s), where the length of dept name is equal to 'no of employees - 2' in any other department.
+Query:
+-----
+Select dname from dept where length(dname)+2 in (select count(*) from emp group by deptno);
+

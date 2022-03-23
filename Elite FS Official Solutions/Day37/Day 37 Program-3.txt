@@ -1,0 +1,111 @@
+/*
+Problem Statement:
+------------------
+Somesh is given a task to you on Strings.
+You have given a string S ([a-z]), and an integer array Arr[]
+Now your task is to modify 'S' in such way:
+replace the 'i+1' characters in the string, with next i-th character 
+in alphabetic order(cyclic).
+
+For example, if S="art", Arr[]=[2,3,5] is 3, 
+i=0, modify('a') = 'c' , S="crt".
+i=1, modify('c') = 'f', modify('r') = 'u', S="fut".
+i=2, modify('f') = 'k', modify('u') = 'z', modify('t') = 'y', S="kzy"
+Finally modified string is kzy. 
+
+Note: if arr[i]=3 modify('z') ='c'
+
+Return the final modified string after all such modifications to S are applied.
+
+Input Format:
+-------------
+Line-1 -> A String S, length of S is L
+Line-2 -> L space separated integers.
+
+Output Format:
+--------------
+Print modifed String.
+
+
+Sample Input-1:
+---------------
+adbp
+1 2 3 4
+
+Sample Output-1:
+----------------
+kmit
+
+
+Test Cases:
+----------
+case =1
+input =smallest
+1 4 2 5 8 4 7 3
+output =atdmhscw
+
+case =2
+input =adbp
+1 2 3 4
+output =kmit
+
+case =3
+input =pneumonoultramicroscopicsilicovolcanoconiosis
+23 46 43 35 37 29 1 28 10 20 22 38 50 11 27 34 48 4 33 2 28 29 21 8 30 11 11 15 8 28 46 23 25 41 45 47 12 49 16 26 1 42 32 30 47
+output =fgdclcyycjxzwkvovwwzjiyxfrjvaejiiajdjlajejxhn
+
+case =4
+input =aaaaaaaaaaaaaaaaaaaaaaaaaa
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+output =nmkhdysldukznamxhqyflquxza
+
+case =5
+input =aaaaaaaaaaaaaaaaaaaaaaaaaa
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+output =azyxwvutsrqponmlkjihgfedcb
+
+case =6
+input =hippopotomonstrosesquippedaliophobia
+42 41 28 47 15 24 34 1 16 23 1 21 9 39 5 47 44 1 38 48 41 16 32 21 5 20 32 48 2 12 23 24 14 13 44 25
+output =tewuyklickpnxpasbviucbsmgadijncxgfzz
+
+case =7
+input =pseudopseudohypoparathyroidism
+34 28 5 23 48 3 31 6 34 49 29 19 42 44 10 21 48 15 47 25 45 40 49 20 30 8 13 9 18 1
+output =dyitfusqweqyyzyntikysnqmpfskln
+
+case =8
+input =supercalifragilisticexpialidociousantidisestablishmentarianism
+13 35 2 19 12 20 20 3 22 25 38 45 5 50 26 21 47 18 43 38 17 50 13 33 43 30 13 2 16 34 49 32 18 2 7 15 1 10 17 19 21 2 42 41 23 11 29 42 11 41 36 40 43 40 23 30 29 5 35 8 11 4
+output =apboihlcwxkhurwtioloegagrlemvtraagmsjxiwneqbtxwqkoemhwpjwltfhq
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class StringModified {
+    public static String modifyLetters(String S, int[] Arr) {
+        StringBuilder res = new StringBuilder(S);
+        for (int i = Arr.length - 2; i >= 0; i--)
+            Arr[i] = (Arr[i] + Arr[i + 1]) % 26;
+        for (int i = 0; i < S.length(); i++)
+            res.setCharAt(i, (char)((S.charAt(i) - 'a' + Arr[i]) % 26 + 'a'));
+        return res.toString();
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		String s=sc.nextLine();
+		String array[]=sc.nextLine().split(" ");
+		
+		int Arr[]=new int[array.length];
+	
+		for(int i=0;i<array.length;i++)
+			Arr[i]=Integer.parseInt(array[i]);
+
+		System.out.println(modifyLetters(s,Arr));
+	}
+}
