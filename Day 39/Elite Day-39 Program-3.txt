@@ -1,0 +1,60 @@
+Mohan is given a task to decorate a wall with balloons.
+He is given an unlimited set of ballons of three different colors.
+
+The decoration should have N rows of 3 balloons each. 
+He has to make sure that no two adjacent balloons have the same colour.
+both vertically and horizontally.
+
+Your task is to help Mr Mohan to find the number of ways to decorate the wall,  
+the answer must be computed modulo 10^9 + 7
+
+Input Format:
+-------------
+An integer N
+
+Output Format:
+--------------
+Print an integer as outpur, number of ways to decorate.
+
+
+Sample Input-1:
+---------------
+1
+
+Sample Output-1:
+----------------
+12
+
+Explanation:
+------------
+Suppose the colors are, B-Blue, W-White, R-Red. Given N is 1
+RBR	BRB	WRB
+RBW	BRW	WRW
+RWR	BWR	WBR
+RWB	BWB	WBW
+
+
+Sample Input-2:
+---------------
+2
+
+Sample Output-2:
+----------------
+54
+
+
+
+
+def colorBalloons(n):
+    color2=6
+    color3=6
+    mod=(10**9)+7
+    for i in range(n-1):
+        temp = color3 
+        color3 = (2*color3 + 2*color2)
+        color2 = (2*temp + 3*color2)
+    return (color3 + color2) % mod
+
+if __name__=="__main__":
+    n=int(input())
+    print(colorBalloons(n))
