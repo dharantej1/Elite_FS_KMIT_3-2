@@ -1,0 +1,62 @@
+Babylonians invented multiplication of numbers.
+
+You will be given two strings consist of digits only.
+You have to perform the multiplication of these two strings using 
+Babylonians approach, and return the result of multiplication of two strings.
+
+
+Input Format:
+-------------
+Two space separated strings, num1 and num2.
+
+Output Format:
+--------------
+Print the product of two strings num1 and num2.
+
+
+Sample Input-1:
+---------------
+5 4 
+
+Sample Output-1:
+----------------
+20
+
+
+Sample Input-2:
+---------------
+121 432 
+
+Sample Output-2:
+----------------
+52272
+
+Note:
+-----
+	- Input should contain digits only, and should not contain leading 0's 
+	  except number 0.
+	- Output will be in the range of integer only.
+	- There will be no leading minus '-' symbol also.
+	- Should not use built-in BigInteger library.
+	- Should not convert the given strings into integers.
+
+
+
+def multiplyLong(num1,num2):
+    dic,l1,l2={str(i):i for i in range(10)},len(num1)-1,len(num2)-1
+    lis1,lis2=[],[]
+    for i,n1 in enumerate(num1):
+        lis1.append(dic[n1]*(10**(l1-i)))
+    for j,n2 in enumerate(num2):
+        lis2.append(dic[n2]*(10**(l2-j)))
+    return str(sum(lis1)*sum(lis2))
+
+num1,num2=map(str,input().split())
+if num1[0]=="-" and num2[0]=="-":
+    print(multiplyLong(num1[1:],num2[1:]))
+elif num1[0]=="-" and num2[0]!="-":
+    print("-"+multiplyLong(num1[1:],num2))
+elif num1[0]!="-" and num2[0]=="-":
+    print("-"+multiplyLong(num1,num2[1:]))
+else:
+    print(multiplyLong(num1,num2))
