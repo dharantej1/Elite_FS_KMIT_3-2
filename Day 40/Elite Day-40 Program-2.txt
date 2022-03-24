@@ -1,62 +1,72 @@
-In a maths class, Teahcer given a task to a student.
-Initially, Teacher provided a set of tokens(one on another) to the student
-All the tokens are printed a positive number on one side and empty on other side
-Intially, the number side of tokens are hidden.
+Reena has to sent the mails regularly.
+She used emphasize any word W based on a given set of words[].
+Two emphasize the words she used enclose them with <i> and </i> tag.
+The emphasize procedure of the sub-words of W is as follows:
+	
+	- If two sub-words are intersected with each other, 
+	  enclose them with one <i></i> tag.
+	
+	- If two sub-words are enclosed with <i></i> tag and neighbours also,
+	  then merge the sub-words as one and enclose with one <i> </i> tag.
 
-Now, you do the following steps repeatedly, until all tokens are turned up:
-    1. Take the top token of the set, show the number, and take it out of the set.
-    2. If there are still tokens in the set, put the next top token of the set 
-       at the bottom of the set.
-    3. If there are still hidden tokens, go back to step 1. Otherwise, stop.
-
-Your task is to help students to find and return an ordering of the set, that 
-would show the tokens in increasing order. 
-
-NOTE: The first entry in the answer is considered to be the top of the set.
+You will be given the word W, and set of words[] to emphasize.
+Your task is to help Reena to emphasize the word W.
+and print it.
 
 Input Format:
 -------------
-Line-1 -> An integer N, no of tokens
-Line-2 -> N space separated integers.
+Line-1: A string W, the word.
+Line-2: space separated strings, set of words[].
 
 Output Format:
 --------------
-Print N space separated integers as result.
-
+Print the string, the emphasized string.
 
 Sample Input-1:
 ---------------
-7
-7 6 5 1 2 3 4
+kmitngit123
+it 123
 
 Sample Output-1:
 ----------------
-1 6 2 5 3 7 4
+km<i>it</i>ng<i>it123</i>
 
-Explanation: 
+
+Sample Input-2:
 ---------------
-Given a set in the order 7 6 5 1 2 3 4
-After reordering, the set starts as 1 6 2 5 3 7 4, where 1 is the top of the set.
-Student show 1, and move 6 to the bottom.  The set is now 2 5 3 7 4 6.
-Student show 2, and move 5 to the bottom.  The set is now 3 7 4 6 5.
-Student show 3, and move 7 to the bottom.  The set is now 4 6 5 7
-Student show 4, and move 6 to the bottom.  The set is now 5 7 6
-Student show 5. and move 7 to the bottom.  The set is now 6 7
-Student show 6, and move 7 to the bottom.  The set is now 7
-Student show 7.
-Since all the cards revealed are in increasing order, the answer is correct.
+qwertykeypad
+qwerty key pad
+
+Sample Output-2:
+----------------
+<i>qwertykeypad</i>
 
 
 
-def incToken(n,l):
-    l1=[i for i in range(len(l))]
-    for i in sorted(l):
-        l[l1[0]]=i
-        if len(l1)>1:
-            l1=l1[2:]+[l1[1]]
+w=list(input())
+words=[list(i) for i in input().split()]
+pos=[0]*len(w)
+for i in words:
+    x=len(i)
+    for j in range(len(w)):
+        # print(i,w[j:j+x])
+        if w[j:j+x]==i:
+            # print('here')
+            pos[j:j+x]=['F']*(x)
+flag=True
+# print(pos)
+for i in range(len(pos)):
+    if pos[i]!='F':
+        if flag:
+            print(w[i],end='')
         else:
-            l1=[]
-    return l
-n=int(input())
-l=list(map(int,input().split()))
-print(incToken(n,l))
+            print('</i>'+w[i],end='')
+            flag=True
+    
+    else:
+        if flag:
+            print('<i>'+w[i],end='')
+            flag=False
+        else:print(w[i],end='')
+    
+if not flag:print('</i>',end='')
