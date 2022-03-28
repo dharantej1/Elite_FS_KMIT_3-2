@@ -76,3 +76,61 @@ Holiday-spot 3 -> [Holiday-spot 2, Holiday-spot 4]
 Holiday-spot 4 -> [Holiday-spot 1, Holiday-spot 2, Holiday-spot 3]
 
 Holiday-spots 0 has 1 reachable Holiday-spot at a distance = 2, 
+
+
+
+import java.util.*;
+class pair{
+    int n;
+    int d;
+    pair(int n,int d){
+        this.n = n;
+        this.d = d;
+    }
+}
+class D41P1{
+    static void dfs(int node,ArrayList<ArrayList<pair>> adj,int c,int cnt,boolean[] vis){
+        if(cnt>c) return;
+        vis[node] = true;
+        for(pair p : adj.get(node)){
+            dfs(p.n,adj,c,cnt+p.d,vis);
+        }
+    }
+    static int getcount(boolean[] vis){
+        int c = 0;
+        for(boolean x : vis){
+            if(x==true) c++;
+        }
+        return c;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int req_dist = sc.nextInt();
+        ArrayList<ArrayList<pair>> adj = new ArrayList<ArrayList<pair>>(n);
+        for(int i=0;i<n;i++){
+            adj.add(new ArrayList<pair>());
+        }
+        for(int i=0;i<m;i++){
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+            int d = sc.nextInt();
+            adj.get(x).add(new pair(y,d));
+            adj.get(y).add(new pair(x,d));
+        }
+        int req = Integer.MAX_VALUE;
+        int ans = 0;
+        for(int i=0;i<n;i++){
+            boolean[] vis = new boolean[n];
+            dfs(i,adj,req_dist,0,vis);
+            int a = getcount(vis);
+            if(req>=a){
+               req=a;
+                ans = Math.max(ans,i);
+            }
+        }
+        System.out.println(ans);
+        
+    }
+}

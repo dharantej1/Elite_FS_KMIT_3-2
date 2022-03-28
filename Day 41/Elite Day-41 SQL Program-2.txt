@@ -1,0 +1,14 @@
+/*
+Write an SQL query to display the name, job, salary of the employees in the 
+department with the highest average salary among all the departments.
+
+Sample Output:
+-------------
+ename   job     sal                                                                                                     
+MARTIN  SALESMAN        1250.00  
+
+*/
+-- select * from emp;
+select ename,job,sal from emp where deptno in
+(select deptno from emp group by deptno having avg(sal)=
+(select max(salary) from (select avg(sal) salary from emp group by deptno)t));

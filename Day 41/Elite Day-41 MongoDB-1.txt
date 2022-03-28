@@ -1,0 +1,19 @@
+/* 
+Write a MongoDB query to display the students details 
+who are studying in ECE branch
+
+Sample Students Document:
+-------------------------
+{"name":"Suresh","rollno":"041","branch":"ECE"}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+e.g., To display all the douments from 'students' collection
+    => printjson( db.students.find())
+    db => databse connection object
+    students => collections name
+    find => method to retrieve  all the docuemnts
+
+*/
+
+// Write the query here.
+printjson(db.students.find({"branch":"ECE"}))

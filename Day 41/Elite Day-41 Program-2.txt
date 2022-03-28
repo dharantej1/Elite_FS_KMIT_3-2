@@ -55,3 +55,46 @@ Sample Input-3:
 Sample Output-3:
 ----------------
 1
+
+
+
+import java.util.*;
+
+class D41P2{
+    static int get_indices_count(int[] arr,int even,int odd,int n,int[] evensum,int[] oddsum){
+        int c=0;
+         for(int i=0;i<n;i++)
+    {
+        if(i%2!=0){
+           if((evensum[i]+odd-oddsum[i])==(oddsum[i]+even-evensum[i]-arr[i])) {
+            c++;
+           }
+        }
+        else{
+            if((evensum[i]+odd-oddsum[i]-arr[i])==(oddsum[i]+even-evensum[i])) {
+            c++;
+           }
+        }
+
+    }
+    return c;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        int even = 0;
+        int odd = 0;
+        int[] evensum = new int[n];
+        int[] oddsum = new int[n];
+        for(int i=0;i<n;i++){
+            int num = sc.nextInt();
+           if(i%2==0)  even+=num;
+           else odd+=num;
+           arr[i] = num;
+           evensum[i] = even;
+           oddsum[i] = odd;
+        }
+        System.out.println(get_indices_count(arr,even,odd,n,evensum,oddsum));
+    }
+}

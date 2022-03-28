@@ -1,0 +1,15 @@
+/*
+Write an SQL query to display the names of departments, in which atleast 
+3 employees are working in that department.
+
+Sample Output:
+-------------
+dname           count(*)                                                                                                        
+Accounting        3                                                                                                       
+Research          6                                                                                                       
+Sales             3 
+
+*/
+-- select * from dept;
+-- select * from emp;
+select dname,count(*) from dept,emp where emp.deptno=dept.deptno group by dname having count(*)>=3;
