@@ -1,0 +1,115 @@
+/*
+Problem Statement:
+------------------
+Babylonians invented muliplication of numbers.
+
+You will be given two strings consist of digits only.
+You have to perform the multiplication of these two strings using 
+Babylonians approach, and return the result of multiplication of two strings.
+
+
+Input Format:
+-------------
+Two space separated strings, num1 and num2.
+
+Output Format:
+--------------
+Print the product of two strings num1 and num2.
+
+
+Sample Input-1:
+---------------
+5 4 
+
+Sample Output-1:
+----------------
+20
+
+
+Sample Input-2:
+---------------
+121 432 
+
+Sample Output-2:
+----------------
+52272
+
+Note:
+-----
+	- Input should contain digits only, and should not contain leading 0's 
+	  except number 0.
+	- Output will be in the range of integer only.
+	- There will be no leading minus '-' symbol also.
+	- Should not use built-in BigInteger library.
+	- Should not convert the given strings into integers.
+
+
+Test Cases:
+----------
+case =1
+input =5 4
+output ="20"
+
+case =2
+input =123 45
+output ="5535"
+
+case =3
+input =121 432 
+output ="52272"
+	
+case =4
+input =345 0
+output ="0"
+
+case =4
+input =1000 234
+output ="234000"
+
+case =6
+input =1564 9841
+output ="15391324"
+
+case =7
+input =68761 452
+output ="31079972"
+
+case =8
+input =11111 11111
+output ="123454321"
+
+*/
+
+Solution:
+---------
+
+import java.util.*;
+
+class MultiplyString{
+	public static String multiply(String num1, String num2) {
+		int m = num1.length(), n = num2.length();
+		int[] pos = new int[m + n];
+	   
+		for(int i = m - 1; i >= 0; i--) {
+			for(int j = n - 1; j >= 0; j--) {
+				int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0'); 
+				int p1 = i + j, p2 = i + j + 1;
+				int sum = mul + pos[p2];
+
+				pos[p1] += sum / 10;
+				pos[p2] = (sum) % 10;
+			}
+		}  
+		
+		StringBuilder sb = new StringBuilder();
+		for(int p : pos) if(!(sb.length() == 0 && p == 0)) sb.append(p);
+		return sb.length() == 0 ? "0" : sb.toString();
+	}
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String[] S=sc.nextLine().split(" ");
+		System.out.println(multiply(S[0],S[1]));	
+	}
+}

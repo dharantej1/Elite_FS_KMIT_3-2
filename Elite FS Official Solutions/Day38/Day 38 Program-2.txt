@@ -1,0 +1,109 @@
+/*
+Problem Statement:
+------------------
+For this challenge, a substring is defined as any contiuous group of one or more 
+characters of a string. For example, the unique substrings of "baca" are [b, ba, 
+bac, baca, a, ac, aca, c ,ca] . The list in alphabetical order is [a, ac, aca, b, 
+ba, bac, baca, c, ca]. in this case, the maximum substrin, alphabetically, is 'ca'.
+
+Given a string s, determine its maximum substring.
+
+Your task is to design a function, that return the maximum substring of s.
+
+NOTE:
+String s contains only lowercase alphabets.
+
+Input Format:
+-------------
+A string, s
+
+Output Format:
+--------------
+print a string, maximum substring.
+
+
+Sample Input-1:
+---------------
+baca
+
+Sample Output-1:
+----------------
+ca
+
+
+Sample Input-2:
+---------------
+banana
+
+Sample Output-2:
+----------------
+nana
+
+
+Test Cases:
+----------
+case =1
+input =baca
+output =ca
+
+case =2
+input =banana
+output =nana
+
+case =3
+input =alphabeticorder
+output =ticorder
+
+case =4
+input =explanationforthisprogram
+output =xplanationforthisprogram
+
+case =5
+input =pneumonoultramicroscopicsilicovolcanoconiosis
+output =volcanoconiosis
+
+case =6
+input =pseudopseudohypoparathyroidism
+output =yroidism
+
+case =7
+input =antidisestablishmentarianism
+output =tidisestablishmentarianism
+
+case =8
+input =floccinaucinihilipilification
+output =ucinihilipilification
+
+case =9
+input =zyxbbbzyxbbbzyxddd
+output =zyxddd
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class LastSubstring {
+    public String lastSubstring(String s) {
+        int i = 0, j = 1, offset = 0, len = s.length();
+        while (i + offset < len && j + offset < len) {
+            char c = s.charAt(i + offset), d = s.charAt(j + offset);
+            if (c == d) {
+                ++offset;
+            }else {
+                if (c < d)  { i += offset + 1; } // chars in [i, ..., i + offset] <= charAt(i) == charAt(j)
+                else { j += offset + 1; } // c > d, chars in [j, ..., j + offset] <= charAt(i) == charAt(j)
+                if (i == j) { ++j; } // avoid duplicate start indices. 
+                offset = 0; // reset offset to 0.
+            }
+        }
+        return s.substring(i);
+    }
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String s=sc.next();
+		System.out.println(new LastSubstring().lastSubstring(s));
+	}
+}

@@ -1,0 +1,129 @@
+/*
+Problem Statement:
+------------------
+Reena has to sent the mails regularly.
+She used emphasize any word W based on a given set of words[].
+Two emphasize the words she used enclose them with <i> and </i> tag.
+The emphasize procedure of the sub-words of W is as follows:
+	
+	- If two sub-words are intersected with each other, 
+	  enclose them with one <i></i> tag.
+	
+	- If two sub-words are enclosed with <i></i> tag and neighbours also,
+	  then merge the sub-words as one and enclose with one <i> </i> tag.
+
+You will be given the word W, and set of words[] to emphasize.
+Your task is to help Reena to emphasize the word W.
+and print it.
+
+Input Format:
+-------------
+Line-1: A string W, the word.
+Line-2: space separated strings, set of words[].
+
+Output Format:
+--------------
+Print the string, the emphasized string.
+
+Sample Input-1:
+---------------
+kmitngit123
+it 123
+
+Sample Output-1:
+----------------
+km<i>it</i>ng<i>it123</i>
+
+
+Sample Input-2:
+---------------
+qwertykeypad
+qwerty key pad
+
+Sample Output-2:
+----------------
+<i>qwertykeypad</i>
+
+
+Test Cases:
+----------
+case =1
+input =kmitngit123
+it 123
+output =km<i>it</i>ng<i>it123</i>
+
+case =2
+input =qwertykeypad
+qwerty key pad
+output =<i>qwertykeypad</i>
+
+case =3
+input =cktcwhrrftytspvnrnfvkceejfwzuaeuictdsdqvmxfzcirabetmaxvurxtdusauebdiuswbugnwzhcpgrukedymtyoxkmgjpqoxngeurcxtrrwwafd
+ck tc wh rr ft yt sp vn rn fv kc ee jf wz ua eu
+output =<i>cktcwhrrftytspvnrnfvkceejfwzuaeu</i>ictdsdqvmxfzcirabetmaxvurxtdusauebdiuswbugn<i>wz</i>hcpgrukedymtyoxkmgjpqoxng<i>eu</i>rcxt<i>rr</i>wwafd
+
+case =4
+input =abcdefghijklmnopqrstuvwxyz
+abcd efg hij lmno pqr stu wxy
+output =<i>abcdefghij</i>k<i>lmnopqrstu</i>v<i>wxy</i>z
+
+case =5
+input =abcdefghijklmnopqrstuvwxyz
+zxyw trs pmno qst bca fed ihg
+output =abcdefghijklmnopqrstuvwxyz
+
+case =6
+input =aaaabbbbbcccccccdddddddeeeeeeeefffffffffffff
+aaa ab bbc ccc cdd dee eff fff
+output =<i>aaaab</i>bb<i>bbcccccccdd</i>dddd<i>dee</i>eeeee<i>efffffffffffff</i>
+
+case =7
+input =canyoucanacanasacannercancanacan
+ca n ou
+output =<i>can</i>y<i>oucan</i>a<i>can</i>asa<i>cann</i>er<i>cancan</i>a<i>can</i>
+
+case =8
+input =lesser123leather456never789weather123456edwetter456789weatherbetter
+le er ss ath we 123 456 789
+output =<i>lesser123leather456</i>nev<i>er789weather123456</i>ed<i>we</i>tt<i>er456789weather</i>bett<i>er</i>
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+public class AddItalicTag {
+    public static String addItalicTag(String s, String[] dict) {
+        boolean[] italic = new boolean[s.length()];
+        for (int i = 0, end = 0; i < s.length(); i++) {
+            for (String word : dict) {
+                if (s.startsWith(word, i)) {
+                    end = Math.max(end, i + word.length());
+                }
+            }
+            italic[i] = end > i;
+        }
+        
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            if (!italic[i]) {
+                result.append(s.charAt(i));
+                continue;
+            }
+            int j = i;
+            while (j < s.length() && italic[j]) j++;
+            result.append("<i>" + s.substring(i, j) + "</i>");
+            i = j - 1;
+        }
+        
+        return result.toString();
+    }
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		String s=sc.nextLine();
+		String[] str=sc.nextLine().split(" ");
+		System.out.println(addItalicTag(s,str));
+	}
+}

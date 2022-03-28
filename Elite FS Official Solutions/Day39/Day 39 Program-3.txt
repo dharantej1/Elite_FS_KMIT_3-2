@@ -1,0 +1,109 @@
+/*
+Problem Statement:
+------------------
+Mohan is given a task to decorate a wall with balloons.
+He is given an unlimited set of ballons of three different colors.
+
+The decoration should have N rows of 3 balloons each. 
+He has to make sure that no two adjacent balloons have the same colour.
+both vertically and horizontally.
+
+Your task is to help Mr Mohan to find the number of ways to decorate the wall,  
+the answer must be computed modulo 10^9 + 7
+
+Input Format:
+-------------
+An integer N
+
+Output Format:
+--------------
+Print an integer as outpur, number of ways to decorate.
+
+
+Sample Input-1:
+---------------
+1
+
+Sample Output-1:
+----------------
+12
+
+Explanation:
+------------
+Suppose the colors are, B-Blue, W-White, R-Red. Given N is 1
+RBR	BRB	WRB
+RBW	BRW	WRW
+RWR	BWR	WBR
+RWB	BWB	WBW
+
+
+Sample Input-2:
+---------------
+2
+
+Sample Output-2:
+----------------
+54
+
+
+
+Test Cases:
+----------
+case =1
+input =1
+output =12
+
+case =2
+input =2
+output =54
+
+case =3
+input =8
+output =485778
+
+case =4
+input =10
+output =10107954
+
+case =5
+input =14
+output =376370518
+
+case =6
+input =20
+output =690883140
+
+case =7
+input =16
+output =62485141
+
+case =8
+input =3
+output =246
+
+*/
+
+Solution:
+---------
+
+import java.util.*;
+
+public class NumofWays {	
+	
+	public static int numOfWays(int n) {
+        long a121 = 6, a123 = 6, b121, b123, mod = (long)1e9 + 7;
+        for (int i = 1; i < n; ++i) {
+            b121 = a121 * 3 + a123 * 2;
+            b123 = a121 * 2 + a123 * 2;
+            a121 = b121 % mod;
+            a123 = b123 % mod;
+        }
+        return (int)((a121 + a123) % mod);
+    }
+	
+		public static void main(String args[] ) {
+		Scanner scan = new Scanner(System.in);
+		int n=scan.nextInt();     
+		System.out.println(numOfWays(n));
+	}
+}

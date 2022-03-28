@@ -1,0 +1,39 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to list out(ename,mgr,and sal) the lowest paid employees 
+working for each manager, exclude any employee whose salary is
+less than 1000 sort the output by salary.
+
+Query:
+-----
+select e.ename,e.mgr,e.sal from emp e where sal in(select min(sal) from emp 
+where mgr=e.mgr) and e.sal>1000 order by sal;
+
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display the Name of dept where highest no.of emps are working.
+
+
+Query:
+-----
+select dname from emp join dept on emp.deptno=dept.deptno group by dname
+order by count(*) desc limit 1;
+
+
+Query-3:
+=======
+Problem:
+-------
+Write an SQL query to display all the details of managers who are not working 
+under the president.
+
+Query:
+-----
+select * from emp where empno in(select mgr from emp) and mgr not in (select empno from emp where job = 'PRESIDENT')
+
+

@@ -1,0 +1,141 @@
+/*
+Problem Statement:
+------------------
+You are playing a shooting game.
+There are N bottles hanging to a rod, i-th bottle numbered bottle[i].
+
+If you shoot i-th bottle, you will get bottle[i-1]*bottle[i]*bottle[i+1] points.
+The more points you score, the more rewards you can win.
+
+Your task is to score the maximum points by shooting all the ballons wisely.
+
+Note: After you shoot bottle at i-th index, bottles at i-1 and i+1 positions
+become adjacent. if there is no existing 'i-1' or 'i+1' positions for selected bottle.
+you can assume that bottle[i-1] = bottle[i+1] = 1.
+
+Input Format:
+-------------
+N space separated integers bottles[].
+
+Output Format:
+--------------
+Print an integer, maximum points you can get.
+
+
+Sample Input:
+---------------
+3 1 5 8
+
+Sample Output:
+----------------
+167
+
+Explanation:
+------------
+Given bottles = [3, 1, 5, 8] 
+position 	points
+--------------------
+1				3*1*5
+5				3*5*8
+3				1*3*8
+8				1*8*1
+--------------------
+Total = 167
+
+
+Sample Input:
+---------------
+2 1 3 5 4
+
+Sample Output:
+----------------
+102
+
+Explanation:
+------------
+Given bottles = [2, 1, 3, 5, 4] 
+
+position 	points
+--------------------
+5				3*5*4
+1				2*1*3
+3				2*3*4
+2				1*2*4
+4				1*4*1
+--------------------
+Total = 102
+
+
+Test Cases:
+----------
+case =1
+input =3 1 5 8
+output =167
+
+case =2
+input =49 9 11 4 43
+output =32076
+
+case =3
+input =2 1 3 5 4
+output =102
+
+case =4
+input =7 8 2 4 9 11 13 2 17
+output =7220
+
+case =5
+input =83 37 74 78 90 14 18 9 36 68
+output =2120353
+
+case =6
+input =18 16 35 13 39 9 48 24 21 23
+output =211136
+
+case =7
+input =5 12 21 29 7 50 11 50 14 22 37 16 8 8 11
+output =287727
+
+case =8
+input =3 15 19 27 39 29 39 50 46 6 29 10 38 13 9 35 32 20 16 32
+output =626280
+
+*/
+
+Solution:
+---------
+
+import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+class BurstBalloons {
+	//DP SOLUTION
+    public int maxCoins(int[] iNums) {
+		int[] nums = new int[iNums.length + 2];
+		int n = 1;
+		for (int x : iNums) if (x > 0) nums[n++] = x;
+		nums[0] = nums[n++] = 1;
+
+
+		int[][] dp = new int[n][n];
+		for (int k = 2; k < n; ++k)
+			for (int left = 0; left < n - k; ++left) {
+				int right = left + k;
+				for (int i = left + 1; i < right; ++i)
+					dp[left][right] = Math.max(dp[left][right], 
+					nums[left] * nums[i] * nums[right] + dp[left][i] + dp[i][right]);
+			}
+
+		return dp[0][n - 1];
+	}
+
+	public static void main(String args[] ) throws IOException {
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str = br.readLine();
+		String[] numberline = str.split(" ");
+		int[] nums = Arrays.asList(numberline).stream().mapToInt(Integer::parseInt).toArray();
+		System.out.print( new BurstBalloons().maxCoins(nums));   
+	}
+}

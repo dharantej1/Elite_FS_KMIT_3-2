@@ -1,0 +1,127 @@
+/*
+Problem Statement:
+------------------
+In a maths class, Teahcer given a task to a student.
+Initially, Teacher provided a set of tokens(one on another) to the student
+All the tokens are printed a positive number on one side and empty on other side
+Intially, the number side of tokens are hidden.
+
+Now, you do the following steps repeatedly, until all tokens are turned up:
+    1. Take the top token of the set, show the number, and take it out of the set.
+    2. If there are still tokens in the set, put the next top token of the set 
+       at the bottom of the set.
+    3. If there are still hidden tokens, go back to step 1. Otherwise, stop.
+
+Your task is to help students to find and return the ordering of the set that 
+would show the tokens in increasing order. 
+
+NOTE: The first entry in the answer is considered to be the top of the set.
+
+Input Format:
+-------------
+Line-1 -> An integer N, no of tokens
+Line-2 -> N space separated integers.
+
+Output Format:
+--------------
+Print N space separated integers as result.
+
+
+Sample Input-1:
+---------------
+7
+7 6 5 1 2 3 4
+
+Sample Output-1:
+----------------
+1 6 2 5 3 7 4
+
+Explanation: 
+---------------
+Given a set in the order 7 6 5 1 2 3 4
+After reordering, the set starts as 1 6 2 5 3 7 4, where 1 is the top of the set.
+Student show 1, and move 6 to the bottom.  The set is now 2 5 3 7 4 6.
+Student show 2, and move 5 to the bottom.  The set is now 3 7 4 6 5.
+Student show 3, and move 7 to the bottom.  The set is now 4 6 5 7
+Student show 4, and move 6 to the bottom.  The set is now 5 7 6
+Student show 5. and move 7 to the bottom.  The set is now 6 7
+Student show 6, and move 7 to the bottom.  The set is now 7
+Student show 7.
+Since all the cards revealed are in increasing order, the answer is correct.
+
+
+Test Cases:
+----------
+case =1
+input =7
+7 6 5 1 2 3 4
+output =1 6 2 5 3 7 4
+
+case =2
+input =10
+32 13 174 109 11 90 61 169 75 155
+output =11 90 13 174 32 109 61 169 75 155
+
+case =3
+input =10
+144 106 192 84 148 77 187 151 58 68
+output =58 144 68 192 77 148 84 187 106 151
+
+case =4
+input =20
+105 199 106 171 109 71 68 48 142 181 31 194 148 189 107 36 37 10 168 53
+output =10 107 31 171 36 109 37 199 48 142 53 181 68 148 71 194 105 168 106 189
+
+case =5
+input =20
+99 40 140 85 116 94 163 45 8 59 191 88 22 55 20 121 187 183 139 17
+output =8 94 17 140 20 99 22 191 40 116 45 163 55 121 59 187 85 139 88 183
+
+case =6
+input =40
+116 62 155 53 191 188 16 170 199 131 33 168 57 184 117 173 104 146 101 85 175 151 50 167 79 144 46 176 67 12 106 92 52 51 149 172 136 65 187 107
+output =12 117 16 170 33 131 46 184 50 136 51 172 52 144 53 199 57 146 62 173 65 149 67 187 79 151 85 175 92 155 101 191 104 167 106 176 107 168 116 188
+
+case =7
+input =40
+121 137 103 171 162 87 100 60 132 6 142 113 153 70 82 38 40 138 30 23 197 182 158 192 94 114 190 154 147 91 17 174 8 7 165 110 160 24 75 47
+output =6 113 7 158 8 114 17 174 23 121 24 160 30 132 38 197 40 137 47 162 60 138 70 182 75 142 82 165 87 147 91 192 94 153 100 171 103 154 110 190
+
+case =8
+input =100
+89 714 544 111 911 375 449 59 810 984 464 16 846 346 634 695 518 994 865 699 363 679 444 560 805 49 760 910 158 22 535 552 81 174 110 944 403 130 689 192 106 713 184 267 511 244 948 339 34 215 976 333 72 772 301 777 558 581 398 177 20 850 612 749 262 355 537 726 489 474 842 970 735 364 443 53 91 50 590 908 70 445 664 661 856 534 238 765 784 264 767 669 533 915 584 568 399 819 495 180
+output =16 533 20 749 22 534 34 984 49 535 50 760 53 537 59 856 70 544 72 765 81 552 89 944 91 558 106 767 110 560 111 865 130 568 158 772 174 581 177 976 180 584 184 777 192 590 215 908 238 612 244 784 262 634 264 948 267 661 301 805 333 664 339 910 346 669 355 810 363 679 364 994 375 689 398 819 399 695 403 911 443 699 444 842 445 713 449 970 464 714 474 846 489 726 495 915 511 735 518 850
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class TokensOrder {
+    public int[] setShownIncreasing(int[] set) {
+        int n= set.length;
+        Arrays.sort(set);
+        Queue<Integer> q= new LinkedList<>();
+        for (int i=0; i<n; i++) q.add(i);
+        int[] res= new int[n];
+        for (int i=0; i<n; i++){
+            res[q.poll()]=set[i];
+            q.add(q.poll());
+        }
+        return res;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int N=sc.nextInt();
+		int array[]=new int[N];
+		
+		for(int i=0;i<N;i++)
+			array[i]=sc.nextInt();
+		int result[]=new TokensOrder().setShownIncreasing(array);
+		for(int i:result)
+		System.out.print(i+" ");
+	}
+}
