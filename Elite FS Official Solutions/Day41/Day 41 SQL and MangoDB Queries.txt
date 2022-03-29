@@ -1,0 +1,74 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to display the names of departments, in which atleast 3 employees are working in that department.
+
+Query:
+-----
+select d.dname,count(*) from emp e ,dept d where e.deptno = d.deptno group by d.dname having count(*) >= 3 ;
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display the name, job, salary of the employees in the department with the highest average salary among all the departments.
+
+Query:
+-----
+select ename, job, sal from emp where deptno in( select deptno from emp group by deptno having avg(sal)=(select max(salary) from (select avg(sal) as salary from emp group by deptno) t));
+
+
+Mango DB Queries
+================
+Query-1:
+-------
+Problem:
+-------
+Write a MongoDB query to display the students details who are studying in ECE branch
+
+Sample Students Document:
+-------------------------
+{"name":"Suresh","rollno":"041","branch":"ECE"}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+e.g., To display all the douments from 'students' collection
+    => printjson( db.students.find())
+    db => databse connection object
+    students => collections name
+    find => method to retrieve  all the docuemnts
+
+
+Query:
+-----
+printjson( db.students.find({branch: 'ECE'}) );
+
+
+Query-2:
+-------
+Problem:
+-------
+Write a MongoDB query all documents in the inventory collection where the status equals "A" and qty is less than 30.
+.
+Sample Document:
+----------------
+{ 
+	"item": "journal", 
+	"qty": 25, 
+	"size": { "h": 14, "w": 21, "uom": "cm" }, 
+	"status": "A" 
+}
+
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.inventory.find())
+    Where,
+    db => databse connection object
+    inventory => collections name
+    find => method to retrieve  all the docuemnts
+
+
+Query:
+-----
+printjson(db.inventory.find({ status: "A", qty: { $lt: 30 } }))

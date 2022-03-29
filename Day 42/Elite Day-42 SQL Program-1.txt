@@ -1,0 +1,13 @@
+/*
+Write an SQL query to display the manager name(s) and count of employees 
+working under that manager, who is having maximum number of employeess 
+among all the managers.
+
+Sample Output:
+-------------
+ename   count                                                                                                           
+BLAKE   5                                                                                                               
+
+*/
+select m.ename, count(*) count from emp e, emp m where e.mgr=m.empno group by m.ename having count(*)=
+(select max(no) from (select count(*) no from emp group by mgr) t);

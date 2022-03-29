@@ -1,0 +1,32 @@
+/* 
+Write a MongoDB query to display all documents from inventory collection,
+where the height(h) of the item is less than 15 and the unit of measurement(uom) 
+is "cm" and the status field equals "A".
+.
+Sample Document:
+----------------
+{ 
+	"item": "journal",
+	"qty": 25,
+	"size": { "h": 14, "w": 21, "uom": "cm" },
+	"status": "A"
+}
+
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.inventory.find())
+    Where,
+    db => databse connection object
+    inventory => collections name
+    find => method to retrieve  all the docuemnts
+
+*/
+
+// Write the query here.
+printjson(db.inventory.find({
+    status:"A",
+    "size.h":{$lt:15},
+    "size.uom":"cm"
+    // size:{"uom":"cm"},
+}));

@@ -1,0 +1,124 @@
+Problem Statement:
+-----------------
+Using Map Filter Reduce function complete the following task:
+
+    - MAP FUNCTION:
+        Here the data is manipulated or updated based on below conditions,
+        Condition#1: if sal>50k then 15 percent hike in sal.
+        Condition#2: if sal>30k and <=50 then 20 percent hike in sal.
+        Condition#3: if sal<=30 then 25 percent hike in sal.
+    
+    - FILTER FUNCTION: 
+        Retains the employee data whose sal<=50
+    
+    - REDUCE FUNCTION:
+        Finds the highest salary(scalar value) from the filtered employee data.
+
+Sample Input
+------------
+6      -----> Number of employees
+aa 10  -----> (empName  salary)
+bb 50
+cc 35
+dd 12
+ww 60
+ll 9
+
+Sample Output
+-------------
+42      ------> highest salary (of filtered emp data)
+
+
+Test Cases:
+----------
+case =1
+input =6
+aa 10
+bb 50
+cc 35
+dd 12
+ww 60
+ll 9
+output ="42"
+
+case =2
+input =10
+aa 10
+bb 20
+cc 30
+dd 40
+ee 50
+ff 60
+gg 70
+hh 80
+ii 90
+jj 100
+output ="48"
+
+case =3
+input =4
+aa 60
+bb 20
+cc 12
+dd 18
+output ="25"
+
+
+
+Solution:
+---------
+
+var readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  var empList=[];
+  var n=null;
+  var i=0;
+  readline.question('',function(input){
+      n=input;
+  });
+  readline.on('line',function(line){
+      var data=line.split(' ');
+      item={};
+      item ["empName"] = data[0];
+      item ["sal"] = Number(data[1]);
+      empList.push(item);
+      if(++i == n){
+          readline.close();
+          mrf();
+      }
+  });
+  
+  
+  
+function mrf(){
+  //MAP FUNCTION
+  let empDetails = empList.map(emp1 => { 
+      if(emp1.sal>50)
+      {
+          emp1.sal=emp1.sal+(emp1.sal*(15/100));   //if sal>50k then 15 percent hike in sal.
+      }
+      if(emp1.sal>30 && emp1.sal<=50)
+      {
+        emp1.sal=emp1.sal+(emp1.sal*(20/100));   //if sal>30k and <=50 then 20 percent hike in sal.
+      }
+      if(emp1.sal<=30)
+      {
+        emp1.sal=emp1.sal+(emp1.sal*(25/100));   //if sal<=30 then 25 percent hike in sal.
+      }
+      return emp1
+  });
+  
+  //FILTER FUNCTION
+  var filterEmp = empDetails.filter(emp2 => {
+      if(emp2.sal <= 50){
+          return emp2;              //filters the employees whose sal<=50
+      }
+  });
+  
+  //REDUCE FUNCTION
+  let maxSal=filterEmp.reduce((max, emp3) => emp3.sal > max ? emp3.sal : max, filterEmp[0].sal)
+  console.log(maxSal) 
+}
+

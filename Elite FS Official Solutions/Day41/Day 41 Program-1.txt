@@ -1,0 +1,237 @@
+/*
+Problem Statement:
+------------------
+Amith decided go on a holiday trip. 
+Given a map of N holiday spots numbered 0,1,2,.. N-1, map shows the connecting 
+routes between the holiday sopts, the routes are bidirectional, and
+the connecting routes are indicates as routes[i] = [from , to , distance ]. 
+He can travel only a certian distance D.
+
+Your task is to find the holiday spot H with the smallest number of holiday-spots
+that are reachable from H and whose distance is at most D, 
+
+If there are multiple holiday spots, return H with the greatest number.
+
+
+Input Format:
+-------------
+Line-1 : Three integers, N number of holiday spots, R is the number of connecting 
+        routes and D is the distance can travel.
+Next R lines : Three space separated integers, from , to and distance.
+
+Output Format:
+--------------
+Print an integer, holiday spot.
+
+
+Sample Input-1:
+---------------
+4 4 4
+0 1 3
+1 2 1
+1 3 4
+2 3 1
+
+Sample Output-1:
+----------------
+3
+
+
+Explanation:
+------------
+Distance can travel= 4,
+
+From			Reachable sopts
+-------------------------------------
+Holiday-spot 0 -> [Holiday-spot 1, Holiday-spot 2] 
+Holiday-spot 1 -> [Holiday-spot 0, Holiday-spot 2, Holiday-spot 3] 
+Holiday-spot 2 -> [Holiday-spot 0, Holiday-spot 1, Holiday-spot 3] 
+Holiday-spot 3 -> [Holiday-spot 1, Holiday-spot 2] 
+
+Holiday-spots 0 and 3 have 2 reachable Holiday-spots at a distance = 4, 
+but we have to return Holiday-spot 3 since it has the greatest number.
+
+
+Sample Input-2:
+---------------
+5 6 2
+0 1 2
+0 4 8
+1 2 3
+1 4 2
+2 3 1
+3 4 1
+
+Sample Output-2:
+----------------
+0
+
+Explanation:
+------------
+Distance can travel= 2,
+
+From			Reachable sopts
+-------------------------------------
+Holiday-spot 0 -> [Holiday-spot 1] 
+Holiday-spot 1 -> [Holiday-spot 0, Holiday-spot 4] 
+Holiday-spot 2 -> [Holiday-spot 3, Holiday-spot 4] 
+Holiday-spot 3 -> [Holiday-spot 2, Holiday-spot 4]
+Holiday-spot 4 -> [Holiday-spot 1, Holiday-spot 2, Holiday-spot 3]
+
+Holiday-spots 0 has 1 reachable Holiday-spot at a distance = 2, 
+
+
+Test Cases:
+----------
+case =1
+input =5 6 2
+0 1 2
+0 4 8
+1 2 3
+1 4 2
+2 3 1
+3 4 1
+output =0
+
+case =2
+input =4 4 4
+0 1 3
+1 2 1
+1 3 4
+2 3 1
+output =3
+
+case =3
+input =6 9 4
+0 1 1
+1 2 2
+2 3 3
+3 4 4
+4 5 1
+5 0 2
+0 3 2
+1 4 3
+2 5 2
+output =5
+
+case =4
+input =5 10 4
+1 2 1
+2 3 2
+3 4 3
+4 0 2
+0 1 3
+1 3 4
+1 4 2
+2 0 3
+2 4 4
+3 0 4
+output =4
+
+case =5
+input =8 13 2
+0 1 1
+1 2 2
+2 3 1
+3 4 2
+4 5 1
+5 6 2
+6 7 1
+7 0 2
+0 3 1
+1 4 2
+2 7 1
+2 5 2
+3 6 2
+output =5
+
+case =6
+input =6 9 3
+0 1 1
+1 2 2
+2 3 3
+3 4 4
+4 5 1
+5 0 2
+0 3 2
+1 4 3
+2 5 2
+output =3
+
+case =7
+input =5 10 3
+1 2 1
+2 3 2
+3 4 3
+4 0 2
+0 1 3
+1 3 4
+1 4 2
+2 0 3
+2 4 4
+3 0 4
+output =3
+
+case =8
+input =8 13 3
+0 1 1
+1 2 2
+2 3 3
+3 4 2
+4 5 1
+5 6 3
+6 7 1
+7 0 3
+0 3 1
+1 4 2
+2 7 3
+2 5 2
+3 6 3
+output =7
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class FindtheCity{
+	public int findTheCity(int n, int[][] routes, int distance) {
+        int[][] dis = new int[n][n];
+        int res = 0, smallest = n;
+        for (int[] row : dis)
+            Arrays.fill(row, 10001);
+        for (int[] e : routes)
+            dis[e[0]][e[1]] = dis[e[1]][e[0]] = e[2];
+        for (int i = 0; i < n; ++i)
+            dis[i][i] = 0;
+        for (int k = 0; k < n; ++k)
+            for (int i = 0; i < n; ++i)
+                for (int j = 0; j < n; ++j)
+                    dis[i][j] = Math.min(dis[i][j], dis[i][k] + dis[k][j]);
+        for (int i = 0; i < n; i++) {
+            int count = 0;
+            for (int j = 0; j < n; ++j)
+                if (dis[i][j] <= distance)
+                    ++count;
+            if (count <= smallest) {
+                res = i;
+                smallest = count;
+            }
+        }
+        return res;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int N=sc.nextInt();
+		int R=sc.nextInt();
+		int D=sc.nextInt();
+		int[][] routes=new int[R][3];
+		for(int i=0;i<R;i++)
+			for(int j=0;j<3;j++)
+				routes[i][j]=sc.nextInt();
+		System.out.println(new FindtheCity().findTheCity(N,routes,D));
+	}
+}
