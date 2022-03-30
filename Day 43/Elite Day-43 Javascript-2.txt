@@ -1,0 +1,31 @@
+/*
+Write a JS program to find the number of employees working in each college,
+the college name is extracted from email as follows:
+    - For given email: sudhakar@kmit.in, the college name is "kmit".
+
+Sample Document
+---------------
+
+{
+    "id": 1,
+    "name": "nagireddy",
+    "email": "avnreddy@kmit.com",
+    "phone": "9876543210"
+}
+
+
+Sample Output:
+--------------
+kmit => 4                                                                                                               
+ngit => 3                                                                                                               
+kmec => 3                                                                                                               
+
+*/
+
+// Input JSON file.
+const empdata= require('./empInfo.json');
+
+//Implement Your Code Here
+var clg_name=empdata.map((e)=>{return e.email.split("@")[1].split(".")[0]});
+var cn=new Set(clg_name);
+var res=cn.forEach((e)=>{console.log(e," => ",clg_name.filter(x => x==e).length)})

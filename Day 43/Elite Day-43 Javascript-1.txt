@@ -1,0 +1,32 @@
+/*
+Write a JS program to count the number of valid mobile numbers in the 
+given employee data with following constraint:
+	- Mobile number should start with 7 or 8 or 9 only
+    - Length of the mobile number should be 10 only
+Sample Document
+---------------
+
+{
+    "id": 1,
+    "name": "nagireddy",
+    "email": "avnreddy@kmit.com",
+    "phone": "9876543210"
+}
+
+
+Sample Output:
+--------------
+print an integer value                                                                                                             
+
+*/
+
+// Input JSON file.
+const empdata= require('./empInfo.json');
+
+//Implement Your Code Here
+var num=/^[0]?[789]\d{9}$/;
+var data=empdata.filter(function(e){
+    if(num.test(e.phone))
+    return e.phone;
+});
+console.log(data.length);
