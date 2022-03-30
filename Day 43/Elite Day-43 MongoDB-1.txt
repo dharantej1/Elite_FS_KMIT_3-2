@@ -1,0 +1,29 @@
+/* 
+Write a MongoDB Query to get all the documents from inventory collection,
+where the field tags value is an array with exactly two elements "red" 
+and "blank", the dim_cm array contains elements that in some combination 
+satisfy the query conditions; e.g., one element can satisfy the greater 
+than 15 condition and another element can satisfy the less than 20 condition,
+or a single element can satisfy both.
+.
+Sample Document:
+----------------
+{ 
+	item: "journal", 
+	qty: 25, 
+	tags: ["blank", "red"], 
+	dim_cm: [ 14, 21 ] 
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.inventory.find())
+    Where,
+    db => databse connection object
+    inventory => collections name
+    find => method to retrieve  all the docuemnts
+
+*/
+
+// Write the query here.
+printjson(db.inventory.find({dim_cm:{$gt:15,$lt:20},tags:{$all:["blank","red"]}}));
