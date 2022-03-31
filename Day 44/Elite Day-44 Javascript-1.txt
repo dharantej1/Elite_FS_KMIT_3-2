@@ -1,0 +1,60 @@
+/*
+Manoj is given a box full of balls with several colors, 
+each colored ball is uniquely identified by a number.
+
+All the balls are arranged in a line randomly.
+He is given the arrangement as an array of numbers,the colored balls.
+He has to arrange the balls in sorted order, based on the ascending order 
+of count of each colored balls, if there are multiple colored balls 
+having the same count, arrange them in decreasing order of color number.
+
+Your task is to help Manoj to arrange the colored balls accordingly.
+
+Input Format:
+-------------
+Line-1: N space separated integers, colors of the balls in the line.
+
+Output Format:
+--------------
+Print an array of integers.
+
+
+Sample Input-1:
+---------------
+2,3,4,3,3,2,4
+
+Sample Output-1:
+----------------
+4,4,2,2,3,3,3,
+
+
+Sample Input-2:
+---------------
+1,2,2,3,2,3,3
+
+Sample Output-2:
+----------------
+4,1,3,3,3,2,2,2,
+
+*/
+
+let readline=require('readline').createInterface({input:process.stdin,output:process.stdout});
+let n;
+readline.question('',function(line){
+	n=line.split(",").map(i=>Number(i));
+	solution(n);
+	readline.close();
+});
+
+function solution(nums) {
+    // implement your code here
+    const m=new Map();
+    nums.forEach((t)=>m.set(t,(m.get(t)||0)+1));
+    nums.sort(function(a,b){
+        if(m.get(a)==m.get(b))
+            return b-a;
+        else
+            return m.get(a)-m.get(b);
+    });
+    console.log(nums);
+}
