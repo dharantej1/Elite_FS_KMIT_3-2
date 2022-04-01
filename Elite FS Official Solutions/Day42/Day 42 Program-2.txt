@@ -1,0 +1,201 @@
+/*
+Problem Statement:
+------------------
+You are given a square box with square cubes in it.
+Each cube of size 1*1*1, and colored with either white or blue.
+white cube represented by 1 and blue cube represented by 0.
+
+In one operation, You can choose any two adjacent horizontal lines of cubes in 
+the box and swap them. The box is said to be diagonal box, if all the square 
+cubes above the main diagonal are blue colored.
+
+Your task is to find the the minimum number of operations needed to arrange 
+the box as diagonal box , if it is not possible to arrange return  -1.
+
+The main diagonal of a box is the diagonal that starts at cube (0, 0) and
+ends at cube (n-1, n-1) .
+
+Input Format:
+-------------
+Line-1: An integer, N size of the box.
+Next N lines: N space separated integers, colors of the cubes in the box.
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+3
+0 1 0
+1 0 1
+1 0 0
+
+Sample Output-1:
+----------------
+2
+
+
+Sample Input-2:
+---------------
+4
+1 1 0 0
+1 0 1 0
+0 1 0 0
+1 0 1 0
+
+Sample Output-2:
+----------------
+-1
+
+
+
+Test Cases:
+----------
+case =1
+input =4
+1 0 1 0
+0 1 0 1
+1 0 0 1
+1 0 1 0
+output =-1
+
+case =2
+input =5
+0 0 0 1 0
+1 1 0 0 0
+1 0 1 0 1
+1 0 1 0 0
+1 0 0 0 0
+output =7
+
+case =3
+input =6
+0 1 0 0 1 0
+1 0 1 0 0 0
+1 0 0 1 0 0
+1 0 1 0 0 0
+0 1 0 0 0 0
+1 0 0 0 0 0 
+output =11
+
+case =4
+input =7
+1 0 1 0 0 0 0
+1 1 1 0 0 0 0
+0 1 0 1 0 0 0
+1 0 1 1 0 0 0
+1 0 0 0 0 0 0
+1 0 0 0 0 0 0
+1 0 1 0 0 0 0
+output =8
+
+case =5
+input =7
+0 1 0 0 1 0 0
+1 1 1 0 0 0 0
+0 1 0 1 0 0 0
+0 0 1 0 0 1 0
+1 0 0 0 0 0 0
+1 0 0 0 0 0 0
+1 0 1 0 1 0 1
+output =10
+
+case =6
+input =5
+0 1 0 1 0
+1 0 1 0 0
+1 0 0 0 0
+0 0 0 0 0
+1 1 0 0 1
+output =5
+
+case =7
+input =4
+1 0 0 0
+1 1 0 0
+1 1 1 0
+1 1 1 1
+output =0
+
+case =8
+input =6
+1 1 0 0 0 0
+1 0 1 0 0 0
+1 1 0 0 1 0
+1 0 0 0 0 0
+1 0 1 0 1 0
+1 1 0 1 0 0 
+output =5
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class MinSwaps {
+    public int minSwaps(int[][] grid) {
+        int[] a = gridToVec(grid);
+        return minSwaps(a);
+    }
+    
+    private int minSwaps(int[] a) {
+        int n = a.length;
+        int ans = 0;
+        for (int i=0; i<n; i++) {
+            if (a[i] < (n-i-1)) {
+                int j=i;
+                while (j < n && a[j] < (n-i-1)) {
+                    j++;
+                }
+				
+                if (j == n) {     // Did not find any number greater than or equal to n-i-1.
+                    return -1;  // so its impossible to get the answer.
+                }
+                while (j>i) {
+                    //swap(a[j], a[j-1]);
+                    int temp = a[j];
+                    a[j] = a[j-1];
+                    a[j-1] = temp;
+                    ans++;
+                    j--;
+                }
+            }
+        }
+        return ans;
+    }
+    
+    
+    private int zerosAtEnd(int[] a) {
+        int ans = 0;
+        int n = a.length;
+        int i=n-1;
+        while (i >= 0 && a[i] == 0) {
+            ans++;
+            i--;
+        } 
+        return ans;
+    }
+    
+     private int[] gridToVec(int[][] grid) {
+        int[] ans = new int[grid.length];
+         int i =0;
+        for (int[] x: grid) {
+            ans[i++] = zerosAtEnd(x);
+        }
+        return ans;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc= new Scanner(System.in);
+		int n=sc.nextInt();
+		int grid[][]=new int[n][n]; 
+		for(int i=0;i<n;i++)
+			for(int j=0;j<n;j++)
+				grid[i][j]=sc.nextInt();
+		System.out.println(new MinSwaps().minSwaps(grid));
+	}
+}

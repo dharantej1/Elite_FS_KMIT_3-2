@@ -1,0 +1,48 @@
+Problem Statement:
+-----------------
+You are given the deatils of the participants of the ideathon competition,
+There are two rounds in the competition, one is Coding round, and the second
+is Quiz round. Based on the scores, the participants will be decided either 
+'pass' or 'fail', [i.e., isSucceed : true or false].
+
+The details of each participant are given as follows:
+
+    {
+        id: 1,
+        name: "Sri Charan",
+        codingScore: 98,
+        quizScore: 56,
+        isSucceed: true,
+    }
+
+Your task is to write a JavaScript program to find the avarage score of 
+all the participants, who have succeeded in ideathon competition.
+
+Input: A JSON file.
+Output: Print the avergae score.
+
+
+Test Cases:
+----------
+case =1
+output =154
+
+
+Solution:
+---------
+const ideathon = require('./file.json');
+let c=0;
+
+var totalscore = ideathon
+  .filter(function (coder) {
+    return coder.isSucceed;
+  })
+  .map(function (score) {
+    c=c+1;
+    return score.codingScore + score.quizScore;
+  })
+  .reduce(function (acc, res) {
+    return acc + res;
+  }, 0);
+  
+  console.log(totalscore/c);

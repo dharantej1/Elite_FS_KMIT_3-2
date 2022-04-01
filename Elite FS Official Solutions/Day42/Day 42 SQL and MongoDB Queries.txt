@@ -1,0 +1,84 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to display the manager name(s) and count of employees working under that manager, who is having maximum number of employees among all the managers.
+
+Query:
+-----
+SELECT m.ename,count(*) as count FROM emp w,emp m WHERE w.mgr = m.empno GROUP BY m.ename 
+HAVING count(*) = (SELECT max(mycount) FROM (SELECT count(*) mycount FROM emp GROUP BY mgr) a);
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to find the all the details of the employees who earn thesame salary as the minimum salary for all departments by ascending order
+
+
+Query:
+-----
+select * from emp where sal in (select min(sal) from emp group by job) order by sal asc;
+
+
+Mongo DB Queries
+================
+Query-1:
+-------
+Problem:
+-------
+Wrrite a MongoDB Query to display all documents from the inventory collection,where the status equals "A" and either qty is less than 30 or item starts with 
+the letter p.
+.
+Sample Document:
+----------------
+{ 
+	"item": "journal", 
+	"qty": 25, 
+	"size": { "h": 14, "w": 21, "uom": "cm" }, 
+	"status": "A" 
+}
+
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.inventory.find())
+    Where,
+    db => databse connection object
+    inventory => collections name
+    find => method to retrieve  all the docuemnts
+
+Query:
+-----
+printjson(db.inventory.find({ status: "A", $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ] }))
+
+
+Query-2:
+-------
+Problem:
+-------
+Write a MongoDB query to display all documents from inventory collection,
+where the height(h) of the item is less than 15 and the unit of measurement(uom) 
+is "cm" and the status field equals "A".
+.
+Sample Document:
+----------------
+{ 
+	"item": "journal",
+	"qty": 25,
+	"size": { "h": 14, "w": 21, "uom": "cm" },
+	"status": "A"
+}
+
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.inventory.find())
+    Where,
+    db => databse connection object
+    inventory => collections name
+    find => method to retrieve  all the docuemnts
+
+Query:
+-----
+printjson(db.inventory.find({ "size.h": { $lt: 15 }, "size.uom": "cm", status: "A" }))

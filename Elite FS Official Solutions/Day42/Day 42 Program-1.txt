@@ -1,0 +1,283 @@
+/*
+Problem Statement:
+------------------
+Manoj is working on sets and relations.
+He is given a set S consist of N integers from 1 to N, without dupliactes.
+The set S may contain any shuffled order of 1 to N numbers.
+And also P number of subsets also given where each subset of size Q.
+Each subset is a subsequence of shuffled set S.
+
+Manoj has to check, using the given subsets can he form the set S uniquely 
+or not. i.e., the order of numbers in the subsets remains unchanged and 
+can form only one unique super set using the subsets, and 
+the unique super set should be S.
+
+Your task is to help Manoj to check whether it is possible to form 
+the shuffled set S uniquely from the given subsets.
+
+For example: 
+-----------
+If given shuffled set is [2,4,6] and subsets are [2,4] [2,6].
+You can form the following sets, [2,4,6] or [2,6,4].
+
+So, you should return false, as the given subsets form more than 1 set.
+
+Simply, there should be always only one unique super set can be formed.
+and that set should be equal to S.
+
+
+Input Format:
+-------------
+Line-1: An integer N, size of the shuffled array.
+Line-2: N space separated integers, shuffled set S.
+Line-3: Two space separated integers P and Q, number of subsets, size of subsets
+Next P lines: Q space separated integers, non repeated integers from [1-N]
+
+Output Format:
+--------------
+Print a boolean value, can you form the shuffled set S uniquely or not.
+
+
+Sample Input-1:
+---------------
+4
+1 3 2 4
+3 2
+1 2
+3 2
+3 4
+
+Sample Output-1:
+----------------
+false
+
+Explanation: 
+------------
+The subsets are [1,2], [3,2] and [3,4] cannot
+form the given shuffled set [1,3,2,4].
+It can form another set as [1,3,4,2] also.
+
+
+Sample Input-2:
+---------------
+4
+1 3 2 4
+4 2
+1 2
+3 2
+1 3
+2 4
+
+Sample Output-2:
+----------------
+true
+
+Explanation: 
+------------
+The subsets are [1,2], [3,2], [1,3] and [2,4] can uniquely 
+form the given shuffled set [1,3,2,4].
+
+
+Sample Input-3:
+---------------
+5
+1 3 5 4 2
+3 3
+3 4 2
+5 4 2
+1 3 5
+
+Sample Output-3:
+----------------
+true
+
+Explanation: 
+------------
+The subsets are [3,4,2], [5,4,2], and [1,3,5] can uniquely 
+form the given shuffled set [1,3,5,4,2].
+
+
+Test Cases:
+----------
+case =1
+input =6
+4 1 5 2 6 3
+2 4
+4 1 5 2
+5 2 6 3
+output =true
+
+case =2
+input =5
+1 3 5 4 2
+3 3
+3 4 2
+5 4 2
+1 3 5
+output =true
+
+case =3
+input =4
+1 3 2 4
+4 2
+1 2
+3 2
+1 3
+2 4
+output =true
+
+case =4
+input =4
+1 3 2 4
+3 2
+1 2
+3 2
+3 4
+output =false
+
+case =5
+input =8
+1 5 2 6 4 8 7 3
+6 3
+1 2 4
+5 6 4
+2 6 8
+5 2 8
+8 7 3
+4 7 3
+output =false
+
+case =6
+input =8
+1 5 2 6 4 8 7 3
+6 4
+1 2 4 8
+5 6 4 8
+2 6 8 7
+5 2 8 3
+6 8 7 3
+1 5 6 4
+output =true
+
+case =7
+input =5
+1 3 5 4 2
+5 2
+3 4
+5 4
+3 5
+1 2
+3 2
+output =false
+
+case =8
+input =10
+2 6 8 3 9 7 1 10 5 4
+12 3
+2 3 1
+6 9 1
+2 8 9
+3 1 10
+7 1 5
+1 5 4
+2 3 9
+9 7 10
+2 8 10
+8 9 7
+3 5 4
+9 7 10
+output =false
+
+*/
+
+Solution:
+---------
+
+import java.util.*;
+
+class SequenceReconstruction
+{
+    public boolean sequenceReconstruction(int[] org, int[][] seqs) {
+        
+        // Intuition : 
+        // If the org seq is [a,b,c], then there must exist a relationship between [a,b] and [b,c] both. Else it is not unique.
+        // Reason : We can try other possiblities, say, we have relationships [a,b] and [a,c]. Now possible org : [a,b,c], [a,c,b] (not unique)
+        // Hence, every element must have a relationship with its next neighbour.
+        //
+        // More example : 
+        // org = [a,b,c,d], seqs = [a,b,c], [b,d], [c,d]
+        // Since we are only interested in neighbouring relationships, we will ignore the remaining.
+        // While processing seqs elements : 
+        // #1 [a,b,c] => we mark the neighbouring relationships. We mark 'b' to have a proper relationship with 'a', 
+        // then we mark 'c' to have proper relationship with 'a'.
+        // #2 [b,d] => we don't mark anything here. Since, 'd' is not have previous neighbour as 'b'.
+        // #3 [c,d] => we mark 'd' to have a proper previous neighbour 'c'.
+        // Now, we check our neighbouring relationship array, all elements must have proper previous neighbour, if so, we are good.
+        
+        
+        // Save the index of element : 
+        int[] index = new int[org.length+1];
+        for(int i = 0; i < org.length; i++){
+            index[org[i]] = i;
+        }
+        
+        boolean[] neighbourRelations = new boolean[org.length];
+        
+        for(int[] seq : seqs){
+            
+            // Sequence bigger than original : 
+            if(seq.length > org.length) return false;
+            
+            for(int i = 0; i < seq.length; i++){
+            
+                // Value corssing 'N' : 
+                if(seq[i] > org.length) {
+                    return false;
+                }
+                
+                // Base case : 
+                if(i == 0){
+                    if(index[seq[i]] == 0) {
+                        neighbourRelations[0] = true;
+                    }
+                    continue;
+                }
+                
+                // Reverse relation, cannot form seq : 
+                if(index[seq[i-1]] > index[seq[i]]) {
+                    return false;
+                }
+                
+                // Neighbour relation : 
+                if(index[seq[i-1]] + 1 == index[seq[i]]){
+                    neighbourRelations[index[seq[i]]] = true;
+                }
+            }
+        }
+        
+        for(boolean b : neighbourRelations){
+            if(!b) return false;
+        }
+        return true;
+    }
+
+	
+	public static void main(String args[])
+	{
+		Scanner sc= new Scanner(System.in);
+		int n;
+		int s1,s2;//sequance count -> s1, sequence size -> s2(should be same for all seq's)
+		n=sc.nextInt();
+		int org[]=new int[n]; 
+		for(int i=0;i<n;i++)
+			org[i]=sc.nextInt();
+		s1=sc.nextInt();
+		s2=sc.nextInt();
+		int seqs[][]=new int[s1][s2];
+		for(int i=0;i<s1;i++)
+			for(int j=0;j<s2;j++)
+				seqs[i][j]=sc.nextInt();
+		SequenceReconstruction sr=new SequenceReconstruction();
+		System.out.println(sr.sequenceReconstruction(org,seqs));
+	}
+}

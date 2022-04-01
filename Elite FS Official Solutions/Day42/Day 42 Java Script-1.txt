@@ -1,0 +1,76 @@
+Problem Statement:
+-----------------
+/*
+Write a javascript program to find the unique domain names,
+from the given list of email-id's.
+
+
+Sample Input:
+-------------
+abc@kmit.in def@gmail.com kfs@kmit.in hello@gmail.com funnyy@yahoo.com                                                  
+
+Sample Output:
+--------------                                                  
+kmit.in                                                                                                                 
+gmail.com                                                                                                               
+yahoo.com                                                                        
+*/
+
+Test Cases:
+----------
+case =1
+input =abc@kmit.in def@gmail.com kfs@kmit.in hello@gmail.com funnyy@yahoo.com
+output =kmit.in                                                                                                                 
+gmail.com                                                                                                               
+yahoo.com
+
+case =2
+input =abc@kmit.com def@ngit.com kfs@kmit.in hello@kmec.in funnyy@kmec.in
+output =kmit.com                                                                                                                
+ngit.com                                                                                                                
+kmit.in                                                                                                                 
+kmec.in
+
+case =3
+input =abc@kmit.in def@ngit.in kfs@kmit.in hello@kmit.in funnyy@ngit.in
+output =kmit.in                                                                                                                 
+ngit.in                                                                                                                 
+
+case =4
+input =avnreddy@kmit.com bilahari@ngit.com santu@kmec.in saha@kmit.in hima@kmit.in manasa@ngit.in ashok@kmit.in srikanth@kmec.in swapna@kmec.in akhila@ngit.in
+output =kmit.com                                                                                                                
+ngit.com                                                                                                                
+kmec.in                                                                                                                 
+kmit.in                                                                                                                 
+ngit.in 
+
+
+Solution:
+---------
+
+var readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+  var emails=[];
+  var n=null;
+  var i=0;
+  let uniqueDomainSet=new Set();
+  readline.on('line',function(line){
+      emails=line.split(' ');
+       uniqueDomains(emails);
+  });
+
+function uniqueDomains(data){
+  data.forEach(addToSet);
+  uniqueDomainSet.forEach(displaySet);
+}
+
+function addToSet(item, index) {
+  var value=item.split('@');
+  uniqueDomainSet.add(value[1]);
+}
+
+function displaySet(item, index) {
+  console.log(item);
+}

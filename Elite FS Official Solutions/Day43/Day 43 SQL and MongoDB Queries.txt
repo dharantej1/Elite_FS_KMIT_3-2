@@ -1,0 +1,92 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to print the department number, employee name,salary ,job,
+and Net Salary(Salary+Commission) of the employee(s), who earns the second 
+highest net salary.
+
+
+Query:
+-----
+select deptno, ename,sal,job,sal+comm "Net Salary" from emp e 
+where 1 = (select count(distinct e1.sal+e1.comm) from emp e1
+ where e1.sal+e1.comm>e.sal+e.comm);
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display all the details those earners whose salary is 
+out of the grade available in Sal grade table
+
+
+Query:
+-----
+select * from emp where sal< (select min(losal) from salgrade) or sal> (select max(hisal) from salgrade);
+
+
+Mango DB Queries
+================
+Query-1:
+-------
+Problem:
+-------
+Write a MongoDB Query to get all the documents from inventory collection,
+where the field tags value is an array with exactly two elements "red" 
+and "blank", the dim_cm array contains elements that in some combination 
+satisfy the query conditions; e.g., one element can satisfy the greater 
+than 15 condition and another element can satisfy the less than 20 condition,
+or a single element can satisfy both.
+.
+Sample Document:
+----------------
+{ 
+	item: "journal", 
+	qty: 25, 
+	tags: ["blank", "red"], 
+	dim_cm: [ 14, 21 ] 
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.inventory.find())
+    Where,
+    db => databse connection object
+    inventory => collections name
+    find => method to retrieve  all the docuemnts
+
+Query:
+-----
+printjson( db.inventory.find({ tags: { $all: ["red","blank"] },dim_cm: { $gt: 15, $lt: 20 } } ))
+
+
+Query-2:
+-------
+Problem:
+Write a MongoDB Query to get all the documents from inventory collection,
+where the dim_cm array contains at least one element that is both 
+greater than 22 and less than 30.
+.
+Sample Document:
+----------------
+{ 
+	item: "journal", 
+	qty: 25, 
+	tags: ["blank", "red"], 
+	dim_cm: [ 14, 21 ] 
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.inventory.find())
+    Where,
+    db => databse connection object
+    inventory => collections name
+    find => method to retrieve  all the docuemnts
+
+
+
+Query:
+-----
+printjson(db.inventory.find( { dim_cm: { $elemMatch: { $gt: 22, $lt: 30 } } } ))
