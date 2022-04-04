@@ -1,0 +1,11 @@
+/*
+Write a SQL query to find those employees whose salary is less than 
+the salary of his/her manager but more than the salary of any other manager
+
+Sample Output:
+--------------
+empno   ename   sal                                                                                                     
+7566    JONES   2975.00                                                                                                 
+
+*/
+select e.empno,e.ename,e.sal from emp e,emp e1 where e.mgr=e1.empno and e.sal<e1.sal and e.sal>any(select sal from emp where empno in(select mgr from emp));
