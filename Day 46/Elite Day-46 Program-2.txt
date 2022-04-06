@@ -1,71 +1,98 @@
-Shaggy Rogers is working with numbers.
-He is given a number N, 
-He wants to replace all occurrences of a digit in the number N,
-with another digit between [0-9]. May be with same number too.
-
-But there should not be any leading zeros in the number after the replacement,
-Or the number should not become zero.
-
-Rogers can perform the replacement of the occurrences of the digit in N for two 
-times, He will generate two new numbers P and Q, such that the value of |P-Q| 
-should be Maximum.
-
-Your task is to help Shaggy Roers to find the maximum difference of P and Q possible.
-
-
-Input Format:
--------------
-An integer N, the number
-
-Output Format:
---------------
-Print an integer, the maximum difference of P and Q
-
-
-Sample Input-1:
----------------
-123
-
-Sample Output-1:
-----------------
-820
-
-Explanation:
-------------
-Replacement-1: replace 1 with 9 you will get P as 923
-Replacement-2: replace 2 with 0 you will get Q as 103
-So Max difference is 820.
-
-
-Sample Input-2:
----------------
-4254
-
-Sample Output-2:
-----------------
-8008
-
-Explanation:
-------------
-Replacement-1: replace 4 with 9 you will get P as 9259
-Replacement-2: replace 4 with 1 you will get Q as 1259
-So Max difference is 8008.
-def longDiff(w):
-    temp1,temp2=w[::],w[::]
-    for i in temp1:
-        if i !='9':
-            temp1=temp1.replace(i,'9')
-            break
-    if temp2[0]!='1':
-        temp2=temp2.replace(temp2[0],'1')
-        print(abs(int(temp1)-int(temp2)))
-        exit()
-    x,temp2=temp2[0],temp2[1:]
-    for i in temp2:
-        if i !='0'and x!=i:
-            temp2=temp2.replace(i,'0')
-            break
-    print(abs(int(temp1)-int(x+temp2)))
-if __name__=="__main__":
-    w=input()
-    longDiff(w)
+Priyanka taught a new fun time program practice for Engineering Students.
+As a part of this she has given set of numbers and given set of ranges, 
+and asked the students to find the sum of numbers between the given range,
+S and E (S<=E), both are inclusive.
+
+You need to find the total sum of all given range sum's, and 
+print the total sum. 
+
+NOTE: Set conatins 1000 numbers.
+You have to implement the code using Callable and Future using Java.
+
+
+Input Format:
+-------------
+Line-1: An integer N, number of ranges.
+Line-2: Two integers S and E, index positions 
+		where 0 <= S1 <= E < 1000
+
+Output Format:
+--------------
+An integer(may be long), total sum of N ranges(s, e).
+
+
+Sample Input-1:
+---------------
+3
+12 125
+10 500
+175 350
+
+Sample Output-1:
+----------------
+4078093
+import java.io.*; 
+import java.util.*;
+import java.util.concurrent.*;
+
+class CallableExample implements Callable<Integer>
+{
+    private Integer start,end;
+    private int numbers[];
+    public CallableExample(Integer i,Integer j,int num[]){
+        this.start=i;
+        this.end=j;
+        this.numbers=num;
+    }
+    
+  @Override
+  public Integer call() throws Exception
+  {
+      int sum=0;
+      for (int i=start;i<=end;i++)
+        sum+=numbers[i];
+  
+      return sum;
+  }
+  
+}
+  
+
+
+public class RangeSum {
+
+  
+    
+    public static void main(String[] args) throws Exception{
+        //Implement your code here
+        
+        // read set of integers input
+        File file = new File("MyFile.txt");
+        Scanner sc1=new Scanner(file);
+        String[] list=sc1.nextLine().split(" ");
+        int numbers[]=new int[list.length];
+        int ans=0;
+        for(int i=0;i<list.length;i++)
+            numbers[i]=Integer.parseInt(list[i]);
+            
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        FutureTask[] tasks = new FutureTask[n];
+        // int arr[]=new int[n][2]
+        for(int i=0;i<n;i++){
+            int start=sc.nextInt();
+            int end=sc.nextInt();
+            
+        Callable callable = new CallableExample(start,end,numbers);
+        
+          tasks[i] = new FutureTask(callable);
+      
+          Thread t = new Thread(tasks[i]);
+          t.start();
+          
+          ans+=(Integer)tasks[i].get();
+          
+        }
+        System.out.println(ans);
+    }
+}
