@@ -1,0 +1,114 @@
+Charlie Brown is working with strings,
+
+He is a given a string S. He wants to find out the maximum substring 'MaxSub'.
+
+
+
+MaxSub is a substring which appears atleast twice in S with Maximum length. 
+
+
+
+Your task is to help Charlie Brown to find the Maximum Substring MaxSub,
+
+and print the length of MaxSub. If there is MaxSub, return 0.
+
+
+
+Input Format:
+
+-------------
+
+A string S.
+
+
+
+Output Format:
+
+--------------
+
+Print an integer, length of MaxSub
+
+
+
+
+
+Sample Input-1:
+
+---------------
+
+babababba
+
+
+
+Sample Output-1:
+
+----------------
+
+5
+
+
+
+Explanation: 
+
+------------
+
+The Maximum substring is 'babab' , which occurs 2 times.
+
+
+
+
+
+Sample Input-2:
+
+---------------
+
+abbbbba
+
+
+
+Sample Output-2:
+
+----------------
+
+4
+
+
+
+Explanation: 
+
+------------
+
+The Maximum substring is 'bbbb' , which occurs 2 times.
+
+
+
+
+
+Sample Input-3:
+
+---------------
+
+vignesh
+
+
+
+Sample Output-3:
+
+----------------
+
+0
+
+
+def subStr(w):
+    n=len(w)
+    d={}
+    ans=0
+    for i in range(n-1):
+        for j in range(i+1,n+1):
+            d[w[i:j]]=d.get(w[i:j],0)+1
+    for i in d.keys():
+        if d[i]>1 and len(i)>ans:
+            ans=len(i)
+    return ans
+w=str(input())
+print(subStr(w))
