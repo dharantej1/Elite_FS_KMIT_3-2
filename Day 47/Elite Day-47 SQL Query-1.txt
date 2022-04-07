@@ -1,0 +1,11 @@
+/*
+Write an SQL query to display the employee number and name of employee working 
+as CLERK and earning highest salary among CLERKS.
+
+Sample Output:
+-------------
+empno   ename                                                                                                           
+7934    FORD 
+
+*/
+select empno, ename from emp where job="clerk" and sal=(select max(sal) from emp group by job having job="clerk");

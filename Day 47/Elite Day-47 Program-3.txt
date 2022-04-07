@@ -1,0 +1,163 @@
+Venkatadri is a maths teacher.
+He is teaching matrices to his students.
+He is given a matrix of size m*n, and it contains only positive numbers.
+He has given a task to his students to find the special matrix, 
+in the iven matrix A[m][n].
+A special matrix has following property:
+	- The sum of elements in each row, each column and the two diagonals are equal.
+	- Every 1*1 matrix is called as a special matrix.
+	- The size of the special matrix should be a square, i.e., P*P.
+
+Your task is to help the students to find the speical matrix  with max size P.
+
+
+Input Format:
+-------------
+Line-1: Two space separated integers M and N, size of the matrix.
+Next M lines: N space separated integers m and n.
+
+Output Format:
+--------------
+Print an integer, maximum size P of the special matrix.
+
+
+Sample Input-1:
+---------------
+5 5
+7 8 3 5 6
+3 5 1 6 7
+3 5 4 3 1
+6 2 7 3 2
+5 4 7 6 2
+
+Sample Output-1:
+----------------
+3
+
+Explanation:
+------------
+The special matrix is:
+5 1 6
+5 4 3
+2 7 3
+
+
+Sample Input-2:
+---------------
+4 4
+7 8 3 5
+3 2 1 6
+3 2 3 3
+6 2 3 3
+
+Sample Output-2:
+----------------
+2
+
+Explanation:
+------------
+The special matrix is:
+3 3
+3 3
+#include<bits/stdc++.h>
+using namespace std;
+#define n row
+#define m col
+int main()
+{
+     int row,col;
+     cin>>row>>col;
+     vector<vector<int>> mat(row,vector<int>(col));
+     for(int i=0;i<row;i++){
+        for(int j=0;j<col;j++)
+        cin>>mat[i][j];
+     }
+        vector<vector<long long>> ROWSums(row, vector<long long>(col, 0)),colSums(row, vector<long long>(col, 0));
+         for(int i=0; i<row; i++){
+            ROWSums[i][0]=mat[i][0];
+            for(int j=1; j<col; j++){
+                            ROWSums[i][j]+=ROWSums[i][j-1]+mat[i][j];
+            }
+        }
+        for(int i=0; i<col; i++){
+             colSums[0][i]=mat[0][i];
+            for(int j=1; j<row; j++){
+                 colSums[j][i]+=mat[j][i]+colSums[j-1][i];
+            }
+        }
+
+
+        int ans=1;
+
+
+        for(int i=2; i<=min(row,col); i++){
+            for(int r=0; r<n-i+1; r++){
+                for(int c=0; c<m-i+1; c++){
+                    long long prev;
+                    long long sum;
+                    bool ROWS=true;
+                    bool cols=true;
+                    bool diagnal=true;
+
+
+                    for(int k=r; k<r+i; k++){
+                        sum=ROWSums[k][c+i-1];
+                        sum-=(c>0)?ROWSums[k][c-1]:0;
+                        if(k==r){
+                            prev=sum;
+                        }else{
+                            if(sum!=prev){
+                                ROWS=false;
+                                break;
+                            }
+                        }
+                        prev=sum;
+                    }
+                    if(!ROWS){
+                        continue;
+                    }
+
+
+                    for(int k=c; k<c+i; k++){
+                        sum=colSums[r+i-1][k];
+                        sum-=(r>0)?colSums[r-1][k]:0;
+                        if(sum!=prev){
+                            cols=false;
+                            break;
+                        }
+                        prev=sum;
+                    }
+                    if(!cols){
+                        continue;
+                    }
+
+
+                    sum=0;
+                    for(int k=0; k<i; k++){
+                        sum+=mat[r+k][c+k];
+                    }
+                    if(sum!=prev){
+                        diagnal=false;
+                        continue;
+                    }
+
+
+                    sum=0;
+                    for(int k=0; k<i; k++){
+                        sum+=mat[r+k][c+i-k-1];
+                    }
+                    if(sum!=prev){
+                        diagnal=false;
+                        continue;
+                    }
+
+
+                    if(ROWS && cols && diagnal){
+                        ans=max(ans, i);
+                    }
+                }
+            }
+        }
+        cout<<ans<<endl;
+
+}
