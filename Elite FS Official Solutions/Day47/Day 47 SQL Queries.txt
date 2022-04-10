@@ -1,0 +1,24 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to display the employee number and name of employee working 
+as CLERK and earning highest salary among CLERKS.
+
+Query:
+-----
+select empno, ename from emp where job='CLERK' and sal=(select max(sal)
+from emp where job='CLERK');
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display allthe details of employee(s) who are in 
+sales department and grade is 3.
+
+
+Query:
+-----
+select * from emp where sal>=(select losal from salgrade where 	grade=3) and 
+sal<=(select hisal from salgrade where grade=3) and deptno=(select deptno from dept where dname='SALES');

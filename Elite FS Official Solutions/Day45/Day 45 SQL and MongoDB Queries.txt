@@ -1,0 +1,104 @@
+MYSQL Queries:
+=============
+Query-1:
+=======
+Problem:
+-------
+Write a query to display the job groups having total salary greater than the maximum salary for managers.
+
+Query:
+-----
+select job, sum(sal) from emp group by job 
+having sum(sal) > (select max(sal) from emp where job='MANAGER');
+
+Query-2:
+=======
+Problem:
+-------
+Write a SQL query to find those employees whose salary is less than the salary of his/her manager but more than the salary of any other manager
+
+Query:
+-----
+select w.empno, w.ename, w.sal from emp w,emp m where w.mgr = m.empno 
+and w.sal < m.sal 
+and w.sal > any (select sal from emp where empno in (select mgr from emp));
+
+
+MongoDB Queries:
+===============
+
+Query-1:
+-------
+Problem:
+-------
+Write a MongoDB query to Count the number of orders in the collection "orders"
+with the field 'date' greater than "15-03-2021".
+.
+Sample Document:
+----------------
+{
+	"_id": 0,
+	"name": "Pepperoni",
+	"size": "small",
+	"price": 19,
+	"quantity": 10,
+	"date": "2021-03-13T08:14:30Z"
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.orders.find())
+    Where,
+    db => databse connection object
+    orders => collections name
+    find => method to retrieve  all the docuemnts
+
+Query:
+-----
+printjson(  db.orders.countDocuments(
+{ 
+ $and :[ {date: {$gte: new Date('2021-03-01')}},{date: {$lte: new Date('2021-03-31')}}]
+}) );
+
+
+Query-2:
+-------
+Problem:
+-------
+Write a MongoDB query on "orders" to find and print the '_id' and 
+'totalQuantity' return the total order quantity of medium size pizzas 
+grouped by pizza name.
+.
+Sample Document:
+----------------
+{
+	"_id": 0,
+	"name": "Pepperoni",
+	"size": "small",
+	"price": 19,
+	"quantity": 10,
+	"date": "2021-03-13T08:14:30Z"
+}
+
+Note: To write the query, use printjson() method from 'mongosh' module
+    e.g., To display all the douments from 'students' collection
+        => printjson( db.orders.find())
+    Where,
+    db => databse connection object
+    orders => collections name
+    find => method to retrieve  all the docuemnts
+
+Query:
+-----
+printjson(
+    db.orders.aggregate( [
+       // Stage 1: Filter pizza order documents by pizza size
+       {
+          $match: { size: "medium" }
+       },
+       // Stage 2: Group remaining documents by pizza name and calculate total quantity
+       {
+          $group: { _id: "$name", totalQuantity: { $sum: "$quantity" } }
+       }
+    ] )
+);

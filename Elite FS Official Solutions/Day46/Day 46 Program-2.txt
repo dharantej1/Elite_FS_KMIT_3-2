@@ -1,0 +1,127 @@
+/*
+Problem Statement:
+------------------
+Shaggy Rogers is working with numbers.
+He is given a number N, 
+He wants to replace all occurrences of a digit in the number N,
+with another digit between [0-9]. May be with same number too.
+
+But there should not be any leading zeros in the number after the replacement,
+Or the number should not become zero.
+
+Rogers can perform the replacement of the occurrences of the digit in N for two 
+times, He will generate two new numbers P and Q, such that the value of |P-Q| 
+should be Maximum.
+
+Your task is to help Shaggy Roers to find the maximum difference of P and Q possible.
+
+
+Input Format:
+-------------
+An integer N, the number
+
+Output Format:
+--------------
+Print an integer, the maximum difference of P and Q
+
+
+Sample Input-1:
+---------------
+123
+
+Sample Output-1:
+----------------
+820
+
+Explanation:
+------------
+Replacement-1: replace 1 with 9 you will get P as 923
+Replacement-2: replace 2 with 0 you will get Q as 103
+So Max difference is 820.
+
+
+Sample Input-2:
+---------------
+4254
+
+Sample Output-2:
+----------------
+8008
+
+Explanation:
+------------
+Replacement-1: replace 4 with 9 you will get P as 9259
+Replacement-2: replace 4 with 1 you will get Q as 1259
+So Max difference is 8008.
+
+Test Cases:
+----------
+case =1
+input =1234
+output =8200
+
+case =2
+input =4254
+output =8008
+
+case =3
+input =723543
+output =800000
+
+case =4
+input =94342589
+output =85050008
+
+case =5
+input =1234321
+output =8200028
+
+case =6
+input =94893929
+output =85080808
+
+case =7
+input =11122221
+output =88822228
+
+case =8
+input =98399123
+output =81088000
+
+*/
+
+Solution:
+---------
+
+import java.util.*;
+
+class MaxDiff {
+    public int maxDiff(int num) {
+        char[] a = Integer.toString(num).toCharArray(), b = a.clone();
+        char x = a[0], y = 0;
+        for (int i = 0; i < a.length; ++i) {
+            if (a[i] == x) {
+                a[i] = '9';
+                b[i] = '1';
+            }else if (x == '1' && a[i] > '0' || x == '9' && a[i] < '9') {
+                if (y == 0) {
+                    y = a[i];
+                } 
+                if (y == a[i]) {
+                    if (x == '1')
+                        b[i] = '0';
+                    else
+                        a[i] = '9';
+                }
+            }
+        }
+        return Integer.parseInt(String.valueOf(a)) - Integer.parseInt(String.valueOf(b));
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		System.out.println(new MaxDiff().maxDiff(n));
+	}
+}

@@ -1,0 +1,23 @@
+Query-1:
+=======
+Problem:
+-------
+Write an SQL query to display the name(s) of employee(s) from department number 40 
+with salary greater than that of all of the employees working in other departments.
+
+Query:
+-----
+select ename,sal,deptno from emp e1 where e1.deptno=40 and sal > 
+any(select max(sal) from emp e2 where e1.deptno!=e2.deptno and e2.deptno!=40);
+
+Query-2:
+=======
+Problem:
+-------
+Write an SQL query to display the name(s) of employee(s) from department number 40 
+with salary greater than that of any employee working in other departments.
+
+Query:
+-----
+select ename,sal,deptno from emp e1 where e1.deptno=40 and sal > 
+any(select max(sal) from emp e2 where e1.deptno!=e2.deptno and e2.deptno!=40);

@@ -1,0 +1,137 @@
+/*
+Problem Statement:
+------------------
+Write a Java Program which read atmost 5 files and a dictionary of pair of words,
+A pair of word looks like, pair[]=["first","second"], in one operation 
+replace all occurences of first word with second word.
+for example, pair[]={"hello", "hi"}, you need to replace all the occurneces 
+of "hello" with "hi" in every file.
+
+You need to create callables for each file, and you need to perform the 
+above operation for every pair of words in the dictionary.
+
+Return the result as single string, 
+String s=data from (paragraph1.txt+pragraph2.txt+..+pragraph5.txt)
+
+Hint:
+Available file names:
+paragraph1.txt
+paragraph2.txt
+paragraph3.txt
+paragraph4.txt
+paragraph5.txt
+
+Input Format:
+-------------
+Line-1: Space separated pair of words, dictionary.
+        each pair is '-' separated.
+Line-2: space separated strings, filenames.
+
+
+Output Format:
+--------------
+Print a string result.
+
+Sample Input-1:
+---------------
+india-bharath from-to bitter-sweeter
+paragraph1.txt paragraph2.txt paragraph3.txt
+
+Sample Output-1:
+----------------
+Large output:
+
+
+Test Cases:
+----------
+case =1
+input =india-bharath from-to bitter-sweeter
+paragraph1.txt
+output =nory was a catholic because her mother was a catholic and norys mother was a catholic because her father was a catholic and her father was a catholic because his mother was a catholic or had been. i felt happy because i saw the others were happy and because i knew i should feel happy but i wasnt really happy. but good morning good morning to ye and thou id say to all my patients because i was the worse of the hypocrites of all the hypocrites the cruel and phony hypocrites i was the very worst. so i said yes to thomas clinton and later thought that i had said yes to god and later still realized i had said yes only to thomas clinton.  it rained on his lousy tombstone and it rained on the grass on his stomach. it rained all over the place. now is the time to make real the promises of democracy. now is the time to rise to the dark and desolate valley of segregation to the sunlit path of racial justice. now is the time to lift our nation to the quicksands of racial injustice to the solid rock of brotherhood. now is the time to make justice a reality for all of gods children. if you did know to whom i gave the ring if you did know for whom i gave the ring and would conceive for what i gave the ring and how unwillingly i left the ring when naught would be accepted but the ring you would abate the strength of your displeasure.the woods are lovely dark and deep but i have promises to keep and miles to go before i sleep and miles to go before i sleep.
+
+case =2
+input =india-bharath from-to bitter-sweeter pick-pack and-or independence-freedom
+paragraph1.txt paragraph2.txt
+output =nory was a catholic because her mother was a catholic or norys mother was a catholic because her father was a catholic or her father was a catholic because his mother was a catholic or had been. i felt happy because i saw the others were happy or because i knew i should feel happy but i wasnt really happy. but good morning good morning to ye or thou id say to all my patients because i was the worse of the hypocrites of all the hypocrites the cruel or phony hypocrites i was the very worst. so i said yes to thomas clinton or later thought that i had said yes to god or later still realized i had said yes only to thomas clinton.  it rained on his lousy tombstone or it rained on the grass on his stomach. it rained all over the place. now is the time to make real the promises of democracy. now is the time to rise to the dark or desolate valley of segregation to the sunlit path of racial justice. now is the time to lift our nation to the quicksors of racial injustice to the solid rock of brotherhood. now is the time to make justice a reality for all of gods children. if you did know to whom i gave the ring if you did know for whom i gave the ring or would conceive for what i gave the ring or how unwillingly i left the ring when naught would be accepted but the ring you would abate the strength of your displeasure.the woods are lovely dark or deep but i have promises to keep or miles to go before i sleep or miles to go before i sleep.tongue twisters are a great way to practice or improve pronunciation or fluency. they can also help to improve accents by using alliteration which is the repetition of one sound. theyre not just for kids but are also used by actors politicians or public speakers who want to sound clear when speaking. below you will find some of the most popular english tongue twisters. say them as quickly as you can. if you can master them you will be a much more confident speaker peter piper packed a peck of packled peppers a peck of packled peppers peter piper packed if peter piper packed a peck of packled peppers wheres the peck of packled peppers peter piper packed betty botter bought some butter but she said the butters sweeter if i put it in my batter it will make my batter sweeter but a bit of better butter will make my batter better so twas better betty botter bought a bit of better butter how much wood would a woodchuck chuck if a woodchuck could chuck wood he would chuck he would as much as he could or chuck as much wood as a woodchuck would if a woodchuck could chuck wood
+
+case =3
+input =from-to bitter-sweeter pick-pack and-or independence-freedom was-is she-he better-worst
+paragraph2.txt
+output =tongue twisters are a great way to practice or improve pronunciation or fluency. they can also help to improve accents by using alliteration which is the repetition of one sound. theyre not just for kids but are also used by actors politicians or public speakers who want to sound clear when speaking. below you will find some of the most popular english tongue twisters. say them as quickly as you can. if you can master them you will be a much more confident speaker peter piper packed a peck of packled peppers a peck of packled peppers peter piper packed if peter piper packed a peck of packled peppers wheres the peck of packled peppers peter piper packed betty botter bought some butter but he said the butters sweeter if i put it in my batter it will make my batter sweeter but a bit of worst butter will make my batter worst so tis worst betty botter bought a bit of worst butter how much wood would a woodchuck chuck if a woodchuck could chuck wood he would chuck he would as much as he could or chuck as much wood as a woodchuck would if a woodchuck could chuck wood
+
+case =4
+input =india-bharath from-to bitter-sweeter pick-pack and-or independence-freedom
+paragraph2.txt paragraph5.txt
+output =tongue twisters are a great way to practice or improve pronunciation or fluency. they can also help to improve accents by using alliteration which is the repetition of one sound. theyre not just for kids but are also used by actors politicians or public speakers who want to sound clear when speaking. below you will find some of the most popular english tongue twisters. say them as quickly as you can. if you can master them you will be a much more confident speaker peter piper packed a peck of packled peppers a peck of packled peppers peter piper packed if peter piper packed a peck of packled peppers wheres the peck of packled peppers peter piper packed betty botter bought some butter but she said the butters sweeter if i put it in my batter it will make my batter sweeter but a bit of better butter will make my batter better so twas better betty botter bought a bit of better butter how much wood would a woodchuck chuck if a woodchuck could chuck wood he would chuck he would as much as he could or chuck as much wood as a woodchuck would if a woodchuck could chuck woodmangal porey (19 july 1827 to 8 april 1857) is synonymous for his role in the initial stages of the bharathn uprising of 1857. born in uttar pradesh, porey was a sepoy in the 6th company of the 34th native infantry .the daring attack on a superior officer provoked the spark of bharaths first war of freedom. mangal porey became the first freedom fighter or martyr of 1857. the reason for the uprising reached its culmination as the british introduced reforms which were very stringent or unfair. the provision provided for sepoys were meager with paltry salaries. the east bharath company made matters worse by introducing the pattern 1853 enfield rifle. the cartridges for these rifles were coated with grease membrane that has to be cut by the teeth, before loading. the rumor was the membrane was extracted to the fat of either cow or pig. this proved to be the last straw as it is offensive to both hindu as well as muslim soldiers. there was no reasoning with the sepoys despite the permission to create grease to vegetable oil. on march 29 1857 mangal porey launched an open mutiny at barrackpore near kolkata. wounded in the combat  porey was arrested or sent to the gallows. mangal poreys execution was scheduled for april 18 but was carried out ten days earlier. in 1984 the bharathn government issued a postage stamp bearing the image of mangal porey on october 5 1984 commemorating his spirit. his valor has become the subject of films plays or fiction.
+
+*/
+
+Solution:
+---------
+
+import java.io.*; 
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.Optional;
+
+class ReplacePara implements Callable<String> {
+
+    private Map<String, String> dictionary=new LinkedHashMap<>();
+    private String paragraph;
+
+    public ReplacePara(String paragraph, Map<String,String> dictionary) {
+        this.paragraph=paragraph;
+        this.dictionary.putAll(dictionary);
+    }
+
+    @Override
+    public String call() throws Exception {
+        dictionary.entrySet().stream().forEach(e -> {
+            paragraph=paragraph.replaceAll(e.getKey(), e.getValue());
+        });
+        TimeUnit.MILLISECONDS.sleep(1000);
+        return paragraph;
+    }
+}
+
+public class ReplaceWords {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException, FileNotFoundException {
+
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(2);
+
+        Map<Integer, Future<String>> replaceFile = new HashMap<>();
+        
+        //read ranges
+        Scanner sc = new Scanner(System.in);
+        Map<String,String> dictionary=new LinkedHashMap<>();
+        //read dictionary
+        String dict[]=sc.nextLine().split(" ");
+        String filenames[]=sc.nextLine().split(" ");
+        for(int i=0;i < dict.length;i++){
+            String pair[]=dict[i].split("-");
+            dictionary.put(pair[0],pair[1]);
+        }
+       sc.close();
+       int i=1;
+        //Read Files and N callables.
+        for(String filename:filenames)
+        {
+            File file = new File(filename);
+            Scanner scan=new Scanner(file);
+            String paragraph="";
+            while (scan.hasNextLine())
+                paragraph += scan.nextLine();
+
+            ReplacePara rp = new ReplacePara(paragraph,dictionary);
+            replaceFile.put(i++, executor.submit(rp));
+            scan.close();
+        }
+        String result="";
+        for (Map.Entry<Integer,Future<String>> entry : replaceFile.entrySet())
+               result+=entry.getValue().get();
+        System.out.println(result);
+        
+        executor.shutdown();
+    }
+}

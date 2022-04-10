@@ -1,0 +1,99 @@
+Problem Statement:
+-----------------
+Given two lists of numbers, the length of the lists may differ,
+Your target is to find the intersection of two lists, each element 
+in the result must appear as many times as it shows in both 
+the lists and you must return the result in the given order of lists.
+
+Input Format:
+-------------
+Two space separated strings, each string contains comma separated numbers.
+
+Output Format:
+--------------
+Print an array of numbers.
+
+
+Sample Input-1:
+---------------
+2,3,3,2 3,3
+
+Sample Output-1:
+----------------
+3,3,
+
+
+Sample Input-2:
+---------------
+5,7,3 7,5,7,8,5
+
+Sample Output-2:
+----------------
+5,7,
+
+Test Cases:
+----------
+case =1
+input =2,3,3,2 3,3
+output =3,3,
+
+case =2
+input =5,7,3 7,5,7,8,5
+output =5,7,
+
+case =3
+input=8,12,6,8,6,1,4,6,8,9 9,9,8,5
+output=8,9,
+
+case =4
+input =56,32,75,32,89,74,32,44 2,89,63,46,89,35
+output =89,
+
+case =5
+input =10,20,30,40,8,40,9,34,56,8,15,0,6,4,32,45,78,65 3,4,5,6,8,8,9,9,9,12,14,1,5
+output =8,9,8,6,4, 
+
+case =6
+input =1,2,3,2,5,2,6,8,5,4,5,6,7,8,9 1,2,2,3,3,4,5,3,2,4,5,7,4,6,5,4,2,1
+output =1,2,3,2,5,2,6,5,4,5,7,
+
+Solution:
+---------
+
+let readline=require('readline').createInterface({input:process.stdin,output:process.stdout});
+let n;
+let arr1;
+let arr2;
+readline.question('',function(line){
+	n=line.split(" ")
+	arr1=n[0].split(",").map(i=>Number(i));
+	arr2=n[1].split(",").map(j=>Number(j));
+	solution(arr1,arr2);
+	readline.close();
+});
+
+function solution(nums1, nums2) {
+    // track how often each number occurs in first list
+    var store = nums2.reduce(function(map, n) {
+        map[n] = (map[n] + 1) || 1;
+        
+        return map;
+    }, {});
+    
+    // filter out numbers from second list based on
+    // how often they occurred in the first list
+    let result = nums1.filter(function(n) {
+        if (store[n]) {
+            store[n]--;
+            
+            return true;
+        } else {
+            return false;
+        }
+    });
+    let t="";
+    result.forEach(function(entry) {
+      t=t+entry+",";
+    });
+    console.log(t);
+}

@@ -1,0 +1,156 @@
+/*
+Problem Statement:
+------------------
+Charlie Brown is working with strings,
+He is a given a string S. He wants to find out the maximum substring 'MaxSub'.
+
+MaxSub is a substring which appears atleast twice in S with Maximum length. 
+
+Your task is to help Charlie Brown to find the Maximum Substring MaxSub,
+and print the length of MaxSub. If there is MaxSub, return 0.
+
+Input Format:
+-------------
+A string S.
+
+Output Format:
+--------------
+Print an integer, length of MaxSub
+
+
+Sample Input-1:
+---------------
+babababba
+
+Sample Output-1:
+----------------
+5
+
+Explanation: 
+------------
+The Maximum substring is 'babab' , which occurs 2 times.
+
+
+Sample Input-2:
+---------------
+abbbbba
+
+Sample Output-2:
+----------------
+4
+
+Explanation: 
+------------
+The Maximum substring is 'bbbb' , which occurs 2 times.
+
+
+Sample Input-3:
+---------------
+vignesh
+
+Sample Output-3:
+----------------
+0
+
+
+Test Cases:
+----------
+case =1
+input =babababba
+output =5
+
+case =2
+input =abbbbba
+output =4
+
+case =3
+input =vignesh
+output =0
+
+case =4
+input =ababababacbabacabcaba
+output =7
+
+case =5
+input =attitudeandgrattitude
+output =8
+
+case =6
+input =abbabbabbbababbababbbbbbabaaababbbbbbbababababbabababbabbbbaa
+output =10
+
+case =7
+input =iamacodericandecodeacodeusingdecodingtechnoques
+output =5
+
+case =8
+input =abbabbabbabbabbabbabbabbabbabb
+output =27
+
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class LRS {
+	  /*
+	  Rabin-Karp with polynomial rolling hash.
+      Search a substring of given length
+      that occurs at least 2 times.
+      Return start position if the substring exits and -1 otherwise.
+      */
+  public int search(int L, int a, long modulus, int n, int[] nums) {
+    // compute the hash of string S[:L]
+    long h = 0;
+    for(int i = 0; i < L; ++i) h = (h * a + nums[i]) % modulus;
+
+    // already seen hashes of strings of length L
+    HashSet<Long> seen = new HashSet();
+    seen.add(h);
+    // const value to be used often : a**L % modulus
+    long aL = 1;
+    for (int i = 1; i <= L; ++i) aL = (aL * a) % modulus;
+
+    for(int start = 1; start < n - L + 1; ++start) {
+      // compute rolling hash in O(1) time
+      h = (h * a - nums[start - 1] * aL % modulus + modulus) % modulus;
+      h = (h + nums[start + L - 1]) % modulus;
+      if (seen.contains(h)) return start;
+      seen.add(h);
+    }
+    return -1;
+  }
+
+  public int longestRepeatingSubstring(String S) {
+    int n = S.length();
+    // convert string to array of integers
+    // to implement constant time slice
+    int[] nums = new int[n];
+    for(int i = 0; i < n; ++i) nums[i] = (int)S.charAt(i) - (int)'a';
+    // base value for the rolling hash function
+    int a = 26;
+    // modulus value for the rolling hash function to avoid overflow
+    long modulus = (long)Math.pow(2, 24);
+
+    // binary search, L = repeating string length
+    int left = 1, right = n;
+    int L;
+    while (left <= right) {
+      L = left + (right - left) / 2;
+      if (search(L, a, modulus, n, nums) != -1) left = L + 1;
+      else right = L - 1;
+    }
+
+    return left - 1;
+  }
+  
+  	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String s=sc.next();
+		System.out.println(new LRS().longestRepeatingSubstring(s));
+	}
+
+}

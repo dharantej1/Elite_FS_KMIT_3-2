@@ -1,0 +1,185 @@
+/*
+Problem Statement:
+------------------
+KMIT's Technical club- "recurse" developed a UPI payment system R-UPI.
+R-UPI (Rupee) payments, offers a coupon for each payment made using it.
+Each coupon will come with an expiry time. R-UPI has a utilization restriction 
+over the coupons earned by the user, the limit is atmost one coupon per day.
+And  the coupons alloted in a single day will have same expiry time.
+
+Nagireddy, one of the user of R-UPI made few payments each day for N days.
+and he received coupons for the same. The coupons earned in each day for N days 
+is given as coupons[], where coupon[i] indicates number of coupons on i-th day.
+And the expiry time in days is given as expdays[], where expdays[i] indicates,
+expiry of i-th day coupons and expiry days includes the day the coupons earned. 
+If no coupons on i-th day, then coupons[i]=0 and expdays[i]=0.
+
+For example: if Nagireddy earns 2 coupons on day-3, He has to utilize them on 
+day-3 and day-4, he can't utilize them on day-5.
+
+You will be given an integer N, coupons[] and expdays[].
+Your task is to findout the maximum number of coupons utilized by Nagireddy. 
+
+NOTE: if N=5 and on day-5 you are left with few coupons, you can continue 
+to utilize the remaining coupons before they get expired.
+
+Input Format:
+-------------
+Line-1: An integer N, number of Coupons.
+Line-2: N space separated integers, number of coupons each day.
+Line-3: N space separated integers, i-th coupon expires in days[i] days. 
+
+Output Format:
+--------------
+Print an integer, number of coupons you can utilize.
+
+
+Sample Input-1:
+---------------
+5
+1 3 4 2 2
+2 1 2 4 3
+
+Sample Output-1:
+----------------
+7
+
+Explanation:
+------------
+Nagireddy can utilize 7 coupons in total,
+	- On day-1, he can use 1 coupon received on day-1.
+	- On day-2, he can use 1 coupon received on day-2 and remaining 2 coupons expired.
+	- On day-3, he can use 1 coupon received on day-3 and remains 3 coupons.
+	- On day-4, he can use 1 coupon received on day-3 and 
+	  remains with 2 coupons earned on day-4.
+	- On day-5, he can use 1 coupon received on day-4 and 
+	  remains with 3 coupons earned on day-4 and 2 coupons earned on day-5
+	- On day-6, he can use 1 coupon received on day-5 and 
+	  remains with 3 coupons earned on day-4 and coupons earned on day-5 expired.
+	- On day-7, he can use 1 coupon received on day-4 and 
+	  2 coupons remained on day-4 expires.
+
+
+Sample Input-2:
+---------------
+6
+2 0 0 1 0 3
+1 0 0 2 0 2
+
+Sample Output-2:
+----------------
+4
+
+Explanation:
+------------
+Nagireddy can utilize 4 coupons in total,
+	- On day-1, he can use 1 coupon received on day-1, and 1 coupon expired.
+	- On day-2 and day-3, he don't have any coupons
+	- On day-4, he can use 1 coupon received on day-4 and no coupons left.
+	- On day-5, he don't have any coupons
+	- On day-6, he can use 1 coupon received on day-6 and 
+	  remains with 1 coupons earned on day-6.
+	- On day-7, he can use 1 coupon received on day-6 and 
+	  the remaining 1 coupon expired.
+
+Test Cases:
+----------
+case =1
+input =6
+2 0 0 1 0 3
+1 0 0 2 0 2
+output =4
+
+case =2
+input =5
+1 3 4 2 2
+2 1 2 4 3
+output =7
+
+case =3
+input =5
+1 2 3 5 2
+3 1 4 3 4
+output =8
+
+case =4
+input =10
+2 4 3 2 5 7 4 5 3 2
+5 7 5 5 3 2 7 8 5 6
+output =15
+
+case =5
+input =20
+5 16 8 6 3 19 15 11 19 15 18 0 10 12 7 14 15 20 19 19
+3 1 15 2 16 8 1 8 14 1 18 17 15 4 20 15 12 6 18 20
+output =39
+
+case =6
+input =25
+4 18 0 10 2 1 14 0 13 13 1 8 1 2 11 8 18 9 10 19 14 19 10 19 10
+25 34 0 17 8 23 19 0 27 1 7 21 2 34 23 33 35 19 14 13 5 12 5 3 18
+output =51
+
+case =7
+input =50
+27 26 26 4 5 33 35 23 2 11 34 1 1 31 10 11 2 12 17 32 27 21 13 11 23 28 14 15 8 19 15 27 3 23 32 27 7 28 4 3 20 5 8 16 2 6 20 1 30 13
+7 2 48 47 11 1 60 21 4 36 54 31 48 31 54 31 28 4 26 9 20 21 2 47 37 20 24 18 24 19 17 11 45 55 33 34 41 57 6 13 60 17 46 38 16 27 33 43 29 15
+output =100
+
+case =8
+input =100
+37 13 57 6 34 21 23 35 45 36 55 43 7 22 55 53 51 48 13 33 5 42 40 2 53 10 29 6 3 20 45 6 38 52 35 39 1 58 31 45 41 15 39 44 17 14 11 19 40 51 55 53 57 12 1 60 4 39 44 56 42 43 46 51 21 29 16 29 59 11 46 11 4 26 30 32 10 44 40 12 56 16 45 19 4 1 26 37 6 13 54 42 14 44 33 38 38 26 40 41
+26 89 32 15 40 29 35 43 35 30 2 16 55 62 46 70 4 42 87 32 20 54 72 1 13 28 90 19 25 76 35 23 36 39 83 43 60 25 17 3 57 27 74 3 64 16 47 69 17 45 53 66 62 28 75 77 61 62 33 86 73 20 23 93 31 19 40 65 42 55 28 31 4 27 68 32 9 28 16 32 35 88 64 95 35 55 41 89 37 74 14 74 38 57 13 70 71 77 38 74
+output =178
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class EatenApples {
+    public int eatenApples(int[] apples, int[] days) {
+        int res = 0; 
+        int i = 0; //day
+        
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a,b)->(a+days[a])-(b+days[b])); // indexes go in, sort by expiration date
+        for(; i<apples.length; i++){
+            if(apples[i] != 0){
+                pq.offer(i);
+            }            
+            while(!pq.isEmpty() && pq.peek()+days[pq.peek()] <= i) //remove expired apples
+                pq.poll();
+            if(pq.isEmpty()) continue; 
+            apples[pq.peek()]--; // eat apple of earliest expiration date
+            res++; 
+            if(apples[pq.peek()]==0) // remove if apples from that basket are all gone
+                pq.poll();
+        }
+        while(!pq.isEmpty()){ // empty rest of queue
+            while(!pq.isEmpty() && pq.peek()+days[pq.peek()] <= i)
+                pq.poll();
+            if(pq.isEmpty()) continue; 
+            apples[pq.peek()]--;
+            res++; 
+            if(apples[pq.peek()]==0)
+                pq.poll();
+            i++;
+        }
+        return res; 
+    }
+
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int days[]=new int[n];
+		int apples[]=new int[n];
+		for(int j=0;j<n;j++)
+			apples[i][j]=sc.nextInt();
+		for(int j=0;j<n;j++)
+			days[i][j]=sc.nextInt();		
+
+		System.out.println(new EatenApples().eatenApples(apples,days));
+	}	
+}

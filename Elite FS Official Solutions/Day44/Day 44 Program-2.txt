@@ -1,0 +1,170 @@
+/*
+Problem Statement:
+------------------
+Bablu is playing a eating challenge game.
+The game contains 3 boxes, each box contains P,Q and R number of laddus.
+
+To score in the game the rules are as follows:
+	- You can select any two non-empty boxes, 
+	and eat one laddu from each box, you will get 1 point.
+	- Reepeat the above step, until you can find two non-empty boxes.
+	Otherwise game will end.
+	
+Your task is to help Bablu to score maximum points in the game.
+
+Input Format:
+-------------
+Three space separated integers, P, Q, R.
+
+Output Format:
+--------------
+Print an integer, maximum points Bablu can score in the game.
+
+
+Sample Input-1:
+---------------
+3 3 4
+
+Sample Output-1:
+----------------
+5
+
+Explanation:
+------------
+The game starts with boxes with [3, 3, 4] laddus. 
+One optimal solution to score max points is:
+- Eat from 1st and 2nd boxes, remaining is [2, 2, 4]
+- Eat from 1st and 3rd boxes, remaining is [1, 2, 3]
+- Eat from 1st and 3rd boxes, remaining is [0, 2, 2]
+- Eat from 2nd and 3rd boxes, remaining is [0, 1, 1]
+- Eat from 2nd and 3rd boxes, remaining is [0, 0, 0]
+You can't select two non-empty boxes, so the game ends. 
+Total: 5 points.
+
+
+Sample Input-2:
+---------------
+3 4 5
+
+Sample Output-2:
+----------------
+6
+
+Explanation:
+------------
+The game starts with boxes with [3, 4, 5] laddus. 
+One optimal solution to score max points is:
+- Eat from 1st and 3rd boxes, remaining is [2, 4, 4]
+- Eat from 1st and 3rd boxes, remaining is [1, 4, 3]
+- Eat from 2nd and 3rd boxes, remaining is [1, 3, 2]
+- Eat from 2nd and 3rd boxes, remaining is [1, 2, 1]
+- Eat from 2nd and 3rd boxes, remaining is [1, 1, 0]
+- Eat from 1st and 2nd boxes, remaining is [0, 0, 0]
+You can't select two non-empty boxes, so the game ends. 
+Total: 6 points.
+
+Test Cases:
+----------
+case =1
+input =1234 1334 2134
+output =2351
+
+case =2
+input =543 455 756
+output =877
+
+case =3
+input =7634 6523 4837
+output =9497
+
+case =4
+input =1765 2924 2131
+output =3410
+
+case =5
+input =2222 3333 1111
+output =3333
+
+case =6
+input =8768 4567 6567
+output =9951
+
+case =7
+input =4723 2766 3455
+output =5472
+
+case =8
+input =9876 8765 7654
+output =13147
+
+*/
+
+Solution:
+---------
+import java.util.*;
+
+class MaxScore {
+
+	/* Math way
+    public int maximumScore(int a, int b, int c) {
+        int[] arr = {a,b,c};
+        Arrays.sort(arr);
+		
+		// the goal is to isolate the largest element and extract the maximum possible value
+        int sum1=arr[0]+arr[1];
+        int sum2=arr[2];
+		
+        int res=0;
+		
+        if(sum1>=sum2){
+		// We can combine the 2 lower elements after utilising the largest of 3
+            res=sum2+(sum1-sum2)/2;
+        }else{
+		// We can combine the 2 lower elements with the largest element
+            res=sum1;
+        }
+        return res;
+    }
+	*/
+	 
+	 //maxheap solution
+	 public int maximumScore(int a, int b, int c) {
+       
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>((a1, b1) -> (b1 - a1));
+        
+        //store in maxHeap
+        maxHeap.add(a);
+        maxHeap.add(b);
+        maxHeap.add(c);
+        
+        int score = 0;
+        while(maxHeap.size() > 1){
+            //find first two max number
+            int maxNum1 = maxHeap.remove();
+            int maxNum2 = maxHeap.remove();
+            
+            //decrement both 
+            maxNum1--;
+            maxNum2--;
+            
+            //only add in heap, if greater than 0
+            if(maxNum1 > 0) maxHeap.add(maxNum1);
+            if(maxNum2 > 0) maxHeap.add(maxNum2);
+            
+            //increase score
+            score++;
+        }
+        
+        return score;
+    }
+
+	
+	public static void main(String args[])
+	{
+		Scanner sc= new Scanner(System.in);
+		int a=sc.nextInt();
+		int b=sc.nextInt();
+		int c=sc.nextInt();
+		System.out.println(new MaxScore().maximumScore(a,b,c));
+	}
+}
