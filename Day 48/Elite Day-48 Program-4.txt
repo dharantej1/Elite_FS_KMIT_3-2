@@ -47,19 +47,46 @@ Sample Input-2:
 Sample Output-2:
 ----------------
 Yash
-def Wins(coins):    
-    N = len(coins)
-    if N % 2 == 0:
-        return "Yash"
-    else:
-        dp = coins[:]
-        for i in range(1, N):
-            for j in range(N - i):
-                dp[j] = max(coins[j] - dp[j + 1], coins[j + i] - dp[j])
-        if dp[0]>=0 == True:
-            return "Yash"
-        else:
-            return "Dutt"
-n=int(input())
-coins=list(map(int,input().split()))[:n]
-print(Wins(coins))
+// def Wins(coins):    
+//     N = len(coins)
+//     if N % 2 == 0:
+//         return "Yash"
+//     else:
+//         dp = coins[:]
+//         for i in range(1, N):
+//             for j in range(N - i):
+//                 dp[j] = max(coins[j] - dp[j + 1], coins[j + i] - dp[j])
+//         if dp[0]>=0 == True:
+//             return "Yash"
+//         else:
+//             return "Dutt"
+// n=int(input())
+// coins=list(map(int,input().split()))[:n]
+// print(Wins(coins))
+
+#include<bits/stdc++.h>
+using namespace std;
+int solve(vector<int> v,vector<vector<int>> dp,int i,int j){
+    if(i>=v.size() || i>j || j<0) return 0;
+    
+    if(dp[i][j]!=-1) return dp[i][j];
+    
+    int a=v[i]+min(solve(v,dp,i+2,j),solve(v,dp,i+1,j-1));
+    int b=v[j]+min(solve(v,dp,i+1,j-1),solve(v,dp,i,j-2));
+    
+    return dp[i][j]=max(a,b);
+}
+int main(){
+    int n;
+    cin>>n;
+    vector<int> v(n);
+    int sum=0;
+    for(int i=0;i<n;i++){
+        cin>>v[i];
+        sum+=v[i];
+    }
+    vector<vector<int>> dp(n+1,vector<int>(n+1,-1));
+    int ans=solve(v,dp,0,n-1);
+    if(ans>sum-ans) cout<<"Yash";
+    else cout<<"Dutt";
+}
