@@ -1,0 +1,56 @@
+You are given a set of N integers, and a value to find F. Initially a variable, 
+'total' is set to 0. You can perform either addition(+) or subtraction(-)
+of every integer from the set to the 'total'. The resultant total should be
+equal to the value F.
+
+Your task is to find out the number of ways, you can make the 'total' equal to
+the value F.
+
+Input Format:
+-------------
+Line-1: Two integers N and F.
+Line-2: N space separated integers 
+
+Output Format:
+--------------
+Print an integer, number of ways.
+
+
+Sample Input:
+---------------
+5 3
+1 1 1 1 1
+
+Sample Output:
+----------------
+5
+
+Explanation:
+------------
+total = -1+1+1+1+1 = 3 -> total=value-F
+total = +1-1+1+1+1 = 3 -> total=value-F
+total = +1+1-1+1+1 = 3 -> total=value-F
+total = +1+1+1-1+1 = 3 -> total=value-F
+total = +1+1+1+1-1 = 3 -> total=value-F
+
+NOTE: + means addition, - means subtraction
+def ways(nums, target):
+    sumOfNums = sum(nums)
+    n = len(nums)
+    if target > sumOfNums:
+        return 0
+    if (target + sumOfNums) % 2 != 0:
+        return 0
+    s1 = (sumOfNums + target) // 2
+    t = [[0] * (s1 + 1) for i in range(n + 1)]
+    t[0][0] = 1
+    for i in range(1, n + 1):
+        for j in range(s1 + 1):
+            if nums[i - 1] <= j:
+                t[i][j] = t[i - 1][j] + t[i - 1][j - nums[i - 1]]
+            else:
+                t[i][j] = t[i-1][j]
+    return t[n][s1]
+n,f=map(int,input().split())
+l=list(map(int,input().split()))[:n]
+print(ways(l,f))
