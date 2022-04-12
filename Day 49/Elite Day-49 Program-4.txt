@@ -55,3 +55,16 @@ Row		1 2 3	4 5 6 7 	8 9 10
 In row-1, we can fit for 1 family-group
 In row-2, we can fit for 1 family-group
 In row-3, we can fit for 2 family-groups
+def Movie(n,b):
+    l=[["0"]*10 for i in range(n)]
+    for k in range(b):
+        i,j=map(int,input().split())
+        l[i-1][j-1]="1"
+    c=0
+    for row in l:
+        c+=("".join(row[1:-1])).count("0000")
+    print(c)
+    
+    
+n,b=map(int,input().split())
+print(Movie(n,b))
