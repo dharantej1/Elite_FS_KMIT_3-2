@@ -1,0 +1,64 @@
+Mr Sudhakar has a set of N dices, the dice has different faces of 
+movie characters. The possibility score of i-th dice to show the JOKER face
+when it is rolled is given as pScore[i].
+
+Your task is to help Mr Sudhakar to find and return the possibility score, that
+the number of dices showing JOKER face equals to value F, 
+when you roll all N dices only once.
+
+NOTE:
+-----
+Your output will be accepted as correct,
+if they are within 10^-5 of the correct output.
+
+Input Format:
+-------------
+Line-1: An integer N, number of chances.
+Line-2: N space separated double values, possibility pScore[]
+Line-3: An integer F, number of dices to show JOKER face up.   
+
+Output Format:
+--------------
+Print a double result, the possibility score.
+
+
+Sample Input-1:
+---------------
+4
+0.5 0.25 0.75 0.5
+2
+
+Sample Output-1:
+----------------
+0.40625
+
+
+
+Sample Input-2:
+---------------
+1
+0.6
+1
+
+Sample Output-2:
+----------------
+0.60000
+
+
+Sample Input-3:
+---------------
+3
+0.4 0.5 0.6
+0
+
+Sample Output-3:
+----------------
+0.12000
+def possibleScore(n,l,f):
+    
+
+
+n=int(input())
+l=list(map(int,input().split()))[:n]
+f=int(input())
+print(posibleScore(n,l,f))

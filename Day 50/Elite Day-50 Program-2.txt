@@ -1,0 +1,53 @@
+Given a sorted list of integers E[], and two integers  L and U
+Where L <= E[i]  <= U.
+
+Your task is to find the ranges, which are not present in the given list
+and print all the ranges
+
+For example:
+Given list is [ 1, 2, 4, 51, 52, 53, 92, 93, 94, 95 ] and L=1 U=100: 
+The ranges which are not present are [3, 5->50, 54->91, 96->100]
+
+Note: List E contain no duplicates.
+
+Input Format:
+-------------
+Line-1 -> Space separated integers in sorted order
+
+Output Format:
+--------------
+Print the list of ranges.
+
+
+Sample Input-1:
+---------------
+0 1 2 3 4 5 8 9 10
+0 20
+
+Sample Output-1:
+----------------
+[6->7, 11->20]
+
+
+Sample Input-2:
+---------------
+1 2 4 51 52 53 92 93 94 95
+1 100
+
+Sample Output-2:
+----------------
+[3, 5->50, 54->91, 96->100]
+ 
+def findNumbers(r,l,u):
+    ans=[]
+    if l<r[0]:ans.append(str(l)+"->"+str(r[0]-1))
+    for i in range(1,len(r)):
+        if r[i]-r[i-1]>2:ans.append(str(r[i-1]+1)+"->"+str(r[i]-1))
+        elif r[i]-r[i-1]==2:ans.append(str(r[i-1]+1)) 
+    if r[len(r)-1]<u:ans.append(str(r[len(r)-1]+1)+"->"+str(u))
+    print(ans)
+r=list(map(int,input().split()))
+l,u=list(map(int,input().split()))
+findNumbers(r,l,u)
+    
+    
