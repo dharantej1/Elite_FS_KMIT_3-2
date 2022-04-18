@@ -1,0 +1,116 @@
+Pandavas and Kauravas are ruling two different kingdoms sepertaed by river.
+If you connect both the kingdoms they will be in Square shaped land.
+Land occupied by the kingdoms, indiacted with 1's and the river, indiacted with 0's.
+
+Now, Pandavas and Kauravas decided to build a bridge on the river for easy 
+connectivity. As the cost of building a bridge will be high, they have decided 
+to reduce the length of the bridge. You are allowed to build the bridge on 
+the river cells, connected by 4 directions only (up, down,left,right).
+
+Your task is to help the Kings, to minimize the occupation of river cells, 
+to build the bridge with minimum cost. And return the count of river cells occupied.
+
+Input Format:
+-------------
+Line-1: An integer N, size of the land.
+Next N lines: N space separated integers, either 0 or 1. 
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+4
+1 1 1 0
+1 0 0 0
+1 0 0 1
+0 0 1 1
+
+Sample Output-1:
+----------------
+2
+
+
+Sample Input-2:
+---------------
+5
+1 1 0 0 0
+1 1 0 0 0
+0 0 0 0 1
+0 0 0 1 1
+0 0 1 1 1
+
+Sample Output-2:
+----------------
+3
+#include<bits/stdc++.h>
+using namespace std;
+void DFS(int x,int y,vector<vector<int>> &grid)
+{
+    if(x>=0 and y>=0 and y<grid.size() and x<grid.size() and grid[x][y]==1){
+        grid[x][y]=-1;
+        DFS(x+1,y,grid);
+        DFS(x,y+1,grid);
+        DFS(x-1,y,grid);
+        DFS(x,y-1,grid);
+    }
+}
+int main()
+{
+   int n;
+   cin>>n;
+   vector<vector<int>> grid(n,vector<int> (n));
+   int x=-1,y=-1;
+   for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++){
+        cin>>grid[i][j];
+        if(grid[i][j]){
+            x=i;
+            y=j;
+            }
+
+    }
+   }
+   DFS(x,y,grid);
+   int ans=INT_MAX;
+   queue<vector<int> > q;
+   for(int i=0;i<n;i++){
+    for(int j=0;j<n;j++){
+         if(grid[i][j]==-1){
+            q.push({i,j,0});
+         }
+    }
+
+   }
+   while(!q.empty()){
+   vector<int> t=q.front();
+   q.pop();
+   int x=t[0];
+   int y=t[1];
+   int z=t[2];
+   if(x>=0 and y>=0 and y<n and x<n and grid[x][y]!=2 )
+  {
+      if(grid[x][y]==1){
+        ans=min(ans,z);
+      }
+      else{
+        q.push({x+1,y,z+1});
+        q.push({x-1,y,z+1});
+        q.push({x,y+1,z+1});
+        q.push({x,y-1,z+1});
+
+      }
+      grid[x][y]=2;
+
+   }
+
+   }
+   cout<<ans-1<<endl;
+
+
+
+
+
+}
