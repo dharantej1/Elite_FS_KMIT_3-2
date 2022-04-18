@@ -1,0 +1,117 @@
+/*
+Problem Statement:
+-----------------
+There is a switch-board made by an electrician,
+If you turn on any two adjacent switches, it will cause short-circuit
+and damage the switch-board.
+
+You are given N integers(only 0's and 1's), Indiactes current status of the 
+switch board with N switches, where 1 indiactes switch is ON and 0 indiactes 
+switch is OFF. And an integer K, more number of switches to be turned ON.
+
+Return true if and only if you can turn ON all the K switches, without causing 
+any damage to switch-board. Otherwise return fasle.
+
+Input Format:
+-------------
+Line-1: Two integers N and K, number of switches, and more K switches to be ON
+Line-2: N space separated integers, only 0's and 1's.
+
+Output Format:
+--------------
+Print a boolean value.
+
+
+Sample Input-1:
+---------------
+5 1
+1 0 0 0 1
+
+Sample Output-1:
+----------------
+true
+
+Sample Input-2:
+---------------
+5 2	
+1 0 0 0 1
+
+Sample Output-2:
+----------------
+flase
+
+Test Cases:
+----------
+case =1
+input =5 1
+1 0 0 0 1
+output =true
+
+case =2
+input =5 2	
+1 0 0 0 1
+output =false
+
+case =3
+input =10 2
+0 1 0 0 0 0 0 0 1 0
+output =true
+
+case =4
+input =10 3
+0 1 0 0 0 0 0 0 1 0
+output =false
+
+case =5
+input =25 5
+1 0 1 0 0 1 0 0 0 0 0 1 0 0 0 0 1 0 0 1 0 0 0 0 0 1
+output =true
+
+case =6
+input =25 6
+1 0 1 0 0 1 0 0 0 0 0 1 0 0 0 0 1 0 0 1 0 0 0 0 0 1
+output =false
+
+case =7
+input =50 15
+0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 1 0 0
+output =true
+
+case =8
+input =50 20
+0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 1 0 0
+output =false
+
+*/
+
+Solution:
+--------
+
+import java.util.*;
+
+public class SwitchBoard {
+    public boolean canKSwitchesOn(int[] switchBoard, int k) {
+        int i = 0, count = 0;
+        while (i < switchBoard.length) {
+            if (switchBoard[i] == 0 && (i == 0 || switchBoard[i - 1] == 0) && (i == switchBoard.length - 1 || switchBoard[i + 1] == 0)) {
+                switchBoard[i++] = 1;
+                count++;
+            }
+             if(count>=k)
+                return true;
+            i++;
+        }
+        return false;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int k=sc.nextInt();
+		int[] switchBoard=new int[n];
+		for(int i=0;i<n;i++)
+			switchBoard[i]=sc.nextInt();
+		System.out.println(new SwitchBoard().canKSwitchesOn(switchBoard,k));
+	}
+}

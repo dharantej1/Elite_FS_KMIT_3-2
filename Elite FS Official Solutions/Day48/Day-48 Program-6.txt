@@ -1,0 +1,116 @@
+/*
+Problem Statement:
+-----------------
+Somayajaulu working with strings.
+He is given a string S, string S contains repeated characters.
+Somayajulu decided to delete all the repeated characters, 
+such that each character in S should appears once and only once.
+He is deleting the characters from S in such a way that, 
+the final string should be the smallest string among all possibilities
+
+You are given the string S.
+Your task is to help Somayajulu to find the smallest string possible 
+after deleting the repeated characters from S.
+
+Input Format:
+-------------
+A string S.
+
+Output Format:
+--------------
+Print a string, smallest string after deleting repeated characters.
+
+
+Sample Input-1:
+---------------
+attitude
+
+Sample Output-1:
+----------------
+aitude
+
+
+Sample Input-2:
+---------------
+cbabacbabca
+
+Sample Output-2:
+----------------
+abc
+ 
+ 
+Test Cases:
+----------
+case =1
+input =attitude
+output =aitude
+
+case =2
+input =cbabacbabca
+output =abc
+
+case =3
+input =pneumonoultramicroscopicsilicovolcanoconiosis
+output =emnoultacrpisv
+
+case =4
+input =pseudopseudohypoparathyroidism 
+output =deuhopartyism
+
+case =5
+input =floccinaucinihilipilification 
+output =auchilpfton
+
+case =6
+input =antidisestablishmentarianism
+output =adblhentrism
+
+case =7
+input =supercalifragilisticexpialidocious
+output =afrgilstcexpdou
+
+case =8
+input =incomprehensibilitiesstrengthseuouae 
+output =cmpbilerngthsoua
+
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+public class RemoveDuplicateLetters {
+    public String removeDuplicateLetters(String s) {
+		Stack<Character> stack = new Stack<>();
+		int[] count = new int[26];
+		char[] arr = s.toCharArray();
+		for(char c : arr) {
+			count[c-'a']++;
+		}
+		boolean[] visited = new boolean[26];
+		for(char c : arr) {
+			count[c-'a']--;
+			if(visited[c-'a']) {
+				continue;
+			}
+			while(!stack.isEmpty() && stack.peek() > c && count[stack.peek()-'a'] > 0) {
+				visited[stack.peek()-'a'] = false;
+				stack.pop();
+			}
+			stack.push(c);
+			visited[c-'a'] = true;
+		}
+		StringBuilder sb = new StringBuilder();
+		for(char c : stack) {
+			sb.append(c);
+		}
+		return sb.toString();
+	}
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String s=sc.next();
+		System.out.println(new RemoveDuplicateLetters().removeDuplicateLetters(s));
+	}
+}

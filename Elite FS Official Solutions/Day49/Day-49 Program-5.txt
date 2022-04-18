@@ -1,0 +1,237 @@
+/*
+Problem Statement:
+-----------------
+Given N satellite stations, numbered 1 to N.
+These satellites are connected to send signals from one to other.
+To send a signal from satellite 's' to satellite 'd', it takes 
+an amount of time 't'.
+
+You are given a list of travel times as directed edges times[i] = (s, d, t).
+
+Your task to find the time taken to recieve signal from a satellite station K, 
+to all N-1 satellite stations. If it is impossible, return -1 .
+
+Input Format:
+-------------
+Line-1 ->   Three integers, N number of satellite stations, 
+            K is the satellite to send signal and T is the number of edges.
+Next T lines -> Three space separated integers, 's' is the source, 
+            'd' is the destination, 
+			't' is the time taken recieve signal from 's' to 'd'.
+
+Output Format:
+--------------
+Print an integer as your result.
+
+
+Sample Input-1:
+---------------
+4 2 3
+2 1 1
+2 3 1
+3 4 1
+
+Sample Output-1:
+----------------
+2
+
+
+Sample Input-2:
+---------------
+5 2 4
+2 1 1
+2 3 2
+3 4 3
+5 1 4
+
+Sample Output-2:
+----------------
+-1
+
+
+Sample Input-3:
+---------------
+5 2 4
+2 1 1
+2 3 2
+3 4 3
+1 5 6
+
+Sample Output-3:
+----------------
+7
+
+ 
+Test Cases:
+----------
+case =1
+input =4 2 3
+2 1 1
+2 3 1
+3 4 1
+output =2
+
+case =2
+input =5 2 4
+2 1 1
+2 3 2
+3 4 3
+5 1 4
+output =-1
+
+case =3
+input =5 2 4
+2 1 1
+2 3 2
+3 4 3
+1 5 6
+output =7
+
+case =4
+input =7 1 13
+1 2 2
+2 3 2
+3 2 4
+2 7 1
+7 2 2
+3 4 5
+7 6 4
+4 3 2
+4 5 6
+5 4 3
+5 6 1
+6 5 8
+6 7 3
+output =15
+
+case =5
+input =5 2 10
+1 5 2
+1 3 4
+2 1 1
+2 5 9
+3 2 6
+4 1 3
+4 2 8
+4 3 7
+5 4 5
+5 3 10
+output =8
+
+case =6
+input =6 6 11
+1 2 1
+1 5 1
+1 4 3
+4 5 6
+3 4 4
+2 3 3
+6 1 1
+6 2 2
+6 5 5
+6 4 7
+6 3 6
+output =5
+
+case =7
+input =8 7 21
+1 2 1
+1 6 6
+2 3 5
+2 1 6
+2 8 4
+3 2 2
+3 4 3
+4 3 4
+4 5 4
+5 6 5
+5 8 12
+5 4 3
+6 1 1
+6 5 2
+7 1 3
+7 5 2
+7 4 3
+8 3 3
+8 2 3
+8 4 3
+1 7 2
+output =8
+
+case =8
+input =8 7 21
+1 2 1
+1 6 1
+2 3 1
+2 1 1
+2 8 1
+3 2 1
+3 4 1
+4 3 1
+4 5 1
+5 6 1
+5 8 1
+5 4 1
+6 1 1
+6 5 1
+7 1 1
+7 5 1
+7 4 1
+8 3 1
+8 2 1
+8 4 1
+1 7 1
+output =2
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class NetworkDelayTime {
+    public static int networkDelayTime(int[][] times, int N, int K) {
+        Map<Integer, Map<Integer,Integer>> map = new HashMap<>();
+        for(int[] time : times){
+            map.putIfAbsent(time[0], new HashMap<>());
+            map.get(time[0]).put(time[1], time[2]);
+        }
+        
+        //distance, node into pq
+        Queue<int[]> pq = new PriorityQueue<>((a,b) -> (a[0] - b[0]));
+        
+        pq.add(new int[]{0, K});
+        
+        boolean[] visited = new boolean[N+1];
+        int res = 0;
+        
+        while(!pq.isEmpty()){
+            int[] cur = pq.remove();
+            int curNode = cur[1];
+            int curDist = cur[0];
+            if(visited[curNode]) continue;
+            visited[curNode] = true;
+            res = curDist;
+            N--;
+            if(map.containsKey(curNode)){
+                for(int next : map.get(curNode).keySet()){
+                    pq.add(new int[]{curDist + map.get(curNode).get(next), next});
+                }
+            }
+        }
+        return N == 0 ? res : -1;
+            
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int N=sc.nextInt();
+		int K=sc.nextInt();
+		int[][] network=new int[N][3];
+		for(int i=0;i<N;i++)
+			for(int j=0;j<3;j++)
+				network[i][j]=sc.nextInt();
+		System.out.println(networkDelayTime(network, N, K));
+	}
+}

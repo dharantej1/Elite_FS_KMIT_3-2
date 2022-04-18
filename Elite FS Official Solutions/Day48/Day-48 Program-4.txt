@@ -1,0 +1,133 @@
+/*
+Problem Statement:
+-----------------
+In a game, There are N boxes in a Queue.
+Each box conatins few gold coins in it.
+
+Yash and Dutt are playing the game.
+
+Game rules are as follows:
+	- Initially, Yash picks one of the box from either end of the Queue.
+	- Then, Dutt picks one of the box from either end of the Queue.
+	- Repeat the first and second steps until the Queue become empty. 
+The person with the maximum amount of gold coins is the winner.
+
+You are given N boxes of gold coins, coins[].
+Your task is to find the name of the winner either Yash or Dutt. 
+
+Input Format:
+-------------
+Line-1: An integer N
+Line-2: N space separated integers coins[].
+
+Output Format:
+--------------
+Print the name of the winner, Yash / Dutt
+
+
+Sample Input-1:
+---------------
+3
+2 6 3
+
+Sample Output-1:
+----------------
+Dutt
+
+Explanation: 
+------------
+Initially, Yash can choose between 2 and 3.
+If he chooses 3 (or 2), then Dutt can choose from 2 (or 3) and 5. If player 2 chooses 5, then
+Yash will be left with 2 (or 3).
+So, final score of Yash is 3 + 2 = 5, and Dutt is 6.
+Hence, Dutt is the winner.
+
+Sample Input-2:
+---------------
+4
+2 6 50 7
+
+Sample Output-2:
+----------------
+Yash
+
+
+Test Cases:
+----------
+case =1
+input =3
+2 6 3
+output ="Dutt"
+
+case =2
+input =4
+2 6 50 7
+output ="Yash"
+
+case =3
+input =9
+2 6 3 8 7 6 5 9 15
+output ="Yash"
+
+case =4
+input =9
+10 5 15 20 18 19 12 13 14
+output ="Yash"
+
+case =5
+input =5
+1 20 5 50 10
+output ="Dutt"
+
+case =6
+input =5
+1 50 10 60 14
+output ="Dutt"
+
+case =7
+input =9
+4 50 10 60 14 20 5 50 10
+output ="Dutt"
+
+case =8
+input =14
+10 5 15 20 18 19 12 13 14 20 30 40 50 60
+output ="Yash"
+
+*/
+
+Solution:
+--------
+
+import java.util.*;
+
+class PredictTheWinner {
+    public boolean predictTheWinner(int[] nums) {
+        int[][] dp = new int[nums.length][nums.length];
+        for (int s = nums.length; s >= 0; s--) {
+            for (int e = s; e < nums.length; e++) {
+                if (s == e) {
+                    dp[s][e] = nums[s];
+                } else {
+                    int a = nums[s] - dp[s + 1][e];
+                    int b = nums[e] - dp[s][e - 1];
+                    dp[s][e] = Math.max(a, b);
+                }
+            }
+        }
+        return dp[0][nums.length - 1] >= 0;
+    }
+
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int arr[]=new int[n];
+		for(int j=0;j<n;j++)
+			arr[j]=sc.nextInt();
+		if(new PredictTheWinner().predictTheWinner(arr))
+			System.out.println("Yash");
+		else
+			System.out.println("Dutt");
+	}
+}

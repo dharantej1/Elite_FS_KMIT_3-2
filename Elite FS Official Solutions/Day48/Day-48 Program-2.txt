@@ -1,0 +1,113 @@
+/*
+Problem Statement:
+-----------------
+A string is called well-weighted string,if and only if
+the string has equal number of 'A's and 'B's in it.
+
+You are given a string S, divide S in to the maximum number of well-weighted 
+strings. You should not leave any letter/part of the string.
+Return the maximum number of well-weighted strings.
+
+Input Format:
+-------------
+A string contains only A's and B's
+
+Output Format:
+--------------
+Print an integer, maximum number of well-weighted strings
+
+
+Sample Input-1:
+---------------
+ABBBBAAABA
+
+Sample Output-1:
+----------------
+3
+
+Explanation:
+--------------
+Well weighted strings, AB, BBBAAA, BA.
+
+
+Sample Input-2:
+---------------
+ABAABBABAB
+
+Sample Output-2:
+----------------
+4
+
+Explanation:
+--------------
+Well weighted strings, AB, AABB, AB, AB.
+
+
+Sample Input-3:
+---------------
+ABAAABBABB
+
+Sample Output-3:
+----------------
+2
+
+
+
+Test Cases:
+----------
+case =1
+input =ABBBBAAABA
+output =3
+
+case =2
+input =ABAABBABAB
+output =4
+
+case =3
+input =ABAAABBABB
+output =2
+
+case =4
+input =ABAABBABABABBBBAAABA
+output =7
+
+case =5
+input =ABAABBABABABBAABBBABABBAAABA
+output =9
+
+case =6
+input =ABAABBABABABBABBAABAABBAABBABBABABBAAABA
+output =14
+
+case =7
+input =ABAABAABBAABBABBABABABABBABBAABAABBAABBABBABABBAAABABBABBAABAA
+output =16
+
+case =8
+input =ABAABABABBABBABABBAAABABABBABBABABBAAABABBABBAABAABABBAABAABABABABABBABA
+output =23
+
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class WellWeightedString{
+	public int wellWeightedString(String s) {
+		int res = 0, cnt = 0;
+		for (int i = 0; i < s.length(); ++i) {
+			cnt += s.charAt(i) == 'B' ? 1 : -1;
+			if (cnt == 0) ++res;
+		}
+		return res;             
+	}
+	
+	public staic void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String s=sc.next();
+		System.out.println(new WellWeightedString().wellWeightedString(s));
+	}
+}
