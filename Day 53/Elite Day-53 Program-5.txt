@@ -51,3 +51,38 @@ Sample Input-2:
 Sample Output-2:
 ----------------
 0.50499
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    double N,P;
+    cin>>N>>P;
+    priority_queue<vector<double>,vector<vector<double>>> pq;
+    double s=0,t=0;
+    for(int i=0;i<N;i++)
+    {
+         double l,r;
+         cin>>l>>r;
+         double x=(l+1)/(r+1);
+         pq.push({x-l/r,l,r,l/r});
+    }
+    double ans=0;
+    while(P--){
+        vector<double>  v=pq.top();
+        pq.pop();
+        double l=v[1]+1;
+        double r=v[2]+1;
+        double x=(l+1)/(r+1);
+         pq.push({x-l/r,l,r,l/r});
+
+    }
+    while(!pq.empty()){
+        ans+=pq.top()[3];
+        pq.pop();
+    }
+     printf("%.5lf",ans/N);
+   
+}
