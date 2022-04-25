@@ -1,0 +1,78 @@
+Given a list of integers points[], the points earned or lost by N persons.
+
+A point[a], is said to be better than a point[b],
+if mod(point[a] - med) > mod(point[b] - med), where med is the median of points.
+If mod(point[a] - med) == mod(point[b] - med), then point[a] is said to be 
+better than point[b], if point[a] > point[b].
+
+Median is the middle value in an ordered integer list. More formally,
+if the length of the list is N, the median is the element in position 
+((N - 1) / 2) in the sorted list (0-indexed).
+
+For Example,
+points[]= [7, -3, 9, 8, 1], N = 5 and the median is med = ((5 - 1) / 2) = 2. 
+The element at median is points[med]= 7, as sorted list is [-3, 1, 7, 8, 9]
+
+Your task is to return P number of better values from the points[] list.
+Return the answer in sorted order.
+
+Input Format:
+-------------
+Line-1: Two space seperated integers, N and P
+Line-2: N space separated integers points[].
+
+Output Format:
+--------------
+Print the list of integers in sorted order.
+
+
+Sample Input-1:
+---------------
+5 2
+2 3 4 5 6
+
+Sample Output-1:
+----------------
+2 6
+
+Explanation:
+------------
+The better 2 elements are [2, 6].
+Please note that although mod(6 - 4) == mod(2 - 4) but 6 is better than 2
+because 6 > 2.
+
+
+Sample Input-2:
+---------------
+6 4
+3 4 9 4 3 5
+
+Sample Output-2:
+----------------
+3 3 5 9
+n,p=list(map(int,input().split()))
+points=list(map(int,input().split()))
+points.sort()
+if n%2!=0:m=points[n//2]
+else:m=points[(n//2)-1]
+i,j,c,ans=0,-1,0,[]
+while c<p:
+    p1,p2=points[i],points[j]
+    if abs(m-p1)>abs(m-p2):
+        ans.append(p1)
+        i+=1
+        c+=1
+    elif abs(m-p2)>abs(m-p1):
+        ans.append(p2)
+        j-=1
+        c+=1
+    else:
+        if p1>=p2:
+            ans.append(p1)
+            i+=1
+        else:
+            ans.append(p2)
+            j-=1
+        c+=1
+for i in sorted(ans):
+    print(i,end=' ')

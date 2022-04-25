@@ -1,0 +1,109 @@
+You are given two strings 'Org' and 'Sub' where Sub is a subsequence of Org. 
+You aer given a list of R indices[] (Unique indices), and you need to delete 
+P letters from the given string 'Org', with the following conditions:
+    - You need to delete the first P letters from strin 'Org'in the given order
+      of indices[] only.
+    - After deleting P letters, the string 'Sub' should be subsequence of 'Org'.
+      Where, 0 <= i < P and P < R.
+     
+Your task is to maximixe the value of P such that 'Sub' is still a subsequence 
+of 'Org' after the deletion of letters, and return P.
+
+Input Format:
+-------------
+Line-1: Two space seperated strings, Original and Sub
+Line-2: An integer, R, number of indices.
+Line-3: R space separated integers, indices[].
+
+Output Format:
+--------------
+Print an integer, the maximum value of P.
+
+
+Sample Input-1:
+---------------
+pqrprq pr
+3
+3 1 0
+
+Sample Output-1:
+----------------
+2
+
+Explanation:
+------------
+After deleting 2 letters at indices 3 and 1, "pqrprq" becomes "prrq".
+"pq" is a subsequence of "prrq".
+If you delete 3 letters at indices 3, 1, and 0, "pqrprq" becomes "rrq", 
+and "pq" is not a subsequence of "rrq".
+Hence, the maximum P is 2.
+
+Sample Input-2:
+---------------
+pqrqssss pqrs
+6
+3 2 1 4 5 6
+
+Sample Output-2:
+----------------
+1
+
+Explanation: 
+------------
+After deleting 1 letter at index 3, "pqrqssss" becomes "pqrssss".
+"pqrs" is a subsequence of "pqrssss".
+
+
+
+import java.util.*;
+
+class main{
+    static boolean check(String org,String sub,int[] arr,int x){
+        char[] O = org.toCharArray();
+        char[] S = sub.toCharArray();
+        for(int i=0;i<=x;i++){
+            O[arr[i]] = '_';       
+        }    
+        int i = 0;
+        int j = 0;
+        while(i< O.length && j<S.length){
+            if(O[i] == S[j]){
+                i++;
+                j++;
+            }
+            else i++;
+        }
+        if(j == S.length) return true;
+        return false;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        String org = sc.next();
+        String sub = sc.next();
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++){
+            arr[i] = sc.nextInt();
+        }
+        int c = 0;
+        int l = 0;
+        int r = n-1;
+        int ans = -1;
+        while(l<=r){
+            if(l==r){
+                if(check(org,sub,arr,r)){
+                    ans=r;
+                }
+                break;
+            }
+            int mid = (l+r)/2;
+            if(check(org,sub,arr,mid)){
+                ans = mid;
+                l = mid+1;
+            }
+            else
+                r = mid-1;
+        }
+        System.out.println(ans+1);
+    }
+}
