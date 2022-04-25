@@ -1,0 +1,67 @@
+VishnuVardan is working with Binary Trees.
+Kishore is planned to flip the binary tree horizontally.
+
+The rules to flip the binary tree are as follows:
+	- The original root node becomes the new right node.
+	- The original left node becomes the new root node.
+	- The original right node becomes the new left node.
+
+Your task is to help VishnuVardan to flip the tree horizontally with 
+given rule set.
+
+Your task is to implement the class Solution:
+	- public BinaryTreeNode horizontalFlippedTree(BinaryTreeNode root)
+	return the new root node.
+
+NOTE:
+- The mentioned rules are applied level by level, it is guaranteed that 
+  every node in the given tree has either 0 or 2 children.
+- Every right node in the tree has a left node sharing the same parent
+- Every right node in the tree has no children
+
+
+Input Format:
+-------------
+Space separated integers, nodes of the tree.
+
+Output Format:
+--------------
+Print the list of nodes of flipped tree as described below.
+
+
+Sample Input-1:
+---------------
+4 2 3 5 1
+
+Sample Output-1:
+----------------
+5 1 2 3 4
+
+
+Sample Input-2:
+---------------
+4 2 5
+
+Sample Output-2:
+----------------
+2 5 4
+
+For explanation look the hint
+import java.util.*;
+
+/*
+//Sample Binary tree node sturcture for reference 
+
+class BinaryTreeNode{
+	public int data; 
+	public BinaryTreeNode left, right; 
+	public BinaryTreeNode(int data){
+		this.data = data; 
+		left = null; 
+		right = null; 
+	}
+}
+*/
+class Solution {
+
+}
