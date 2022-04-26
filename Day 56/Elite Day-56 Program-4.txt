@@ -38,3 +38,78 @@ At time 12, the goals are [0,1,1], and 1 is leading.
 At time 25, the goals are [0,1,1,0,0,1], and 1 is leading (as ties go to the most recent goal)
 At time 15, the goals are [0,1,1,0], and 0 is leading (as ties go to the most recent goal)
 At time 24, the goals are [0,1,1,0,0], and 0 is leading.
+import java.util.*;
+
+class main{
+    static int find_index(int[] arr, int n, int K)
+{
+     
+    int start = 0;
+    int end = n - 1;
+    while (start <= end)
+    {
+        int mid = (start + end) / 2;
+
+        if (arr[mid] == K)
+            return mid;
+ 
+        else if (arr[mid] < K)
+            start = mid + 1;
+ 
+        else
+            end = mid - 1;
+    }
+    return end;
+}
+static void find_leading_team(int[] goals,int[] leading_team,int n){
+    
+        int zeros = 0;
+        int ones = 0;
+        
+        for(int i=0;i<n;i++){
+            int goal = goals[i];
+            if(goal==0){
+                zeros++;
+            }
+            else{
+                ones++;
+            }
+            if(zeros > ones){
+                leading_team[i] = 0;
+            }
+            else if(zeros < ones){
+                leading_team[i] = 1;
+            }
+            else{
+                leading_team[i] = goal;
+            }
+        }
+}
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        
+        int[] goals = new int[n];
+        for(int i=0;i<n;i++) goals[i] = sc.nextInt();
+        
+        int[] leading_team = new int[n];
+        find_leading_team(goals,leading_team,n);
+        
+        int[] times = new int[n];
+        for(int i=0;i<n;i++){
+            times[i] = sc.nextInt();
+        }
+        
+        int[] giventime = new int[k];
+        for(int i=0;i<k;i++){
+            giventime[i] = sc.nextInt();
+        }
+        
+        for(int i=0;i<k;i++){
+            int index = find_index(times,n,giventime[i]);
+            System.out.print(leading_team[index]+" ");
+        }
+        
+    }
+}

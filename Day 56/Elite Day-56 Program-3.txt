@@ -19,6 +19,7 @@ To keep the items into the rooms, delivery agent has to follow these rules:
 Your task is to return the maximum number of items, the delivery agent can keep 
 inside the building.
 
+
 Input Format:
 -------------
 Line-1 -> two integers N and K, number of items and number of rooms.
@@ -65,3 +66,64 @@ since there's only 1 room of height >= 6
 Other valid solutions are to put the item with height 4 in room 2 or 
 to put the item with height 3 in room 2 or room 0 before putting 
 the the item with height 4 and 6.
+import java.util.*;
+
+class main{
+    static int total(int[] result,int[] items){
+        Arrays.sort(result);
+        Arrays.sort(items);
+        
+        int i = 0;
+        int j = 0;
+        int c = 0;
+        while(i<result.length && j<items.length){
+            if(result[i] < items[j]){
+                i++;
+            }
+            else{
+                c++;
+                i++;
+                j++;
+            }
+        }
+        return c;
+        
+    }
+    static int[] cal_left(int[] rooms,int k){
+        
+        int[] left = new int[k];
+        int l = Integer.MAX_VALUE;
+        for(int i=0;i<k;i++){
+            l = Math.min(l,rooms[i]);
+            left[i] = l;
+        }
+        return left;
+    }
+    static int[] cal_right(int[] rooms,int k){
+        int[] right = new int[k];
+        int r = Integer.MAX_VALUE;
+        for(int i=k-1;i>=0;i--){
+            r = Math.min(r,rooms[i]);
+            right[i] = r;
+        }
+        return right;
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+        int[] items = new int[n];
+        int[] rooms = new int[k];
+        for(int i=0;i<n;i++) items[i] = sc.nextInt();
+        for(int i=0;i<k;i++) rooms[i] = sc.nextInt();
+        
+        int[] left = cal_left(rooms,k);
+        int[] right = cal_right(rooms,k);
+        
+        int result[] = new int[k];
+        for(int i=0;i<k;i++){
+            result[i] = Math.max(right[i],left[i]);
+        }
+        System.out.println(total(result,items));
+    }
+}
