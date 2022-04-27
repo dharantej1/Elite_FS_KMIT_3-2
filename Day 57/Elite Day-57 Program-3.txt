@@ -1,0 +1,60 @@
+Ashok is given a list of integers nums[].
+His task is to find the longest contiguous sublist of S, 
+the product of all the numbers in the sublist should be positive.
+
+Your task is to return the length of longest contiguous sublist.
+
+Input Format:
+-------------
+Space separated integers nums[], list of numbers.
+
+Output Format:
+--------------
+Print the length of the longest contiguous sublist
+
+
+Sample Input-1:
+---------------
+1 -1 2 -2
+
+Sample Output-1:
+----------------
+4
+
+
+Sample Input-2:
+---------------
+-1 -2 -3 0 1
+
+Sample Output-2:
+----------------
+2
+
+Explanation:
+------------
+0 is not considered as positive number.
+
+
+Sample Input-3:
+---------------
+1 2 3 4 -5 6  7 8
+
+Sample Output-3:
+----------------
+4
+def maxSublist(l):
+    max_len = pos = neg = 0
+    for i in l:
+        if i == 0: 
+            pos = neg = 0
+        elif i > 0: 
+            pos += 1 
+            neg = 0 if neg == 0 else neg + 1 
+        else: 
+            old_pos = pos
+            pos = 0 if neg == 0 else neg + 1 
+            neg = old_pos + 1 
+        max_len = max(max_len, pos) 
+    return max_len
+l=list(map(int,input().split()))
+print(maxSublist(l))
