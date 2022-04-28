@@ -1,0 +1,64 @@
+Mr Parandhamayya working with words.
+He is given a word W, you need to divide the word into N non-empty parts, 
+such that all the newly formed words should be distinct, and 
+if you append all those words should form original word W.
+
+Your task is to help Mr Parandhamayya to divide the word into N parts,
+such that, the value of N should be maximized, and print N.
+
+Input Format:
+-------------
+Line-1: A string W, a word.
+
+Output Format:
+--------------
+Print an integer result, the value of N.
+
+
+Sample Input-1:
+---------------
+banana
+
+Sample Output-1:
+----------------
+4
+
+Explanation: 
+------------
+One way to divide the word is "b","a","n","ana".
+If you divide it like "b","a","n","an","a".The word "a" will be repeated.
+So it is not allowed to divide like the second way.
+
+
+Sample Input-2:
+---------------
+mississippi
+
+Sample Output-2:
+----------------
+7
+
+Explanation: 
+------------
+One of the way to divide the word is "m","i","s","si","ssi","p","pi".
+
+NOTE: Subsequences are not allowed.
+s = input()
+st = set()
+res = -99999
+def find(ind):
+    global s,st,res
+    if ind>=len(s):
+        res = max(len(st),res)
+        return
+    temp = ""
+    for i in range(ind,len(s)):
+        temp+= s[i]
+        #temp = s[ind:i+1]
+        if temp not in st:
+            st.add(temp)
+            find(i+1)
+            st.remove(temp)
+    return
+find(0)
+print(res)

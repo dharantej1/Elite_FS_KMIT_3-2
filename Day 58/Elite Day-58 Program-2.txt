@@ -1,0 +1,62 @@
+Arjun wants to build a swimming pool, in the backyard of his farm-house.
+The backyard has an empty land of size m*n. 
+Some part of the backyard is used to build the swimming pool
+You will be given the m*n grid values (0's and 1's). 
+where 1 indicates swimming pool, and 0 indiactes empty land.
+
+Your task to find the perimeter of the swimming pool.
+
+Note: There is only one swimming pool.
+
+Input Format:
+-------------
+Line-1: Two integers M and N, size of the backyard.
+Next M lines: N space separated integers, either 0 or 1
+0- represents empty land and 1- represents the swimming pool 
+
+Output Format:
+--------------
+Print an integer, the perimeter of the swimming pool
+
+
+Sample Input-1:
+---------------	
+4 4
+0 1 0 0
+1 1 1 0
+0 1 0 0
+1 1 0 0
+ 
+Sample Output-1:
+----------------
+16
+
+
+Sample Input-2:
+---------------
+1 2
+1 0
+ 
+Sample Output-2:
+----------------
+4
+
+For explanation of sample test cases given refer Hint-1.
+def poolPerimeter(grid):    
+    op = 0
+    m = len(grid)
+    n = len(grid[0])
+    
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == 1:
+                for x,y in [(0,1),(1,0),(-1,0),(0,-1)]:
+                    dx = i + x
+                    dy = j + y
+                    # print(dx,dy)
+                    if dx >= m or dy >= n or dx < 0 or dy < 0 or grid[dx][dy] == 0:
+                        op += 1
+    return op
+m,n=map(int,input().split())
+l=[list(map(int,input().split()))[:n] for _ in range(m)]
+print(poolPerimeter(l))
