@@ -1,0 +1,130 @@
+/*
+Problem Statement:
+-----------------
+Somesh is working on Number Strings.
+He got an idea to find the smallest possible number by 
+deleting some digits from the number without changing 
+the relative order of digits in it.
+
+You will be given a integer String 'num', and an integer n.
+Find the smallest number possible after deleting n digits from 'num'.
+
+Note: If the number string 'num' turns to empty, print 0.
+
+Input Format:
+-------------
+Line-1 : A string num, consist of digits only.
+Line-2 : An integer n, number of digits to delete.
+
+Output Format:
+--------------
+Print the smallest possible number.
+
+
+Sample Input-1:
+---------------
+1432219
+3
+
+Sample Output-1:
+----------------
+1219
+
+Explanation: 
+------------
+Delete the three digits 4, 3, and 2 to form the smallest number 1219.
+
+
+Sample Input-2:
+---------------
+10200
+1
+
+Sample Output-2:
+----------------
+200
+
+Explanation:
+------------
+Delete the leading 1 and the smallest number is 200. 
+Note that the output must not contain leading zeroes.
+
+ 
+Test Cases:
+----------
+case =1
+input =10200
+1
+output =200
+
+case =2
+input =1432219
+3
+output =1219
+
+case =3
+input =8767445367656
+5
+output =44367656
+
+case =4
+input =100230450607
+4
+output =40607
+
+case =5
+input =67452317
+3
+output =42317
+
+case =6
+input =1263546523131
+4
+output =123423131
+
+case =7
+input =1281317487
+5
+output =11147
+
+case =8
+input =87641324683128648768
+8
+output =123128648768
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+public class RemoveKdigits {
+    public String removeKdigits(String num, int k) {
+        int digits = num.length() - k;
+        char[] stk = new char[num.length()];
+        int top = 0;
+        // k keeps track of how many characters we can remove
+        // if the previous character in stk is larger than the current one
+        // then removing it will get a smaller number
+        // but we can only do so when k is larger than 0
+        for (int i = 0; i < num.length(); ++i) {
+            char c = num.charAt(i);
+            while (top > 0 && stk[top-1] > c && k > 0) {
+                top -= 1;
+                k -= 1;
+            }
+            stk[top++] = c;
+        }
+        // find the index of first non-zero digit
+        int idx = 0;
+        while (idx < digits && stk[idx] == '0') idx++;
+        return idx == digits? "0": new String(stk, idx, digits - idx);
+    }
+	
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String num = sc.next();
+		int k=sc.nextInt();
+		System.out.print(new RemoveKdigits().removeKdigits(num,k));
+	}
+}

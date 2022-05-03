@@ -1,0 +1,130 @@
+/*
+Problem Statement:
+-----------------
+Mr NOkayya is AI developer, He is given a dictionary, he want to implement a 
+an Word-Corrector application that checks user-word and corrects it.
+
+For a given user-word, the Word-Corrector handles two types of validations:
+
+1) If the user-word matches a word in the dictionary (case-insensitive), 
+then the user-word is returned with the matched word in the dictionary.
+    Ex-1: dict = ["kmit"], user-word = "KmIt": word-corrector = "kmit"
+	Ex-2: dict = ["Kmit"], user-word = "kmit": word-corrector = "Kmit"
+	Ex-3: dict = ["kmit"], user-word = "kmit": word-corrector = "kmit"
+	
+2) If after replacing the vowels of the user-word with any vowel individually,
+it matches a word in the dictionary (case-insensitive), 
+then the user-word is returned with the matched word in the dictionary.
+	Ex-1: dict = ["KmIt"], user-word = "kmet": word-corrector = "KmIt"
+	Ex-2: dict = ["KmIt"], user-word = "kmmit": word-corrector = "" (no match)
+	Ex-3: dict = ["KmIt"], user-word = "kit": word-corrector = "" (no match)
+
+In addition to the above conditions, the word-corrector app works
+with the following precedence rules:
+ - When the user-word exactly matches a word in the dictionary (case-sensitive), 
+    you should return the same word back.
+ - When the user-word matches a word up to validation-1, 
+    you should return the first such match in the dictionary.
+ - When the user-word matches a word up to validation-2, 
+    you should return the first such match in the dictionary.
+ - If the user-word has no matches in the dictionary, 
+    you should return the empty string.
+
+You are given some user-words[], return a list of words result[], 
+where result[i] is the corrected words by the Word-Corrector app for 
+user-word = user-words[i].
+
+
+Input Format:
+-------------
+Line-1: comma separated strings, dictionary[].
+Line-2: comma separated strings, user-words[].
+
+Output Format:
+--------------
+List of corrected user-words[] by Word-Corrector app.
+
+
+Sample Input-1:
+---------------
+LiTe,lite,bare,Bare
+lite,Lite,LiTe,Bare,BARE,Bear,bear,leti,leet,leto
+
+Sample Output-1:
+----------------
+[lite, LiTe, LiTe, Bare, bare, , , LiTe, , LiTe]
+
+
+Sample Input-2:
+---------------
+kmit,ngit,kmec
+KmOT,NHIT,KMIC
+
+Sample Output-2:
+----------------
+[kmit, , kmec]
+
+ 
+Test Cases:
+----------
+case =1
+input =LiTe,lite,bare,Bare
+lite,Lite,LiTe,Bare,BARE,Bear,bear,leti,leet,leto
+output =[lite, LiTe, LiTe, Bare, bare, , , LiTe, , LiTe]
+
+case =2
+input =kmit,ngit,kmec
+KmOT,NHIT,KMIC
+output =[kmit, , kmec]
+
+case =3
+input =jtaki,glosu,qtwcy,anzbn,fgplv,ouhbi,skxec,mxhmt,bghyp,tcjyd,zzunf,qdsma,phhqf,yravo,gafqp,bhhho,rsfyo,lexnj,mcvhc,wbktu,eyrjt,hgliu,vkucq,cszby,flssp,bowvt,wmpxc,pqonq,dczgb,smmhy,dzvjl,vkykz,fkyiu,yghsh,bjsla,zqklz,flysa,spbdk,iznjs,nvikh,rqwzb,yihwy,trdkn,lrloi,eezwj,wikvj,bkrlk,fzwuk,zqukm,rultg,ztocm,rrrzr,zttdc,ypacc,xigzh,blblq,cvylu,xboqz,hkhle,tsere,mysjh,skdsb,yivbv,sausi,hxncs,dfvme,sjklr,acgjv,checl,wyeaa,ngior,fnpnt,fisuw,fheyg,gbctl,zgmec,xakaj,ftxvx,jhsbj,pgbph,zjsxc,endjo,oduna,aqhvq,sseea,vsisn,yaudv,trpfk,mljzb,lgcct,dtmxm,xiyco,qjxfp,sdayn,ozmxp,hojso,ggslo,mcaxy,fdled,pfuac,eloxv,nvtxa,eqwut,skyyf,xqpjx,rvcgt,wfzfs,nqdte,bmqrf,qrdob,hcrxu,dgqkb,muljb,mfbzy,uuaqm,jjmvd,afqdg,seuhc,vitlj,xnypa,rimel,eaxla,nacpp,qpjba,iaybi,ujtzq,cmcbe,ifoog,lphix,gniwo,narkn,rfjzo,rgbcn,fkhwi,wstwr,amhqz,haxdw,qicnt,ckszc,youev,qcajr,fztqg,cwthh,kmkir,fwsml,svpek,ipjye,wrqbe,dtdsd,czyjm,dhjre,oyyqw,fizwv,mvcll,krqji,fngyq,prvsq,lbaeg,faxfm,dcybz,klssw,aqpxk,piwbl,ntbwr,oqetg,ncpgo,vyeuh,musdc,rsidn,ptspy,uhvlp,qotqh,snezo,ghtfb,cklme,mkbws,wcvnc,ryncf,czbah,mbtuk,obcqy,vofhd,efsxm,xxtqk,sijss,awbic,elbhg,deujm,yhalo,iqkfa,lajyx,xclsj,gwfnq,sayag,pxkoh,twfqn,sbxrs,chssp,rwdlr,lgjte,nxrec,gzsbr,olijc,xuxlt,riefm,oucfm,qamjb,ihqhl,qqkxf,lhhks,ijlxz,ckfta,oxjhy,greut,kfqie,jvuon,uwgpv,xwlnl,gwdbt,kmgqr,qjedw,ybzpy,zeyul,srlkt,bbdrz,idqvh,qwhhy,vznho,euwiq,ezynp,apmas,wmcys,jfirw,zoyzc,rvwms,sftke,rleks,rwsac,crjun,lsyoh,hrhma,nzvkh,julyb,tkfdk,krxay,egrrz,obwkh,qzqdn,uynar,wbegx,ckjlw,ohhtp,kztbw,ctxcx,slomi,ercii,jaiqe,utmyv,gmtad,znwkt,bxhhe,hrzjo,ystlu,qhzmv,jccea,xnoar,aazaj,mgqas,gicpq,nuebb,gggfg,rdyyj,xuqxx,sutol,hhnwf,taxcx,ieumq,mzudn,ikgea,dpder,wymhe,jmbmt,mnvzw,uevpu,jxbse,aktvd,ogukk,ljqyp,ktujp,pegwc,nxfmx,bdfto,scvzi,jyhvc,fdrxr,velcy,euoqv,ttlvt,lvcaw,tfiwa,yjuou,rldme,fudnp,megnz,armmb,nqcub,kbeyw,mgdes,phvqw,kpwvv,cscer,ygkfo,wssct,epcfg,adlat,amuev,psqbv,ubntj,bggxd,itrli,szwmk,nfjjq,dhwhb,wupjy,qltxn,ydmcr,gtxws,wlrtd,fajnx,qvpok,fqbxi,jjbxk,jbngv,itwxm,svhfh,bxibd,kxoyt,lfmxl,ltpmc,arphy,ovvqj,dyusz,sapdb,mwvvu,odluh,trrpe,wwitp,mdlko,mpyua,ppdyq,fgeph,mdpml,mzxpl,obwyd,pcjcx,dzwfb,daecr,lbbni,hgdqg,wbtow,vcmtd,krtpd,vkqjb,wqafs,jqbkf,uqsuc,fpmcl,uzipm,lxcjz,mapvb,ircdr,iyyde,ltvcs,jzscz,cgxza,pzysc,ylmhi,dxjhp,ypxdw,rkcuq,tzlcg,ouuok,tjrov,eusfs,zhook,bkgjs,yrwid,vtnnk,tuiej,fvuwp,dorlm,llwsz,nswxo,oufwa,wwuox,ixfta,vurlq,fhbzm,tnofr,auaym,aqaqz,poygy,pxryd,lzhnp,ttgql,rjgif,khkog
+ftlxq,ovork,ifslk,irhhc,VSiPl,yephw,byjqj,xclbg,zaGlD,zyhue,pkqup,wrxtc,aFIed,xxlie,dbkMu,edeoh,oytsy,dtngw,qyxag,rrFGS,nifwl,apgxq,dpbgw,OILjC,qhCTO,ijLXZ,ikuql,fsuyx,piqfj,vkrfm,tdwti,cbgrx,efscw,ldEXq,fycsj,zwENQ,HydcK,btgsx,twbeV,qoely,bpfqe,jlbpx,bxien,jkxzj,zjtao,MBCHH,luskm,yhbcg,odiel,ebcqj,ngvxr,brpeq,MDXcK,fxhbv,pajtp,lzvki,zevjg,llaoh,gzfxj,dvonz,jqbkf,jmkqe,reamj,hwfew,zjtyo,zqklz,gfdst,pprbh,jEZsi,jzscz,musdc,oqkDU,ogamu,axfut,spuhf,vyavx,lxboo,zykjs,yafog,keftq,mgsms,gwnss,ieMrd,imfti,fwduo,zstmv,uznpg,janmb,NQeMd,QoupK,hqfjv,LXMBO,zFTEm,ilpou,xdyrp,iskhp,kwexx,ailfj,ajytf,pdvqj,cqebf,rupge,ytagh,pnxms,tgezn,axxyq,zgzbg,chvgk,ahtmd,jlbyu,mllah,pzgdb,dtvym,ghhkm,txcvq,pefbb,TXReb,bdftu,jxwka,wbbjB,tuccm,aamjq,owpxr,kwyuc,fnjpl,qwycz,jkcrp,vpthw,ozoxr,giwoz,wfefh,affqs,obfkq,vvsud,qtzye,uidej,xuybi,uqfuu,GLosU,pwlwr,jefkb,ygpgs,lequb,ohfsv,xlvnd,bxHhe,gyxvu,OyYqw,fbrww,pfriz,qqeda,vmzrm,hefmu,fmtoy,quyjh,hpWPK,rmbeo,cczns,gytoe,kQsct,oouqg,tyzzn,bhhks,nenhj,qamjb,qhxnr,qvhbt,kaypp,fbyeh,YoFAZ,bfcoe,gvbru,wcgck,dxkte,mamkq,ZkkuW,ujcvq,CkXFU,jghty,cjwza,opvaj,enybu,qbrqf,mrxqf,zlyxt,enafj,mnkkr,nugei,ljvvc,oroga,qsnkb,ehqgj,okzvb,yytqb,hVaFu,jshwi,frsgn,cfeoa,fLRbQ,lhgdn,gwnvj,ykkhw,ttjbi,bjovl,recid,gxuzn,uifac,irEyy,brxqj,yebvm,czbgi,hjzry,nimah,ylbyM,oeojr,avlyy,gwzmi,wedae,fwnqd,mlbzj,udjkn,pojpt,qqcsm,lhzuq,IUsDv,antjw,duxya,zgcwa,ngref,nuflp,siswb,faxnj,jvrnz,ndtuy,clteg,cqrrx,Esznj,ubxgy,fyizn,iommy,qwief,ceerk,kevVE,Accxe,modli,midif,yrqmk,zycmz,gtuwr,vetty,bxhhe,bpzpe,jdhsz,zwpoo,uohrg,btiec,ucoty,zzsnf,tecka,ayrut,cromh,hkyaf,ieiix,xphhm,iiklw,lzsfy,HbjFo,fzfpy,egljd,sryfk,kgtim,deeph,sozbc,fxfxs,mryex,HCXao,lPbYH,fgszz,pejbe,njtng,eomql,mqsso,SbvNN,klarr,QUZsx,gbklv,pposz,khcyd,isysn,wjnzl,irqgp,panib,wzpxe,qvuqr,cGmlL,tnaab,veaqh,RZkwO,hukim,uqiki,fzfsj,bpstu,ebgqi,Jqlsf,liypo,sdnya,utupb,xrnel,dtxxd,iwpyx,zndkp,svksk,mbtuk,nSQbH,afjdu,fzahb,txogb,vngfi,wstwr,sbtod,oHVbC,ehngk,iqmew,JaIQE,qesmr,zarbv,ejjmd,uijps,vxaxe,jvqkr,Ebuba,qndfe,frueh,gwdtp,akkWW,efzvw,ogwea,pkthc,bkctq,lrrrm,vapnu,nwnry,uirmk,fbuxw,vxbfk,vrgfl,jqnto,aetyi,hwfew,vzbqh,jndoy,nkvab,EbYte,mwvhu,fisuw,ubmxe,ybely,kkdpl,TMUil,ToeVp,kutjq,ghtkg,cGoaf,knvab,mwaRM,tyhcn,tMrWa,qazyd,bvfed,qpqzx,cLFUc,NXhth,oedaa,lpzvd,ilgjx,kubny,mffxb,tzomm,gfyzn,xyzek,swwdt,gropf,iyhwa,lwmok,mkcjm,zzacj,ttgwl,uinwl,jfbjm,yqebw,iyoxy,pwktu,gigjs,qpqna,ntkao,hwiie,hvuhh,aamvi,svxpk,jugkx,hkvlg,pepog,mwdoh,ocfps,ybaey,vntgu,spbzg,fZtqg,lvcoa,sphqy,pepmo,fcawg,smrof,bwueq,gbyam,zstmv,KEpLf,gjxoa,ieMhP,jgpgf,ljeqv,tlblz,kuttf,gpvgu,pktfr,HvunR,svnnc,mynym,ndwlz,uruwj,dLmtH,kmjwo
+output =[, , , , , , , , , , , , , , , , , , , , , , , , , ijlxz, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , jqbkf, , , , , zqklz, , , , jzscz, musdc, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , bdfto, , , , , , , , , , , , , , , , , , , , , glosu, , , , , , , bxhhe, , oyyqw, , , , , , , , , , , , , , , , , qamjb, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , bxhhe, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , mbtuk, , , , , , wstwr, , , , , jaiqe, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , fisuw, , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , , fztqg, , , , , , , , , , , , , , , , , , , , , , , , ]
+
+case =4
+input =kmit,ngit,kMiT,KMec,kmec,kmec
+knit,ksjc,KMiT,kMiT,KmiC,kmec,NGiT,Nget,nget,ngit,NGIT,kmIc,kmic
+output =[, , kmit, kMiT, KMec, kmec, ngit, ngit, ngit, ngit, ngit, KMec, KMec]
+
+case =5
+input =LiTe,lite,bare,Bare,KmOt,kmit,ngit,kMiT,KMec,kmec,kmec
+KmOT,NHIT,KMIC,lite,Lite,LiTe,Bare,BARE,Bear,bear,leti,leet,leto,knit,ksjc,KMiT,kMiT,KmiC,kmec,NGiT,Nget,nget,ngit,NGIT,kmIc,kmic
+output =[KmOt, , KMec, lite, LiTe, LiTe, Bare, bare, , , LiTe, , LiTe, , , kmit, kMiT, KMec, kmec, ngit, ngit, ngit, ngit, ngit, KMec, KMec]
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Program3 {
+    public String[] spellchecker(String[] wordlist, String[] queries) {
+        Set<String> words = new HashSet<>(Arrays.asList(wordlist));
+        HashMap<String, String> cap = new HashMap<>();
+        HashMap<String, String> vowel = new HashMap<>();
+        for (String w : wordlist) {
+            String lower = w.toLowerCase(), devowel = lower.replaceAll("[aeiou]", "#");
+            cap.putIfAbsent(lower, w);
+            vowel.putIfAbsent(devowel, w);
+        }
+        for (int i = 0; i < queries.length; ++i) {
+            if (words.contains(queries[i])) continue;
+            String lower = queries[i].toLowerCase(), devowel = lower.replaceAll("[aeiou]", "#");
+            if (cap.containsKey(lower)) {
+                queries[i] = cap.get(lower);
+            } else if (vowel.containsKey(devowel)) {
+                queries[i] = vowel.get(devowel);
+            } else {
+                queries[i] = "";
+            }
+        }
+        return queries;
+    }
+	public static void main(String args[]){
+		Scanner sc= new Scanner(System.in);
+		String dict[]=sc.nextLine().split(",");
+		String user[]=sc.nextLine().split(",");
+		System.out.println(Arrays.toString(new Program3().spellchecker(dict,user)));
+	}
+}

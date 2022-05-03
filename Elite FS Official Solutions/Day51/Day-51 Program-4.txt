@@ -1,0 +1,105 @@
+/*
+Problem Statement:
+-----------------
+In a birthday party, there are N guests attended the party.
+All of them formed in a circle, each of the guest numbered from 1 to N.
+
+But we have dinner tokens for only N-1 guests.
+and you are given an integer S.
+
+The distibution of tokens as follows:
+	1- Intially you visit guest-1.
+	2- Visit to the next S guests in the circle in clockwise direction including 
+	visited guest, you may visit some guests more than once.
+	3- The last guest you visit will get the token and moves out of the circle.
+	4- You have to repeat the process from step-2, until all the tokens over.
+	
+At the only one guest will be leftout without a token.
+
+You are given the number of guests, N , and an integer S , 
+Your task is to find the guest number who haven't recieved the token.
+
+Input Format:
+-------------
+Two integers N and S, number of guests N and value of S.
+
+Output Format:
+--------------
+Print an integer, Guest number remained at the end without a token.
+
+
+Sample Input-1:
+---------------
+5 3
+
+Sample Output-1:
+----------------
+4
+
+For the explanation look at Hint.
+
+Sample Input-2:
+---------------
+6 2
+
+Sample Output-2:
+----------------
+5
+
+
+ 
+Test Cases:
+----------
+case =1
+input =100 8
+output =97
+
+case =2
+input =100 15
+output =42
+
+case =3
+input =250 12
+output =76
+
+case =4
+input =750 213
+output =329
+
+case =5
+input =1024 512
+output =8
+
+case =6
+input =500 499
+output =121
+
+case =7
+input =750 231
+output =141
+
+case =8
+input =1024 1023
+output =924
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Winner {
+    public int findTheWinner(int n, int k) {
+        int res = 0;
+        for (int i = 1; i <= n; ++i)
+            res = (res + k) % i;
+        return res + 1;
+    }
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int k=sc.nextInt();
+		System.out.println(new Winner().findTheWinner(n,k));
+	}
+}

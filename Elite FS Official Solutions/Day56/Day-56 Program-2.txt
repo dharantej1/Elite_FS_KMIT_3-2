@@ -1,0 +1,175 @@
+/*
+Problem Statement:
+-----------------
+Karthik is going on a world tour, He prefers to travel in airplanes.
+He is given a list of planes avaialble , where a plane[i]=[src-i, dest-i].
+i.e, plane[i] indiactes airplane from source city to destination city.
+
+Your task is to findout in which city karthk will end up his world tour.
+end up the tour means, he cannot travel further from that city.
+
+Note: It is guaranteed that there is no loop. 
+
+Input Format:
+-------------
+Line-1: An integer N, number of airplanes routes.
+next N lines: two comma (',') separated Strings, source and destination.
+
+Output Format:
+--------------
+Print a string, City Name.
+
+
+Sample Input:
+---------------
+3
+London,New York
+New York,Sydney
+Sydney,New Delhi
+
+Sample Output:
+----------------
+New Delhi
+
+ 
+Test Cases:
+----------
+case =1
+input =3
+London,New York
+New York,Sydney
+Sydney,New Delhi
+output ="New Delhi"
+
+case =2
+input =5
+New Delhi,Kerala
+Kerala,Kashmir
+London,New York
+New York,Sydney
+Sydney,New Delhi
+output ="Kashmir"
+
+case =3
+input =8
+London,New York
+New York,Sydney
+Sydney,New Delhi
+New Delhi,Kerala
+New Zealand,Hyderabad
+Kerala,Kashmir
+Japan,New Zealand
+Kashmir,Japan
+output ="Hyderabad"
+
+case =4
+input =10
+Hyderabad,Paris
+Paris,France
+London,New York
+New York,Sydney
+Sydney,New Delhi
+New Delhi,Kerala
+New Zealand,Hyderabad
+Kerala,Kashmir
+Japan,New Zealand
+Kashmir,Japan
+output ="France"
+
+case =5
+input =5
+London,New York
+New York,Sydney
+Kerala,Japan
+Sydney,New Delhi
+New Delhi,Kerala
+output ="Japan"
+
+case =6
+input =10
+Hyderabad,Brezil
+Brezil,London
+London,New York
+New Zealand,Korea
+Kerala,Kashmir
+Japan,New Zealand
+Kashmir,Japan
+New York,Sydney
+Sydney,New Delhi
+New Delhi,Kerala
+output ="Korea"
+
+case =7
+input =15
+Hyderabad,Brezil
+Dubai,Hyderabad
+Bangcock,Dubai
+Brezil,London
+London,New York
+Germany,Amaravathi
+New Zealand,Korea
+Kerala,Kashmir
+Japan,New Zealand
+Korea,Malasiya
+Malasiya,Germany
+Kashmir,Japan
+New York,Sydney
+Sydney,New Delhi
+New Delhi,Kerala
+output ="Amaravathi"
+
+case =8
+input =16
+Hyderabad,Brezil
+Dubai,Hyderabad
+Bangcock,Dubai
+Brezil,London
+London,New York
+Germany,Bangalore
+New Zealand,Korea
+Kerala,Kashmir
+Amaravathi,Bangcock
+Japan,New Zealand
+Korea,Malasiya
+Malasiya,Germany
+Kashmir,Japan
+New York,Sydney
+Sydney,New Delhi
+New Delhi,Kerala
+output ="Bangalore"
+
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class WorldTour {
+        public String lastCity(List<ArrayList<String>> planes) {
+        
+        HashSet<String> myHashSet=new HashSet();
+        for(int i=0;i<planes.size();i++)
+              myHashSet.add(planes.get(i).get(0));
+        
+        for(int i=0;i<planes.size();i++) {
+            if(!myHashSet.contains(planes.get(i).get(1)))
+                return planes.get(i).get(1);
+        }
+        return null; // it says "It is guaranteed that there will be exactly one destination city."
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=Integer.parseInt(sc.nextLine());
+		List<ArrayList<String>> planes=new ArrayList<ArrayList<String>>();
+		
+		for(int i=0;i<n;i++){
+			String[] str=sc.nextLine().split(",");
+			planes.add(new ArrayList<String>(Arrays.asList(str)));
+		}
+		
+		System.out.println(new WorldTour().lastCity(planes));
+	}
+}

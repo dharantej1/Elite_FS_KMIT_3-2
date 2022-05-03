@@ -1,0 +1,147 @@
+/*
+Problem Statement:
+-----------------
+In summer training camp, a course is divided into N sessions.
+Each session handled by N different trainers, each trainer identified by an alphabet.
+At the end of the course, the students are requested to give rating for each
+trainer between 1 to N, each trainer should be assigned different rating.
+
+For example, there are 3 trainers, I, J and K, the student can vote them as IJK,
+JKI, IKJ..etc. Where IJK means, trainer-I got rating-1, trainer-J got rating-2, 
+trainer-K got rating-3.
+
+You have to sort the trainers based on the rating they recieved.
+The sorting of the trainers is as follows:
+	- The sorting of the trainers is decided by who received the most ratings.
+	- If the trainer recieved more 1-ratings, he is in first place, 
+	- If two or more trainers tie in the first place, you have to consider 
+	the second place to resolve the conflict, if they tie again, we continue
+	this process until the ties are resolved.
+	- If two or more trainers are still tied after considering all the places, 
+	we sort them alphabetically based on the assigned letter.
+
+You will be given an array of ratings by S students in the class. 
+Your task is to sort the trainers according to the above rules, and return the
+sorted list of N trainers as a string by the rating given to them.
+
+Input Format:
+-------------
+Line: Space separated strings,ratings given by S students for N faculty, 
+      where S is ratings.length and N is ratings[i].length
+
+Output Format:
+--------------
+Print a String output.
+
+
+Sample Input-1:
+---------------
+JKI KIJ KJI IJK IKJ JIK
+
+Sample Output-1:
+----------------
+IJK
+
+Explanation:
+------------
+Trainer-I was rated first by 2 students, second by 2 students and third by 2 students.
+Trainer-J was rated first by 2 students, second by 2 students and third by 2 students.
+Trainer-K was rated first by 2 students, second by 2 students and third by 2 students.
+There is a tie and you sort the trainers in ascending order by their IDs.
+
+
+Sample Input-2:
+---------------
+PQSR SQRP
+
+Sample Output-2:
+----------------
+SPQR
+
+Explanation:
+------------
+Trainer-P was rated first by 1 student, Trainer-S was rated first by 1 student, 
+there is a tie. In second place for P and S also a tie, now in third place S 
+got rated by one student, and P by none. So, S occupies first place, 
+then P occupies second-place, trainer-Q was rated by 2 students next,
+so Q took third place, and ramaining trainer-R in the last place.
+
+
+Sample Input-3:
+---------------
+K K K K
+
+Sample Output-3:
+----------------
+K
+
+ 
+Test Cases:
+----------
+case =1
+input =BCAD ADCB ADBC BADC BCAD CADB CABD BCDA
+output =BACD
+
+case =2
+input =QWERTYUIOPASDFGHJKLZXCVBNM NBVCXZMLKJHGFDSAYTREWQUIOP
+output =QNWBEVRCTXYZUMLIKOJPAHGSDF
+
+case =3
+input =IKMNHY KHMNIY MNHKIY HKINMY MYIKHN INMHKY HKIYMN HNIMKY
+output =HIMKNY
+
+case =4
+input =ABC BCA CAB CBA BAC ACB
+output =ABC
+
+case =5
+input =QWERTY YERTQW TREQYW QRTYWE TRWEYQ YERTWQ ERWTQY QWEYTR
+output =QTYERW
+
+case =6
+input =IJKLMN MNKLJI KLJMNI KLJMIN KJLMNI JKNMLI IJMNLK IKLMJN MKNJLI MLKJNI
+output =KMIJLN
+
+case =7
+input =QWERTYUIOP QWERTYUIOP QWERTYUIOP QWERTYUIOP QWERTYUIOP QWERTYUIOP
+output =QWERTYUIOP
+
+case =8
+input =ABCDEFGHIJKLMNOPQRSTUVWXYZ QAZWSXEDCRFVTGBYHNUJMIKOLP QAZWSXEDCVFRTGBNHYUJMKIOLP POIUYTREQWASDFGHJKLZXCVBNM QWERTYUIOPGFDSAHJKLVBNMCXZ
+output =QAPWOBZEICRUDSTYXFGHVJKLMN
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class TeamRanks {
+    public String rankTeams(String[] votes) {
+        int[][] voteCount = new int[26][26]; // voteCount[0][0] means the number of votes of team `A` to become the first position
+        for (String vote : votes) {
+            for (int i = 0; i < vote.length(); i++) {
+                char c = vote.charAt(i);
+                voteCount[c-'A'][i]++; // voteCount[c-'A'][i] means the number of votes of team `c` to become the `ith` position
+            }
+        }
+        char[] ans = votes[0].toCharArray();
+        Character[] tmp = new Character[ans.length];
+        for (int i = 0; i < ans.length; i++) tmp[i] = ans[i];
+        Arrays.sort(tmp, (t1, t2) -> {
+            for (int i = 0; i < 26; i++)
+                if (voteCount[t1-'A'][i] != voteCount[t2-'A'][i]) // If team1 and team2 don't tie on the `ith` position
+                    return voteCount[t2-'A'][i] - voteCount[t1-'A'][i]; // return team with higher votes
+            return t1 - t2; // return team with lower alphabetically letter
+        });
+        for (int i = 0; i < ans.length; i++) ans[i] = tmp[i];
+        return new String(ans);
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String[] votes = sc.nextLine().split(" ");
+		System.out.println(new TeamRanks().rankTeams(votes));
+	}	
+}

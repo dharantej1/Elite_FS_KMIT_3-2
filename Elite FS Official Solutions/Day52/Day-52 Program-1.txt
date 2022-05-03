@@ -1,0 +1,101 @@
+/*
+Problem Statement:
+-----------------
+Gopal used to violate the traffic rules set by Government
+The list of violations he made is represented in String S2
+And list of traffic violations represented in String S1.
+
+The characters in S1 indicates TrafficViolations, each character 
+is a type of traffic violation. The characters in S2 indicates All Violations, 
+each character is a type of violation.
+
+Now your task is to find the number of traffic violations made by Gopal.
+
+NOTE: It is guaranteed that String S1 contains distinct characters.
+And all the characters in both S1, S2 are case-sensitive.
+i.e. 'a' is different from 'A'.
+
+Input Format:
+-------------
+Two strings S1 and S2
+
+Output Format:
+--------------
+Print an integer, the number of traffic violations made by Gopal.
+
+
+Sample Input-1:
+---------------
+Aa aAAbbbb
+
+Sample Output-1:
+----------------
+3
+
+Sample Input-2:
+---------------
+abc  ABBCCC
+
+Sample Output-2:
+----------------
+0
+
+ 
+Test Cases:
+----------
+case =1
+input =Aa aAAbbbb
+output =3
+
+case =2
+input =abc  ABBCCC
+output =0
+
+case =3
+input =QhjYt Qwertyyuuwgejdbasbchj
+output =5
+
+case =4
+input =abcdefg abnbcbdvecvdegfc
+output =13
+
+case =5
+input =NkjJ NkNJKKHKjjkhjk
+output =9
+
+case =6
+input =abcdefghijkl ANBSJKBdkjndkjaDHjkahsdkndJNJKHdkjdNMnajkdhJKASDKJNASC
+output =23
+
+case =7
+input =QAZwsxEDCrfvTGByhn ERDGFCChgfhgjhghjhFHGFgFRTrtGvnVjhlkkjklugfgdRTEERSGFCR
+output =24
+
+case =8
+input =qwertyuiopasdfghjklQWERTY WEFERTgkjjytftyftdtertfjkklhivgccbnmvferrejnkljoinkjbJHCRTDtrfFTYDvjkKJHiu
+output =53
+
+*/
+
+Solution:
+--------
+import java.util.*;
+	
+class ViolationsCount{	
+	public int numTrafficViolations(String J, String S) {
+        int res = 0;
+        Set setJ = new HashSet();
+        for (char j: J.toCharArray())
+            setJ.add(j);
+        for (char s: S.toCharArray())
+            if (setJ.contains(s)) res++;
+        return res;
+    }
+
+	public static void main(String args[] ) {
+		Scanner sc = new Scanner(System.in);
+		String S1=sc.next();
+		String S2=sc.next();
+		System.out.println(new ViolationsCount().numTrafficViolations(S1,S2));
+	}
+}

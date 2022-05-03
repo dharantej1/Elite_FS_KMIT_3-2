@@ -1,0 +1,107 @@
+/*
+Problem Statement:
+-----------------
+Kilbil pandey is a sharp shooter. He is given a row of lamp posts with 
+different heights, And He can shoot only lamps on top of the lamp posts.
+Due to heights are different he can shoot the lamps, whose hieght is maximum.
+
+In a single shot, he can break any number of lamps.
+
+Find out and print the number of lamps, he can successfully break.
+
+Input Format:
+-------------
+Line-1 -> An integers N. Number of lamp posts
+Line-2 -> N space separated integers, heights of lamp posts.
+
+Output Format:
+--------------
+Print an integer, the number of lamps, he can successfully break.
+
+
+Sample Input-1:
+---------------
+4
+3 2 1 3
+
+Sample Output-1:
+----------------
+2
+
+
+Sample Input-2:
+---------------
+10
+18 90 90 13 90 75 90 8 90 43
+
+Sample Output-2:
+----------------
+5
+
+ 
+Test Cases:
+----------
+case =1
+input =15
+5 8 6 6 8 2 4 7 4 2 2 3 3 5 2
+output =2
+
+case =2
+input =4
+3 2 1 3
+output =2
+
+case =3
+input =10
+18 90 90 13 90 75 90 8 90 43
+output =5
+
+case =4
+input =20
+8 8 2 8 3 4 3 4 4 6 4 4 4 5 5 2 4 6 8 5
+output =4
+
+case =5
+input =30
+13 13 13 13 12 12 14 15 15 15 13 15 15 14 11 15 15 13 11 13 13 13 14 13 12 12 11 14 13 14
+output =7
+
+case =6
+input =30
+22 24 21 24 24 22 21 21 22 24 24 24 23 24 21 21 23 24 23 24 24 21 21 23 22 24 21 23 22 22
+output =11
+
+case =7
+input =50
+25 20 20 20 20 23 21 23 25 24 20 22 25 22 20 24 22 23 24 24 25 21 22 24 23 24 25 21 25 20 21 21 22 24 25 20 20 21 22 25 23 20 23 22 21 22 23 23 25 25
+output =10
+
+case =8
+input =50
+28 28 28 27 27 29 26 29 27 26 28 27 26 27 26 29 28 26 29 27 29 29 28 29 28 27 29 27 29 28 29 29 28 28 26 26 28 28 28 29 29 29 27 27 26 27 28 27 27 27
+output =14
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class LampPosts{
+    public static void main(String[] args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int max=0;
+        int count=0;
+        for(int i=0;i<n;i++){
+            int t=sc.nextInt();
+            if(t>max){
+                max=t;
+                count=1;
+            }
+            else if(t==max){
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
+}

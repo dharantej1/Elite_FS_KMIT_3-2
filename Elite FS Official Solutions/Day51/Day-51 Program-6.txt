@@ -1,0 +1,132 @@
+/*
+Problem Statement:
+-----------------
+Chhota Bheem is fond of Laddus, there are N boxes in a row, each box contains 
+some laddus, where k-th box conatins box[k]-number of laddus.
+
+In one go, Choota Bheem can choose any box and eat floor(box[i]/2) laddus 
+from it. He has do the above step, exactly K times. He is allowed to eat 
+from the same box any number of times.
+
+ 
+You are given an list of N integers, number of laddus in each box.
+Your task is to return the minimum number of laddus left in all the boxes 
+together, after K times.
+
+NOTE: floor(I) is the greatest integer that is smaller than or equal to I.
+ 
+Input Format:
+-------------
+Line -1: Two space separated integers N and K,number of boxes and value of K.
+Line -2: N space separated integers, number of laddus in each box.
+ 
+Output Format:
+--------------
+Print an integer result.
+ 
+Sample Input-1:
+---------------
+3 2
+3 5 9
+ 
+Sample Output-1:
+----------------
+11
+ 
+Explanation:
+------------
+Steps of a possible scenario are:
+- Chota bheem selected box-2. The resulting boxes are [3,5,5].
+- Chota bheem selected box-2. The resulting boxes are [3,5,3].
+The total number of laddus in all the boxes [3,5,3] is 11.
+
+ 
+Sample Input-2:
+---------------
+5 3
+4 3 8 6 7
+ 
+Sample Output-2:
+----------------
+18
+
+ 
+Test Cases:
+----------
+case =1
+input =6 2
+45 21 38 82 45 63
+output =222
+
+case =2
+input =15 5
+24 65 7 3 1 5 89 76 23 45  64 77 11 33 45
+output =384
+
+
+case =3
+input =3 4
+65 47 9 8
+output =38
+
+
+case =4
+input =25 9
+21 47 5 36 98 75 15 35 95 42 64 31 64 97 49 13 76 34 25 87 55 77 33 66 44
+output =919
+
+
+case =6
+input =9 6
+25 67 3 46 48 58 98 28 68
+output =248
+
+
+case =6
+input =12 7
+44 55 22 33 99 88 77 66 75 46 98 14
+output =440
+
+
+case =7
+input =32 15
+32 56 98 75 15 34 46 97 52 31 76 53 59 57 51 39 36 34 37 24 28 23 22 27 41 45 40 49 46 43 67 69
+output =1029
+
+
+case =8
+input =18 9
+25 3 9 4 6 1 75 89 46 95 56 33 27 72 19 34 55 34
+output =395
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class ChotaBheem{
+	public int chotaBheem(int[] A, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b)->b - a);
+        int res = 0;
+        for (int a : A) {
+            pq.add(a);
+            res += a;
+        }
+        while (k-- > 0) {
+            int a = pq.poll();
+            pq.add(a - a / 2);
+            res -= a / 2;
+        }
+        return res;
+    }
+    public static void main(String[] args){
+	Scanner sc = new Scanner(System.in);
+	int s = sc.nextInt();
+	int k = sc.nextInt();
+	int[] arr = new int[s];
+	for(int i=0;i<s;i++){
+		arr[i] = sc.nextInt();
+	}
+	System.out.println(new ChotaBheem().chotaBheem(arr,k));
+    }
+ }

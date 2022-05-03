@@ -1,0 +1,132 @@
+/*
+Problem Statement:
+-----------------
+There are N students stands in a row, where students from ABC school indicated 
+with 0's and students from XYZ school indicated with 1's. Trainer asks them 
+to stand alternatively according to the school they belongs to. 
+[i.e., No two students from same school stands side by side]
+
+You are allowed to perform these operations to arrange them to sit alternatively:
+Op-1: Move the first student in the row to the end of the row. 
+Op-2: Choose any one student in the row, Shift the student from the current 
+      school to other school. 
+    [i.e., shift from ABC school to XYZ school or vice-versa]
+    
+You will be given the initial standing positions of students as a binary string. 
+Your task is to find and return the minimum number of Op-2 operations required 
+to arrange them to stand alternatively with the above rules.
+
+
+Input Format:
+-------------
+A binary string B.
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+1100100
+
+Sample Output-1:
+----------------
+2
+
+Explanation:
+------------
+Perform Op-1 operation 3 times: The sitting will be 0100110.
+Perform Op-2 operation: at 4th and 5th positions in the row.
+Finally, sitting is 0101010
+
+
+Sample Input-2:
+---------------
+11011
+
+Sample Output-2:
+----------------
+1
+
+ 
+Test Cases:
+----------
+case =1
+input =111100011100110
+output =5
+
+case =2
+input =1111111100000010000101111111111100
+output =16
+
+case =3
+input =000010010100111110010110100110010010010010100100
+output =24
+
+case =4
+input =000000000000000000000000000000000000000000000000000
+output =25
+
+case =5
+input =10111111111111111111000000000000000000000100000
+output =20
+
+case =6
+input =111111111111111111111111100000000000000000000000011111111111111111011111111110111
+output =38
+
+case =7
+input =10101010100101010010010010101010010010101010010010101010010010011000111001001001
+output =28
+
+case =8
+input =10100100100101010010101001010010100100010101010101010010010010101010100101011001
+output =36
+
+case =9
+input =101010101010101010101010101010100101010101010101010101010101010101010101010101010
+output =0
+
+case =10
+input =1010101010101010101010101010101001010101010101010101010101010101010101010101010101
+output =32
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class MinFlips {
+    public int minFlips(String s) {
+        int n = s.length();        
+        int mininumFlip = Integer.MAX_VALUE;
+        int misMatchCount = 0;
+        for(int i = 0; i < (2 * n); i++){
+            
+            int r = i % n;
+            
+            //add mis watch count in current window
+            if((s.charAt(r) - '0') != (i % 2 == 0 ? 1 : 0)) misMatchCount++;
+            
+            //remove mismatch count which are not relvent for current window
+            if(i >= n && (s.charAt(r) - '0') != (r % 2 == 0 ? 1 : 0)) misMatchCount--;
+            
+            
+            //misMatchCount : when valid binary string start from 1
+            //n - misMatchCount : when valid binary string start from 0
+            if(i >= n - 1) mininumFlip = Math.min(mininumFlip, Math.min(misMatchCount, n - misMatchCount));
+        }
+        
+        return mininumFlip;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String s=sc.next();
+		System.out.println(new MinFlips().minFlips(s));
+	}
+}
+

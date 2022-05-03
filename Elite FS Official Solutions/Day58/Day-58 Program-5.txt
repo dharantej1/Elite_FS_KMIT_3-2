@@ -1,0 +1,166 @@
+/*
+Problem Statement:
+-----------------
+Balbir singh is working with Binary Trees.
+The elements of the tree is given in the level order format.
+Balbir has a task to split the tree into two parts by removing only one edge
+in the tree,such that the product of sums of both the sub-trees should be maximum.
+
+You will be given the root of the binary tree.
+Your task is to help the Balbir singh to split the binary tree as specified.
+print the product value, as the prouct may be large, print product%1000000007
+
+Your task is to implement the class Solution:
+	- public boolean maxProduct(BinaryTreeNode root):
+	return an integer value, the product % 1000000007.
+	
+NOTE: 
+Please do consider the node with data as '-1' as null in the given trees.
+
+Input Format:
+-------------
+Space separated integers, elements of the tree.
+
+Output Format:
+--------------
+Print an integer value.
+
+
+Sample Input-1:
+---------------
+1 2 4 3 5 6
+
+Sample Output-1:
+----------------
+110
+
+Explanation:
+------------
+if you split the tree by removing edge between 1 and 4, 
+then the sums of two trees are 11 and 10. So, the max product is 110.
+
+
+Sample Input-2:
+---------------
+3 2 4 3 2 -1 6
+
+Sample Output-2:
+----------------
+100
+
+ 
+Test Cases:
+----------
+case =1
+input =1 2 3 5 -1 -1 5
+output =64
+
+case =2
+input =3 2 4 3 2 -1 6
+output =100
+
+case =3
+input =5 5 5 5 5 5 10
+output =400
+
+case =4
+input =7 4 3 5 6 2 3 8 4 5 6 7 5 5 6
+output =1444
+
+case =5
+input =7 4 3 5 6 2 3 8 4 5 6 7 8 5 6
+output =1558
+
+case =6
+input =5 5 5 -1 5 -1 5
+output =150
+
+case =7
+input =1 2 3 4 5 6 7 15 14 13 12 10 11 9 7
+output =3510
+
+case =8
+input =1 2 3 4 5 6 7 15 14 13 12 10 11 12 17
+output =4356
+
+case =9
+input =5 5 2 2 2 3 5 -1 1 1 -1 -1 4
+output =224
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class BinaryTreeNode{
+	public int data; 
+	public BinaryTreeNode left, right; 
+	public BinaryTreeNode(int data){
+		this.data = data; 
+		left = null; 
+		right = null; 
+	}
+}
+
+public class SplittedBinaryTree {
+	static BinaryTreeNode root;
+	static BinaryTreeNode temp = root;
+	void insert(BinaryTreeNode temp, int key)
+    {
+ 
+        if (temp == null) {
+            root = new BinaryTreeNode(key);
+            return;
+        }
+        Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+        q.add(temp);
+ 
+        // Do level order traversal until we find
+        // an empty place.
+        while (!q.isEmpty()) {
+            temp = q.peek();
+            q.remove();
+ 
+            if (temp.left == null) {
+                temp.left = new BinaryTreeNode(key);
+                break;
+            }
+            else
+                q.add(temp.left);
+ 
+            if (temp.right == null) {
+                temp.right = new BinaryTreeNode(key);
+                break;
+            }
+            else
+                q.add(temp.right);
+        }
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String str[]=sc.nextLine().split(" ");
+		SplittedBinaryTree bt=new SplittedBinaryTree();
+		root=new BinaryTreeNode(Integer.parseInt(str[0]));
+		for(int i=1; i<str.length; i++)
+			bt.insert(root,Integer.parseInt(str[i]));
+		Solution sol= new Solution();
+		System.out.println(sol.maxProduct(root));
+	}
+}
+class Solution {
+    long res = 0, total = 0, sub;
+    public int maxProduct(BinaryTreeNode root) {
+        total = s(root); s(root);
+        return (int)(res % (int)(1e9 + 7));
+    }
+    private long s(BinaryTreeNode root) {
+        if (root == null ||root.data==-1) return 0;
+        sub = root.data + s(root.left) + s(root.right);
+        res = Math.max(res, sub * (total - sub));
+        return sub;
+    }
+    
+}

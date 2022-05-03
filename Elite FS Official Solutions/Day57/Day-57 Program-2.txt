@@ -1,0 +1,115 @@
+/*
+Problem Statement:
+-----------------
+In a team of N players wearing jerseys, each jersey has a number printed on it.
+Jersey numbers may be repeated.
+
+You will be given the list of jersey numbers of N players. 
+You need to find out number of pairs, wearing same jersey number.
+i.e, pair[i]=[p1, p2], p1 and p2 are the index positions
+jersey number of Player-p1 and Player-p2 should be same.  
+
+If no such pair found, print "0".
+
+Input Format:
+-------------
+Line-1: An integer N, number of players.
+Line-2: N space separated integers, Jersey numbers of players.
+
+Output Format:
+--------------
+Print an integer, number of pairs wearing same jersey number.
+
+
+Sample Input-1:
+---------------
+6
+1 2 3 1 1 3
+
+Sample Output-1:
+----------------
+4
+
+Explanation: 
+------------
+There are 4 pairs (0,3), (0,4), (3,4), (2,5) wearing same jersey numbers, 
+0-indexed list.
+
+
+Sample Input-2:
+---------------
+3
+1 2 3
+
+Sample Output-2:
+----------------
+0
+
+ 
+Test Cases:
+----------
+case =1
+input =6
+1 2 3 1 1 3
+output =4
+
+case =2
+input =3
+1 2 3
+output =0
+
+case =3
+input =10
+1 2 3 1 2 3 1 2 3 1
+output =12
+
+case =4
+input =20
+3 1 3 4 1 1 4 2 4 3 2 2 2 1 1 4 4 2 2 3
+output =41
+
+case =5
+input =25
+3 3 5 4 3 3 4 3 3 6 5 4 4 3 6 3 6 6 4 5 3 4 3 6 6
+output =78
+
+case =6
+input =30
+6 5 3 6 3 6 4 4 3 5 3 4 3 3 5 5 3 4 4 5 3 5 5 3 3 3 6 4 3 3
+output =120
+
+case =7
+input =75
+5 5 9 7 8 5 6 5 5 9 8 7 6 6 7 6 6 8 6 8 9 8 5 5 5 9 8 5 7 5 6 6 5 9 6 6 6 6 7 9 5 5 9 8 6 8 7 9 8 7 5 9 9 8 6 8 8 9 6 7 8 7 8 5 6 6 5 9 5 5 5 8 6 7 5
+output =559
+
+case =8
+input =99
+5 5 4 6 5 6 6 6 6 4 4 6 7 8 8 7 5 4 8 6 7 5 7 8 4 8 4 7 6 4 7 7 5 8 5 6 5 6 5 5 5 8 5 7 5 6 6 6 6 5 4 6 4 7 4 4 8 5 8 6 4 6 8 4 4 7 7 7 6 5 4 7 6 4 6 5 5 5 5 7 6 5 7 6 5 4 7 6 7 4 4 8 4 7 8 5 8 4 6
+output =970
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class PairsinTeam {
+    public int numIdenticalPairs(int[] jersey) {
+        int res = 0, count[] = new int[jersey.length+1];
+        for (int a: jersey) {
+            res += count[a]++;
+        }
+        return res;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int jersey[]=new int[n];
+		for(int i=0;i<n;i++)
+			jersey[i]=sc.nextInt();
+		System.out.println(new PairsinTeam().numIdenticalPairs(jersey));
+	}
+}

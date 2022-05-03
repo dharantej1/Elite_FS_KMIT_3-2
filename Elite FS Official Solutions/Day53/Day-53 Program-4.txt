@@ -1,0 +1,187 @@
+/*
+Problem Statement:
+-----------------
+There are S counters[] in a Restaurant and T orders[] made by customers,
+counters[i] is the capacity of the i-th counter, 
+and orders[k] is the time required to prepare the k-th order, in minutes.
+Both the counters[] and orders[] are 0-indexed arrays.
+
+Orders are assigned to the counters using an order queue. 
+Initially, all counters are available, and the queue is empty.
+
+At k-th minute, the k-th order is entered into the queue
+(starting with the 0th order being entered at 0th minute). 
+
+As long as the counters are available and the queue is not empty, 
+the first order in the queue will be assigned to an available counter 
+with the smallest capacity, and in case of a tie, it is assigned to
+an available counter with the smallest index.
+
+If there are no counters available and the queue is not empty, 
+wait until a counter becomes available and immediately assign the next order.
+If multiple counters become available at the same time, then multiple orders
+from the queue will be assigned in order of entrance, following the capacity 
+and index priorities above.
+
+A counter that is assigned an order k at minute M will be free again 
+at (M + orers[k]) minute.
+
+Your Order is to build an array result[] of length T, where result[k] is
+the index of the counter the k-th order will be assigned to, and print it.
+
+
+Input Format:
+-------------
+Line-1: Two space separated integers, values of S and T.
+Line-2: S space separated integers, 
+Line-3: T space separated integers, 
+
+Output Format:
+--------------
+Print T space separated integers, the final result.
+
+
+Sample Input-1:
+---------------
+3 7
+8 8 6
+1 2 2 3 2 1 2
+
+Sample Output-1:
+----------------
+2 2 0 2 0 1 2
+
+Explanation: Events in chronological order go as follows:
+- At minute-0, order-0 is entered and prepared using counter-2 until minute-1.
+
+- At minute-1, counter-2 becomes available. order-1 is entered and prepared
+  using counter-2 until minute-3.
+
+- At minute-2, order-2 is entered and prepared using counter-0 until minute-4.
+
+- At minute-3, counter-2 becomes available. order-3 is entered and prepared 
+  using counter-2 until minute-6.
+
+- At minute-4, counter-0 becomes available. order-4 is entered and prepared
+  using counter-0 until minute-6.
+
+- At minute-5, order-5 is entered and prepared using counter-1 until minute-6.
+
+- At minute-6, all counters are available. order-6 is entered and prepared 
+  using counter-2 until minute-8.
+
+Sample Input-2:
+---------------
+4 8
+8 2 6 4
+1 2 3 4 5 6 7 8
+
+Sample Output-2:
+----------------
+1 1 3 1 2 3 0 1
+
+ 
+Test Cases:
+----------
+case =1
+input =3 6
+8 8 6
+3 8 4 6 9 7
+output =2 0 1 2 1 2
+
+case =2
+input =8 10
+1 2 3 4 5 6 7 8
+32 15 4 8 7 6 9 23 7 5
+output =0 1 2 3 4 5 2 6 7 3
+
+case =3
+input =15 15
+3 5 4 1 2 6 9 8 7 10 35 25 15 11 22
+6 1 7 2 8 3 9 4 6 15 25 14 35 15 55
+output =3 4 4 0 2 0 3 1 0 4 5 1 2 8 0
+
+case =4
+input =9 16
+9 2 8 1 7 0 6 3 5
+8 9 10 11 12 13 14 15 6 5 4 3 2 1 7 16
+output =5 3 1 7 8 6 4 2 5 0 3 1 5 3 7 3
+
+case =5
+input =5 15
+15 25 95 45 85
+5 95 10 85 15 75 20 70 25 65 30 60 35 55 40
+output =0 1 3 4 2 0 3 2 3 3 0 4 2 1 0
+
+case =6
+input =6 2
+6 5 1 2 3 4
+8 12
+output =2 3
+
+case =7
+input =4 8
+8 2 6 4
+1 2 3 4 5 6 7 8
+output =1 1 3 1 2 3 0 1
+
+case =8
+input =3 4
+15 55 25
+66 44 22 33
+output =0 2 1 1
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class AssignTasks {
+     public int[] assignTasks(int[] servers, int[] tasks) {
+        PriorityQueue<int[]> freeServers = new PriorityQueue<>((a, b) -> (a[0] != b[0]) ? (a[0] - b[0]) : (a[1] - b[1]));
+        PriorityQueue<int[]> usedQueue = new PriorityQueue<>((a, b)->(a[2] != b[2]) ? (a[2] - b[2]) : ((a[0] != b[0]) ? (a[0] - b[0]) : (a[1] - b[1])));
+        int n = servers.length;
+        int m = tasks.length;
+         for (int i = 0; i < n; i++) {
+            freeServers.add(new int[] {servers[i], i, 0});
+        }
+        int[] res = new int[m];
+        for (int i = 0; i < m; i++) {
+            int t = tasks[i];
+            while (!usedQueue.isEmpty() && usedQueue.peek()[2] <= i) {
+                freeServers.add(usedQueue.poll());
+            }
+            if (freeServers.isEmpty()) {
+                int[] cur = usedQueue.poll();
+                res[i] = cur[1];
+                cur[2] += t;
+                usedQueue.add(cur);
+            } else {
+                int[] cur = freeServers.poll();
+                res[i] = cur[1];
+                cur[2] = i + t;
+                usedQueue.add(cur);
+            }
+        }
+        return res;
+    }
+    public static void main(String[] args){
+		Scanner sc = new Scanner(System.in);
+		AssignTasks at = new AssignTasks();
+		int s1 = sc.nextInt();
+		int[] servers = new int[s1];
+		for(int p=0;p<s1;p++){
+			servers[p] = sc.nextInt();
+		}
+		int s2 = sc.nextInt();
+		int[] tasks = new int[s2];
+		for(int q=0;q<s2;q++){
+			tasks[q] = sc.nextInt();
+		}
+		int[] resarr = at.assignTasks(servers,tasks);
+		for(int i=0;i<resarr.length;i++){
+			System.out.print(resarr[i]+" ");
+		}
+    }
+    
+}

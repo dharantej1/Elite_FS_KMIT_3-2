@@ -1,0 +1,150 @@
+/*
+Problem Statement:
+-----------------
+Indian Super League organizing a football match at Eden Gardens.
+The teams are Bangalore and Chennai are playing opposite each other.
+
+After Match starts, each team making some goals at certain time, 
+for example, goal 'goal[i]' was made by a player at time 'time[i]'.
+goal[i]: indicates the team number 0 (Bangalore) or 1 (Chennai).
+time[i]: indicates the time of the goal made.
+
+Now, your task is to find out the leading team at given time t[j].
+
+Input Format:
+------------------
+Line-1: Two integers N and K, no of goals-> goal[i] and no of times-> t[j]
+Line-2: N space seperated integers only 0's and 1', goals[i]
+Line-3: N space seperated integers, time[i]
+Line-4: K space seperated integers , t[i]
+ 
+Output Format:
+------------------
+Print K space seperated integers as result.
+
+
+Sample Input-1:
+---------------
+7 5
+0 1 1 0 0 1 0
+0 5 10 15 20 25 30
+3 12 25 15 24
+
+Sample Output-1:
+----------------
+0 1 1 0 0
+
+Explanation:
+------------
+At time 3, the goals are [0], and 0 is leading.
+At time 12, the goals are [0,1,1], and 1 is leading.
+At time 25, the goals are [0,1,1,0,0,1], and 1 is leading (as ties go to the most recent goal)
+At time 15, the goals are [0,1,1,0], and 0 is leading (as ties go to the most recent goal)
+At time 24, the goals are [0,1,1,0,0], and 0 is leading.
+
+ 
+Test Cases:
+----------
+case =1
+input =7 5
+0 1 1 0 0 1 0
+0 5 10 15 20 25 30
+3 12 25 15 24
+output =0 1 1 0 0
+
+case =2
+input =10 6
+0 1 1 1 0 1 0 0 0 1
+1 4 10 11 12 15 17 18 20 24
+5 9 13 17 19 23
+output =1 1 1 1 0 0
+
+case =3
+input =15 8
+1 1 1 0 1 1 1 0 1 1 0 0 1 1 0
+0 5 10 15 17 25 26 33 36 39 41 45 46 48 49
+12 14 18 47 2 19 8 17
+output =1 1 1 1 1 1 1 1
+
+case =4
+input =20 10
+1 0 1 0 0 0 1 1 0 0 1 0 1 1 0 0 1 1 0 0
+2 5 6 8 10 12 15 18 20 22 25 27 29 32 35 37 38 42 46 48
+11 6 13 17 24 49 44 45 34 31
+output =0 1 0 0 0 0 1 1 1 0
+
+case =5
+input =20 13
+1 0 1 0 0 0 1 1 0 0 1 0 1 1 0 0 1 1 0 0
+2 5 6 8 10 12 15 18 20 22 25 27 29 32 35 37 38 42 46 48
+30 16 14 20 3 14 21 32 37 42 35 44 27
+output =0 0 0 0 1 0 0 1 0 1 0 1 0
+
+case =6
+input =30 12
+1 0 0 1 0 0 0 0 1 1 0 1 0 1 0 1 1 1 0 0 1 1 0 1 0 0 1 1 1 1
+2 5 6 7 10 13 14 21 25 27 29 30 38 42 43 44 48 59 70 73 75 76 79 82 84 86 90 93 96 97
+69 43 54 97 2 93 74 10 81 73 40 53
+output =1 0 0 1 1 1 0 0 0 0 0 0
+
+case =7
+input =30 18
+1 0 1 0 1 0 1 0 1 0 1 1 0 1 0 1 0 0 1 0 0 1 1 0 1 0 1 0 1 0
+2 5 6 7 10 13 14 21 25 27 29 30 38 42 43 44 48 59 70 73 75 76 79 82 84 86 90 93 96 97
+40 44 90 12 63 7 30 36 5 82 100 74 47 71 60 98 5 55
+output =1 1 1 1 0 0 1 1 0 0 0 0 1 1 0 0 0 1
+
+case =8
+input =50 20
+1 1 1 1 0 1 1 0 0 1 0 1 1 0 1 0 0 1 1 1 0 0 0 0 1 1 0 0 0 1 0 1 0 1 0 0 0 0 1 1 0 0 0 0 0 1 1 1 1 0
+0 8 10 15 18 19 23 25 29 34 39 40 43 43 44 50 52 54 56 60 62 64 67 68 75 86 87 90 98 100 109 123 124 133 140 143 144 151 153 156 160 165 166 167 170 174 179 184 189 195
+81 171 151 84 125 51 10 63 1 166 161 197 127 29 30 157 31 15 191 155
+output =1 0 0 1 1 1 1 1 1 0 0 0 1 1 1 1 1 1 0 0
+
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class TopVotedCandidate {
+
+    Map<Integer, Integer> m = new HashMap<>();
+    int[] time;
+    public TopVotedCandidate(int[] persons, int[] times) {
+        int n = persons.length, lead = -1;
+        Map<Integer, Integer> count = new HashMap<>();
+        time = times;
+        for (int i = 0; i < n; ++i) {
+            count.put(persons[i], count.getOrDefault(persons[i], 0) + 1);
+            if (i == 0 || count.get(persons[i]) >= count.get(lead)) lead = persons[i];
+            m.put(times[i], lead);
+        }
+    }
+
+    public int q(int t) {
+        int i = Arrays.binarySearch(time, t);
+        return i < 0 ? m.get(time[-i-2]) : m.get(time[i]);
+    }
+	
+	
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int n=sc.nextInt();
+		int t=sc.nextInt();
+		
+		int persons[]=new int[n];
+		int times[]=new int[n];
+		for(int i=0;i<n;i++)
+			persons[i]=sc.nextInt();
+		for(int i=0;i<n;i++)
+			times[i]=sc.nextInt();
+		
+		TopVotedCandidate tvc= new TopVotedCandidate(persons,times);
+		
+		for(int i=0;i<t;i++)
+		System.out.print(tvc.q(sc.nextInt())+" ");
+	}
+}

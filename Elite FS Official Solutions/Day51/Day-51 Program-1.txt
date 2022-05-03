@@ -1,0 +1,126 @@
+/*
+Problem Statement:
+-----------------
+In an institution there is a special keyboard.
+It contains only one row of 26-keys, keys[]
+
+The order of keys will be given, You need to findout the time taken to type a word.
+
+The rules to find the time is as follows:
+Initially you will be at first key .i.e, keys[0].
+To type a character, you have to move to a key having desired character, key[j].
+Time taken to type the character from key at ith index to key at jth index is |i - j|.
+
+You will be given two strings, Keys and Word W.
+Your task is to find how much time it takes to type the Word W 
+using the given order of keys
+
+NOTE: You have to use only one finger to type the word.
+
+Input Format:
+-------------
+Line-1: A String Keys order.
+Line-2: A String word W to type.
+
+Output Format:
+--------------
+An integer T, time to type the word.
+
+
+Sample Input-1:
+---------------
+poiuytrewqasdfghjklmnbvcxz
+kmit
+
+Sample Output-1:
+----------------
+39
+
+
+Sample Output-2:
+----------------
+abcdefghijklmnopqrstuvwxyz
+code
+
+Sample Output-2:
+----------------
+26
+
+ 
+Test Cases:
+----------
+case =1
+input =poiuytrewqasdfghjklmnbvcxz
+kmit
+output =39
+
+case =2
+input =abcdefghijklmnopqrstuvwxyz
+code
+output =26
+
+case =3
+input =qazwsxedcrfvtgbyhnujmikolp
+confirmation
+output =117
+
+case =4
+input =qwertyuiopasdfghjklmnbvcxz
+adobeconnect
+output =154
+
+case =5
+input =mlpnkojibhuvgycftxdrzseawq
+telescope
+output =104
+
+case =6
+input =asdfghjklpoiuytrewqzxcvbnm
+keshavmemorialinstituteoftechnology
+output =289
+
+case =7
+input =mnbvcxzlkjhgfdsapoiuytrewq
+tessellatorforngitandkmit
+output =207
+
+case =8
+input =poiuytrewqzxcvbasdfghjnmkl
+abcdefghijklmnopqrstuvwxyz
+output =178
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class SingleRow
+{
+    public static int calculateTime(String keyboard, String word) 
+    {
+        int[] index = new int[26];
+        for (int i = 0; i < keyboard.length(); ++i)
+        {
+            index[keyboard.charAt(i) - 'a'] = i;
+        }
+        
+        int sum = 0;
+        int last = 0;
+        for (char c : word.toCharArray())
+        {
+            sum += Math.abs(index[c - 'a'] - last);
+            last = index[c - 'a'];
+        }
+        
+        return sum;
+    }
+
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String keys=sc.next();
+		String word=sc.next();
+		System.out.println(calculateTime(keys,word));
+	}
+}

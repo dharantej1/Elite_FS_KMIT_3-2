@@ -1,0 +1,105 @@
+/*
+Problem Statement:
+-----------------
+Prasad is given a list of integers nums[].
+He like odd numbers, so he wanted to form  
+the odd length consecutive subsets possible.
+
+Now your task is to help Prasad, to form the odd length subsets,
+and to compute and print the sum of all such subsets.
+
+Input Format:
+-------------
+Line-1: An integer N, number of integers.
+Line-2: N space separated integers, nums[].
+
+Output Format:
+--------------
+Print an integer, the sum.
+
+
+Sample Input:
+---------------
+5
+1 4 2 5 3
+
+Sample Output:
+----------------
+58
+
+Explanation:
+------------
+From the given list of integers, possible subsets are.
+[1] = 1, [4] = 4, [2] = 2, [5] = 5, [3] = 3,
+[1,4,2] = 7,	[4,2,5] = 11,	[2,5,3] = 10
+[1,4,2,5,3] = 15
+Finally, total sum is:  1 + 4 + 2 + 5 + 3 + 7 + 11 + 10 + 15 = 58
+
+ 
+Test Cases:
+----------
+case =1
+input =5
+1 4 2 5 3
+output =58
+
+case =2
+input =10
+340 470 61 155 150 227 197 362 332 328
+output =26217
+
+case =3
+input =20
+304 115 184 60 258 309 44 6 15 148 158 364 369 262 252 148 301 213 49 224
+output =144664
+
+case =4
+input =30
+384 20 231 312 329 105 22 385 381 267 332 331 369 246 265 133 30 312 333 128 21 77 5 265 111 269 265 31 252 324
+output =537887
+
+case =5
+input =40
+70 104 96 95 14 144 368 119 371 26 86 109 181 226 262 298 217 374 238 106 287 324 384 345 77 130 78 314 162 229 240 286 192 205 350 234 179 120 70 106
+output =1231818
+
+case =6
+input =65
+49 222 146 92 173 67 130 130 134 192 124 167 243 116 121 61 249 249 26 217 233 211 50 204 63 17 102 61 6 249 118 221 6 115 146 30 82 27 222 211 166 111 144 237 196 239 2 210 152 31 135 87 14 65 106 167 134 5 126 91 4 5 77 88 99
+output =3052672
+
+case =7
+input =75
+114 463 53 121 59 105 39 6 480 389 2 168 23 170 410 476 447 133 466 342 380 44 146 349 104 499 478 44 418 53 119 382 315 408 115 442 330 330 382 82 487 363 407 176 136 263 270 162 260 336 161 14 371 315 331 372 111 218 434 302 407 365 19 361 197 107 224 229 141 93 248 411 34 194 380
+output =9730960
+
+case =8
+input =95
+6 585 520 497 131 477 202 247 217 352 558 680 803 632 109 447 110 378 262 129 61 174 967 127 441 37 806 979 535 760 786 693 462 408 515 546 790 61 498 878 840 425 481 132 992 781 24 395 711 744 9 776 540 507 999 229 838 855 856 731 170 202 272 6 279 16 258 671 245 59 214 311 648 503 386 170 887 519 375 520 352 533 938 424 869 472 506 551 828 284 729 531 170 580 344
+output =35583812
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class SumofOddSubsets {
+    public int sumOddLengthSubsets(int[] A) {
+        int res = 0, n = A.length;
+        for (int i = 0; i < n; ++i) {
+            res += ((i + 1) * (n - i) + 1) / 2 * A[i];
+        }
+        return res;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int arr[]=new int[n];
+		for(int i=0;i<n;i++)
+			arr[i]=sc.nextInt();
+		System.out.println(new SumofOddSubsets().sumOddLengthSubsets(arr));
+	}
+}

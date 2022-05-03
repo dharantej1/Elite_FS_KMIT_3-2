@@ -1,0 +1,115 @@
+/*
+Problem Statement:
+-----------------
+Ms.Akhila is a famous mathematician in a school, one day she decided to
+send her students to Maths Olympiad competetion
+
+To do that MS, Akhila called N number of students and ask them to stand in line.
+Each student is having distinct grade according to his/her perfomences based
+on the exams she conducted so far.
+
+In order to send the students to Olympiad, Ms. Akhila has to form a team of 
+3 students among N students from the line with following conditions:
+	-> Pick any 3 students with index(p,q,r) with 
+	grade(grade[p],grade[q],grade[r]).
+	->A team is consider as valid if: 
+	  - ( grade[p] < grade[q] < grade[r] ) or ( grade[p] > grade[q] > grade[r] )
+ 	    where (0 <= p < q < r < N).                                           
+     
+You are given grades[], grades of N students in the line.                                    
+Your task is to return the number of teams Ms.Akhila can form with 
+given conditions (students can be part of multiple teams).
+
+Input Format:
+-------------
+Line-1: AN integer N, number of students.
+Line-2: N space seperated integers, grades[].
+
+Output Format:
+--------------
+An integer, number of teams can be formed.
+
+
+Sample Input-1:
+---------------
+
+
+Sample Output-1:
+----------------
+3
+
+Explanation:
+------------
+Ms Akhila can form three teams given the conditions. 
+(3,4,5), (6,4,2), (6,5,2).
+
+
+Sample Input-2:
+---------------
+5
+1 2 3 4 5
+
+Sample Output-2:
+----------------
+10
+
+ 
+Test Cases:
+----------
+case =1
+input =11
+3 6 9 8 7 4 1 2 5 22 11
+output =52
+
+case =2
+input =20
+12 45 8 3 74 1 6 5 3 10 34 89 76 66 4 2 7 8 9 85
+output =325
+
+case =3
+input =3
+599 654 753
+output =1
+
+case =4
+input =9
+99 29 67 89 37 19 59 79 49
+output =26
+
+case =5
+input =20
+13 41 9 4 75 15 65 53 10 34 89 77 64 41 21 32 45 6 7 95
+output =386
+
+*/
+
+Solution:
+--------
+
+import java.util.*;
+class Test1{
+
+public int numTeams(int[] rating) {
+    int res = 0;
+    for (int i = 1; i < rating.length - 1; ++i) {
+        int less[] = new int[2], greater[] = new int[2];
+        for (int j = 0; j < rating.length; ++j) {
+            if (rating[i] < rating[j])
+                ++less[j > i ? 1 : 0];
+            if (rating[i] > rating[j])
+                ++greater[j > i ? 1 : 0];
+        }
+        res += less[0] * greater[1] + greater[0] * less[1];
+    }
+    return res;
+}
+public static void main(String args[]){
+		Scanner sc = new Scanner(System.in);
+		int s = sc.nextInt();
+		int rat[] = new int[s];
+		for(int i=0;i<s;i++){
+			rat[i] = sc.nextInt();
+		}
+		System.out.print(new Test1().numTeams(rat));		
+	}
+}

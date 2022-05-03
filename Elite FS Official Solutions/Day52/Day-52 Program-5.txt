@@ -1,0 +1,236 @@
+/*
+Problem Statement:
+-----------------
+A company ABC has scheduled online interviews for N candidates, candidates are
+indexed from 0 to N-1. The interview panel has set up infinity meeting links
+to conduct the interviews, each meeting link is numbered from 0 to infinity. 
+The panel has scheduled interviews for candidates as follows, 
+the ith-candidate's interview is scheduled at schedule[i]=[start, end], 
+where 'start' is the start time and 'end' is the end time of the interview. 
+The start times of interviews are unique.
+
+When a candidate tries to attend the interview, then the candidate 
+will be assigned an available meeting link with the lowest number 
+to join the interview. For example, if meeting link-0, meeting link-1, 
+meeting link-4, and meeting link-5 are busy, then the meeting link-2 will 
+be assigned to the next candidate who attends the interview. 
+Once the interview is completed, then that meeting link is free 
+and can be assigned to the next candidate who attends the interview 
+at the same time or later.
+
+You are given the schedule of the interviews of N candidates, schedule[N][2], 
+and the candidate number C. Your task is to return the lowest meeting link 
+number that the candidate-C can attend.
+
+Input Format:
+-------------
+Line-1: Two space separated integers N and C, number of candidates 
+        and candidate number.
+Next N lines: Two space separated integers start and end, the schedule of 
+              each candidate's interview.
+
+Output Format:
+--------------
+Return an integer output.
+
+Sample Input-1:
+---------------
+3 1 // N and C
+2 5	// Schedule
+3 4
+5 7
+
+Sample Output-1:
+----------------
+1
+
+Explanation: 
+------------
+- Candidate-0's interview starts at time 2 and attends using meeting link-0.
+- Candidate-1's interview starts at time 3 and attends using meeting link-1.
+- Candidate-1's interview ends at time 4 and meeting link-1 is free.
+- Candidate-0's interview ends at time 5 and meeting link-0 is free.
+- Candidate-2's interview starts at time 5 and attends using meeting link-0.
+Since Candidate-1 attended the interview using meeting link-1, return 1.
+
+
+Sample Input-2:
+---------------
+3 1 // N and C
+2 9	// Schedule
+0 4
+1 5
+
+Sample Output-2:
+----------------
+0
+
+Explanation: 
+------------
+- Candidate-1's interview starts at time 0 and attends using meeting link-0.
+- Candidate-2's interview starts at time 1 and attends using meeting link-1.
+- Candidate-0's interview starts at time 2 and attends using meeting link-2.
+- Candidate-1's interview ends at time 4 and meeting link-0 is free.
+- Candidate-2's interview ends at time 5 and meeting link-1 is free.
+- Candidate-0's interview ends at time 9 and meeting link-2 is free.
+Since Candidate-1 attended the interview using meeting link-0, return 0.
+
+ 
+Test Cases:
+----------
+case =1
+input =5 2
+1 5
+2 4
+3 6
+4 7
+5 8
+output =2
+
+case =2
+input =6 4
+6 8
+2 4
+5 7
+1 5
+4 9
+3 6
+output =1
+
+case =3
+input =6 4
+8 10
+5 8
+7 12
+13 17
+2 7
+3 9
+output =0
+
+case =4
+input =6 5
+8 46
+32 59
+56 98
+26 65
+5 25
+33 79
+output =3
+
+case =5
+input =9 5
+1 24
+6 19
+3 14
+7 12
+2 54
+8 16
+9 13
+10 25
+15 36
+output =5
+
+case =6
+input =16 6
+13 34
+17 23
+18 46
+45 32
+12 76
+19 53
+39 45
+37 54
+34 52
+32 56
+27 67
+30 34
+2 78
+5 65
+9 71
+25 43
+output =11
+
+case =7
+input =16 11
+13 34
+17 23
+18 46
+45 32
+12 76
+19 53
+39 45
+37 54
+34 52
+32 56
+27 67
+30 34
+2 78
+5 65
+9 71
+25 43
+output =9
+
+case =8
+input =20 10
+13 34
+17 23
+18 46
+45 32
+12 76
+19 53
+39 45
+37 54
+34 52
+32 56
+27 67
+30 34
+2 78
+5 65
+9 71
+25 43
+22 34
+14 25
+7 15
+1 34
+output =7
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class SmallestChair {
+    public int smallestChair(int[][] times, int targetFriend) {
+        int targetStart = times[targetFriend][0];
+        Arrays.sort(times, (a, b) -> a[0] - b[0]);
+        
+        PriorityQueue<Integer> available = new PriorityQueue<>();
+        for (int i = 0; i < times.length; ++ i) {
+            available.offer(i);
+        }        
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[0] - b[0]);        
+        for (int i = 0; i < times.length; ++ i) {
+            while (!pq.isEmpty() && pq.peek()[0] <= times[i][0]) {
+                available.offer(pq.poll()[1]);
+            }            
+            if (times[i][0] == targetStart) {
+                break;
+            }            
+            pq.offer(new int[]{times[i][1], available.poll()});
+        }        
+        return available.peek();
+    }
+    public static void main(String[] args){
+	Scanner sc = new Scanner(System.in);
+	int r = sc.nextInt();
+	int c = sc.nextInt();
+	int [][] times = new int[r][c];
+	for(int i=0;i<r;i++){
+		for(int j=0;j<c;j++){
+			times[i][j] = sc.nextInt();
+		}
+	}
+	int targetFriend = sc.nextInt();
+	System.out.println(new SmallestChair().smallestChair(times,targetFriend));
+    }
+}

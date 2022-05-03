@@ -1,0 +1,181 @@
+/*
+Problem Statement:
+-----------------
+Yamaha Pvt Ltd has N number of stores in Hyderabad, each showroom has 
+allotted few vehicles. The sales of each showroom are given as an array, 
+sales[], where sales[i]={S, T} indiactes, i-th showroom sold S number of 
+vehicles out of T vehicles allotted to that showroom.
+
+Yamaha introduced a new vehicle in the market and the sales of that 
+vehicle are at peak(i.e., these vehicles will definitely sold ). Now, 
+Yamaha Pvt Ltd, decided to send P vehicles to Hyderabad. Now, each of 
+the P vehicles have to be alloted to a showroom in a way that increases 
+the avarage sales ratio across all the showrooms. 
+The sales ratio of a showroom is calaculated as the number of vehicles 
+sold divided by the total number of vehicles given to that showroom.
+
+Your task is to return the maximum possible average sales ratio 
+after P number of new vehicles allotted.
+
+Input Format:
+-------------
+Line-1: Two space separated integers N and P, no.of showrooms, no.of new vehicles
+Next N lines: Two space separated integers S and T, sold count, allotted count.
+
+Output Format:
+--------------
+Print a double result (rounded to 5 decimals), 
+Max avg sales ratio of all showrooms.
+
+
+Sample Input-1:
+---------------
+4 3
+3 5
+4 9
+6 8
+3 10
+
+Sample Output-1:
+----------------
+0.57008
+
+
+Sample Input-2:
+---------------
+6 4
+4 8
+3 5
+7 9
+2 7
+3 11
+4 13
+
+Sample Output-2:
+----------------
+0.50499
+
+ 
+Test Cases:
+----------
+case =1
+input =4 24
+3 16
+2 32
+8 28
+1 18
+output =0.33781
+
+case =2
+input =2 2
+15 99
+45 66
+output =0.42507
+
+case =3
+input =5 15
+3 9
+4 6
+8 10
+6 8
+3 7
+output =0.72444
+
+case =4
+input =9 33
+8 24
+6 32
+4 22
+10 55
+16 82
+24 46
+18 99
+12 34
+5 9
+output =0.38605
+
+case =5
+input =4 4
+3 5
+4 9
+6 8
+3 11
+output =0.57532
+
+case =6
+input =4 16
+8 32
+2 10
+12 48
+3 18
+output =0.36974
+
+case =7
+input =15 89
+35 106
+23 69
+77 240
+2 9
+4 16
+1 15
+3 3
+8 8
+6 16
+32 66
+4 29
+3 7
+5 45
+6 78
+25 105
+output =0.5143
+
+case =8
+input =2 8
+4 16
+6 25
+output =0.37542
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class AverageRatio {
+    public double maxAverageRatio(int[][] classes, int extraStudents) {
+        PriorityQueue<double[]> maxHeap = new PriorityQueue<>(Comparator.comparingDouble(o -> -o[0])); // Max heap compared by first value in decreasing order.
+        for (int[] c : classes) {
+            double a = c[0], b = c[1];
+            maxHeap.offer(new double[]{profit(a, b), a, b});
+        }
+        while (extraStudents-- > 0) {
+            double[] top = maxHeap.poll();
+            double a = top[1], b = top[2];
+            maxHeap.offer(new double[]{profit(a+1, b+1), a+1, b+1});
+        }
+        double ans = 0.0d;
+        while (!maxHeap.isEmpty()) {
+            double[] top = maxHeap.poll();
+            double a = top[1], b = top[2];
+            ans += a/b;
+        }
+        return ans / classes.length;
+    }
+    
+    double profit(double a, double b) {
+        return (a + 1) / (b + 1) - a / b;
+    }
+    
+    public static void main(String[] args){
+    	Scanner sc = new Scanner(System.in);
+    	int r = sc.nextInt();
+    	int std = sc.nextInt();
+    	int [][] classes = new int[r][2];
+    	for(int i=0;i<r;i++){
+    		for(int j=0;j<2;j++){
+    			classes[i][j] = sc.nextInt();
+    		}
+    	}
+    
+    	System.out.println(Math.round(new AverageRatio().maxAverageRatio(classes,std)*100000.0)/100000.0);
+    }
+}

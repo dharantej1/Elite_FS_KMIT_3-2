@@ -1,0 +1,162 @@
+/*
+Problem Statement:
+-----------------
+A courier company has to deliver N items with different heights.
+All the items have to deliver to one building only.
+
+The building has K rooms inside indexed 0,1,...,K-1, and the heights of 
+the rooms are different. All the rooms connected with each other and has 
+two entry points, one entry is at frontside and other entry is at backside of 
+the building . e.g, you can reach room-1 from room-0 only, room-2 from 
+room-1 only, ..so on, and vice-versa.
+
+Now the task of the delivery agent is to keep the items inside the building.
+
+To keep the items into the rooms, delivery agent has to follow these rules:
+ - Agent can't keep, two goods in one room.
+ - Agent can enter into the building either from frontside or from back side,
+   If the height of some room is less than the height of an item,
+   then the item will be stopped before that room, so are the items behind it.
+ - Agent can rearrange the order of items to keep them inside the building.
+   
+Your task is to return the maximum number of items, the delivery agent can keep 
+inside the building.
+
+Input Format:
+-------------
+Line-1 -> two integers N and K, number of items and number of rooms.
+Line-2 -> N space separated integers, heights of the items.
+Line-3 -> K space separated integers, heights of the rooms.
+
+Output Format:
+--------------
+Print an integer as result.
+
+
+Sample Input-1:
+---------------
+5 4
+2 3 3 4 5
+4 5 2 3
+
+Sample Output-1:
+----------------
+4
+
+Explanation:
+------------
+We can first keep the item of height 2 in room 2. 
+Then we can keep the item of height 3 in room 3.
+Then we can keep the item of height 3 in room 1.
+Then we can keep the item of height 4 in room 0.
+
+
+Sample Input-2:
+---------------
+4 5
+4 6 6 3
+3 2 4 5 6
+
+Sample Output-2:
+----------------
+3
+
+Explanation:
+------------
+Notice that it's not possible to keep the two items of height 6 into the building,
+since there's only 1 room of height >= 6
+Other valid solutions are to put the item with height 4 in room 2 or 
+to put the item with height 3 in room 2 or room 0 before putting 
+the the item with height 4 and 6.
+
+ 
+Test Cases:
+----------
+case =1
+input =5 4
+2 3 3 4 5
+4 5 2 3
+output =4
+
+case =2
+input =4 5
+4 6 6 3
+3 2 4 5 6
+output =3
+
+case =3
+input =10 10
+17 34 19 32 5 33 29 35 4 14
+17 30 46 28 44 37 11 8 3 13
+output =4
+
+case =4
+input =20 20 
+48 47 33 5 25 16 16 28 1 1 45 11 4 2 12 17 38 26 35 42
+32 16 22 44 19 6 6 10 16 42 21 11 44 26 30 9 6 46 31 11
+output =10
+
+case =5
+input =25 20
+4 19 14 9 43 10 27 47 50 15 25 6 36 37 20 3 44 33 18 43 47 20 9 3 7
+43 31 24 41 40 32 27 36 36 25 45 45 21 42 38 22 32 45 20 28
+output =17
+
+case =6
+input =20 18
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3
+output =18
+
+case =7
+input =18 20
+20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+output =18
+
+case =8
+input =50 40
+31 28 16 30 14 5 23 17 35 26 45 27 45 25 34 8 23 9 27 29 31 12 35 27 29 34 23 33 36 17 38 32 3 12 39 29 27 37 13 17 8 43 34 18 38 14 47 12 25 5
+34 37 19 28 41 26 40 31 44 36 47 37 27 48 30 41 17 22 27 32 31 45 41 47 32 42 37 25 18 34 43 22 46 18 17 19 12 28 36 51
+output =22
+
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class MaxBoxesInWarehouse {
+public int maxBoxesInWarehouse(int[] boxes, int[] warehouse) {
+        Arrays.sort(boxes);
+        int m = boxes.length, n = warehouse.length;
+        int i = m-1, head = 0, tail=n-1;
+        int count = 0;
+        while(i>=0 && head<=tail){
+            if(boxes[i]<=warehouse[head]){
+                head++;
+                count++;
+            }else if(boxes[i]<=warehouse[tail]){
+                tail--;
+                count++;
+            }
+            i--;
+        }
+        return count;
+    }
+	
+	public static void main(String args[] ) {
+	    Scanner sc = new Scanner(System.in);
+		int N= sc.nextInt();
+		int K= sc.nextInt();
+		int[] items = new int[N];
+		int[] building=new int[K];
+		for(int i=0;i<N;i++)
+			items[i]= sc.nextInt();
+		for(int i=0;i<K;i++)
+			building[i]= sc.nextInt();
+		
+		System.out.println(new MaxBoxesInWarehouse().maxBoxesInWarehouse(items,building));
+	}
+}

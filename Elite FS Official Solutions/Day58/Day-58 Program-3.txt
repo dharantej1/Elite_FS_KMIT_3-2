@@ -1,0 +1,125 @@
+/*
+Problem Statement:
+-----------------
+Mr Parandhamayya working with words.
+He is given a word W, you need to divide the word into N non-empty parts, 
+such that all the newly formed words should be distinct, and 
+if you append all those words should form original word W.
+
+Your task is to help Mr Parandhamayya to divide the word into N parts,
+such that, the value of N should be maximized, and print N.
+
+Input Format:
+-------------
+Line-1: A string W, a word.
+
+Output Format:
+--------------
+Print an integer result, the value of N.
+
+
+Sample Input-1:
+---------------
+banana
+
+Sample Output-1:
+----------------
+4
+
+Explanation: 
+------------
+One way to divide the word is "b","a","n","ana".
+If you divide it like "b","a","n","an","a".The word "a" will be repeated.
+So it is not allowed to divide like the second way.
+
+
+Sample Input-2:
+---------------
+mississippi
+
+Sample Output-2:
+----------------
+7
+
+Explanation: 
+------------
+One of the way to divide the word is "m","i","s","si","ssi","p","pi".
+
+NOTE: Subsequences are not allowed.
+
+ 
+Test Cases:
+----------
+case =1
+input =filmography
+output =11
+
+case =2
+input =redividend
+output =8
+
+case =3
+input =licovolcanoconiosis
+output =13
+
+case =4
+input =abababababababa
+output =6
+
+case =5
+input =attitudeistheonlykey
+output =16
+
+case =6
+input =abcbcdcdedefgfghghi
+output =14
+
+case =7
+input =ababababbababababababbbabab
+output =10
+
+case =8
+input =bscbsccbsbscbsscbscbsccsbcsbsbc
+output =15
+
+case =9
+input =aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+output =7
+
+case =10
+input =babbaabbbaaabbbbaaaabbbbbaaaaa
+output =12
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+
+class UniqueSplit {
+    public int maxUniqueSplit(String s) {
+        Set<String> set = new HashSet<>();
+        return dfs(set, 0, s);
+    }
+    
+    private int dfs(Set<String> set, int idx, String s) {
+        if (idx >= s.length()) return 0;
+        int res = -1;  // did not find method to split;
+        for (int i = idx + 1; i <= s.length(); i++) {
+            String sub = s.substring(idx, i);
+            if (!set.add(sub)) continue; //already contains sub
+            int next = dfs(set, i, s);
+            if (next >= 0) res = Math.max(res, next + 1);
+            set.remove(sub);
+        }
+        return res;
+    }
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String s=sc.next();
+		System.out.println(new UniqueSplit().maxUniqueSplit(s));
+	}
+
+}

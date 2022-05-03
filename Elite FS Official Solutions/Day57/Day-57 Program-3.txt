@@ -1,0 +1,127 @@
+/*
+Problem Statement:
+-----------------
+Ashok is given a list of integers nums[].
+His task is to find the longest contiguous sublist of S, 
+the product of all the numbers in the sublist should be positive.
+
+Your task is to return the length of longest contiguous sublist.
+
+Input Format:
+-------------
+Space separated integers nums[], list of numbers.
+
+Output Format:
+--------------
+Print the length of the longest contiguous sublist
+
+
+Sample Input-1:
+---------------
+1 -1 2 -2
+
+Sample Output-1:
+----------------
+4
+
+
+Sample Input-2:
+---------------
+-1 -2 -3 0 1
+
+Sample Output-2:
+----------------
+2
+
+Explanation:
+------------
+0 is not considered as positive number.
+
+
+Sample Input-3:
+---------------
+1 2 3 4 -5 6  7 8
+
+Sample Output-3:
+----------------
+4
+
+ 
+Test Cases:
+----------
+case =1
+input =-1 -2 -3 0 1
+output =2
+
+case =2
+input =1 2 3 4 -5 6 7 8
+output =4
+
+case =3
+input =-72 75 56 -3 69 35 7 -94 -75 -39
+output =9
+
+case =4
+input =-34 -69 -43 -59 -42 -51 -70 -41 -25 73 -19 63 83 -16 -44
+output =15
+
+case =5
+input =99 -40 1 24 -16 -30 72 82 19 4 44 0 -32 -25 -56 -64 27 -23 -34 35 92
+output =9
+
+case =6
+input =99 -40 1 24 -16 -30 72 82 19 4 44 -32 -25 -56 -64 27 -23 -34 35 92
+output =18
+
+case =7
+input =-54 -26 -34 87 -9 -94 -32 32 11 -75 -65 50 -33 77 -94 -40 0 46 -25 -3 -10 -91 -44 89 88 -82 59 -24 -49 81 8 57 42 18 -66 -81 -19 58 -65 30 -12 -7 65 94 -92 71 64 -46 -37 73
+output =31
+
+case =8
+input =-13 94 -84 -86 11 2 89 0 -40 42 70 -31 91 64 70 17 -76 -57 -93 -14 -10 35 -79 -40 -57 58 81 -7 38 62 24 82 18 87 -79 -32 -44 -75 -17 36 72 88 -5 43 -53 -1 -92 40 -42 -91 -30 -50 -40 65 81 -89 -49 -58 97 64 38 72 -56 -73 48 9 57 1 3 68 18 18 38 -76 43
+output =66
+
+*/
+
+Solution:
+--------
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+class MaxSubArray {
+    public int getMaxLen(int[] nums) {
+        // sum is used to count the number of negative numbers from zeroPosition to current index
+        int firstNegative = -1, zeroPosition = -1, sum = 0, max = 0;
+        for(int i = 0;i < nums.length; i++){
+            if(nums[i] < 0){
+                sum++;
+				// we only need to know index of first negative number
+                if(firstNegative == -1) firstNegative = i;
+            }
+			// if current number is 0, we can't use any element from index 0 to i anymore, so update zeroPosition, and reset sum and firstNegative. If it is a game, we should refresh the game when we meet 0. 
+            if(nums[i] == 0){
+                sum = 0;
+                firstNegative = -1;
+                zeroPosition = i;
+            }
+            else{
+			    // consider index of zero
+                if(sum%2 == 0) max = Math.max(i - zeroPosition, max);
+				// consider index of first negative number
+                else max = Math.max(i - firstNegative, max);   
+            }
+        }
+        return max;
+    }
+	
+	public static void main(String args[] ) throws IOException {
+	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		String str = br.readLine();
+		String[] sarr = str.split(" ");
+		int[] nums = Arrays.asList(sarr).stream().mapToInt(Integer::parseInt).toArray();
+		System.out.println(new MaxSubArray().getMaxLen(nums));
+	}
+}

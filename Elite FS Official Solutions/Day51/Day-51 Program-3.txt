@@ -1,0 +1,216 @@
+/*
+Problem Statement:
+-----------------
+Pandavas and Kauravas are ruling two different kingdoms sepertaed by river.
+If you connect both the kingdoms they will be in Square shaped land.
+Land occupied by the kingdoms, indiacted with 1's and the river, indiacted with 0's.
+
+Now, Pandavas and Kauravas decided to build a bridge on the river for easy 
+connectivity. As the cost of building a bridge will be high, they have decided 
+to reduce the length of the bridge. You are allowed to build the bridge on 
+the river cells, connected by 4 directions only (up, down,left,right).
+
+Your task is to help the Kings, to minimize the occupation of river cells, 
+to build the bridge with minimum cost. And return the count of river cells occupied.
+
+Input Format:
+-------------
+Line-1: An integer N, size of the land.
+Next N lines: N space separated integers, either 0 or 1. 
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+4
+1 1 1 0
+1 0 0 0
+1 0 0 1
+0 0 1 1
+
+Sample Output-1:
+----------------
+2
+
+
+Sample Input-2:
+---------------
+5
+1 1 0 0 0
+1 1 0 0 0
+0 0 0 0 1
+0 0 0 1 1
+0 0 1 1 1
+
+Sample Output-2:
+----------------
+3
+
+ 
+Test Cases:
+----------
+case =1
+input =5
+1 1 1 1 1
+1 0 0 0 1
+0 0 0 0 0
+0 0 1 0 0
+1 1 1 1 1
+output =2
+
+case =2
+input =7
+1 1 1 1 1 1 1
+1 1 1 1 1 1 1
+1 0 0 0 0 0 1
+0 0 0 0 0 0 0
+0 0 0 0 0 0 0
+0 0 1 1 1 0 0
+0 0 1 1 1 0 0
+output =3
+
+case =3
+input =8
+1 1 1 1 1 0 0 0
+1 1 1 1 0 0 0 0
+1 1 0 0 0 0 0 0
+1 0 0 0 0 0 0 1
+1 0 0 0 0 0 1 1
+1 1 0 0 0 0 0 1
+1 1 0 0 0 0 0 0
+1 1 1 1 0 0 0 0
+output =5
+
+case =4
+input =9
+1 1 1 1 0 0 0 0 0
+1 1 1 0 0 0 0 0 0
+1 1 0 0 0 0 0 0 0
+1 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 1
+0 0 0 0 0 0 0 1 1
+0 0 0 0 0 0 1 1 1
+output =10
+
+case =5
+input =9
+1 1 1 1 1 0 0 0 0
+1 0 1 1 0 0 0 0 0
+1 1 1 0 0 0 0 0 0
+1 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0
+0 0 0 0 0 1 1 1 1
+0 0 0 0 1 0 1 0 0
+0 0 0 0 1 1 1 1 1
+output =6
+
+case =6
+input =11
+1 1 1 1 1 1 1 1 1 0 0
+0 1 0 0 0 0 1 1 0 0 0
+1 1 1 0 1 1 1 0 0 0 0
+0 1 0 1 1 0 0 0 0 0 0
+1 1 0 1 0 0 0 0 0 1 1
+0 0 0 0 0 0 0 0 1 1 0
+0 0 0 0 0 0 0 0 1 0 0
+0 0 0 0 0 0 0 1 1 1 1
+0 0 0 0 0 0 0 1 0 1 0
+0 0 0 0 0 0 0 1 1 1 0
+0 0 0 0 0 0 1 1 0 0 0
+output =4
+
+case =7
+input =11
+1 1 1 1 1 1 1 1 1 1 1
+1 0 1 0 1 0 1 0 1 0 1
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 1 0 1 0 1 0 1 0 1 0
+1 1 1 1 1 1 1 1 1 1 1
+output =8
+
+case =8
+input =11
+1 1 0 0 0 0 0 0 0 1 1
+0 1 1 0 0 0 0 0 1 1 0
+0 0 1 1 0 0 0 1 1 0 0
+0 0 0 1 1 0 1 1 0 0 0
+0 0 0 0 1 1 1 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 1 1 1 0 0 0 0
+0 0 0 1 1 0 1 1 0 0 0
+0 0 1 1 0 0 0 1 1 0 0
+0 1 1 0 0 0 0 0 1 1 0
+1 1 0 0 0 0 0 0 0 1 1
+output =1
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class ShortestBridge {
+    public int shortestBridge(int[][] A) {
+        int m = A.length, n = A[0].length;
+        boolean[][] visited = new boolean[m][n];
+        int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        Queue<int[]> q = new LinkedList<>();
+        boolean found = false;
+        // 1. dfs to find an island, mark it in `visited`
+        for (int i = 0; i < m; i++) {
+            if (found) {
+                break;
+            }
+            for (int j = 0; j < n; j++) {
+                if (A[i][j] == 1) {
+                    dfs(A, visited, q, i, j, dirs);
+                    found = true;
+                    break;
+                }
+            }
+        }
+        // 2. bfs to expand this island
+        int step = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            while (size-- > 0) {
+                int[] cur = q.poll();
+                for (int[] dir : dirs) {
+                    int i = cur[0] + dir[0];
+                    int j = cur[1] + dir[1];
+                    if (i >= 0 && j >= 0 && i < m && j < n && !visited[i][j]) {
+                        if (A[i][j] == 1) {
+                            return step;
+                        }
+                        q.offer(new int[]{i, j});
+                        visited[i][j] = true;
+                    }
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
+    private void dfs(int[][] A, boolean[][] visited, Queue<int[]> q, int i, int j, int[][] dirs) {
+        if (i < 0 || j < 0 || i >= A.length || j >= A[0].length || visited[i][j] || A[i][j] == 0) {
+            return;
+        }
+        visited[i][j] = true;
+        q.offer(new int[]{i, j});
+        for (int[] dir : dirs) {
+            dfs(A, visited, q, i + dir[0], j + dir[1], dirs);
+        }
+    }
+}

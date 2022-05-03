@@ -1,0 +1,170 @@
+/*
+Problem Statement:
+-----------------
+Balbir singh is working with Binary Trees.
+The elements of the tree is given in the level order format.
+Balbir has a task to split the tree into two parts by removing only one edge
+in the tree,such that the sum of elements in both the sub-trees should be equal.
+
+You will be given the root of the binary tree.
+Your task is to help the Balbir singh to split the binary tree as specified.
+print true, if it is possible, otheriwse print false.
+
+Your task is to implement the class Solution:
+	- public boolean checkEqualTree(BinaryTreeNode root):
+	return the boolean value.
+	
+NOTE: 
+Please do consider the node with data as '-1' as null in the given trees.
+
+Input Format:
+-------------
+Space separated integers, elements of the tree.
+
+Output Format:
+--------------
+Print a boolean value.
+
+
+Sample Input-1:
+---------------
+1 2 3 5 -1 -1 5
+
+Sample Output-1:
+----------------
+true
+
+
+Sample Input-2:
+---------------
+3 2 4 3 2 -1 7
+
+Sample Output-2:
+----------------
+false
+
+NOTE: Look at hint for explanation.
+
+ 
+Test Cases:
+----------
+case =1
+input =1 2 3 5 -1 -1 5
+output =true
+
+case =2
+input =3 2 4 3 2 -1 7
+output =false
+
+case =3
+input =5 5 5 5 5 5 10
+output =true
+
+case =4
+input =7 4 3 5 6 2 3 8 4 5 6 7 5 5 6
+output =true
+
+case =5
+input =7 4 3 5 6 2 3 8 4 5 6 7 8 5 6
+output =false
+
+case =6
+input =5 5 5 -1 5 -1 5
+output =false
+
+case =7
+input =1 2 3 4 5 6 7 15 14 13 12 10 11 9 7
+output =false
+
+case =8
+input =1 2 3 4 5 6 7 15 14 13 12 10 11 12 17
+output =true
+
+case =9
+input =5 5 2 2 2 3 5 -1 1 1 -1 -1 4
+output =false
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class BinaryTreeNode{
+	public int data; 
+	public BinaryTreeNode left, right; 
+	public BinaryTreeNode(int data){
+		this.data = data; 
+		left = null; 
+		right = null; 
+	}
+}
+
+public class BinaryTree{
+	static BinaryTreeNode root;
+	static BinaryTreeNode temp = root;
+	void insert(BinaryTreeNode temp, int key)
+    {
+ 
+        if (temp == null) {
+            root = new BinaryTreeNode(key);
+            return;
+        }
+        Queue<BinaryTreeNode> q = new LinkedList<BinaryTreeNode>();
+        q.add(temp);
+ 
+        // Do level order traversal until we find
+        // an empty place.
+        while (!q.isEmpty()) {
+            temp = q.peek();
+            q.remove();
+ 
+            if (temp.left == null) {
+                temp.left = new BinaryTreeNode(key);
+                break;
+            }
+            else
+                q.add(temp.left);
+ 
+            if (temp.right == null) {
+                temp.right = new BinaryTreeNode(key);
+                break;
+            }
+            else
+                q.add(temp.right);
+        }
+    }
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String str[]=sc.nextLine().split(" ");
+		BinaryTree bt=new BinaryTree();
+		root=new BinaryTreeNode(Integer.parseInt(str[0]));
+		for(int i=1; i<str.length; i++)
+			bt.insert(root,Integer.parseInt(str[i]));
+		Solution sol= new Solution();
+		System.out.println(sol.checkEqualTree(root));
+	}
+}
+class Solution {
+    List<Integer> subtreeSum;
+
+    public boolean checkEqualTree(BinaryTreeNode root) {
+        subtreeSum = new LinkedList<>();
+        int totalSum = getTotalSum(root);
+        if (totalSum % 2 != 0) {
+            return false;
+        }
+        subtreeSum.remove(subtreeSum.size() - 1);
+        return subtreeSum.contains(totalSum / 2);
+    }
+
+    private int getTotalSum(BinaryTreeNode root) {
+        if (root == null || root.data == -1) {
+            return 0;
+        }
+        int totalSum = root.data + getTotalSum(root.left) + getTotalSum(root.right);
+        subtreeSum.add(totalSum);
+        return totalSum;
+    }
+}
