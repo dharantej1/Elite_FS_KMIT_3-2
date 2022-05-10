@@ -1,0 +1,76 @@
+Mr Sudhakar is working with Strings,
+He is given a String S, He wants to sort the characters in S in descending order
+based on the frequency of the characters. If two or more characters have same 
+frequency then arrange them in sorted-order.
+
+Your task is to help Mr Sudhakar to convert the string S into sorted order of 
+frequency.
+
+Note: The frequency of a character is the number of times it appears in the string.
+
+Input Format:
+----------------
+A String S, conatins bothe lower case and upper case letters.
+
+Output Format:
+------------------
+Print a string after conversion.
+
+
+Sample Input-1:
+---------------
+divide
+
+Sample Output-1:
+----------------
+ddiiev
+
+Explanation: 
+------------
+d and e have same frequecy and i and v have same frequency.
+So sorted-order is ddeevi.
+
+
+Sample Input-2:
+---------------
+TomAto
+
+Sample Output-2:
+----------------
+ooATmt
+
+
+Sample Input-3:
+---------------
+rrrppp
+
+Sample Output-3:
+----------------
+ppprrr
+// s,d=str(input()),{}
+// for i in sorted(set(s)):
+//     d[i]=s.count(i)
+// dic=sorted(d.items(),key=lambda x:x[1],reverse = True)
+// for i in dic:
+//     print(int(i[1])*i[0],sep="",end="")
+    
+    
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.*;
+
+public class main{
+
+
+    public static void main(String[] args) {
+         Stream.of((new Scanner(System.in)).next().split("")).collect(Collectors.groupingBy(e -> e, Collectors.counting())).entrySet().stream().sorted((e1,e2) -> {if(e1.getValue()==e2.getValue()) return e1.getKey().compareTo(e2.getKey());
+            else return (int)(e2.getValue() - e1.getValue());
+        })
+                .map((e ->new String(new char[e.getValue().intValue()]).replace("\0", e.getKey()) ))
+                .forEach(System.out::print);
+
+    }
+}    
