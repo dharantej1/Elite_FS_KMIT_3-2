@@ -46,10 +46,21 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.List.*;
+
 class main{
     static int top;
     static List<Integer> topele(int n,List<Integer> l){
-        List<Integer> result = l.stream().collect(Collectors.groupingBy(e -> e, Collectors.counting())).entrySet().stream().sorted((e1,e2) -> {return (int) (e2.getValue() - e1.getValue());}).map(e -> {return (int) e.getKey();}).collect(Collectors.toList()).subList(0,top);
+        List<Integer> result = l.stream().
+        collect(Collectors.groupingBy(e -> e, Collectors.counting()))
+        .entrySet().
+        stream()
+        .sorted((e1,e2) -> {
+            if(e1.getValue() == e2.getValue()) return (int) (e1.getKey() - e2.getKey());
+            else return (int) (e2.getValue() - e1.getValue());
+        })
+        .map(e -> {return (int) e.getKey();})
+        .collect(Collectors.toList()).subList(0,top);
+        
         return result;
         
     }
@@ -61,6 +72,7 @@ class main{
         for(int i=0;i<n;i++){
             l.add(sc.nextInt());
         }
+        
         System.out.println(topele(n,l));
     }
 }
