@@ -1,0 +1,71 @@
+Mr Febin is working with numbers.
+He wants to find all the AD Numbers,
+An AD Number is defined as follows:
+	- All the adjacent digits in the given number N 
+	should have an absolute difference of 1 only. 
+
+You will be given two integers, start and end,
+Your task is to find all the AD Numbers in ascending order
+in the range of [start, end], where both are inclusive.
+
+Constarint:
+----------
+0 <= start < end <2*10^9.
+
+Input Format:
+-------------
+Two space separated intergers,  start and end.
+
+Output Format:
+--------------
+Print a list of integers.
+
+
+Sample Input-1:
+---------------
+0 15
+
+Sample Output-1:
+----------------
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12]
+
+
+Sample Input-2:
+---------------
+25 65
+
+Sample Output-2:
+----------------
+[32, 34, 43, 45, 54, 56, 65]
+import java.util.*;
+
+class Solution{
+    static void generate(int s,int e,List<Integer> ans,int num){
+        if(num >= s && num <= e) ans.add(num);
+        if(num == 0 || num > e) return;
+        
+        int digit = num%10;
+        
+        int low = num*10+(digit-1);
+        int high = num*10+(digit+1);
+        
+        if(digit!=0){
+        generate(s,e,ans,low);
+        }
+        if(digit!=9){
+        generate(s,e,ans,high);
+        }
+        
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int start = sc.nextInt();
+        int end = sc.nextInt();
+        List<Integer> ans = new ArrayList<>();
+        for(int i=0;i<=9;i++){
+            generate(start,end,ans,i);
+        }
+        Collections.sort(ans);
+        System.out.println(ans);
+    }
+}

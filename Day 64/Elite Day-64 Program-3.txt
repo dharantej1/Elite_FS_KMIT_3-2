@@ -1,0 +1,71 @@
+You are task is to design an iterator that supports the peek operation on an
+existing iterator in addition to the hasNext() and the next() operations.
+
+Refer to https://docs.oracle.com/javase/8/docs/api/java/util/Iterator.html
+
+Implement the SmartIterator class:
+    - SmartIterator(Iterator<int> nums): Initializes the object with the given 
+                                       Integer iterator 'iterator'.
+The methods are:
+    1. int next():  Returns the next element in the array and moves the 
+                        pointer to the next element.
+    
+    2. boolean hasNext(): Returns 'true' if there are still elements in the array
+    
+    3. int peek():  Returns the next element in the array without moving 
+                        the pointer.
+
+Note: Each language may have a different implementation of the constructor and
+Iterator, but they all support the int next() and boolean hasNext() functions.
+
+Input Format:
+-------------
+Line-1: space separated integers, nums[] array, initialize SmartIterator with nums[].
+Line-2: space separated integers, choices[], either 1,2 or 3.
+        1. next(), 2.hasNext(), 3.peek()
+
+Output Format:
+--------------
+Print the choices.length of answers.
+
+
+Sample Input:
+-------------
+1 2 3 4 5
+1 1 3 2 3 1
+
+Sample Output:
+--------------
+1 2 3 true 3 3 
+import java.util.*;
+
+class SmartIterator<T> implements Iterator<T> {
+    // Implement Your Code here.
+}
+
+//Driver Code
+class Solution {
+public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        
+        String arr[]=sc.nextLine().split(" ");
+        List numbers = new ArrayList<>();
+        for(String s:arr)
+            numbers.add(Integer.parseInt(s));
+        SmartIterator<Integer> nItr = new SmartIterator<>(numbers.iterator());
+		
+        String choices[]=sc.nextLine().split(" ");
+        for(String s:choices){
+            switch(Integer.parseInt(s)){
+				case 1:
+					System.out.print(nItr.next()+" ");
+					break;
+				case 2:
+					System.out.print(nItr.hasNext()+" ");
+					break;
+				case 3:
+					System.out.print(nItr.peek()+" ");
+			}
+		}
+    }
+}
