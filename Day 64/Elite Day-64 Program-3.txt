@@ -41,6 +41,32 @@ import java.util.*;
 
 class SmartIterator<T> implements Iterator<T> {
     // Implement Your Code here.
+    Iterator<T> it=null;
+    T peek=null;
+    SmartIterator(Iterator<T> itr)
+    {
+        it=itr;
+        if(it.hasNext())
+        {
+            peek=it.next();
+        }
+    }
+    public T next()
+    {
+        T curr=peek;
+        if(it.hasNext())
+        peek=it.next();
+        else peek=null;
+        return curr;
+    }
+    public boolean hasNext()
+    {
+        return peek!=null;
+    }
+    public T peek()
+    {
+        return peek;
+    }
 }
 
 //Driver Code
