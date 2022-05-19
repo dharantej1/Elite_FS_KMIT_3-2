@@ -1,0 +1,121 @@
+/*
+Problem Statement:
+-----------------
+Mr Shravan is working with Strings.
+He is given a string S, and a list of words.
+He wants to find a word which is maximum in length and 
+appears first in lexicographical order, And the word is a subsequence of S.
+
+Your task is to help Mr Shravan to find such a word from the given list of words.
+If there is no such word, print "No Word".
+
+Input Format:
+-------------
+Line-1: A string S.
+Line-2: Space separated strings, words[].
+
+Output Format:
+--------------
+Print a string result.
+
+
+
+Sample Input-1:
+---------------
+rascapepurple
+ape cape racer app apple
+
+Sample Output-1:
+----------------
+apple
+
+
+Sample Input-2:
+---------------
+abcdefhijk
+bca abd abc dfe def ghi
+
+Sample Output-2:
+----------------
+abc
+
+Sample Input-3:
+---------------
+vivid
+viva diva diya
+
+Sample Output-3:
+----------------
+No Word
+
+ 
+Test Cases:
+----------
+case =1
+input =rascapepurple
+ape cape racer app apple
+output =apple
+
+case =2
+input =vivid
+viva diva diya
+output =No Word
+
+case =3
+input =abcdefhijk
+bca abd abc dfe def ghi
+output =abc
+
+case =4
+input =battsrjssyaireuiocnjdsfhiuoisncjnbdshkudr
+battle rascal commit strong weaker racist redish
+output =redish
+
+case =5
+input =abcefghijklmnopqrstuv
+a ab abcd abcde abcdef cost abcdegh mop cot
+output =cost
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Solution{
+    static boolean issub(String a, String b){
+        int i=0,j=0;
+        for(;i<a.length() && j<b.length();i++){
+            if(a.charAt(i)==b.charAt(j)){
+                j++;
+            }
+        }
+        
+        return j==b.length();
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        String s = sc.next();
+        sc.nextLine();
+        String words[] = sc.nextLine().split(" ");
+        
+        int mx = 0;
+        String ans="";
+        for(String x: words){
+            if(issub(s,x)){
+                if(x.length() > mx){
+                    mx = x.length();
+                    ans = x;
+                }
+                else if(x.length()==mx && x.compareTo(ans)<0){
+                    ans = x;
+                }
+            }
+        }
+        if(mx==0){
+            ans = "No Word";
+        }
+        
+        System.out.println(ans);
+    }
+}

@@ -1,0 +1,203 @@
+Chapter-3:
+---------
+1. What is output by the following code? (Choose all that apply)
+1: public class Fish {
+2: public static void main(String[] args) {
+3: int numFish = 4;
+4: String fishType = "tuna";
+5: String anotherFish = numFish + 1;
+6: System.out.println(anotherFish + " " + fishType);
+7: System.out.println(numFish + " " + 1);
+8: } }
+A. 4 1
+B. 41
+C. 5
+D. 5 tuna
+E. 5tuna
+F. 51tuna
+G. The code does not compile.
+
+Ans:G
+Line 5 does not compile. This question is checking to see if you are paying attention
+to the types. numFish is an int and 1 is an int. Therefore, we use numeric addition and
+get 5. The problem is that we can’t store an int in a String variable. Supposing line 5
+said String anotherFish = numFish + 1 + "";. In that case, the answer would be
+options A and D. The variable defined on line 5 would be the string "5", and both output
+statements would use concatenation.
+
+2. Which of the following are output by this code? (Choose all that apply)
+3: String s = "Hello";
+4: String t = new String(s);
+5: if ("Hello".equals(s)) System.out.println("one");
+6: if (t == s) System.out.println("two");
+7: if (t.equals(s)) System.out.println("three");
+8: if ("Hello" == s) System.out.println("four");
+9: if ("Hello" == t) System.out.println("five");
+A. one
+B. two
+C. three
+D. four
+E. five
+F. The code does not compile.
+
+Ans:A,C,D
+The code compiles fine. Line 3 points to the String in the string pool. Line 4
+calls the String constructor explicitly and is therefore a different object than s. Lines 5
+and 7 check for object equality, which is true, and so print one and three. Line 6 uses
+object reference equality, which is not true since we have different objects. Line 7 also
+compares references but is true since both references point to the object from the string
+pool. Finally, line 8 compares one object from the string pool with one that was explicitly
+constructed and returns false.
+
+4. What is the result of the following code?
+7: StringBuilder sb = new StringBuilder();
+8: sb.append("aaa").insert(1, "bb").insert(4, "ccc");
+9: System.out.println(sb);
+A. abbaaccc
+B. abbaccca
+C. bbaaaccc
+D. bbaaccca
+E. An exception is thrown.
+F. The code does not compile.
+
+Ans:B
+This example uses method chaining. After the call to append(), sb contains "aaa".
+That result is passed to the first insert() call, which inserts at index 1. At this point
+sb contains abbbaa. That result is passed to the final insert(), which inserts at index
+4, resulting in abbaccca.
+
+5. What is the result of the following code?
+2: String s1 = "java";
+3: StringBuilder s2 = new StringBuilder("java");
+4: if (s1 == s2)
+5: System.out.print("1");
+6: if (s1.equals(s2))
+7: System.out.print("2");
+A. 1
+B. 2
+C. 12
+D. No output is printed.
+E. An exception is thrown.
+F. The code does not compile.
+
+Ans:F
+The question is trying to distract you into paying attention to logical equality versus
+object reference equality. It is hoping you will miss the fact that line 4 does not compile.
+Java does not allow you to compare String and StringBuilder using ==.
+
+6. What is the result of the following code?
+public class Lion {
+public void roar(String roar1, StringBuilder roar2) {
+roar1.concat("!!!");
+roar2.append("!!!");
+}
+public static void main(String[] args) {
+String roar1 = "roar";
+StringBuilder roar2 = new StringBuilder("roar");
+new Lion().roar(roar1, roar2);
+System.out.println(roar1 + " " + roar2);
+} }
+A. roar roar
+B. roar roar!!!
+C. roar!!! roar
+D. roar!!! roar!!!
+E. An exception is thrown.
+F. The code does not compile.
+
+Ans:B
+A String is immutable. Calling concat() returns a new String but does not change
+the original. A StringBuilder is mutable. Calling append() adds characters to the
+existing character sequence along with returning a reference to the same object.
+
+Chapter-4:
+---------
+
+1. Which of the following can fill in the blank in this code to make it compile? (Choose all
+that apply)
+public class Ant {
+_____ void method() { }
+}
+A. default
+B. final
+C. private
+D. Public
+E. String
+F. zzz:
+
+Ans:B,C
+the return type. Option C is correct, creating a method with private access.
+Option B is correct, creating a method with default access and the optional specifier
+final. Since default access does not require a modifier, we get to jump right to final.
+Chapter 4: Methods and Encapsulation 343
+Option A is incorrect because default access omits the access modifier rather than specifying
+default. Option D is incorrect because Java is case sensitive. It would have been
+correct if public were the choice. Option E is incorrect because the method already has
+a void return type. Option F is incorrect because labels are not allowed for methods.
+
+2. Which of the following compile? (Choose all that apply)
+A. final static void method4() { }
+B. public final int void method() { }
+C. private void int method() { }
+D. static final void method3() { }
+E. void final method() {}
+F. void public method() { }
+
+Ans:A,D
+Options A and D are correct because the optional specifiers are allowed in any
+order. Options B and C are incorrect because they each have two return types. Options
+E and F are incorrect because the return type is before the optional specifier and access
+modifier, respectively.
+
+3. Which of the following methods compile? (Choose all that apply)
+A. public void methodA() { return;}
+B. public void methodB() { return null;}
+C. public void methodD() {}
+D. public int methodD() { return 9;}
+E. public int methodE() { return 9.0;}
+F. public int methodF() { return;}
+G. public int methodG() { return null;}
+
+Ans:A, C, D
+Options A and C are correct because a void method is allowed to have a
+return statement as long as it doesn’t try to return a value. Options B and G do not
+compile because null requires a reference object as the return type. void is not a reference
+object since it is a marker for no return type. int is not a reference object since it
+is a primitive. Option D is correct because it returns an int value. Option E does not
+compile because it tries to return a double when the return type is int. Since a double
+cannot be assigned to an int, it cannot be returned as one either. Option F does not
+compile because no value is actually returned.
+
+4. Which of the following compile? (Choose all that apply)
+A. public void moreA(int... nums) {}
+B. public void moreB(String values, int... nums) {}
+C. public void moreC(int... nums, String values) {}
+D. public void moreD(String... values, int... nums) {}
+E. public void moreE(String[] values, ...int nums) {}
+F. public void moreF(String... values, int[] nums) {}
+G. public void moreG(String[] values, int[] nums) {}
+
+Ans:A, B, G.
+Options A and B are correct because the single vararg parameter is the last
+parameter declared. Option G is correct because it doesn’t use any vararg parameters
+at all. Options C and F are incorrect because the vararg parameter is not last. Option
+D is incorrect because two vararg parameters are not allowed in the same method.
+Option E is incorrect because the ... for a vararg must be after the type, not before it.
+
+5. Given the following method, which of the method calls return 2? (Choose all that apply)
+public int howMany(boolean b, boolean... b2) {
+return b2.length;
+}
+A. howMany();
+B. howMany(true);
+C. howMany(true, true);
+D. howMany(true, true, true);
+E. howMany(true, {true});
+F. howMany(true, {true, true});
+G. howMany(true, new boolean[2]);
+Ans:D,G
+Option D passes the initial parameter plus two more to turn into a vararg array
+of size 2. Option G passes the initial parameter plus an array of size 2. Option A does
+not compile because it does not pass the initial parameter. Options E and F do not
+compile because they do not declare an array properly. It should be new boolean[]
+{true}. Option B creates a vararg array of size 0 and option C creates a vararg array of
+size 1.

@@ -1,0 +1,113 @@
+/*
+Problem Statement:
+-----------------
+There are some soldiers formed in a line from Kunthala and Mahishmathi together,
+The soldiers from Kunthala indiacted with 0's and from Mahishmathi indiacted 
+with 1's.
+
+You need to kill the soldiers from either Kunthala or Mahishmathi.(see NOTE)
+Assume that you have unlimited energy. In order to kill them, you need 
+to burn the energy. If you are at position-A and kill a soldier at position-B, 
+you need to burn B-A energy. 
+
+You are given the order of soldiers as a string, consist of 0's an 1's only.
+Your task is to find out the maximum amount of energy burnt to kill the soldier 
+to reach the last soldier in that line.
+
+NOTE: If the last soldier belongs to Kunthala, kill the soldiers belongs 
+to Kunthala only. If the last soldier belongs to Mahishmathi, kill 
+the soldiers belongs to Mahishmathi only.
+
+Input Format:
+-----------------
+A String S, arrangement of soldiers.
+
+Ourput Format:
+-------------------
+Print an integer result, the maximum energy burnt to kill a soldier.
+
+
+Sample Input-1:
+-----------------
+100111010
+
+Sample Output-1:
+-------------------
+4
+
+
+Sample Input-2:
+-----------------
+1111110
+
+Sample Output-2:
+-------------------
+7
+
+Explanation:
+--------------
+Since to reach the last soldier in the line, You have to burn
+the energy of 7 to reach from position-0 to the last soldier in the line.
+
+
+ 
+Test Cases:
+----------
+case =1
+input =100111010
+output =4
+
+case =2
+input =1111110
+output =7
+
+case =3
+input =01111101000101110100110100101100
+output =6
+
+case =4
+input =0101001110100010110101110100110011101101
+output =4
+
+case =5
+input =1100010110100110101001001110011100100001
+output =5
+
+case =6
+input =11100001100101000100100101000011011111101110000110
+output =7
+
+case =7
+input =0101111101111110100100000000101101111000110101000101
+output =9
+
+case =8
+input =0011111001111000010010000101111111111001100000110110
+output =11
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        String s = sc.nextLine();
+        int n = s.length();
+        
+        char c = s.charAt(n - 1);
+        
+        int last = -1, ans = 1;
+        for(int i=0;i<n;i++){
+            if(s.charAt(i) == c){
+                ans = Math.max(ans, i - last);
+                last = i;
+            }
+        }
+        
+        System.out.println(ans);
+    }
+}

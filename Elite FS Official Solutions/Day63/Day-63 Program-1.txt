@@ -1,0 +1,144 @@
+/*
+Problem Statement:
+-----------------
+There are M*N buckets of milk, all the buckets are equal in size (in ltrs).
+The buckets are initially filled with different amounts of milk in liters.
+
+You are given the amount of milk in the buckets as a grid of size M x N, 
+buckets[][]. You need to make that all the buckets have same quantity of Milk.
+You are allowed to perform one operation either adding M liters of Milk
+or take away M liters of Milk from the bucket in one step.
+
+Your task is to return the minimum number of steps required to make 
+all the buckets in the bucket grid contains same amount of Milk. 
+If it is not possible, return -1.
+
+Input Format:
+-----------------
+Line-1: three space sepaarted integers, A, B and M.
+Next A lines: B space sepaarted integers, amount of milk in liters.
+
+Ourput Format:
+-------------------
+Print the integer result.
+
+
+Sample Input-1:
+-----------------
+2 3 5
+5 10 15
+20 25 40
+
+Sample Output-1:
+-------------------
+11
+
+Explanation: 
+------------
+We can make every bucket has equal amount of Milk to 4liters by doing
+the following: 
+- Add 5ltrs milk to 5ltrs bucket 3 times.
+- Add 5ltrs milk to 10ltrs bucket 2 times.
+- Add 5ltrs milk to 15ltrs bucket 1 time.
+- Takeaway 5ltrs milk from 25ltrs bucket 1 time.
+- Takeaway 5ltrs milk from 40ltrs bucket 4 times.
+A total of 11 operations required.
+
+
+Sample Input-2:
+-----------------
+3 3 3
+1 2 3 4
+5 6 7 8
+9 19 11 12
+
+Sample Output-2:
+-------------------
+-1
+
+
+ 
+Test Cases:
+----------
+case =1
+input =3 3 5
+5 10 15
+20 25 40
+55 60 15
+output =27
+
+case =2
+input =3 3 3
+5 11 17
+20 23 14
+8 11 17
+output =14
+
+case =3
+input =3 3 3
+1 2 3 4
+5 6 7 8
+9 19 11 12
+output =-1
+
+case =4
+input =6 10 2
+75 69 83 65 87 51 97 61 77 69
+91 91 99 97 67 57 61 55 75 99
+87 95 87 91 59 81 69 61 55 67
+61 59 97 51 77 55 67 83 61 97
+83 65 61 95 85 83 91 85 81 53
+81 87 61 73 85 79 83 65 71 51
+output =382
+
+case =5
+input =5 6 4
+29 37 49 45 65 69
+17 25 41 77 89 101
+53 61 9 17 21 61
+33 37 17 21 9 41
+49 45 65 25 41 49
+output =135
+
+case =6
+input =8 10 1
+12 25 22 25 23 14 25 11 27 25
+18 20 30 24 27 13 22 17 18 27
+21 17 27 29 25 21 22 14 22 28
+22 30 19 14 12 12 13 15 11 11
+15 23 24 27 18 18 20 25 18 22
+29 27 26 20 21 30 26 14 23 27
+19 13 17 16 30 24 11 24 13 19
+26 17 12 30 27 15 21 26 12 21
+output =392
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class Solution{
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        int m=sc.nextInt();
+        int n=sc.nextInt();
+        int a=sc.nextInt();
+        int arr[]=new int[m*n];
+        int f=0;
+        for(int i=0;i<m*n;i++){
+            arr[i]=sc.nextInt();
+        }
+        Arrays.sort(arr);
+        int mid=(m*n)/2;
+        int op=0;
+       for(int i=0;i<(m*n);i++){
+           if((arr[mid]-arr[i])%a!=0){
+               System.out.println(-1);
+               return;
+           }
+           op+=Math.abs(arr[mid]-arr[i])/a;
+       }
+       System.out.println(op);
+        
+    }
+}

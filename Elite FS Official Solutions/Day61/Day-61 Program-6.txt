@@ -1,0 +1,116 @@
+/*
+Problem Statement:
+-----------------
+Mr Madan is given a line of words as a string, LoW and another set of words as
+excluded[].
+
+Your task is to help Mr Madam to return the most repeated word in LoW that is 
+not an excluded word. It is guaranteed that there exists at least one word
+that is not in excluded list, and the answer is unique.
+
+Note:
+The words in 'LoW' are case-insensitive but the answer should be returned in 
+lowercase. Consider special characters as split symbols while processing the LoW.
+
+Input Format:
+-------------
+Line-1: Single line of space separated words, line.
+Line-2: Space seprated words, excluded[] the words are in lowercase.
+
+Output Format:
+--------------
+Print the word, W.
+
+Sample Input:
+-------------
+KMIT college is having FS classes in KMit Fs Labs
+kmit
+
+Sample Output:
+--------------
+fs
+
+
+Sample Input-2:
+---------------
+hello HellO, world
+world
+
+Sample Output-2:
+----------------
+hello
+
+ 
+Test Cases:
+----------
+case =1
+input =KMIT college is having FS classes in KMit Fs Labs
+kmit
+output ="fs"
+
+case =2
+input =hello HellO, world
+world
+output ="hello"
+
+case =3
+input =Bob hit a ball, the hit BALL flew far after it was hit.
+hit
+output ="ball"
+
+case =4
+input =Peter Piper picked a peck of pickled peppers A peck of pickled peppers Peter Piper picked If Peter Piper picked a peck of pickled peppers Where's the peck of pickled peppers Peter Piper picked
+piper peter peck a peppers picked of
+output ="pickled"
+
+case =5
+input =How much wood would A woodchuck chuck if A woodchuck could chuck wood? He would chuck, he would, as much as he could, and chuck as much wood As a woodchuck would if a woodchuck could chuck wood
+wood chuck would woodchuck as
+output ="a"
+
+case =6
+input =it's a common mistake made by it, beacuse IT's my life
+common mistake
+output ="it"
+
+
+*/
+
+Solution:
+--------
+import java.util.*;
+import java.util.stream.*;
+import java.util.function.*;
+
+class pro{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        String sym = "~`!@#$%^&*()-_=+[{]}:;\"',<.>/?";
+        for(int i=0;i<sym.length();i++){
+            input = input.replaceAll("\\"+sym.charAt(i), " ");
+        }
+        String a[] = input.split(" ");
+        Set<String> ex = Arrays.stream(sc.nextLine().split(" ")).collect(Collectors.toSet());        
+        
+        String ans = Arrays.stream(a)
+                    .map(x -> x.toLowerCase())
+                    .filter(x -> {return !ex.contains(x) && x.length()>0 && x.charAt(0)!=' ';})
+                    
+                    .collect(
+                        Collectors.groupingBy(Function.identity(), Collectors.counting())
+                    )
+                    .entrySet()
+                    .stream()
+                    .sorted((x,y)->{
+                        if(x.getValue() == y.getValue()){
+                            return x.getKey().compareTo(y.getKey());
+                        }  
+                        return (int)(y.getValue() - x.getValue());
+                    })
+                    .collect(Collectors.toList())
+                    .get(0).getKey();                   
+                    
+        System.out.println(ans);
+    }
+}

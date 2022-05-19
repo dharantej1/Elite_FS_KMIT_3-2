@@ -1,0 +1,384 @@
+Chapter-4:
+------------
+1. Which are true of the following code? (Choose all that apply)
+1: public class Rope {
+2: public static void swing() {
+3: System.out.print("swing ");
+4: }
+5: public void climb() {
+6: System.out.println("climb ");
+7: }
+8: public static void play() {
+9: swing();
+10: climb();
+11: }
+12: public static void main(String[] args) {
+13: Rope rope = new Rope();
+14: rope.play();
+15: Rope rope2 = null;
+16: rope2.play();
+17: }
+18: }
+A. The code compiles as is.
+B. There is exactly one compiler error in the code.
+C. There are exactly two compiler errors in the code.
+D. If the lines with compiler errors are removed, the output is climb climb.
+E. If the lines with compiler errors are removed, the output is swing swing.
+F. If the lines with compile errors are removed, the code throws a NullPointerException.
+
+Ans:B, E
+
+Explanation:Line 10 does not compile because static methods are not allowed to call instance
+methods. Even though we are calling play() as if it were an instance method and an
+instance exists, Java knows play() is really a static method and treats it as such. If line
+10 is removed, the code works. It does not throw a NullPointerException on line 16
+because play() is a static method. Java looks at the type of the reference for rope2 and
+translates the call to Rope.play().
+
+2. What is the output of the following code?
+import rope.*;
+import static rope.Rope.*;
+public class RopeSwing {
+private static Rope rope1 = new Rope();
+private static Rope rope2 = new Rope();
+{
+System.out.println(rope1.length);
+}
+public static void main(String[] args) {
+rope1.length = 2;
+rope2.length = 8;
+System.out.println(rope1.length);
+}
+}
+package rope;
+public class Rope {
+public static int length = 0;
+}
+A. 02
+B. 08
+C. 2
+D. 8
+E. The code does not compile.
+F. An exception is thrown.
+
+Ans:D
+
+Explanation:There are two details to notice in this code. First, note that RopeSwing has an
+instance initializer and not a static initializer. Since RopeSwing is never constructed,
+the instance initializer does not run. The other detail is that length is static. Changes
+from one object update this common static variable.
+
+3. How many compiler errors are in the following code?
+1: public class RopeSwing {
+2: private static final String leftRope;
+3: private static final String rightRope;
+4: private static final String bench;
+5: private static final String name = "name";
+6: static {
+7: leftRope = "left";
+8: rightRope = "right";
+9: }
+10: static {
+11: name = "name";
+12: rightRope = "right";
+13: }
+14: public static void main(String[] args) {
+15: bench = "bench";
+16: }
+17: }
+A. 0
+B. 1
+C. 2
+D. 3
+E. 4
+F. 5
+
+Ans:E
+
+Explanation:static final variables must be set exactly once, and it must be in the declaration
+line or in a static initialization block. Line 4 doesn’t compile because bench is not set
+in either of these locations. Line 15 doesn’t compile because final variables are not
+allowed to be set after that point. Line 11 doesn’t compile because name is set twice:
+once in the declaration and again in the static block. Line 12 doesn’t compile because
+rightRope is set twice as well. Both are in static initialization blocks.
+
+4. Which of the following can replace line 2 to make this code compile? (Choose all that apply)
+1: import java.util.*;
+2: // INSERT CODE HERE
+3: public class Imports {
+4: public void method(ArrayList<String> list) {
+5: sort(list);
+6: }
+7: }
+A. import static java.util.Collections;
+B. import static java.util.Collections.*;
+C. import static java.util.Collections.sort(ArrayList<String>);
+D. static import java.util.Collections;
+E. static import java.util.Collections.*;
+F. static import java.util.Collections.sort(ArrayList<String>);
+
+Ans:B
+
+Explanation:The two valid ways to do this are import static java.util.Collections.*; and
+import static java.util.Collections.sort;. Option A is incorrect because you
+can only do a static import on static members. Classes such as Collections require
+a regular import. Option C is nonsense as method parameters have no business in
+an import. Options D, E, and F try to trick you into reversing the syntax of import
+static.
+
+5. What is the result of the following statements?
+1: public class Test {
+2: public void print(byte x) {
+3: System.out.print("byte");
+4: }
+5: public void print(int x) {
+6: System.out.print("int");
+7: }
+8: public void print(float x) {
+9: System.out.print("float");
+10: }
+11: public void print(Object x) {
+12: System.out.print("Object");
+13: }
+14: public static void main(String[] args) {
+15: Test t = new Test();
+16: short s = 123;
+17: t.print(s);
+18: t.print(true);
+19: t.print(6.789);
+20: }
+21: }
+A. bytefloatObject
+B. intfloatObject
+C. byteObjectfloat
+D. intObjectfloat
+E. intObjectObject
+F. byteObjectObject
+
+Ans:E
+
+Explanation:The argument on line 17 is a short. It can be promoted to an int, so print() on
+line 5 is invoked. The argument on line 18 is a boolean. It can be autoboxed to a boolean,
+so print() on line 11 is invoked. The argument on line 19 is a double. It can
+be autoboxed to a double, so print() on line 11 is invoked. Therefore, the output is
+intObjectObject and the correct answer is option E.
+
+Chapter-5:
+-----------
+6. Choose the correct statement about the following code:
+1: interface HasExoskeleton {
+2: abstract int getNumberOfSections();
+3: }
+4: abstract class Insect implements HasExoskeleton {
+5: abstract int getNumberOfLegs();
+6: }
+7: public class Beetle extends Insect {
+8: int getNumberOfLegs() { return 6; }
+9: }
+A. It compiles and runs without issue.
+B. The code will not compile because of line 2.
+C. The code will not compile because of line 4.
+D. The code will not compile because of line 7.
+E. It compiles but throws an exception at runtime.
+
+Ans:D
+
+Explanation:The code fails to compile because Beetle, the first concrete subclass, doesn’t implement
+getNumberOfSections(), which is inherited as an abstract method; therefore,
+option D is correct. Option B is incorrect because there is nothing wrong with this
+interface method definition. Option C is incorrect because an abstract class is not
+required to implement any abstract methods, including those inherited from an interface.
+Option E is incorrect because the code fails at compilation-time.
+
+7. Which of the following statements about polymorphism are true? (Choose all that apply)
+A. A reference to an object may be cast to a subclass of the object without an explicit cast.
+B. If a method takes a superclass of three objects, then any of those classes may be passed as a parameter to the method.
+C. A method that takes a parameter with type java.lang.Object will take any reference.
+D. All cast exceptions can be detected at compile-time.
+E. By defining a public instance method in the superclass, you guarantee that the specific method will be called in the parent class at runtime.
+
+Ans:B, C.
+
+Explanation: A reference to an object requires an explicit cast if referenced with a subclass,
+so option A is incorrect. If the cast is to a superclass reference, then an explicit cast is
+not required. Because of polymorphic parameters, if a method takes the superclass of
+an object as a parameter, then any subclass references may be used without a cast, so
+option B is correct. All objects extend java.lang.Object, so if a method takes that
+type, any valid object, including null, may be passed; therefore, option C is correct.
+Some cast exceptions can be detected as errors at compile-time, but others can only be
+detected at runtime, so D is incorrect. Due to the nature of polymorphism, a public
+instance method can be overridden in a subclass and calls to it will be replaced even in
+the superclass it was defined, so E is incorrect.
+
+8. Choose the correct statement about the following code:
+1: public interface Herbivore {
+2: int amount = 10;
+3: public static void eatGrass();
+4: public int chew() {
+5: return 13;
+6: }
+7: }
+A. It compiles and runs without issue.
+B. The code will not compile because of line 2.
+C. The code will not compile because of line 3.
+D. The code will not compile because of line 4.
+E. The code will not compile because of lines 2 and 3.
+F. The code will not compile because of lines 3 and 4.
+
+Ans:F.
+
+Explanation:The interface variable amount is correctly declared, with public and static being
+assumed and automatically inserted by the compiler, so option B is incorrect. The
+method declaration for eatGrass() on line 3 is incorrect because the method has been
+marked as static but no method body has been provided. The method declaration for
+chew() on line 4 is also incorrect, since an interface method that provides a body must
+be marked as default or static explicitly. Therefore, option F is the correct answer
+since this code contains two compile-time errors.
+
+9. Choose the correct statement about the following code:
+1: public interface CanFly {
+2: void fly();
+3: }
+4: interface HasWings {
+5: public abstract Object getWindSpan();
+6: }
+7: abstract class Falcon implements CanFly, HasWings {
+8: }
+A. It compiles without issue.
+B. The code will not compile because of line 2.
+C. The code will not compile because of line 4.
+D. The code will not compile because of line 5.
+E. The code will not compile because of lines 2 and 5.
+F. The code will not compile because the class Falcon doesn’t implement the interface methods.
+
+Ans:A
+
+Explanation:Although the definition of methods on lines 2 and 5 vary, both will be converted to
+public abstract by the compiler. Line 4 is fine, because an interface can have public
+or default access. Finally, the class Falcon doesn’t need to implement the interface
+methods because it is marked as abstract. Therefore, the code will compile without
+issue.
+
+10. Which statements are true for both abstract classes and interfaces? (Choose all that apply)
+A. All methods within them are assumed to be abstract.
+B. Both can contain public static final variables.
+C. Both can be extended using the extend keyword.
+D. Both can contain default methods.
+E. Both can contain static methods.
+F. Neither can be instantiated directly.
+G. Both inherit java.lang.Object.
+
+Ans:B, C, E, F
+
+Explanation:Option A is wrong, because an abstract class may contain concrete methods.
+Since Java 8, interfaces may also contain concrete methods in form of static or
+default methods. Although all variables in interfaces are assumed to be public static
+final, abstract classes may contain them as well, so option B is correct. Both abstract
+classes and interfaces can be extended with the extends keyword, so option C is correct.
+Only interfaces can contain default methods, so option D is incorrect. Both
+abstract classes and interfaces can contain static methods, so option E is correct. Both
+structures require a concrete subclass to be instantiated, so option F is correct. Finally,
+though an instance of an object that implements an interface inherits java.lang.
+Object, the interface itself doesn’t; otherwise, Java would support multiple inheritance
+for objects, which it doesn’t. Therefore, option G is incorrect.
+
+
+Collections:
+-----------
+11. Suppose that you have a collection of products for sale in a database and you need to
+display those products. The products are not unique. Which of the following collections
+classes in the java.util package best suit your needs for this scenario?
+A. Arrays
+B. ArrayList
+C. HashMap
+D. HashSet
+E. LinkedList
+
+Ans:B
+
+Explanation:The answer needs to implement List because the scenario allows duplicates. Since you
+need a List, you can eliminate C, D, and E immediately. HashMap is a Map and HashSet is a
+Set. LinkedList is both a List and a Queue. You want a regular List. Option A, Arrays,
+is trying to distract you. It is a utility class rather than a Collection. An array is not a collection.
+By process of elimination, the answer is B.
+
+12. Suppose that you need to work with a collection of elements that need to be sorted in their
+natural order, and each element has a unique string associated with its value. Which of the
+following collections classes in the java.util package best suit your needs for this scenario?
+A. ArrayList
+B. HashMap
+C. HashSet
+D. TreeMap
+E. TreeSet
+F. Vector
+
+Ans:D
+
+Explanation:The answer needs to implement Map because you are dealing with key/value pairs per the
+unique string text. You can eliminate A, C, E, and F immediately. ArrayList and Vector
+are Lists. HashSet and TreeSet are Sets. Now it is between HashMap and TreeMap. Since
+the question talks about ordering, you need the TreeMap. Therefore, the answer is E.
+
+13. What is the result of the following statements?
+3: List list = new ArrayList();
+4: list.add("one");
+5: list.add("two");
+6: list.add(7);
+7: for (String s: list)
+8: System.out.print(s);
+A. onetwo
+B. onetwo7
+C. onetwo followed by an exception
+D. Compiler error on line 6
+E. Compiler error on line 7
+
+Ans:E
+
+Explanation:The code does not compile. It attempts to mix generics and legacy code. Lines 3 through
+7 create an ArrayList without generics. This means that we can put any objects in it.
+Line 7 should be looping through a list of Objects rather than Strings since we didn’t use
+generics.
+
+14. What is the result of the following statements?
+3: ArrayDeque<String> greetings = new ArrayDeque<String>();
+4: greetings.push("hello");
+5: greetings.push("hi");
+6: greetings.push("ola");
+7: greetings.pop();
+8: greetings.peek();
+9: while (greetings.peek() != null)
+10: System.out.print(greetings.pop());
+A. hello
+B. hellohi
+C. hellohiola
+D. hi
+E. hihello
+F. The code does not compile.
+G. An exception is thrown.
+
+Ans:E
+
+Explanation:Since we call push() rather than offer(), we are treating the ArrayDeque as a LIFO
+(last-in, first-out) stack. On line 7, we remove the last element added, which is "ola". On
+line 8, we look at the new last element ("hi"), but don’t remove it. Lines 9 and 10, we
+remove each element in turn until none are left. Note that we don’t use an Iterator to loop
+through the ArrayDeque. The order in which the elements are stored internally is not part
+of the API contract.
+
+15. Which of these statements compile? (Choose all that apply.)
+A. HashSet<Number> hs = new HashSet<Integer>();
+B. HashSet<? super ClassCastException> set = new HashSet<Exception>();
+C. List<String> list = new Vector<String>();
+D. List<Object> values = new HashSet<Object>();
+E. List<Object> objects = new ArrayList<? extends Object>();
+F. Map<String, ? extends Number> hm = new HashMap<String, Integer>();
+
+Ans:B, C, F.
+
+Explanation: Option A does not compile because the generic types are not compatible. We could
+say HashSet<? extends Number> hs2 = new HashSet<Integer>();. Option B uses a lower bound, so it allows superclass generic types. Option C is a traditional use of generics
+where the generic type is the same and the List type uses the interface as the type. Option
+D does not compile because a Set is not a List. Option E does not compile because upper
+bounds are not allowed when instantiating the type. Finally, Option F does compile because
+the upper bound is on the correct side of =.
+

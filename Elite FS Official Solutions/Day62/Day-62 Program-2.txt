@@ -1,0 +1,122 @@
+/*
+Problem Statement:
+-----------------
+You are given two words W1 and W2.
+You need find all the mapping of W2 in W1, and 
+return all the statrting indices of the mappings.
+
+The mapping of the words w2 and w1 is as follows:
+	- A shuffled word contains all the characters as original word.
+	The length of the words and occurrence count of each character are same.
+	- find shuffled word of W2 as a substring in W1, and 
+	return the starting index of substring.
+
+
+Input Format:
+-------------
+Single line space separated strings, two words.
+
+Output Format:
+--------------
+Print the list of integers, indices.
+
+
+Sample Input-1:
+---------------
+abcabcabc abc
+ 
+Sample Output-1:
+----------------
+[0, 1, 2, 3, 4, 5, 6]
+
+
+
+Sample Input-2:
+---------------
+bacacbacdcab cab
+
+Sample Output-2:
+----------------
+[0, 3, 4, 5, 9]
+
+ 
+Test Cases:
+----------
+case =1
+input =abcabcabc abc
+output =[0, 1, 2, 3, 4, 5, 6]
+
+case =2
+input =bacacbacdcab cab
+output =[0, 3, 4, 5, 9]
+
+case =3
+input =abdbcdbbabcbabcbdbdbcbbcbddbcabdbdcddbcabd abcd
+output =[26, 28, 36, 38]
+
+case =4
+input =abdbcdbbabcbabcbdbdbcbbcbddbcabdbdcddbcabd abbc
+output =[7, 8, 9, 10, 11, 12, 27, 37]
+
+case =5
+input =pqrpqrrpprppqpprperrqpqpqprpqprpqprprrpqpqpprpp pppqr
+output =[8, 9, 11, 12, 23, 25, 27, 29, 31, 40, 41]
+
+case =6
+input =banananabnbanababnbbbnbnabanabanabnabbbbnbnsansnab anana
+output =[1, 3]
+
+case =7
+input =redrederedredereddereeertedeereereererrederrdderederrederedreer reedd
+output =[1, 2, 5, 8, 9, 12, 13, 14, 15, 16, 44, 45, 54]
+
+case =8
+input =redrederedredereddereeertedeereereererrederrdderederrederedreer rredde
+output =[0, 2, 5, 7, 9, 14, 39, 41, 43, 49, 54]
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        String a = sc.next();
+        String b = sc.next();
+        int n = a.length();
+        int m = b.length();
+        ArrayList<Integer> ans = new ArrayList<Integer>();
+        
+        int hash[] = new int[26];
+        
+        
+        for(int i=0;i<m;i++){
+            hash[b.charAt(i) - 'a']--;
+        }
+        
+        for(int i=0;i<m - 1;i++){
+            hash[a.charAt(i) - 'a']++;
+        }
+        for(int i=m-1;i<n;i++){
+            hash[a.charAt(i) - 'a']++;
+            boolean f = true;
+            for(int j=0;j<26;j++){
+                if(hash[j]!=0){
+                    f = false;
+                    break;
+                }
+            }
+            if(f){
+                ans.add(i - m+1);
+            }
+            hash[a.charAt(i - m+1) - 'a']--;
+        }
+        
+        
+        
+        System.out.println(ans.toString());
+    }
+}

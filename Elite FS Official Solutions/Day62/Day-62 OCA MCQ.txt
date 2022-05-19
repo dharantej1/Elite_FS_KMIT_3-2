@@ -1,0 +1,335 @@
+OCA
+===
+Chapter-3:
+------------
+1. Which are true statements? (Choose all that apply)
+A. An immutable object can be modified.
+B. An immutable object cannot be modified.
+C. An immutable object can be garbage collected.
+D. An immutable object cannot be garbage collected.
+E. String is immutable.
+F. StringBuffer is immutable.
+G. StringBuilder is immutable.
+
+Ans:B, C, E. 
+Explanation: Immutable means the state of an object cannot change once it is created.
+Immutable objects can be garbage collected just like mutable objects. String is immutable.
+StringBuilder can be mutated with methods like append(). Although StringBuffer isn’t on the exam,
+you should know about it anyway in case older questions
+haven’t been removed.
+
+2. Which are the results of the following code? (Choose all that apply)
+String letters = "abcdef";
+System.out.println(letters.length());
+System.out.println(letters.charAt(3));
+System.out.println(letters.charAt(6));
+A. 5
+B. 6
+C. c
+D. d
+E. An exception is thrown.
+F. The code does not compile.
+
+Ans:B, D, E. 
+Explanation: length() is simply a count of the number of characters in a String. In this
+case, there are six characters. charAt() returns the character at that index. Remember
+that indexes are zero based, which means that index 3 corresponds to d and index 6
+corresponds to 1 past the end of the array. A StringIndexOutOfBoundsException is
+thrown for the last line.
+
+3. Which are the results of the following code? (Choose all that apply)
+String numbers = "012345678";
+System.out.println(numbers.substring(1, 3));
+System.out.println(numbers.substring(7, 7));
+System.out.println(numbers.substring(7));
+A. 12
+B. 123
+C. 7
+D. 78
+E. A blank line.
+F. An exception is thrown.
+G. The code does not compile.
+
+Ans:A, D, E. 
+Explanation: substring() has two forms. The first takes the index to start with and the
+index to stop immediately before. The second takes just the index to start with and
+goes to the end of the String. Remember that indexes are zero based. The first call
+starts at index 1 and ends with index 2 since it needs to stop before index 3. The second
+call starts at index 7 and ends in the same place, resulting in an empty String.
+This prints out a blank line. The final call starts at index 7 and goes to the end of the
+String.
+
+4. What is the result of the following code?
+3: String s = "purr";
+4: s.toUpperCase();
+5: s.trim();
+6: s.substring(1, 3);
+7: s += " two";
+8: System.out.println(s.length());
+A. 2
+B. 4
+C. 8
+D. 10
+E. An exception is thrown.
+F. The code does not compile.
+
+Ans:C. 
+Explanation: This question is trying to see if you know that String objects are immutable. Line
+4 returns "PURR" but the result is ignored and not stored in s. Line 5 returns "purr"
+since there is no whitespace present but the result is again ignored. Line 6 returns "ur"
+because it starts with index 1 and ends before index 3 using zero-based indexes. The
+result is ignored again. Finally, on line 6 something happens. We concatenate four new
+characters to s and now have a String of length 8.
+
+5. What is the result of the following code? (Choose all that apply)
+13: String a = "";
+14: a += 2;
+15: a += 'c';
+16: a += false;
+17: if ( a == "2cfalse") System.out.println("==");
+18: if ( a.equals("2cfalse")) System.out.println("equals");
+A. Compile error on line 14.
+B. Compile error on line 15.
+C. Compile error on line 16.
+D. Compile error on another line.
+E. ==
+F. equals
+G. An exception is thrown.
+
+Ans:F. 
+Explanation: a += 2 expands to a = a + 2. A String concatenated with any other type gives
+a String. Lines 14, 15, and 16 all append to a, giving a result of "2cfalse". The if
+statement on line 18 returns false because the values of the two String objects are the
+same using object equality. The if statement on line 17 returns false because the two
+String objects are not the same in memory. One comes directly from the string pool
+and the other comes from building using String operations.
+
+Chapter-4:
+------------
+6. Which of the following are true? (Choose all that apply)
+A. Package private access is more lenient than protected access.
+B. A public class that has private fields and package private methods is not visible to classes outside the package.
+C. You can use access modifiers so only some of the classes in a package see a particular package private class.
+D. You can use access modifiers to allow read access to all methods, but not any instance variables.
+E. You can use access modifiers to restrict read access to all classes that begin with the word Test.
+
+Ans:D. 
+Explanation: Option D is correct. This is the common implementation for encapsulation by setting
+all fields to be private and all methods to be public. Option A is incorrect because
+protected access allows everything that package private access allows and additionally
+allows subclasses access. Option B is incorrect because the class is public. This means
+that other classes can see the class. However, they cannot call any of the methods or
+read any of the fields. It is essentially a useless class. Option C is incorrect because
+package private access applies to the whole package. Option E is incorrect because Java
+has no such capability.
+
+7. Given the following my.school.ClassRoom and my.city.School class definitions, which
+line numbers in main() generate a compiler error? (Choose all that apply)
+1: package my.school;
+2: public class Classroom {
+3: private int roomNumber;
+4: protected String teacherName;
+5: static int globalKey = 54321;
+6: public int floor = 3;
+7: Classroom(int r, String t) {
+8: roomNumber = r;
+9: teacherName = t; } }
+1: package my.city;
+2: import my.school.*;
+3: public class School {
+4: public static void main(String[] args) {
+5: System.out.println(Classroom.globalKey);
+6: Classroom room = new Classroom(101, ""Mrs. Anderson");
+7: System.out.println(room.roomNumber);
+8: System.out.println(room.floor);
+9: System.out.println(room.teacherName); } }
+A. None, the code compiles fine.
+B. Line 5
+C. Line 6
+D. Line 7
+E. Line 8
+F. Line 9
+
+Ans:B, C, D, F. 
+Explanation: The two classes are in different packages, which means private access and
+default (package private) access will not compile. Additionally, protected access will
+not compile since School does not inherit from Classroom. Therefore, only line 8 will
+compile because it uses public access.
+
+8. Which of the following are true? (Choose all that apply)
+A. Encapsulation uses package private instance variables.
+B. Encapsulation uses private instance variables.
+C. Encapsulation allows setters.
+D. Immutability uses package private instance variables.
+E. Immutability uses private instance variables.
+F. Immutability allows setters.
+
+Ans:B, C, E.
+Explanation: Encapsulation requires using methods to get and set instance variables so
+other classes are not directly using them. Instance variables must be private for this
+to work. Immutability takes this a step further, allowing only getters, so the instance
+variables do not change state.
+
+9. Which are methods using JavaBeans naming conventions for accessors and mutators?(Choose all that apply)
+A. public boolean getCanSwim() { return canSwim;}
+B. public boolean canSwim() { return numberWings;}
+C. public int getNumWings() { return numberWings;}
+D. public int numWings() { return numberWings;}
+E. public void setCanSwim(boolean b) { canSwim = b;}
+
+Ans:C, E. 
+Explanation: Option A is incorrect because the property is of type boolean and getters must
+begin with is for booleans. Options B and D are incorrect because they don’t follow
+the naming convention of beginning with get/is/set. Options C and E follow normal
+getter and setter conventions.
+
+
+10. What is the output of the following code?
+1: package rope;
+2: public class Rope {
+3: public static int LENGTH = 5;
+4: static {
+5: LENGTH = 10;
+6: }
+7: public static void swing() {
+8: System.out.print("swing ");
+9: }
+10: }
+1: import rope.*;
+2: import static rope.Rope.*;
+3: public class Chimp {
+4: public static void main(String[] args) {
+5: Rope.swing();
+6: new Rope().swing();
+7: System.out.println(LENGTH);
+8: }
+9: }
+A. swing swing 5
+B. swing swing 10
+C. Compiler error on line 2 of Chimp.
+D. Compiler error on line 5 of Chimp.
+E. Compiler error on line 6 of Chimp.
+F. Compiler error on line 7 of Chimp.
+
+Ans:B. 
+Explanation: Rope runs line 3, setting LENGTH to 5, then immediately after runs the static initializer,
+which sets it to 10. Line 5 calls the static method normally and prints swing.
+Line 6 also calls the static method. Java allows calling a static method through an
+instance variable. Line 7 uses the static import on line 2 to reference LENGTH.
+
+Chapter-5:
+-----------
+11. What modifiers are implicitly applied to all interface methods? (Choose all that apply)
+A. protected
+B. public
+C. static
+D. void
+E. abstract
+F. default
+
+Ans:B. 
+Explanation: All interface methods are implicitly public, so option B is correct and option A is
+not. Interface methods may be declared as static or default but are never implicitly
+added, so options C and F are incorrect. Option D is incorrect—void is not a modifier;
+it is a return type. Option E is a tricky one, because prior to Java 8 all interface methods
+would be assumed to be abstract. Since Java 8 now includes default and static
+methods and they are never abstract, you cannot assume the abstract modifier will be
+implicitly applied to all methods by the compiler.
+
+12. What is the output of the following code?
+1: class Mammal {
+2: public Mammal(int age) {
+3: System.out.print("Mammal");
+4: }
+5: }
+6: public class Platypus extends Mammal {
+7: public Platypus() {
+8: System.out.print("Platypus");
+9: }
+10: public static void main(String[] args) {
+11: new Mammal(5);
+12: }
+13: }
+A. Platypus
+B. Mammal
+C. PlatypusMammal
+D. MammalPlatypus
+E. The code will not compile because of line 8.
+F. The code will not compile because of line 11.
+
+Ans:E. 
+Explanation: The code will not compile because the parent class Mammal doesn’t define a no-argument
+constructor, so the first line of a Platypus constructor should be an explicit call
+to super(int age). If there was such a call, then the output would be MammalPlatypus,
+since the super constructor is executed before the child constructor.
+
+13. Which of the following statements can be inserted in the blank line so that the code will compile successfully? (Choose all that apply)
+public interface CanHop {}
+public class Frog implements CanHop {
+public static void main(String[] args) {
+    ------frog = new TurtleFrog();
+}
+}
+public class BrazilianHornedFrog extends Frog {}
+public class TurtleFrog extends Frog {}
+A. Frog
+B. TurtleFrog
+C. BrazilianHornedFrog
+D. CanHop
+E. Object
+F. Long
+
+Ans:A, B, D, E. 
+Explanation: The blank can be filled with any class or interface that is a supertype of
+TurtleFrog. Option A is a superclass of TurtleFrog, and option B is the same class,
+so both are correct. BrazilianHornedFrog is not a superclass of TurtleFrog, so option
+C is incorrect. TurtleFrog inherits the CanHope interface, so option D is correct. All
+classes inherit Object, so option E is correct. Finally, Long is an unrelated class that is
+not a superclass of TurtleFrog, and is therefore incorrect. 
+
+14. Which statement(s) are correct about the following code? (Choose all that apply)
+public class Rodent {
+protected static Integer chew() throws Exception {
+System.out.println("Rodent is chewing");
+return 1;
+}
+}
+public class Beaver extends Rodent {
+public Number chew() throws RuntimeException {
+System.out.println("Beaver is chewing on wood");
+return 2;
+}
+}
+A. It will compile without issue.
+B. It fails to compile because the type of the exception the method throws is a subclass of the type of exception the parent method throws.
+C. It fails to compile because the return types are not covariant.
+D. It fails to compile because the method is protected in the parent class and public in the subclass.
+E. It fails to compile because of a static modifier mismatch between the two methods.
+
+Ans:C, E. 
+Explanation: The code doesn’t compile, so option A is incorrect. Option B is also not correct
+because the rules for overriding a method allow a subclass to define a method with an
+exception that is a subclass of the exception in the parent method. Option C is correct
+because the return types are not covariant; in particular, Number is not a subclass
+of Integer. Option D is incorrect because the subclass defines a method that is more
+accessible than the method in the parent class, which is allowed. Finally, option E is
+correct because the method is declared as static in the parent class and not so in the
+child class. For nonprivate methods in the parent class, both methods must use static
+(hide) or neither should use static (override).
+
+15. Which of the following may only be hidden and not overridden? (Choose all that apply)
+A. private instance methods
+B. protected instance methods
+C. public instance methods
+D. static methods
+E. public variables
+F. private variables
+
+Ans:A, D, E, F. 
+Explanation: First off, options B and C are incorrect because protected and public methods
+may be overridden, not hidden. Option A is correct because private methods are
+always hidden in a subclass. Option D is also correct because static methods cannot
+be overridden, only hidden. Options E and F are correct because variables may only be
+hidden, regardless of the access modifier.
+
+

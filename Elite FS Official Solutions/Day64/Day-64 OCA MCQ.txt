@@ -1,0 +1,560 @@
+OCA
+===
+Chapter-1:
+---------
+2. What is the output of the following program?
+1: public class WaterBottle {
+2: private String brand;
+3: private boolean empty;
+4: public static void main(String[] args) {
+5: WaterBottle wb = new WaterBottle();
+6: System.out.print("Empty = " + wb.empty);
+7: System.out.print(", Brand = " + wb.brand);
+8: } }
+A. Line 6 generates a compiler error.
+B. Line 7 generates a compiler error.
+C. There is no output.
+D. Empty = false, Brand = null
+E. Empty = false, Brand =
+F. Empty = null, Brand = null
+
+Ans:D
+
+Explanation:Boolean fields initialize to false and references initialize to null, so empty is false
+and brand is null. Brand = null is output.
+
+
+3. Which of the following are true? (Choose all that apply)
+4: short numPets = 5;
+5: int numGrains = 5.6;
+6: String name = "Scruffy";
+7: numPets.length();
+8: numGrains.length();
+9: name.length();
+A. Line 4 generates a compiler error.
+B. Line 5 generates a compiler error.
+C. Line 6 generates a compiler error.
+D. Line 7 generates a compiler error.
+E. Line 8 generates a compiler error.
+F. Line 9 generates a compiler error.
+G. The code compiles as is.
+
+Ans:B, D, E.
+
+Explanation:Option A (line 4) compiles because short is an integral type. Option B (line
+5) generates a compiler error because int is an integral type, but 5.6 is a floating-point
+type. Option C (line 6) compiles because it is assigned a String. Options D and E (lines
+7 and 8) do not compile because short and int are primitives. Primitives do not allow
+methods to be called on them. Option F (line 9) compiles because length() is defined
+on String.
+
+
+4. Given the following class, which of the following is true? (Choose all that apply)
+1: public class Snake {
+2:
+3: public void shed(boolean time) {
+4:
+5: if (time) {
+6:
+7: }
+8: System.out.println(result);
+9:
+10: }
+11: }
+A. If String result = "done"; is inserted on line 2, the code will compile.
+B. If String result = "done"; is inserted on line 4, the code will compile.
+C. If String result = "done"; is inserted on line 6, the code will compile.
+D. If String result = "done"; is inserted on line 9, the code will compile.
+E. None of the above changes will make the code compile.
+
+Ans:A, B.
+
+Explanation:Adding the variable at line 2 makes result an instance variable. Since instance
+variables are in scope for the entire life of the object, option A is correct. Option B is
+correct because adding the variable at line 4 makes result a local variable with a scope
+of the whole method. Adding the variable at line 6 makes result a local variable with
+a scope of lines 6–7. Since it is out of scope on line 8, the println does not compile and
+option C is incorrect. Adding the variable at line 9 makes result a local variable with
+a scope of lines 9 and 10. Since line 8 is before the declaration, it does not compile and
+option D is incorrect. Finally, option E is incorrect because the code can be made to
+compile.
+
+Chapter-2:
+---------
+2. What data type (or types) will allow the following code snippet to compile? (Choose all that
+apply)
+byte x = 5;
+byte y = 10;
+_____ z = x + y;
+A. int
+B. long
+C. boolean
+D. double
+E. short
+F. byte
+
+Ans:A, B, D.
+
+Explanation:The value x + y is automatically promoted to int, so int and data types that
+can be promoted automatically from int will work. Options A, B, D are such data
+types. Option C will not work because boolean is not a numeric data type. Options E
+and F will not work without an explicit cast to a smaller data type.
+
+
+3. What is the output of the following application?
+1: public class CompareValues {
+2: public static void main(String[] args) {
+3: int x = 0;
+4: while(x++ < 10) {}
+5: String message = x > 10 ? "Greater than" : false;
+6: System.out.println(message+","+x);
+7: }
+8: }
+A. Greater than,10
+B. false,10
+C. Greater than,11
+D. false,11
+E. The code will not compile because of line 4.
+F. The code will not compile because of line 5.
+
+Ans:F.
+
+Explanation:F. In this example, the ternary operator has two expressions, one of them a String and
+the other a boolean value. The ternary operator is permitted to have expressions that
+don’t have matching types, but the key here is the assignment to the String reference.
+The compiler knows how to assign the first expression value as a String, but the second
+boolean expression cannot be set as a String; therefore, this line will not compile.
+
+5. What is the output of the following code snippet?
+3: java.util.List<Integer> list = new java.util.ArrayList<Integer>();
+4: list.add(10);
+5: list.add(14);
+6: for(int x : list) {
+7: System.out.print(x + ", ");
+8: break;
+9: }
+A. 10, 14,
+B. 10, 14
+C. 10,
+D. The code will not compile because of line 7.
+E. The code will not compile because of line 8.
+F. The code contains an infinite loop and does not terminate.
+
+Ans:C.
+
+Explanation: This code does not contain any compilation errors or an infinite loop, so options D,
+E, and F are incorrect. The break statement on line 8 causes the loop to execute once
+and finish, so option C is the correct answer.
+
+
+Chapter-3:
+---------
+11. What is the result of the following code?
+4: int total = 0;
+5: StringBuilder letters = new StringBuilder("abcdefg");
+6: total += letters.substring(1, 2).length();
+7: total += letters.substring(6, 6).length();
+8: total += letters.substring(6, 5).length();
+9: System.out.println(total);
+A. 1
+B. 2
+C. 3
+D. 7
+E. An exception is thrown.
+F. The code does not compile.
+
+Ans:E
+
+Explanation:Line 6 adds 1 to total because substring() includes the starting index but not
+the ending index. Line 7 adds 0 to total. Line 8 is a problem: Java does not allow the
+indexes to be specified in reverse order and the code throws a StringIndexOutOf-
+BoundsException.
+
+12. What is the result of the following code? (Choose all that apply)
+StringBuilder numbers = new StringBuilder("0123456789");
+numbers.delete(2, 8);
+numbers.append("-").insert(2, "+");
+System.out.println(numbers);
+A. 01+89–
+B. 012+9–
+C. 012+–9
+D. 0123456789
+E. An exception is thrown.
+F. The code does not compile.
+
+Ans:A
+
+Explanation:First, we delete the characters at index 2 until the character one before index 8. At
+this point, 0189 is in numbers. The following line uses method chaining. It appends a
+dash to the end of the characters sequence, resulting in 0189–, and then inserts a plus
+sign at index 2, resulting in 01+89–.
+
+13. What is the result of the following code?
+StringBuilder b = "rumble";
+b.append(4).deleteCharAt(3).delete(3, b.length() - 1);
+System.out.println(b);
+A. rum
+B. rum4
+C. rumb4
+D. rumble4
+E. An exception is thrown.
+F. The code does not compile.
+
+Ans:F
+
+Explanation:This is a trick question. The first line does not compile because you cannot
+assign a String to a StringBuilder. If that line were StringBuilder b = new
+StringBuilder("rumble"), the code would compile and print rum4. Watch out for this
+sort of trick on the exam. You could easily spend a minute working out the character
+positions for no reason at all.
+
+
+Chapter-4:
+---------
+16. What is the result of the following program?
+1: public class Squares {
+2: public static long square(int x) {
+3: long y = x * (long) x;
+4: x = -1;
+5: return y;
+6: }
+7: public static void main(String[] args) {
+8: int value = 9;
+9: long result = square(value);
+10: System.out.println(value);
+11: } }
+A. -1
+B. 9
+C. 81
+D. Compiler error on line 9.
+E. Compiler error on a different line.
+
+Ans:B
+
+Explanation:Since Java is pass-by-value and the variable on line 8 never gets reassigned, it stays
+as 9. In the method square, x starts as 9. y becomes 81 and then x gets set to –1. Line 9
+does set result to 81. However, we are printing out value and that is still 9.
+
+17. Which of the following are output by the following code? (Choose all that apply)
+public class StringBuilders {
+public static StringBuilder work(StringBuilder a,
+StringBuilder b) {
+a = new StringBuilder("a");
+b.append("b");
+return a;
+}
+public static void main(String[] args) {
+StringBuilder s1 = new StringBuilder("s1");
+StringBuilder s2 = new StringBuilder("s2");
+StringBuilder s3 = work(s1, s2);
+System.out.println("s1 = " + s1);
+System.out.println("s2 = " + s2);
+System.out.println("s3 = " + s3);
+}
+}
+A. s1 = a
+B. s1 = s1
+C. s2 = s2
+D. s2 = s2b
+E. s3 = a
+F. s3 = null
+G. The code does not compile.
+
+Ans:B, D, E. 
+
+Explanation:Since Java is pass-by-reference, assigning a new object to a does not change the
+caller. Calling append() does affect the caller because both the method parameter and 
+caller have a reference to the same object. Finally, returning a value does pass the reference
+to the caller for assignment to s3.
+
+18. Which of the following are true? (Choose 2)
+A. this() can be called from anywhere in a constructor.
+B. this() can be called from any instance method in the class.
+C. this.variableName can be called from any instance method in the class.
+D. this.variableName can be called from any static method in the class.
+E. You must include a default constructor in the code if the compiler does not include one.
+F. You can call the default constructor written by the compiler using this().
+G. You can access a private constructor with the main() method.
+
+Ans:C, G. 
+
+Explanation:Since the main() method is in the same class, it can call private methods in the
+class. this() may only be called as the first line of a constructor. this.variableName
+can be called from any instance method to refer to an instance variable. It cannot be
+called from a static method because there is no instance of the class to refer to. Option
+F is tricky. The default constructor is only written by the compiler if no user-defined
+constructors were provided. this() can only be called from a constructor in the same
+class. Since there can be no user-defined constructors in the class if a default constructor
+was created, it is impossible for option F to be true.
+
+
+Chapter-5:
+---------
+11. What modifiers are assumed for all interface variables? (Choose all that apply)
+A. public
+B. protected
+C. private
+D. static
+E. final
+F. abstract
+
+Ans:A, D, E.
+
+Explanation:Interface variables are assumed to be public static final; therefore, options
+A, D, and E are correct. Options B and C are incorrect because interface variables must
+be public—interfaces are implemented by classes, not inherited by interfaces. Option F
+is incorrect because variables can never be abstract.
+
+12. What is the output of the following code?
+1: interface Nocturnal {
+2: default boolean isBlind() { return true; }
+3: }
+4: public class Owl implements Nocturnal {
+5: public boolean isBlind() { return false; }
+6: public static void main(String[] args) {
+7: Nocturnal nocturnal = (Nocturnal)new Owl();
+8: System.out.println(nocturnal.isBlind());
+9: }
+10: }
+A. true
+B. false
+C. The code will not compile because of line 2.
+D. The code will not compile because of line 5.
+E. The code will not compile because of line 7.
+F. The code will not compile because of line 8.
+
+Ans:B
+
+Explanation:B. This code compiles and runs without issue, outputting false, so option B is the
+correct answer. The first declaration of isBlind() is as a default interface method,
+assumed public. The second declaration of isBlind() correctly overrides the default
+interface method. Finally, the newly created Owl instance may be automatically cast to
+a Nocturnal reference without an explicit cast, although adding it doesn’t break the
+code.
+
+13. What is the output of the following code?
+1: class Arthropod
+2: public void printName(double input) { System.out.print("Arthropod"); }
+3: }
+4: public class Spider extends Arthropod {
+5: public void printName(int input) { System.out.print("Spider"); }
+6: public static void main(String[] args) {
+7: Spider spider = new Spider();
+8: spider.printName(4);
+9: spider.printName(9.0);
+10: }
+11: }
+A. SpiderArthropod
+B. ArthropodSpider
+C. SpiderSpider
+D. ArthropodArthropod
+E. The code will not compile because of line 5.
+F. The code will not compile because of line 9.
+
+Ans:A.
+
+Explanation:The code compiles and runs without issue, so options E and F are incorrect. The
+printName() method is an overload in Spider, not an override, so both methods may
+be called. The call on line 8 references the version that takes an int as input defined
+in the Spider class, and the call on line 9 references the version in the Arthropod class
+that takes a double. Therefore, SpiderArthropod is output and option A is the correct
+answer.
+
+Chapter-6:
+---------
+1. Which of the following statements are true? (Choose all that apply)
+A. Runtime exceptions are the same thing as checked exceptions.
+B. Runtime exceptions are the same thing as unchecked exceptions.
+C. You can declare only checked exceptions.
+D. You can declare only unchecked exceptions.
+E. You can handle only Exception subclasses.
+
+Ans:B
+
+Explanation:Runtime exceptions are also known as unchecked exceptions. They are allowed
+to be declared, but they don’t have to be. Checked exceptions must be handled or
+declared. Legally, you can handle java.lang.Error subclasses, but it’s not a good idea.
+
+2. Which of the following pairs fill in the blanks to make this code compile? (Choose all that apply)
+7: public void ohNo() _____ Exception {
+8: _____________ Exception();
+9: }
+A. On line 7, fill in throw
+B. On line 7, fill in throws
+C. On line 8, fill in throw
+D. On line 8, fill in throw new
+E. On line 8, fill in throws
+F. On line 8, fill in throws new
+
+Ans:B, D. 
+
+Explanation:In a method declaration, the keyword throws is used. To actually throw an
+exception, the keyword throw is used and a new exception is created.
+
+3. When are you required to use a finally block in a regular try statement (not a try-withresources)?
+A. Never.
+B. When the program code doesn’t terminate on its own.
+C. When there are no catch blocks in a try statement.
+D. When there is exactly one catch block in a try statement.
+E. When there are two or more catch blocks in a try statement.
+
+Ans:C.
+
+Explanation:A try statement is required to have a catch clause and/or finally clause. If it goes
+the catch route, it is allowed to have multiple catch clauses.
+
+
+OCP
+====
+Chapter-3:
+---------
+6. What is the result of the following code?
+1: public class Hello<T> {
+2: T t;
+3: public Hello(T t) { this.t = t; }
+4: public String toString() { return t.toString(); }
+5: public static void main(String[] args) {
+6: System.out.print(new Hello<String>("hi"));
+7: System.out.print(new Hello("there"));
+8: } }
+A. hi
+B. hi followed by a runtime exception
+C. hithere
+D. Compiler error on line 4
+E. Compiler error on line 6
+F. Compiler error on line 7
+
+Ans:C
+
+Explanation:Line 7 gives a compiler warning for not using generics but not a compiler error. Line 4
+compiles fine because toString() is defined on the Object class and is therefore always
+available to call. Line 6 creates the Hello class with the generic type String. Line 7 creates
+the Hello class with the generic type Object since no type is specified.
+
+7. Which of the following statements are true? (Select two.)
+3: Set<Number> numbers = new HashSet<>();
+4: numbers.add(new Integer(86));
+5: numbers.add(75);
+6: numbers.add(new Integer(86));
+7: numbers.add(null);
+8: numbers.add(309L);
+9: Iterator iter = numbers.iterator();
+10: while (iter.hasNext())
+11: System.out.print(iter.next());
+A. The code compiles successfully.
+B. The output is 8675null309.
+C. The output is 867586null309.
+D. The output is indeterminate.
+E. There is a compiler error on line 3.
+F. There is a compiler error on line 9.
+G. An exception is thrown.
+
+Ans:A, D.
+
+Explanation:The code compiles fine. It uses the diamond operator, and it allows any implementation
+of Number to be added. HashSet does not guarantee any iteration order, making A and
+D correct.
+
+
+8. What is the result of the following code?
+TreeSet<String> tree = new TreeSet<String>();
+tree.add("one");
+tree.add("One");
+tree.add("ONE");
+System.out.println(tree.ceiling("On"));
+A. On
+B. one
+C. One
+D. ONE
+E. The code does not compile.
+F. An exception is thrown.
+
+Ans:C.
+
+Explanation:TreeSet sorts the elements. Since uppercase letters sort before lowercase letters, the
+ordering is "ONE", "One", "one". The ceiling() method returns the smallest element
+greater than the specified one. "On" appears between "ONE" and "One". Therefore, the
+smallest element that is larger than the specified value is "One".
+
+9. Which of the answer choices are valid given the following declaration?
+Map<String, Double> map = new HashMap<>();
+A. map.add("pi", 3.14159);
+B. map.add("e", 2L);
+C. map.add("log(1)", new Double(0.0));
+D. map.add('x', new Double(123.4));
+E. None of the above
+
+Ans:E
+
+Explanation:Trick question! The Map interface uses put() rather than add() to add elements to the
+map. If these examples used put(), the answer would be A and C. B is no good because a
+long cannot be shoved into a Double. D is no good because a char is not the same thing as
+a String.
+
+10. WWhat is the result of the following program?
+import java.util.*;
+public class MyComparator implements Comparator<String> {
+public int compare(String a, String b) {
+return b.toLowerCase().compareTo(a.toLowerCase());
+}
+public static void main(String[] args) {
+String[] values = { "123", "Abb", "aab" };
+Arrays.sort(values, new MyComparator());
+for (String s: values)
+System.out.print(s + " ");
+}
+}
+A. Abb aab 123
+B. aab Abb 123
+C. 123 Abb aab
+D. 123 aab Abb
+E. The code does not compile.
+F. A runtime exception is thrown.
+
+Ans:A
+
+Explanation:The array is sorted using MyComparator, which sorts the elements in reverse alphabetical
+order in a case-insensitive fashion. Normally, numbers sort before letters. This code
+reverses that by calling the compareTo() method on b instead of a.
+
+11. What is the result of the following code?
+3: Map<Integer, Integer> map = new HashMap<>(10);
+4: for (int i = 1; i <= 10; i++) {
+5: map.put(i, i * i);
+6: }
+7: System.out.println(map.get(4));
+A. 16
+B. 25
+C. Compiler error on line 3.
+D. Compiler error on line 5.
+E. Compiler error on line 7.
+F. A runtime exception is thrown.
+
+Ans:A
+
+Explanation: Line 3 uses the diamond operator to create the map. Lines 5 and 7 use autoboxing to
+convert between the int primitive and the Integer wrapper class. The keys map to their
+squared value. 1 maps to 1, 2 maps to 4, 3 maps to 9, 4 maps to 16, and so on.
+
+12. Which of these statements can fill in the blank so that the Helper class compiles
+successfully? (Choose all that apply.)
+3: public class Helper {
+4: public static <U extends Exception> void printException(U u) {
+5: System.out.println(u.getMessage());
+6: }
+7: public static void main(String[] args) {
+8: __________________________________
+9: } }
+A. Helper.printException(new FileNotFoundException("A"));
+B. Helper.printException(new Exception("B"));
+C. Helper.<Throwable>printException(new Exception("C"));
+D. Helper.<NullPointerException>printException(new NullPointerException
+("D"));
+E. Helper.printException(new Throwable("E"));
+
+Ans:A,B,D
+
+Explanation:The generic type must be Exception or a subclass of Exception since this is an
+upper bound. C and E are wrong because Throwable is a superclass of Exception. D uses
+an odd syntax by explicitly listing the type, but you should be able to recognize it as acceptable.
+

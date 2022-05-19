@@ -1,0 +1,96 @@
+/*
+Problem Statement:
+-----------------
+Ms Akhila has a habit of reading the words in reverse order.
+For Example: if the word is 'hello', she will read it as 'olleh'.
+
+Your task is to help her reading the words in original order.
+
+Note: You have to process each word into reverse order of characaters,
+and the given line of words in the original order.
+
+Input Format:
+-------------
+A line of words as a string S
+
+Output Format:
+--------------
+Print the processed string S.
+
+
+Sample Input-1:
+---------------
+this is EPAM bootcamp
+
+Sample Output-1:
+----------------
+siht si MAPE pmactoob
+
+
+Sample Input-2:
+---------------
+It's My Life
+
+Sample Output-2:
+----------------
+s'tI yM efiL
+
+
+ 
+Test Cases:
+----------
+case =1
+input =this is EPAM bootcamp
+output ="siht si MAPE pmactoob"
+
+case =2
+input =It's My Life
+output ="s'tI yM efiL"
+
+case =3
+input =A true random number generator (TRNG) relies on randomness from a physical event that is external to the computer and its operating system
+output ="A eurt modnar rebmun rotareneg )GNRT( seiler no ssenmodnar morf a lacisyhp tneve taht si lanretxe ot eht retupmoc dna sti gnitarepo metsys"
+
+case =4
+input =A pseudo-random number generator (PRNG) is typically programmed using a randomizing math function
+output ="A modnar-oduesp rebmun rotareneg )GNRP( si yllacipyt demmargorp gnisu a gnizimodnar htam noitcnuf"
+
+case =5
+input =Randomly Choose One Number From a Range of Number
+output ="ylmodnaR esoohC enO rebmuN morF a egnaR fo rebmuN"
+
+case =6
+input =Example: Randomize a Set of Numbers
+output =":elpmaxE ezimodnaR a teS fo srebmuN"
+
+case =7
+input =Keshav Memorial Institute of Technology (KMIT), established in year 2007, is one of the premier engineering colleges in the state of Telangana
+output ="vahseK lairomeM etutitsnI fo ygolonhceT ,)TIMK( dehsilbatse ni raey ,7002 si eno fo eht reimerp gnireenigne segelloc ni eht etats fo anagnaleT"
+
+case =8
+input =KMIT has carved a niche for itself by focusing on providing holistic education that inculcates problem solving skills, professional and ethical responsibilities
+output ="TIMK sah devrac a ehcin rof flesti yb gnisucof no gnidivorp citsiloh noitacude taht setaclucni melborp gnivlos ,slliks lanoisseforp dna lacihte seitilibisnopser"
+
+
+*/
+
+Solution:
+--------
+import java.util.*;
+import java.util.stream.*;
+
+class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        String ans = Arrays.stream(sc.nextLine().split(" "))
+                    .map(x -> {
+                        StringBuilder sb = new StringBuilder(x);
+                        sb.reverse();
+                        return sb.toString();
+                    })
+                    .collect(Collectors.joining(" "));
+                    
+        System.out.println(ans);
+    }
+}
