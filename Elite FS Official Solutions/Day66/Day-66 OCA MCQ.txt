@@ -1,0 +1,653 @@
+
+OCA
+===
+Chapter-1:
+---------
+8. Given the following class, which of the following calls print out Blue Jay? (Choose all that apply)
+public class BirdDisplay {
+public static void main(String[] name) {
+System.out.println(name[1]);
+} }
+A. java BirdDisplay Sparrow Blue Jay
+B. java BirdDisplay Sparrow "Blue Jay"
+C. java BirdDisplay Blue Jay Sparrow
+D. java BirdDisplay "Blue Jay" Sparrow
+E. java BirdDisplay.class Sparrow "Blue Jay"
+F. java BirdDisplay.class "Blue Jay" Sparrow
+G. Does not compile.
+
+Ans:B
+
+Explanation:Option B is correct because arrays start counting from zero and strings with spaces
+must be in quotes. Option A is incorrect because it outputs Blue. C is incorrect because
+it outputs Jay. Option D is incorrect because it outputs Sparrow. Options E and F are
+incorrect because they output Error: Could not find or load main class Bird-
+Display.class.
+
+9. Which of the following legally fill in the blank so you can run the main() method from the command line? (Choose all that apply)
+public static void main( )
+A. String[] _names
+B. String[] 123
+C. String abc[]
+D. String _Names[]
+E. String... $n
+F. String names
+G. None of the above.
+
+Ans:A, C, D, E.
+
+Explanation:Option A is correct because it is the traditional main() method signature
+and variables may begin with underscores. Options C and D are correct because the
+array operator may appear after the variable name. Option E is correct because
+varargs are allowed in place of an array. Option B is incorrect because variables are
+not allowed to begin with a digit. Option F is incorrect because the argument must be
+an array or varargs. Option F is a perfectly good method. However, it is not one that
+can be run from the command line because it has the wrong parameter type.
+
+Chapter-2:
+---------
+9. How many times will the following code print "Hello World"?
+3: for(int i=0; i<10 ; ) {
+4: i = i++;
+5: System.out.println("Hello World");
+6: }
+A. 9
+B. 10
+C. 11
+D. The code will not compile because of line 3.
+E. The code will not compile because of line 5.
+F. The code contains an infinite loop and does not terminate.
+
+Ans:F
+
+Explanation:In this example, the update statement of the for loop is missing, which is fine as the
+statement is optional, so option D is incorrect. The expression inside the loop increments
+i but then assigns i the old value. Therefore, i ends the loop with the same value that it starts with: 0. 
+The loop will repeat infinitely, outputting the same statement over and over again because i remains 0 
+after every iteration of the loop.
+
+10. What is the output of the following code?
+3: byte a = 40, b = 50;
+4: byte sum = (byte) a + b;
+5: System.out.println(sum);
+A. 40
+B. 50
+C. 90
+D. The code will not compile because of line 4.
+E. An undefined value.
+
+Ans:D
+
+Explanation:Line 4 generates a possible loss of precision compiler error. The cast operator has
+the highest precedence, so it is evaluated first, casting a to a byte. Then, the addition is
+evaluated, causing both a and b to be promoted to int values. The value 90 is an int
+and cannot be assigned to the byte sum without an explicit cast, so the code does not
+compile. The code could be corrected with parentheses around (a + b), in which case
+option C would be the correct answer.
+
+Chapter-3:
+---------
+17. Which of these compile when replacing line 8? (Choose all that apply)
+7: ArrayList l = new ArrayList();
+8: // INSERT CODE HERE
+A. int length = l.capacity;
+B. int length = l.capacity();
+C. int length = l.length;
+D. int length = l.length();
+E. int length = l.size;
+F. int length = l.size();
+G. None of the above.
+
+Ans:F
+
+Explanation:The ArrayList class defines a method called size().
+
+18. Which of the following are true? (Choose all that apply)
+A. An array has a fixed size.
+B. An ArrayList has a fixed size.
+C. An array allows multiple dimensions.
+D. An array is ordered.
+E. An ArrayList is ordered.
+F. An array is immutable.
+G. An ArrayList is immutable.
+
+Ans:A, C, D, E.
+
+Explanation:An array is not able to change size and can have multiple dimensions. Both
+an array and ArrayList are ordered and have indexes. Neither is immutable. The elements
+can change in value.
+
+Chapter-4:
+---------
+22. What is the result of the following?
+1: public class Order {
+2: static String result = "";
+3: { result += "c"; }
+4: static
+5: { result += "u"; }
+6: { result += "r"; }
+7: }
+1: public class OrderDriver {
+2: public static void main(String[] args) {
+3: System.out.print(Order.result + " ");
+4: System.out.print(Order.result + " ");
+5: new Order();
+6: new Order();
+7: System.out.print(Order.result + " ");
+8: }
+9: }
+A. curur
+B. ucrcr
+C. u ucrcr
+D. u u curcur
+E. u u ucrcr
+F. ur ur urc
+G. The code does not compile.
+
+Ans:E.
+
+Explanation:On line 3 of OrderDriver, we refer to Order for the first time. At this point the statics
+in Order get initialized. In this case, the statics are the static declaration of result
+and the static initializer. result is u at this point. On line 4, result is the same
+because the static initialization is only run once. On line 5, we create a new Order,
+which triggers the instance initializers in the order they appear in the file. Now result
+is ucr. Line 6 creates another Order, triggering another set of initializers. Now result
+is ucrcr. Notice how the static is on a different line than the initialization code in
+lines 4–5 of Order. The exam may try to trick you by formatting the code like this to
+confuse you.
+
+23. What is the result of the following?
+1: public class Order {
+2: String value = "t";
+3: { value += "a"; }
+4: { value += "c"; }
+5: public Order() {
+6: value += "b";
+7: }
+8: public Order(String s) {
+9: value += s;
+10: }
+11: public static void main(String[] args) {
+12: Order order = new Order("f");
+13: order = new Order();
+14: System.out.println(order.value);
+15: } }
+A. tacb
+B. tacf
+C. tacbf
+D. tacfb
+E. tacftacb
+F. The code does not compile.
+G. An exception is thrown.
+
+Ans:A
+
+Explanation:Line 4 instantiates an Order. Java runs the declarations and instance initializers first
+in the order they appear. This sets value to tacf. Line 5 creates another Order and
+initializes value to tacb. The object on line 5 is stored in the same variable line 4 used.
+This makes the object created on line 4 unreachable. When value is printed, it is the
+instance variable in the object created on line 5.
+
+Chapter-5:
+---------
+16. What is the output of the following code?
+1: abstract class Reptile {
+2: public final void layEggs() { System.out.println("Reptile laying eggs");
+}
+3: public static void main(String[] args) {
+4: Reptile reptile = new Lizard();
+5: reptile.layEggs();
+6: }
+7: }
+8: public class Lizard extends Reptile {
+9: public void layEggs() { System.out.println("Lizard laying eggs"); }
+10: }
+A. Reptile laying eggs
+B. Lizard laying eggs
+C. The code will not compile because of line 4.
+D. The code will not compile because of line 5.
+E. The code will not compile because of line 9.
+
+Ans:E
+
+Explanation:The code doesn’t compile, so options A and B are incorrect. The issue with line 9 is
+that layEggs() is marked as final in the superclass Reptile, which means it cannot be
+overridden. There are no errors on any other lines, so options C and D are incorrect.
+
+17. What is the output of the following code?
+1: public abstract class Whale {
+2: public abstract void dive() {};
+3: public static void main(String[] args) {
+4: Whale whale = new Orca();
+5: whale.dive();
+6: }
+7: }
+8: class Orca extends Whale {
+9: public void dive(int depth) { System.out.println("Orca diving"); }
+10: }
+A. Orca diving
+B. The code will not compile because of line 2.
+C. The code will not compile because of line 8.
+D. The code will not compile because of line 9.
+E. The output cannot be determined from the code provided.
+
+Ans:B.
+
+Explanation:This may look like a complex question, but it is actually quite easy. Line 2 contains
+an invalid definition of an abstract method. Abstract methods cannot contain a body,
+so the code will not compile and option B is the correct answer. If the body {} was
+removed from line 2, the code would still not compile, although it would be line 8 that
+would throw the compilation error. Since dive() in Whale is abstract and Orca extends
+Whale, then it must implement an overridden version of dive(). The method on line
+9 is an overloaded version of dive(), not an overridden version, so Orca is an invalid
+subclass and will not compile.
+
+Chapter-6:
+---------
+6. What will happen if you add the statement System.out.println(5 / 0); to a working main() method?
+A. It will not compile.
+B. It will not run.
+C. It will run and throw an ArithmeticException.
+D. It will run and throw an IllegalArgumentException.
+E. None of the above.
+
+Ans:C
+
+Explanation:The compiler tests the operation for a valid type but not a valid result, so the code
+will still compile and run. At runtime, evaluation of the parameter takes place before
+passing it to the print() method, so an ArithmeticException object is raised.
+
+7. What is printed besides the stack trace caused by the NullPointerException from line 16?
+1: public class DoSomething {
+2: public void go() {
+3: System.out.print("A");
+4: try {
+5: stop();
+6: } catch (ArithmeticException e) {
+7: System.out.print("B");
+8: } finally {
+9: System.out.print("C");
+10: }
+11: System.out.print("D");
+12: }
+13: public void stop() {
+14: System.out.print("E");
+15: Object x = null;
+16: x.toString();
+17: System.out.print("F");
+18: }
+19: public static void main(String[] args) {
+20: new DoSomething().go();
+21: }
+22: }
+A. AE
+B. AEBCD
+C. AEC
+D. AECD
+E. No output appears other than the stack trace.
+
+Ans:C
+
+Explanation:The main() method invokes go and A is printed on line 3. The stop method is
+invoked and E is printed on line 14. Line 16 throws a NullPointerException, so stop
+immediately ends and line 17 doesn’t execute. The exception isn’t caught in go, so the
+go method ends as well, but not before its finally block executes and C is printed on
+line 9. Because main() doesn’t catch the exception, the stack trace displays and no further
+output occurs, so AEC was the output printed before the stack trace.
+
+
+OCP
+===
+Chapter-3:
+---------
+20. What is the result of the following code?
+4: Map m = new HashMap();
+5: m.put(123, "456");
+6: m.put("abc", "def");
+7: System.out.println(m.contains("123"));
+A. false
+B. true
+C. Compiler error on line 4.
+D. Compiler error on line 5.
+E. Compiler error on line 7.
+F. A runtime exception is thrown.
+
+Ans:E
+
+Explanation:This question looks like it is about generics, but it’s not. It is trying to see if
+you noticed that Map does not have a contains() method. It has containsKey() and
+containsValue() instead. If containsKey() was called, the answer would be false
+because the 123 in the list is an Integer rather than a String.
+
+21. Fill in the blanks to make this code compile and print 123. (Choose all that apply.)
+4: List<String> list = Arrays.asList("1", "2", "3");
+5: Iterator iter = list.iterator();
+6: while(iter.__________())
+7: System.out.print(iter._________());
+A. On line 6, fill in the blank with hasNext().
+B. On line 6, fill in the blank with isNext().
+C. On line 6, fill in the blank with next().
+D. On line 7, fill in the blank with getNext().
+E. On line 7, fill in the blank with hasNext().
+F. On line 7, fill in the blank with next().
+
+Ans:A, F
+
+Explanation:You have to memorize this. hasNext() returns a boolean, and it is used in the loop.
+next() returns the next element.
+
+22. What code change is needed to make the method compile?
+public static T identity(T t) {
+return t;
+}
+A. Add <T> after the public keyword.
+B. Add <T> after the static keyword.
+C. Add <T> after T.
+D. Add <?> after the public keyword.
+E. Add <?> after the static keyword.
+F. No change required. The code already compiles.
+
+Ans:B.
+
+Explanation:When using generic types in a static method, the generic specification goes before the
+return type.
+
+23. Which of the answer choices make sense to implement with a lambda? (Choose all that apply.)
+A. Comparable interface
+B. Comparator interface
+C. remove method on a Collection
+D. removeAll method on a Collection
+E. removeIf method on a Collection
+
+Ans:B, E.
+
+Explanation:Both Comparator and Comparable are functional interfaces. However, Comparable is
+intended to be used on the object being compared, making choice B correct. removeIf was
+added in Java 8 to allow specifying the lambda to check when removing elements, making
+choice E correct.
+
+24. Which of the following compiles and print outs the entire set? (Choose all that apply.)
+Set<String> s = new HashSet<>();
+s.add("lion");
+s.add("tiger");
+s.add("bear");
+s.forEach( );
+A. () -> System.out.println(s)
+B. s -> System.out.println(s)
+C. (s) -> System.out.println(s)
+D. System.out.println(s)
+E. System::out::println
+F. System.out::println
+
+Ans:F
+
+Explanation:Choice A is incorrect because forEach takes a Consumer parameter, which requires one
+parameter. Choices B and C are close. The syntax for a lambda is correct. However, s is
+already defined as a local variable and therefore the lambda can’t redefine it. Choices D and
+E use incorrect syntax for a method reference. Choice F is correct.
+
+25. What is the result of the following?
+Map<Integer, Integer> map = new HashMap<>();
+map.put(1, 10);
+map.put(2, 20);
+map.put(3, null);
+map.merge(1, 3, (a,b) -> a + b);
+map.merge(3, 3, (a,b) -> a + b);
+System.out.println(map);
+A. {1=10, 2=20}
+B. {1=10, 2=20, 3=null}
+C. {1=10, 2=20, 3=3}
+D. {1=13, 2=20}
+E. {1=13, 2=20, 3=null}
+F. {1=13, 2=20, 3=3}
+G. The code does not compile.
+H. An exception is thrown.
+
+Ans:F
+
+Explanation:The first call to merge() calls the mapping function and adds the two numbers to get 13.
+It then updates the map. The second call to merge() sees that the map currently has a null
+value for that key. It does not call the mapping function but instead replaces it with the new
+value of 3. Therefore choice F is correct.
+
+Chapter-4:
+----------
+1. What is the output of the following?
+Stream<String> stream = Stream.iterate("", (s) -> s + "1");
+System.out.println(stream.limit(2).map(x -> x + "2"));
+A. 12112
+B. 212
+C. 212112
+D. java.util.stream.ReferencePipeline$3@4517d9a3
+E. The code does not compile.
+F. An exception is thrown.
+G. The code hangs.
+
+Ans:D.
+
+Explanation:No terminal operation is called, so the stream never executes. The methods chain to
+create a stream that would contain “2” and “12.” The first line creates an infinite stream.
+The second line would get the first two elements from that infinite stream and map each
+element to add an extra character.
+
+2. What is the output of the following?
+Predicate<? super String> predicate = s -> s.startsWith("g");
+Stream<String> stream1 = Stream.generate(() -> "growl! ");
+Stream<String> stream2 = Stream.generate(() -> "growl! ");
+boolean b1 = stream1.anyMatch(predicate);
+boolean b2 = stream2.allMatch(predicate);
+System.out.println(b1 + " " + b2);
+A. true false
+B. true true
+C. java.util.stream.ReferencePipeline$3@4517d9a3
+D. The code does not compile.
+E. An exception is thrown.
+F. The code hangs.
+
+Ans:F.
+
+Explanation:b1 is set to true since anyMatch() terminates. Even though the stream is infinite, Java
+finds a match on the first element and stops looking. However, when allMatch() runs,
+it needs to keep going until the end of the stream since it keeps finding matches. Since all
+elements continue to match, the program hangs.
+
+3. What is the output of the following?
+Predicate<? super String> predicate = s -> s.length() > 3;
+Stream<String> stream = Stream.iterate("-", (s) -> s + s);
+boolean b1 = stream.noneMatch(predicate);
+boolean b2 = stream.anyMatch(predicate);
+System.out.println(b1 + " " + b2);
+A. false true
+B. false false
+C. java.util.stream.ReferencePipeline$3@4517d9a3
+D. The code does not compile.
+E. An exception is thrown.
+F. The code hangs.
+
+Ans:E.
+
+Explanation:An infinite stream is generated where each element is twice as long as the previous
+one. b1 is set to false because Java finds an element that doesn’t match when it gets to
+the element of length 4. However, the next line tries to operate on the same stream. Since
+streams can be used only once, this throws an exception that the “stream has already been
+operated upon or closed.” If two different streams were used, the result would be option A.
+
+4. Which are true statements about terminal operations in a stream? (Choose all that apply.)
+A. At most one terminal operation can exist in a stream pipeline.
+B. Terminal operations are a required part of the stream pipeline in order to get a result.
+C. Terminal operations have Stream as the return type.
+D. The referenced Stream may be used after the calling a terminal operation.
+E. The peek() method is an example of a terminal operation.
+
+Ans:A, B.
+
+Explanation:Terminal operations are the final step in a stream pipeline. Exactly one is required,
+because it triggers the execution of the entire stream pipeline. Therefore, options A and B
+are correct. Options C and F are true of intermediate operations rather than terminal operations.
+Option E is never true. Once a stream pipeline is run, the Stream is marked invalid.
+
+5. Which terminal operations on the Stream class are reductions? (Choose all that apply.)
+A. collect()
+B. count()
+C. findFirst()
+D. map()
+E. peek()
+F. sum()
+
+Ans:A, B.
+
+Explanation:Options D and E are incorrect because they are intermediate operations and not terminal
+operations. While option F is a reduction, it is incorrect because it is available only
+on primitive streams such as IntStream. Option C is incorrect because it is not a reduction—
+it does not look at each element in the stream.
+
+6. Which of the following can fill in the blank so that the code prints out false? (Choose all that apply.)
+Stream<String> s = Stream.generate(() -> "meow");
+boolean match = s.________________(String::isEmpty);
+System.out.println(match);
+A. allMatch
+B. anyMatch
+C. findAny
+D. findFirst
+E. noneMatch
+F. None of the above
+
+Ans:A
+
+Explanation:Options C and D are incorrect because these methods do not take a Predicate
+parameter and do not return a boolean. Options B and E are incorrect because they cause
+the code to run infinitely. The stream has no way to know that a match won’t show up
+later. Option A is correct because it is safe to return false as soon as one element passes
+through the stream that doesn’t match.
+
+7. We have a method that returns a sorted list without changing the original. Which of the following can replace the method implementation to do the same with streams?
+private static List<String> sort(List<String> list) {
+	List<String> copy = new ArrayList<>(list);
+	Collections.sort(copy, (a, b) -> b.compareTo(a));
+	return copy;
+}
+A. return list.stream()
+  .compare((a, b) -> b.compareTo(a))
+  .collect(Collectors.toList());
+B. return list.stream()
+  .compare((a, b) -> b.compareTo(a))
+  .sort();
+C. return list.stream()
+  .compareTo((a, b) -> b.compareTo(a))
+  .collect(Collectors.toList());
+D. return list.stream()
+  .compareTo((a, b) -> b.compareTo(a))
+  .sort();
+E. return list.stream()
+  .sorted((a, b) -> b.compareTo(a))
+  .collect();
+F. return list.stream()
+  .sorted((a, b) -> b.compareTo(a))
+  .collect(Collectors.toList());
+
+Ans:F
+
+Explanation:The sorted() method is used in a stream pipeline to return a sorted Stream. A collector
+is needed to turn the stream back into a List. The collect() method takes the desired
+collector.
+
+8. Which of the following are true given the declaration IntStream is = IntStream.empty()? (Choose all that apply.)
+A. is.average() returns the type int.
+B. is.average() returns the type OptionalInt.
+C. is.findAny() returns the type int.
+D. is.findAny() returns the type OptionalInt.
+E. is.sum() returns the type int.
+F. is.sum() returns the type OptionalInt.
+
+Ans:D, E
+
+Explanation:The sum() method returns an int rather than an OptionalInt because the sum
+of an empty list is zero. Therefore, option E is correct. The findAny() method returns
+an OptionalInt because there might not be any elements to find. Therefore, option D is
+correct. The average() method returns an OptionalDouble since averages of any type can
+result in a fraction. Therefore, options A and B are both incorrect.
+
+9. Which of the following can we add after line 5 for the code to run without error and not produce any output? (Choose all that apply.)
+4: LongStream ls = LongStream.of(1, 2, 3);
+5: OptionalLong opt = ls.map(n -> n * 10).filter(n -> n < 5).findFirst();
+A. if (opt.isPresent()) System.out.println(opt.get());
+B. if (opt.isPresent()) System.out.println(opt.getAsLong());
+C. opt.ifPresent(System.out.println)
+D. opt.ifPresent(System.out::println)
+E. None of these; the code does not compile.
+F. None of these; line 5 throws an exception at runtime.
+
+Ans:B, D.
+
+Explanation:Option A would work for a regular Stream. However, we have a LongStream and
+therefore need to call getAsLong(). Option C is missing the :: that would make it a
+method reference. Therefore, options B and D are correct.
+
+10. Select from the following statements and indicate the order in which they would appear to output 10 lines:
+Stream.generate(() -> "1")
+L: .filter(x -> x.length() > 1)
+M: .forEach(System.out::println)
+N: .limit(10)
+O: .peek(System.out::println)
+;
+
+A. L, N
+B. L, N, O
+C. L, N, M
+D. L, N, M, O
+E. L, O, M
+F. N, M
+G. N, O
+
+Ans:F
+
+Explanation:The terminal operation must be right before the semicolon, which is line M. Remember
+that forEach() is a terminal operation while peek() is an intermediate operation. This
+eliminates all but choices C, E, and F. Choice E is incorrect because there is no limit()
+operation, which means that the code would run infinitely. Choice C is incorrect because
+filter() is called before limit(). No elements make it through the filter, so the code also
+runs infinitely. Choice F is correct.
+
+11. What changes need to be made for this code to print the string 12345? (Choose all that apply.)
+Stream.iterate(1, x -> x++).limit(5).map(x -> x).collect(Collectors.
+joining());
+A. Change Collectors.joining() to Collectors.joining("").
+B. Change map(x -> x) to map(x -> "" + x) .
+C. Change x -> x++ to x -> ++x.
+D. Add forEach(System.out::print) after the call to collect().
+E. Wrap the entire line in a System.out.print statement.
+F. None of the above. The code already prints 12345.
+
+Ans:B, C, E.
+
+Explanation:As written, the code doesn’t compile because the collector expects to get a String
+immediately before it in the chain. Option B fixes this, at which point nothing is output
+because the collector creates a String. Option E fixes this and causes the output to be
+11111. Since the post-increment operator is used, the stream contains an infinite number of
+1s. Option C fixes this and causes the stream to contain increasing numbers.
+
+
+12. Which functional interfaces complete the following code? (Choose all that apply.)
+6: ____________ x = String::new;
+7: ____________ y = (a, b) -> System.out.println();
+8: ____________ z = a -> a + a;
+A. BiConsumer<String, String>
+B. BiFunction<String, String>
+C. BinaryConsumer<String, String>
+D. BinaryFunction<String, String>
+E. Consumer<String>
+F. Supplier<String>
+G. UnaryOperator<String>
+H. UnaryOperator<String, String>
+
+Ans:A, F, G.
+
+Explanation:Line 6 doesn’t take any parameters, and it returns a String, making it a Supplier.
+Another clue is that it uses a constructor reference, which should scream Supplier!
+This makes choice F correct. Line 7 takes two parameters, and it doesn’t return anything
+making it a BiConsumer. The print statement should also be a clue that we are dealing with
+a Consumer or BiConsumer. This makes choice A correct. Choices C and D are there to
+mislead you; these interfaces don’t actually exist. BinaryOperator spells out binary. The
+other functional interfaces use the prefix Bi. Finally, line 8 takes a single parameter, and it
+returns the same type, which is a UnaryOperator. Since the types are the same, only one
+generic is needed, making choice G correct.

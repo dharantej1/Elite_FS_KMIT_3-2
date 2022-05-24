@@ -1,0 +1,117 @@
+/*
+Problem Statement:
+-----------------
+Babylonians began to measure the time in hours, minutes.
+They are given the time in a diital clock as string T, the format is 'HH:MM'
+They want to find the time which appears sooner after given time T in the same 
+clock, consists the digits of the given time T.
+
+Your task is to help them to find the time accordingly.
+
+The valid timings are as follows, "02:45", "11:09" 
+The invalid timings are as follows, "2:45", "11:9".
+
+
+Input Format:
+-------------
+A String time, the range is between 00:00 to 23:59, must be HH:MM format.
+
+Output Format:
+--------------
+Print the valid time, appears after T
+
+
+Sample Input-1:
+---------------
+13:45
+
+Sample Output-1:
+----------------
+13:51
+
+Explanation:
+------------
+The time appears sooner after 13:45 is 13:51, which occurs 6 minutes later.
+It is not 13:44, because this occurs 23 hours and 59 minutes later.
+
+
+Sample Input-2:
+---------------
+19:49
+
+Sample Output-2:
+----------------
+11:11
+
+ 
+Test Cases:
+----------
+case =1
+input =13:45
+output =13:51
+
+case =2
+input =19:49
+output =11:11
+
+case =3
+input =19:46
+output =19:49
+
+case =4
+input =17:58
+output =18:11
+
+case =5
+input =12:00
+output =12:01
+
+case =6
+input =23:33
+output =22:22
+
+case =7
+input =14:47
+output =17:11
+
+case =8
+input =21:23
+output =21:31
+
+*/
+
+Solution:
+--------
+import java.util.*;
+import java.time.*;
+class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        String s = sc.next();
+        String w[] = s.split(":");
+        
+        int h = Integer.parseInt(w[0]);
+        int m = Integer.parseInt(w[1]);
+        LocalTime tm = LocalTime.of(h,m);
+        
+        
+        for(int i=0;i<60*24;i++){
+            tm = tm.plusMinutes(1);
+            boolean ok = true;
+            String t = ""+tm;
+            for(int j=0;j<t.length();j++){
+                if(s.indexOf(t.charAt(j))==-1){
+                    ok = false;
+                    break;
+                }
+            }
+            if(ok){
+                System.out.println(tm);
+                return;
+            }
+        }
+        
+        
+    }
+}

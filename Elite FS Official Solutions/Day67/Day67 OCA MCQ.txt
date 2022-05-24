@@ -1,0 +1,542 @@
+OCA
+===
+
+Chapter-1:
+----------
+10. Which of the following are legal entry point methods that can be run from the command line? (Choose all that apply)
+A. private static void main(String[] args)
+B. public static final main(String[] args)
+C. public void main(String[] args)
+D. public static void test(String[] args)
+E. public static void main(String[] args)
+F. public static main(String[] args)
+G. None of the above.
+
+Ans:E.
+
+Explanation:Option E is the canonical main() method signature. You need to memorize it.
+Option A is incorrect because the main() method must be public. Options B and F
+are incorrect because the main() method must have a void return type. Option C is
+incorrect because the main() method must be static. Option D is incorrect because the
+main() method must be named main.
+
+
+Chapter-2:
+----------
+11. What is the output of the following code?
+1: public class ArithmeticSample {
+2: public static void main(String[] args) {
+3: int x = 5 * 4 % 3;
+4: System.out.println(x);
+5: }}
+A. 2
+B. 3
+C. 5
+D. 6
+E. The code will not compile because of line 3.
+
+Ans:A.
+
+Explanation:The * and % have the same operator precedence, so the expression is evaluated
+from left-to-right. The result of 5 * 4 is 20, and 20 % 3 is 2 (20 divided by 3 is 18, the
+remainder is 2). The output is 2 and option A is the correct answer.
+
+Chapter-3:
+----------
+19. Which of the following are true? (Choose all that apply)
+A. Two arrays with the same content are equal.
+B. Two ArrayLists with the same content are equal.
+C. If you call remove(0) using an empty ArrayList object, it will compile successfully.
+D. If you call remove(0) using an empty ArrayList object, it will run successfully.
+E. None of the above.
+
+Ans:B, C.
+
+Explanation:An array does not override equals() and so uses object equality. ArrayList does
+override equals() and defines it as the same elements in the same order. The compiler
+does not know when an index is out of bounds and thus can’t give you a compiler
+error. The code will throw an exception at runtime, though.
+
+20. What is the result of the following statements?
+6: List<String> list = new ArrayList<String>();
+7: list.add("one");
+8: list.add("two");
+9: list.add(7);
+10: for(String s : list) System.out.print(s);
+A. onetwo
+B. onetwo7
+C. onetwo followed by an exception
+D. Compiler error on line 9.
+E. Compiler error on line 10.
+
+Ans:D.
+
+Explanation:The code does not compile because list is instantiated using generics. Only String
+objects can be added to list and 7 is an int.
+
+
+Chapter-4
+----------
+24. Which of the following will compile when inserted in the following code? (Choose
+all that apply)
+public class Order3 {
+final String value1 = "1";
+static String value2 = "2";
+String value3 = "3";
+{
+// CODE SNIPPET 1
+}
+static {
+// CODE SNIPPET 2
+}
+}
+A. value1 = "d"; instead of // CODE SNIPPET 1
+B. value2 = "e"; instead of // CODE SNIPPET 1
+C. value3 = "f"; instead of // CODE SNIPPET 1
+D. value1 = "g"; instead of // CODE SNIPPET 2
+E. value2 = "h"; instead of // CODE SNIPPET 2
+F. value3 = "i"; instead of // CODE SNIPPET 2
+
+Ans:B, C, E. 
+
+Explanation:value1 is a final instance variable. It can only be set once: in the variable declaration,
+an instance initializer, or a constructor. Option A does not compile because
+the final variable was already set in the declaration. value2 is a static variable. Both
+instance and static initializers are able to access static variables, making options B
+and E correct. value3 is an instance variable. Options D and F do not compile because
+a static initializer does not have access to instance variables.
+
+25. Which of the following are true about the following code? (Choose all that apply)
+public class Create {
+Create() {
+System.out.print("1 ");
+}
+Create(int num) {
+System.out.print("2 ");
+}
+Create(Integer num) {
+System.out.print("3 ");
+}
+Create(Object num) {
+System.out.print("4 ");
+}
+Create(int... nums) {
+System.out.print("5 ");
+}
+public static void main(String[] args) {
+new Create(100);
+new Create(1000L);
+}
+}
+A. The code prints out 2 4.
+B. The code prints out 3 4.
+C. The code prints out 4 2.
+D. The code prints out 4 4.
+E. The code prints 3 4 if you remove the constructor Create(int num).
+F. The code prints 4 4 if you remove the constructor Create(int num).
+G. The code prints 5 4 if you remove the constructor Create(int num).
+
+Ans:A, E.
+
+Explanation:The 100 parameter is an int and so calls the matching int constructor. When
+this constructor is removed, Java looks for the next most specific constructor. Java prefers
+autoboxing to varargs, and so chooses the Integer constructor. The 100L parameter
+is a long. Since it can’t be converted into a smaller type, it is autoboxed into a Long
+and then the constructor for Object is called.
+
+
+Chapter-5:
+----------
+18. What is the output of the following code? (Choose all that apply)
+1: interface Aquatic {
+2: public default int getNumberOfGills(int input) { return 2; }
+3: }
+4: public class ClownFish implements Aquatic {
+5: public String getNumberOfGills() { return "4"; }
+6: public String getNumberOfGills(int input) { return "6"; }
+7: public static void main(String[] args) {
+8: System.out.println(new ClownFish().getNumberOfGills(-1));
+9: }
+10: }
+A. 2
+B. 4
+C. 6
+D. The code will not compile because of line 5.
+E. The code will not compile because of line 6.
+F. The code will not compile because of line 8.
+
+Ans:E.
+
+Explanation:The code doesn’t compile because line 6 contains an incompatible override of the
+getNumberOfGills(int input) method defined in the Aquatic interface. In particular,
+int and String are not covariant returns types, since int is not a subclass of String.
+Note that line 5 compiles without issue; getNumberOfGills() is an overloaded method
+that is not related to the parent interface method that takes an int value.
+
+19. Which of the following statements can be inserted in the blank so that the code will compile successfully? (Choose all that apply)
+public class Snake {}
+public class Cobra extends Snake {}
+public class GardenSnake {}
+public class SnakeHandler {
+private Snake snake;
+public void setSnake(Snake snake) { this.snake = snake; }
+public static void main(String[] args) {
+new SnakeHandler().setSnake(----------------);
+}
+}
+A. new Cobra()
+B. new GardenSnake()
+C. new Snake()
+D. new Object()
+E. new String("Snake")
+F. null
+
+Ans:A, C, F.
+
+Explanation: First off, Cobra is a subclass of Snake, so option A can be used. GardenSnake is
+not defined as a subclass of Snake, so it cannot be used and option B is incorrect. The
+class Snake is not marked as abstract, so it can be instantiated and passed, so option
+C is correct. Next, Object is a superclass of Snake, not a subclass, so it also cannot be
+used and option D is incorrect. The class String is unrelated in this example, so option
+E is incorrect. Finally, a null value can always be passed as an object value, regardless
+of type, so option F is correct.
+
+Chapter-6:
+----------
+8. What is the output of the following snippet, assuming a and b are both 0?
+3: try {
+4: return a / b;
+5: } catch (RuntimeException e) {
+6: return -1;
+7: } catch (ArithmeticException e) {
+8: return 0;
+9: } finally {
+10: System.out.print("done");
+11: }
+A. -1
+B. 0
+C. done-1
+D. done0
+E. The code does not compile.
+F. An uncaught exception is thrown.
+
+Ans:E.
+
+Explanation:The order of catch blocks is important because they’re checked in the order they
+appear after the try block. Because ArithmeticException is a child class of Runtime-
+Exception, the catch block on line 7 is unreachable. (If an ArithmeticException is
+thrown in try try block, it will be caught on line 5.) Line 7 generates a compiler error
+because it is unreachable code.
+
+9. What is the output of the following program?
+1: public class Laptop {
+2: public void start() {
+3: try {
+4: System.out.print("Starting up ");
+5: throw new Exception();
+6: } catch (Exception e) {
+7: System.out.print("Problem ");
+8: System.exit(0);
+9: } finally {
+10: System.out.print("Shutting down ");
+11: }
+12: }
+13: public static void main(String[] args) {
+14: new Laptop().start();
+15: } }
+A. Starting up
+B. Starting up Problem
+C. Starting up Problem Shutting down
+D. Starting up Shutting down
+E. The code does not compile.
+F. An uncaught exception is thrown.
+
+Ans:B.
+
+Explanation:The main() method invokes start on a new Laptop object. Line 4 prints Starting
+up; then line 5 throws an Exception. Line 6 catches the exception, line 7 prints
+Problem, and then line 8 calls System.exit, which terminates the JVM. The finally
+block does not execute because the JVM is no longer running.
+
+
+OCP
+===
+
+Generics and Collections(Other Sources):
+---------------------------------------
+1. Given:
+public static void main(String[] args) {
+// INSERT DECLARATION HERE
+for (int i = 0; i <= 10; i++) {
+List<Integer> row = new ArrayList<Integer>();
+for (int j = 0; j <= 10; j++)
+row.add(i * j);
+table.add(row);
+}
+for (List<Integer> row : table)
+System.out.println(row);
+}
+Which statements could be inserted at // INSERT DECLARATION HERE to allow this code to compile and run? (Choose all that apply.)
+A. List<List<Integer>> table = new List<List<Integer>>();
+B. List<List<Integer>> table = new ArrayList<List<Integer>>();
+C. List<List<Integer>> table = new ArrayList<ArrayList<Integer>>();
+D. List<List, Integer> table = new List<List, Integer>();
+E. List<List, Integer> table = new ArrayList<List, Integer>();
+F. List<List, Integer> table = new ArrayList<ArrayList, Integer>();
+G. None of the above
+
+Ans:B
+
+Explanation:A is correct because List is an interface, so you can't say new List(), regardless of any generic types. D, E, and F are incorrect because List only takes one type parameter
+(a Map would take two, not a List). C is tempting, but incorrect. The type argument <List<Integer>\> must be the same for both sides of the assignment, even though the
+constructor new ArrayList() on the right side is a subtype of the declared type List on the left.
+
+2. Which statements are true about comparing two instances of the same class, given that the equals() and hashCode() methods have been properly overridden? (Choose all that apply.)
+A. If the equals() method returns true, the hashCode() comparison == might return false
+B. If the equals() method returns false, the hashCode() comparison == might return true
+C. If the hashCode() comparison == returns true, the equals() method must return true
+D. If the hashCode() comparison == returns true, the equals() method might return true
+E. If the hashCode() comparison != returns true, the equals() method might return true
+
+Ans:B, D.
+
+Explanation:B is true because often two dissimilar objects can return the same hashcode
+value. D is true because if the hashCode() comparison returns ==, the two objects might or
+might not be equal.A, C, and E are incorrect. C is incorrect because the hashCode() method is very flexible
+in its return values, and often two dissimilar objects can return the same hashcode value. A and
+E are a negation of the hashCode() and equals() contract.
+
+3. Given:
+public static void before() {
+Set set = new TreeSet();
+set.add("2");
+set.add(3);
+set.add("1");
+Iterator it = set.iterator();
+while (it.hasNext())
+System.out.print(it.next() + " ");
+}
+Which statements are true?
+A. The before() method will print 1 2
+B. The before() method will print 1 2 3
+C. The before() method will print three numbers, but the order cannot be determined
+D. The before() method will not compile
+E. The before() method will throw an exception at runtime
+
+Ans:E.
+
+Explanation:You can't put both Strings and ints into the same TreeSet. Without
+generics, the compiler has no way of knowing what type is appropriate for this TreeSet,
+so it allows everything to compile. At runtime, the TreeSet will try to sort the elements
+as they're added, and when it tries to compare an Integer with a String, it will throw a
+ClassCastException. Note that although the before() method does not use generics, it does
+use autoboxing. Watch out for code that uses some new features and some old features mixed
+together.
+
+
+4. Given:
+import java.util.*;
+class MapEQ {
+public static void main(String[] args) {
+Map<ToDos, String> m = new HashMap<ToDos, String>();
+ToDos t1 = new ToDos("Monday");
+ToDos t2 = new ToDos("Monday");
+ToDos t3 = new ToDos("Tuesday");
+m.put(t1, "doLaundry");
+m.put(t2, "payBills");
+m.put(t3, "cleanAttic");
+System.out.println(m.size());
+}
+}
+class ToDos{
+String day;
+ToDos(String d) { day = d; }
+public boolean equals(Object o) {
+return ((ToDos)o).day.equals(this.day);
+}
+// public int hashCode() { return 9; }
+}
+Which is correct? (Choose all that apply.)
+A. As the code stands, it will not compile
+B. As the code stands, the output will be 2
+C. As the code stands, the output will be 3
+D. If the hashCode() method is uncommented, the output will be 2
+E. If the hashCode() method is uncommented, the output will be 3
+F. If the hashCode() method is uncommented, the code will not compile
+
+Ans:C, D.
+
+Explanation:If hashCode() is not overridden, then every entry will go into its own
+bucket, and the overridden equals() method will have no effect on determining equivalency.
+If hashCode() is overridden, then the overridden equals() method will view t1 and t2 as
+duplicates.
+
+5. Given:
+12. public class AccountManager {
+13. private Map accountTotals = new HashMap();
+14. private int retirementFund;
+15.
+16. public int getBalance(String accountName) {
+17. Integer total = (Integer) accountTotals.get(accountName);
+18. if (total == null)
+19. total = Integer.valueOf(0);
+20. return total.intValue();
+21. }
+23. public void setBalance(String accountName, int amount) {
+24. accountTotals.put(accountName, Integer.valueOf(amount));
+25. }
+26. }
+This class is to be updated to make use of appropriate generic types, with no changes in behavior (for better or worse). Which of these steps could be performed? (Choose three.)
+A. Replace line 13 with private Map<String, int> accountTotals = new HashMap<String, int>();
+B. Replace line 13 with private Map<String, Integer> accountTotals = new HashMap<String, Integer>();
+C. Replace line 13 with private Map<String<Integer>\> accountTotals = new HashMap<String<Integer>\>();
+D. Replace lines 17–20 with
+   int total = accountTotals.get(accountName);
+   if (total == null)
+     total = 0;
+   return total;
+E. Replace lines 17–20 with
+  Integer total = accountTotals.get(accountName);
+  if (total == null)
+    total = 0;
+  return total;
+F. Replace lines 17–20 with return accountTotals.get(accountName);
+G. Replace line 24 with accountTotals.put(accountName, amount);
+H. Replace line 24 with accountTotals.put(accountName, amount.intValue());
+
+Ans:B, E, G.
+
+Explanation:A is incorrect because you can't use a primitive type as a type parameter. C is incorrect
+because a Map takes two type parameters separated by a comma. D is incorrect because an int
+can't autobox to a null, and F is incorrect because a null can't unbox to 0. H is incorrect
+because you can't autobox a primitive just by trying to invoke a method with it.
+
+Chapter-4:
+---------
+13. Which of the following is true?
+List<Integer> l1 = Arrays.asList(1, 2, 3);
+List<Integer> l2 = Arrays.asList(4, 5, 6);
+List<Integer> l3 = Arrays.asList();
+Stream.of(l1, l2, l3).map(x -> x + 1)
+.flatMap(x -> x.stream()).forEach(System.out::print);
+A. The code compiles and prints 123456.
+B. The code compiles and prints 234567.
+C. The code compiles but does not print anything.
+D. The code compiles but prints stream references.
+E. The code runs infinitely.
+F. The code does not compile.
+G. The code throws an exception
+
+Ans:F.
+
+Explanation:If the map() and flatMap() calls were reversed, choice B would be correct. In this case,
+the Stream created from the source is of type Stream<List<Integer>>. The Function in
+map expects an Integer rather than a List<Integer>, so the code does not compile.
+
+14. Which of the following is true?
+4: Stream<Integer> s = Stream.of(1);
+5: IntStream is = s.mapToInt(x -> x);
+6: DoubleStream ds = s.mapToDouble(x -> x);
+7: Stream<Integer> s2 = ds.mapToInt(x -> x);
+8: s2.forEach(System.out::print);
+A. Line 4 does not compile.
+B. Line 5 does not compile.
+C. Line 6 does not compile.
+D. Line 7 does not compile.
+E. Line 8 does not compile.
+F. The code throws an exception.
+G. The code compiles and prints 1.
+
+Ans:D.
+
+Explanation:Line 4 should obviously look OK. It creates a Stream and uses autoboxing to put the
+Integer 1 inside. Line 5 converts to a primitive, again using autoboxing. Line 6 converts
+to a double primitive, which works since double d = 1; would work. Line 7 is where it
+all falls apart. Converting from a double to an int would require a cast inside the lambda.
+
+16. What is the output of the following?
+Stream<String> s = Stream.empty();
+Stream<String> s2 = Stream.empty();
+Map<Boolean, List<String>> p = s.collect(
+Collectors.partitioningBy(b -> b.startsWith("c")));
+Map<Boolean, List<String>> g = s2.collect(
+Collectors.groupingBy(b -> b.startsWith("c")));
+System.out.println(p + " " + g);
+A. {} {}
+B. {} {false=[], true=[]}
+C. {false=[], true=[]} {}
+D. {false=[], true=[]} {false=[], true=[]}
+E. The code does not compile.
+F. An exception is thrown.
+
+Ans:C.
+
+Explanation:The partitioningBy() operation always returns a map with two Boolean keys, even
+if there are no corresponding values. By contrast, groupingBy() returns only keys that are
+actually needed.
+
+17. Which of the following is equivalent to this code?
+UnaryOperator<Integer> u = x -> x * x;
+A. BiFunction<Integer> f = x -> x*x;
+B. BiFunction<Integer, Integer> f = x -> x*x;
+C. BinaryOperator<Integer, Integer> f = x -> x*x;
+D. Function<Integer> f = x -> x*x;
+E. Function<Integer, Integer> f = x -> x*x;
+F. None of the above
+
+Ans:E.
+
+Explanation:A UnaryOperator is a special type of function where the parameter and return type
+are the same. Therefore, option E is correct. Notice that other options don’t even compile
+because they have the wrong number of generic types for the functional interface provided.
+
+18. What is the result of the following?
+DoubleStream s = DoubleStream.of(1.2, 2.4);
+s.peek(System.out::println).filter(x -> x > 2).count();
+A. 1
+B. 2
+C. 2.4
+D. 1.2 and 2.4
+E. There is no output.
+F. The code does not compile.
+G. An exception is thrown.
+
+Ans:D.
+
+Explanation:The terminal operation is count(). Since there is a terminal operation, the intermediate
+operations run. The peek() operation comes before the filter, so both numbers are printed.
+The count happens to be 1 since the other number is filtered. However, the result of the
+stream pipeline isn’t stored in a variable, and that result is ignored.
+
+19. Which of the following return primitives? (Choose all that apply.)
+A. BooleanSupplier
+B. CharSupplier
+C. DoubleSupplier
+D. FloatSupplier
+E. IntSupplier
+F. StringSupplier
+
+Ans:A, C, E.
+
+Explanation:The three common types of double, int and, long have dedicated supplier classes.
+The only primitive functional interface that does not involve one of those three types is
+BooleanSupplier.
+
+20. What is the simplest way of rewriting this code?
+List<Integer> l = IntStream.range(1, 6)
+.mapToObj(i -> i).collect(Collectors.toList());
+l.forEach(System.out::println);
+A. IntStream.range(1, 6);
+B. IntStream.range(1, 6)
+ .forEach(System.out::println);
+C. IntStream.range(1, 6)
+ .mapToObj(1 -> i)
+ .forEach(System.out::println);
+D. None of the above is equivalent.
+E. The provided code does not compile.
+
+Ans:B.
+
+Explanation:Both lists and streams have forEach() methods. There is no reason to collect into a list
+just to loop through it.
+

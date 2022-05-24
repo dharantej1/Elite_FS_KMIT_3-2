@@ -1,0 +1,198 @@
+/*
+Problem Statement:
+-----------------
+You are given a list of Students as StudentList,
+Your task is to find out how many male and female students are there in 
+the college?
+
+Sample Output:
+--------------
+{Male=11, Female=6}
+
+
+
+The Student class looks like this:
+----------------------------------
+class Student
+{
+    int id;
+    String name;
+    int age;
+    String gender;
+    String department;
+    int yearOfJoining;
+    
+    public Student(int id, String name, int age, String gender, String department, int yearOfJoining ) 
+    {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.department = department;
+        this.yearOfJoining = yearOfJoining;
+    }
+     
+    public int getId() 
+    {
+        return id;
+    }
+     
+    public String getName() 
+    {
+        return name;
+    }
+     
+    public int getAge() 
+    {
+        return age;
+    }
+     
+    public String getGender() 
+    {
+        return gender;
+    }
+     
+    public String getDepartment() 
+    {
+        return department;
+    }
+     
+    public int getYearOfJoining() 
+    {
+        return yearOfJoining;
+    }
+     
+    @Override
+    public String toString() 
+    {
+        return "Id : "+id
+                +", Name : "+name
+                +", Age : "+age
+                +", Gender : "+gender
+                +", Department : "+department
+                +", Year Of Joining : "+yearOfJoining;
+    }
+}
+
+
+Test Cases:
+----------
+case =1
+output ={Male=11, Female=6}
+
+*/
+
+Solution:
+--------
+
+Main.java:
+----------
+import java.util.*;
+import java.util.stream.Collectors;  
+class Main{
+	public static void main(String args[]){
+		List<Student> StudentList = new ArrayList<Student>();			 
+		StudentList.add(new Student(111, "Jiya Brein", 32, "Female", "Humanties and Sciences", 2011));
+		StudentList.add(new Student(122, "Paul Niksui", 25, "Male", "Computer Science", 2015));
+		StudentList.add(new Student(133, "Martin Theron", 29, "Male", "Information Technology", 2012));
+		StudentList.add(new Student(144, "Murali Gowda", 28, "Male", "Artificial Intelligence", 2014));
+		StudentList.add(new Student(155, "Nima Roy", 27, "Female", "Humanties and Sciences", 2013));
+		StudentList.add(new Student(166, "Iqbal Hussain", 43, "Male", "Cyber Security", 2016));
+		StudentList.add(new Student(177, "Manu Sharma", 35, "Male", "Machine Learning", 2010));
+		StudentList.add(new Student(188, "Wang Liu", 31, "Male", "Artificial Intelligence", 2015));
+		StudentList.add(new Student(199, "Amelia Zoe", 24, "Female", "Computer Science", 2016));
+		StudentList.add(new Student(200, "Jaden Dough", 38, "Male", "Cyber Security", 2015));
+		StudentList.add(new Student(211, "Jasna Kaur", 27, "Female", "Information Technology", 2014));
+		StudentList.add(new Student(222, "Nitin Joshi", 25, "Male", "Artificial Intelligence", 2016));
+		StudentList.add(new Student(233, "Jyothi Reddy", 27, "Female", "Machine Learning", 2013));
+		StudentList.add(new Student(244, "Nicolus Den", 24, "Male", "Computer Science", 2017));
+		StudentList.add(new Student(255, "Ali Baig", 23, "Male", "Information Technology", 2018));
+		StudentList.add(new Student(266, "Sanvi Pandey", 26, "Female", "Artificial Intelligence", 2015));
+		StudentList.add(new Student(277, "Anuj Chettiar", 31, "Male", "Artificial Intelligence", 2012));
+		
+		System.out.println(new Solution().numOfMaleAndFemaleStudents(StudentList));
+	}
+}
+
+Student.java:
+------------
+class Student
+{
+    int id;
+     
+    String name;
+     
+    int age;
+     
+    String gender;
+     
+    String department;
+     
+    int yearOfJoining;
+     
+    public Student(int id, String name, int age, String gender, String department, int yearOfJoining ) 
+    {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.department = department;
+        this.yearOfJoining = yearOfJoining;
+    }
+     
+    public int getId() 
+    {
+        return id;
+    }
+     
+    public String getName() 
+    {
+        return name;
+    }
+     
+    public int getAge() 
+    {
+        return age;
+    }
+     
+    public String getGender() 
+    {
+        return gender;
+    }
+     
+    public String getDepartment() 
+    {
+        return department;
+    }
+     
+    public int getYearOfJoining() 
+    {
+        return yearOfJoining;
+    }
+     
+     
+    @Override
+    public String toString() 
+    {
+        return "Id : "+id
+                +", Name : "+name
+                +", Age : "+age
+                +", Gender : "+gender
+                +", Department : "+department
+                +", Year Of Joining : "+yearOfJoining;
+    }
+}
+
+
+
+-----------------------
+import java.util.*;
+import java.util.stream.Collectors;  
+
+class Solution{
+	public Map<String, Long> numOfMaleAndFemaleStudents(List<Student> StudentList){
+		Map<String, Long> noOfMaleAndFemaleStudents=
+		StudentList.stream().collect(Collectors.groupingBy(Student::getGender, Collectors.counting()));
+		return noOfMaleAndFemaleStudents;
+	}
+}

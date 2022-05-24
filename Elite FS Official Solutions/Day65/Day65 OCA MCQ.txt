@@ -1,0 +1,576 @@
+OCA
+===
+
+Chapter-1:
+---------
+5. Given the following classes, which of the following can independently replace INSERT
+IMPORTS HERE to make the code compile? (Choose all that apply)
+package aquarium;
+public class Tank { }
+package aquarium.jellies;
+public class Jelly { }
+package visitor;
+INSERT IMPORTS HERE
+public class AquariumVisitor {
+public void admire(Jelly jelly) { } }
+A. import aquarium.*;
+B. import aquarium.*.Jelly;
+C. import aquarium.jellies.Jelly;
+D. import aquarium.jellies.*;
+E. import aquarium.jellies.Jelly.*;
+F. None of these can make the code compile.
+
+Ans:C, D.
+
+Explanation:Option C is correct because it imports Jelly by classname. Option D is correct
+because it imports all the classes in the jellies package, which includes Jelly.
+Option A is incorrect because it only imports classes in the aquarium package—Tank
+in this case—and not those in lower-level packages. Option B is incorrect because you
+cannot use wildcards anyplace other than the end of an import statement. Option E is
+incorrect because you cannot import parts of a class with a regular import statement.
+Option F is incorrect because options C and D do make the code compile.
+
+6. Given the following classes, what is the maximum number of imports that can be removed
+and have the code still compile?
+package aquarium; public class Water { }
+package aquarium;
+import java.lang.*;
+import java.lang.System;
+import aquarium.Water;
+import aquarium.*;
+public class Tank {
+public void print(Water water) {
+System.out.println(water); } }
+A. 0
+B. 1
+C. 2
+D. 3
+E. 4
+F. Does not compile.
+
+Ans:E.
+
+Explanation:The first two imports can be removed because java.lang is automatically imported.
+The second two imports can be removed because Tank and Water are in the same package,
+making the correct answer E. If Tank and Water were in different packages, one of
+these two imports could be removed. In that case, the answer would be option D.
+
+7. Given the following classes, which of the following snippets can be inserted in place of
+INSERT IMPORTS HERE and have the code compile? (Choose all that apply)
+package aquarium;
+public class Water {
+boolean salty = false;
+}
+package aquarium.jellies;
+public class Water {
+boolean salty = true;
+}
+package employee;
+INSERT IMPORTS HERE
+public class WaterFiller {
+Water water;
+}
+A. import aquarium.*;
+B. import aquarium.Water;
+   import aquarium.jellies.*;
+C. import aquarium.*;
+   import aquarium.jellies.Water;
+D. import aquarium.*;
+   import aquarium.jellies.*;
+E. import aquarium.Water;
+   import aquarium.jellies.Water;
+F. None of these imports can make the code compile.
+
+Ans:A, B, C.
+
+Explanation:Option A is correct because it imports all the classes in the aquarium package
+including aquarium.Water. Options B and C are correct because they import Water by
+classname. Since importing by classname takes precedence over wildcards, these compile.
+Option D is incorrect because Java doesn’t know which of the two wildcard Water 
+classes to use. Option E is incorrect because you cannot specify the same classname in
+two imports.
+
+
+Chapter-2:
+---------
+6. What is the output of the following code snippet?
+3: int x = 4;
+4: long y = x * 4 - x++;
+5: if(y<10) System.out.println("Too Low");
+6: else System.out.println("Just right");
+7: else System.out.println("Too High");
+A. Too Low
+B. Just Right
+C. Too High
+D. Compiles but throws a NullPointerException.
+E. The code will not compile because of line 6.
+F. The code will not compile because of line 7.
+
+Ans:F.
+
+Explanation:The code does not compile because two else statements cannot be chained together
+without additional if-then statements, so the correct answer is option F. Option E is
+incorrect as Line 6 by itself does not cause a problem, only when it is paired with Line 7. 
+One way to fix this code so it compiles would be to add an if-then statement on
+line 6. The other solution would be to remove line 7.
+
+7. What is the output of the following code?
+1: public class TernaryTester {
+2: public static void main(String[] args) {
+3: int x = 5;
+4: System.out.println(x > 2 ? x < 4 ? 10 : 8 : 7);
+5: }}
+A. 5
+B. 4
+C. 10
+D. 8
+E. 7
+F. The code will not compile because of line 4.
+
+Ans:D.
+
+Explanation:As you learned in the section “Ternary Operator,” although parentheses are not
+required, they do greatly increase code readability, such as the following equivalent
+statement:
+System.out.println((x > 2) ? ((x < 4) ? 10 : 8) : 7)
+We apply the outside ternary operator fi rst, as it is possible the inner ternary expression
+may never be evaluated. Since (x>2) is true, this reduces the problem to:
+System.out.println((x < 4) ? 10 : 8)
+Since x is greater than 2, the answer is 8, or option D in this case.
+
+8. What is the output of the following code snippet?
+3: boolean x = true, z = true;
+4: int y = 20;
+5: x = (y != 10) ^ (z=false);
+6: System.out.println(x+", "+y+", "+z);
+A. true, 10, true
+B. true, 20, false
+C. false, 20, true
+D. false, 20, false
+E. false, 20, true
+F. The code will not compile because of line 5.
+
+Ans:B
+
+Explanation:This example is tricky because of the second assignment operator embedded in line
+5. The expression (z=false) assigns the value false to z and returns false for the
+entire expression. Since y does not equal 10, the left-hand side returns true; therefore,
+the exclusive or (^) of the entire expression assigned to x is true. The output reflects
+these assignments, with no change to y, so option B is the only correct answer. The
+code compiles and runs without issue, so option F is not correct.
+
+
+Chapter-3:
+---------
+14. Which of the following can replace line 4 to print "avaJ"? (Choose all that apply)
+3: StringBuilder puzzle = new StringBuilder("Java");
+4: // INSERT CODE HERE
+5: System.out.println(puzzle);
+A. puzzle.reverse();
+B. puzzle.append("vaJ$").substring(0, 4);
+C. puzzle.append("vaJ$").delete(0, 3).deleteCharAt(puzzle.length() - 1);
+D. puzzle.append("vaJ$").delete(0, 3).deleteCharAt(puzzle.length());
+E. None of the above.
+
+Ans:A, C.
+
+Explanation:The reverse() method is the easiest way of reversing the characters in a String-
+Builder; therefore, option A is correct. Option B is a nice distraction—it does in fact
+return "avaJ". However, substring() returns a String, which is not stored anywhere.
+Option C uses method chaining. First it creates the value "JavavaJ$". Then it removes
+the first three characters, resulting in "avaJ$". Finally, it removes the last character,
+resulting in "avaJ". Option D throws an exception because you cannot delete the character
+after the last index. Remember that deleteCharAt() uses indexes that are zero
+based and length() counts starting with 1.
+
+
+15. Which of these array declarations is not legal? (Choose all that apply)
+A. int[][] scores = new int[5][];
+B. Object[][][] cubbies = new Object[3][0][5];
+C. String beans[] = new beans[6];
+D. java.util.Date[] dates[] = new java.util.Date[2][];
+E. int[][] types = new int[];
+F. int[][] java = new int[][];
+
+Ans:C, E, F.
+
+Explanation:Option C uses the variable name as if it were a type, which is clearly illegal.
+Options E and F don’t specify any size. Although it is legal to leave out the size for later
+dimensions of a multidimensional array, the first one is required. Option A declares a
+legal 2D array. Option B declares a legal 3D array. Option D declares a legal 2D array.
+Remember that it is normal to see on the exam types you might not have learned. You
+aren’t expected to know anything about them.
+
+16. Which of these compile when replacing line 8? (Choose all that apply)
+7: char[]c = new char[2];
+8: // INSERT CODE HERE
+A. int length = c.capacity;
+B. int length = c.capacity();
+C. int length = c.length;
+D. int length = c.length();
+E. int length = c.size;
+F. int length = c.size();
+G. None of the above.
+
+Ans:C
+
+Explanation:Arrays define a property called length. It is not a method, so parentheses are not allowed.
+
+
+Chapter-4:
+---------
+19. Which of these classes compile and use a default constructor? (Choose all that apply)
+A. public class Bird { }
+B. public class Bird { public bird() {} }
+C. public class Bird { public bird(String name) {} }
+D. public class Bird { public Bird() {} }
+E. public class Bird { Bird(String name) {} }
+F. public class Bird { private Bird(int age) {} }
+G. public class Bird { void Bird() { }
+
+Ans:A, G.
+
+Explanation:Options B and C don’t compile because the constructor name must match the
+classname. Since Java is case sensitive, these don’t match. Options D, E, and F all compile
+and provide one user-defined constructor. Since a constructor is coded, a default
+constructor isn’t supplied. Option G defines a method, but not a constructor. Option A
+does not define a constructor, either. Since no constructor is coded, a default constructor
+is provided for options A and G.
+
+20. Which code can be inserted to have the code print 2?
+public class BirdSeed {
+private int numberBags;
+boolean call;
+public BirdSeed() {
+// LINE 1
+call = false;
+// LINE 2
+}
+public BirdSeed(int numberBags) {
+this.numberBags = numberBags;
+}
+public static void main(String[] args) {
+BirdSeed seed = new BirdSeed();
+System.out.println(seed.numberBags);
+} }
+A. Replace line 1 with BirdSeed(2);
+B. Replace line 2 with BirdSeed(2);
+C. Replace line 1 with new BirdSeed(2);
+D. Replace line 2 with new BirdSeed(2);
+E. Replace line 1 with this(2);
+F. Replace line 2 with this(2);
+
+Ans:E.
+
+Explanation:Options A and B will not compile because constructors cannot be called without
+new. Options C and D will compile but will create a new object rather than setting the
+fields in this one. Option F will not compile because this() must be the first line of a
+constructor. Option E is correct.
+
+21. Which of the following complete the constructor so that this code prints out 50? (Choose all that apply)
+public class Cheetah {
+int numSpots;
+public Cheetah(int numSpots) {
+// INSERT CODE HERE
+}
+public static void main(String[] args) {
+System.out.println(new Cheetah(50).numSpots);
+}
+}
+A. numSpots = numSpots;
+B. numSpots = this.numSpots;
+C. this.numSpots = numSpots;
+D. numSpots = super.numSpots;
+E. super.numSpots = numSpots;
+F. None of the above.
+
+Ans:C
+
+Explanation:Within the constructor numSpots refers to the constructor parameter. The instance
+variable is hidden because they have the same name. this.numSpots tells Java to use
+the instance variable. In the main() method, numSpots refers to the instance variable.
+Option A sets the constructor parameter to itself, leaving the instance variable as 0.
+Option B sets the constructor parameter to the value of the instance variable, making
+them both 0. Option C is correct, setting the instance variable to the value of the constructor
+parameter. Options D and E do not compile.
+
+
+Chapter-5:
+---------
+14. Which statements are true about the following code? (Choose all that apply)
+1: interface HasVocalCords {
+2: public abstract void makeSound();
+3: }
+4: public interface CanBark extends HasVocalCords {
+5: public void bark();
+6: }
+A. The CanBark interface doesn’t compile.
+B. A class that implements HasVocalCords must override the makeSound() method.
+C. A class that implements CanBark inherits both the makeSound() and bark() methods.
+D. A class that implements CanBark only inherits the bark() method.
+E. An interface cannot extend another interface.
+
+Ans:C.
+
+Explanation:The code compiles without issue, so option A is wrong. Option B is incorrect, since
+an abstract class could implement HasVocalCords without the need to override the
+makeSound() method. Option C is correct; any class that implements CanBark automatically
+inherits its methods, as well as any inherited methods defined in the parent
+interface. Because option C is correct, it follows that option D is incorrect. Finally, an
+interface can extend multiple interfaces, so option E is incorrect.
+
+15. Which of the following is true about a concrete subclass? (Choose all that apply)
+A. A concrete subclass can be declared as abstract.
+B. A concrete subclass must implement all inherited abstract methods.
+C. A concrete subclass must implement all methods defined in an inherited interface.
+D. A concrete subclass cannot be marked as final.
+E. Abstract methods cannot be overridden by a concrete subclass.
+
+Ans:B.
+
+Explanation:Concrete classes are, by definition, not abstract, so option A is incorrect. A concrete
+class must implement all inherited abstract methods, so option B is correct. Option C
+is incorrect; a superclass may have already implemented an inherited interface, so the
+concrete subclass would not need to implement the method. Concrete classes can be
+both final and not final, so option D is incorrect. Finally, abstract methods must be
+overridden by a concrete subclass, so option E is incorrect.
+
+16. What is the output of the following code?
+1: abstract class Reptile {
+2: public final void layEggs() { System.out.println("Reptile laying eggs");
+}
+3: public static void main(String[] args) {
+4: Reptile reptile = new Lizard();
+5: reptile.layEggs();
+6: }
+7: }
+8: public class Lizard extends Reptile {
+9: public void layEggs() { System.out.println("Lizard laying eggs"); }
+10: }
+A. Reptile laying eggs
+B. Lizard laying eggs
+C. The code will not compile because of line 4.
+D. The code will not compile because of line 5.
+E. The code will not compile because of line 9.
+
+Ans: E
+
+Explanation: The code doesn’t compile, so options A and B are incorrect. The issue with line 9 is
+that layEggs() is marked as final in the superclass Reptile, which means it cannot be
+overridden. There are no errors on any other lines, so options C and D are incorrect.
+
+
+Chapter-6:
+---------
+4. Which exception will the following throw?
+Object obj = new Integer(3);
+String str = (String) obj;
+System.out.println(str);
+A. ArrayIndexOutOfBoundsException
+B. ClassCastException
+C. IllegalArgumentException
+D. NumberFormatException
+E. None of the above.
+
+Ans:B.
+
+Explanation:The second line tries to cast an Integer to a String. Since String does not extend
+Integer, this is not allowed and a ClassCastException is thrown.
+
+5. Which of the following exceptions are thrown by the JVM? (Choose all that apply)
+A. ArrayIndexOutOfBoundsException
+B. ExceptionInInitializerError
+C. java.io.IOException
+D. NullPointerException
+E. NumberFormatException
+
+Ans:A, B, D.
+
+Explanation:java.io.IOException is thrown by many methods in the java.io package,
+but it is always thrown programmatically. The same is true for NumberFormatException;
+it is thrown programmatically by the wrapper classes of java.lang. The other
+three exceptions are all thrown by the JVM when the corresponding problem arises.
+
+6. What will happen if you add the statement System.out.println(5 / 0); to a working
+main() method?
+A. It will not compile.
+B. It will not run.
+C. It will run and throw an ArithmeticException.
+D. It will run and throw an IllegalArgumentException.
+E. None of the above.
+
+Ans: C.
+
+Explanation: The compiler tests the operation for a valid type but not a valid result, so the code
+will still compile and run. At runtime, evaluation of the parameter takes place before
+passing it to the print() method, so an ArithmeticException object is raised.
+
+
+OCP
+===
+
+Chapter-3:
+---------
+
+13. Which of these statements can fill in the blank so that the Wildcard class compiles successfully? (Choose all that apply.)
+import java.util.*;
+public class Wildcard {
+public void showSize(List<?> list) {
+System.out.println(list.size());
+}
+public static void main(String[] args) {
+Wildcard card = new Wildcard();
+____________________________________
+card.showSize(list);
+} }
+A. ArrayDeque<?> list = new ArrayDeque<String>();
+B. ArrayList<? super Date> list = new ArrayList<Date>();
+C. List<?> list = new ArrayList<?>();
+D. List<Exception> list = new LinkedList<java.io.IOException>();
+E. Vector<? extends Number> list = new Vector<Integer>();
+F. None of the above
+
+Ans:B, E.
+
+Explanation:showSize() can take any type of List since it uses an unbounded wildcard. Option
+A is incorrect because it is a Queue and not a List. Option C is incorrect because the wildcard
+is not allowed to be on the right side of an assignment. Option D is incorrect because
+the generic types are not compatible. Option B is correct because a lower-bounded wildcard
+allows that same type to be the generic. Option E is correct because Integer is a subclass
+of Number. Vector is an old type of List. It isn’t common in new code, but you still need to
+know it for the exam and in case you encounter old code.
+
+14. What is the result of the following program?
+import java.util.*;
+public class Sorted implements Comparable<Sorted>, Comparator<Sorted> {
+private int num;
+private String text;
+Sorted(int n, String t) {
+this.num = n;
+this.text = t;
+}
+public String toString() { return "" + num; }
+public int compareTo(Sorted s) { return text.compareTo(s.text); }
+public int compare(Sorted s1, Sorted s2) { return s1.num – s2.num; }
+public static void main(String[] args) {
+Sorted s1 = new Sorted(88, "a");
+Sorted s2 = new Sorted(55, "b");
+TreeSet<Sorted> t1 = new TreeSet<>();
+t1.add(s1); t1.add(s2);
+TreeSet<Sorted> t2 = new TreeSet<>(s1);
+t2.add(s1); t2.add(s2);
+System.out.println(t1 + " " + t2);
+} }
+A. [55. 88] [55, 88]
+B. [55. 88] [88, 55]
+C. [88. 55] [55, 88]
+D. [88. 55] [88, 55]
+E. The code does not compile.
+F. A runtime exception is thrown.
+
+Ans:C.
+
+Explanation:This question is hard because it defines both Comparable and Comparator on the same
+object. t1 doesn’t specify a Comparator so it uses the Comparable object’s compareTo()
+method. This sorts by the text instance variable. t2 did specify a Comparator when calling
+the constructor, so it uses the compare() method, which sorts by the int.
+
+15. What is the result of the following code?
+Comparator<Integer> c = (o1, o2) -> o2—o1;
+List<Integer> list = Arrays.asList(5, 4, 7, 1);
+Collections.sort(list, c);
+System.out.println(Collections.binarySearch(list, 1));
+A. 0
+B. 1
+C. 2
+D. The result is undefined.
+E. The code does not compile.
+F. A runtime exception is thrown.
+
+Ans:D.
+
+Explanation:The list is sorted in descending order. However, it is searched using the default order,
+which is sorted in ascending order. binarySearch() requires both to use the same sort
+order. Therefore, the precondition for binarySearch() is not met and the result is undefined.
+
+16. Which of the following statements are true? (Choose all that apply.)
+A. Comparable is in the java.util package.
+B. Comparator is in the java.util package.
+C. compare() is in the Comparable interface.
+D. compare() is in the Comparator interface.
+E. compare() takes one method parameter.
+F. compare() takes two method parameters.
+
+Ans: B, D, F. 
+
+Explanation: The java.lang.Comparable interface is implemented on the object to compare.
+It specifies the compareTo() method, which takes one parameter. The java.
+util.Comparator interface specifies the compare() method, which takes two
+parameters.
+
+
+17. Which two options can fill in the blanks to make this code compile? (Choose all that apply.)
+1: public class Generic________ {
+2: public static void main(String[] args) {
+3: Generic<String> g = new Generic_______();
+4: Generic<Object> g2 = new Generic();
+5: }
+6: }
+A. On line 1, fill in with <>.
+B. On line 1, fill in with <T>.
+C. On line 1, fill in with <?>.
+D. On line 3, fill in with <>.
+E. On line 3, fill in with <T>.
+F. On line 3, fill in with <?>.
+
+Ans: B, D. 
+
+Explanation: Line 1 is a generic class that requires specifying a name for the type. Options A and
+C are incorrect because no type is specified. Line 3 tries to use the diamond operator to
+instantiate the class. Option E is incorrect because T is not a class and certainly not one
+compatible with String. Option F is incorrect because a wildcard cannot be specified on
+the right side when instantiating an object.
+
+
+18. Which of the following lines can be inserted to make the code compile? (Choose all that apply.)
+class A {}
+class B extends A {}
+class C extends B {}
+class D<C> {
+// INSERT CODE HERE
+}
+A. A a1 = new A();
+B. A a2 = new B();
+C. A a3 = new C();
+D. C c1 = new A();
+E. C c2 = new B();
+F. C c1 = new C();
+
+Ans: A, B. 
+
+Explanation: C is both a class and a type parameter. This means that within the class D, when we
+refer to C, it uses the type parameter. All of the choices that mention class C are incorrect
+because it no longer means the class C.
+
+
+19. Which options are true of the following code? (Choose all that apply.)
+3: ______________<Integer> q = new LinkedList<>();
+4: q.add(10);
+5: q.add(12);
+6: q.remove(1);
+7: System.out.print(q);
+A. If we fill in the blank with List, the output is [10].
+B. If we fill in the blank with List, the output is [10, 12].
+C. If we fill in the blank with Queue, the output is [10].
+D. If we fill in the blank with Queue, the output is [10, 12].
+E. The code does not compile in either scenario.
+F. A runtime exception is thrown.
+
+Ans: A, D. 
+
+Explanation: A LinkedList implements both List and Queue. The List interface has a method to
+remove by index. Since this method exists, Java does not autobox to call the other method.
+Queue has only the remove by object method, so Java does autobox there. Since the number
+1 is not in the list, Java does not remove anything for the Queue.
+
+
