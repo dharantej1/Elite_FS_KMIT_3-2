@@ -1,0 +1,92 @@
+Mr Nagireddy is working with Binary Trees.
+The elements of the tree are given in the level order format.
+
+He is given the root of the binary tree T, to find the most occured STsum(s), if 
+there are more than one STsums like that, return all of them as a list.
+An STsum is a sub tree sum from a node N, where that node N acts as the root node,
+STsum is the sum of all the nodes data of that sub tree of node N.
+
+Your task is to help Nagireddy to find and return the list of STsums, which 
+occured more number of times.
+
+Your task is to implement the class Solution:
+	- public List<Integer> findFrequentSum(BinaryTreeNode root):
+	return a list of integers as result.
+
+NOTE: The Binary Tree T may contain negative values. 	
+
+Input Format:
+-------------
+Line-1: comma separated integers, level order binary tree
+
+Output Format:
+--------------
+Print a list of integers in ascending order as result.
+
+
+Sample Input-1:
+---------------
+4,-2,5,3,1
+
+Sample Output-1:
+----------------
+[1,2,3,5,11]
+
+
+Sample Input-2:
+---------------
+4,-2,5,3,2
+
+Sample Output-2:
+----------------
+[3]
+import java.util.*;
+
+/*
+class BinaryTreeNode{
+	public int data; 
+	public BinaryTreeNode left, right; 
+	public BinaryTreeNode(int data){
+		this.data = data; 
+		left = null; 
+		right = null; 
+	}
+}
+*/
+
+class Solution {
+    static HashMap<Integer,Integer> map = new HashMap<>();
+    static int sum(BinaryTreeNode root){
+        if(root==null)
+            return 0;
+        int x = root.data;
+        x += sum(root.left);
+        x += sum(root.right);
+        map.put(x,map.getOrDefault(x,0)+1);
+        return x;
+    }
+    public List<Integer> findFrequentSum(BinaryTreeNode root) {
+        //Implement Your Code here
+        int dummy = sum(root);
+        Iterator itr = map.keySet().iterator();
+        TreeMap<Integer,List<Integer>> resMap = new TreeMap<>();
+        while(itr.hasNext()){
+            Integer a = (Integer)itr.next();
+            int k = map.get(a);
+            List<Integer> arr;
+            if(resMap.containsKey(k)){
+                arr = resMap.get(k);
+                arr.add(a);
+            }
+            else{
+                arr = new ArrayList<>();
+                arr.add(a);
+                resMap.put(k,arr);
+            }
+        }
+        List<Integer> res = resMap.get(resMap.lastKey());
+        //System.out.println(res);
+        Collections.sort(res);
+        return res;
+    }
+}
