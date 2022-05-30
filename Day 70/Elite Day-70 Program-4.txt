@@ -1,0 +1,103 @@
+A set of computers connected with each other and formed a network with the 
+following rule, one computer can directly connected with atmost two computers only.
+Each computer is assigned with an ID, the computer ID's may be repeated.
+
+A pair of two different computers (must be leaf nodes) of the network is said to
+be NICE, if the shortest distance between theose computers is less than or 
+equal to 'D'.
+
+You are given the entire network as a tree, and an integer 'D'.
+Your task is to return the number of NICE Pairs in the given network.
+
+Implement the class Solution:
+   1. public int numberOfPairs(BinaryTreeNode root, int D) : 
+      returns an integer.
+
+NOTE: in the input tree, consider -1 as 'No Connection' (NULL node).
+
+
+Input Format:
+-------------
+Line-1: space separated integers, network ID's in the form the tree.
+Line-2: An integer, D
+
+Output Format:
+--------------
+Print an integer, number of NICE pairs.
+
+
+Sample Input-1:
+---------------
+2 3 4 -1 5
+3
+
+Sample Output-1:
+----------------
+1
+
+Explanation:
+------------
+The computer at the leaf nodes in the network are 4 and 5 and the shortest 
+distance between them is 3. This is the only NICE pair.
+
+
+Sample Input-2:
+---------------
+2 5 3 4 3 7 5
+3
+
+Sample Output-2:
+----------------
+2
+
+Explanation:
+------------
+The NICE pairs in the network are [4,3] and [7,5] and the shortest 
+distance between them is 2. This is the only NICE pair.
+import java.util.*;
+
+/*
+// for reference
+class BinaryTreeNode{
+	public int data; 
+	public BinaryTreeNode left, right; 
+	public BinaryTreeNode(int data){
+		this.data = data; 
+		left = null; 
+		right = null; 
+	}
+}
+*/
+
+class Solution {
+    static int count = 0;
+    boolean isleaf(BinaryTreeNode root){
+        if((root.left==null || root.left.data==-1) && (root.right==null || root.right.data==-1)) return true;
+        return false;
+    }
+    List<Integer> getnodes(BinaryTreeNode root,int dist){
+        if(root == null || root.data == -1) return new ArrayList<Integer>();
+        
+        if(isleaf(root)) return new ArrayList<Integer>(Arrays.asList(1));
+        
+        List<Integer> l = getnodes(root.left,dist);
+        List<Integer> r = getnodes(root.right,dist);
+        for(int i : l){
+            for(int j : r){
+                if(i+j <= dist) count++;
+            }
+        }
+        
+        List<Integer> res = new ArrayList<>();
+        
+        for(int i : l) res.add(i+1);
+        
+        for(int j : r) res.add(j+1);
+        return res;
+    }
+   public int numberOfPairs(BinaryTreeNode root, int dist) {
+        // Implement Your code here.
+        getnodes(root,dist);
+        return count;
+    }
+}
