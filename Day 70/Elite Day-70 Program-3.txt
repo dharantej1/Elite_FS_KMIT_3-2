@@ -32,3 +32,27 @@ With size-2: [1,1]
 With size-3: [1,0,1], [0,1,1], [1,1,0]
 With size-4: [1,1,0,1]
 With size-5: [1,1,0,1,0]
+import java.util.*;
+
+
+class Solution{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        String input = sc.nextLine();
+        int[] arr = Arrays.stream(input.split(" ")).mapToInt(Integer::parseInt).toArray();
+        int res = 0;
+        for(int i=0;i<arr.length;i++){
+            int count0 = 0;
+            int count1 = 0;
+            for(int j=i;j<arr.length;j++){
+                if(arr[j]==0)
+                    count0++;
+                else
+                    count1++;
+                if(count1>count0)
+                    res++;
+            }
+        }
+        System.out.print(res);
+    }
+}
