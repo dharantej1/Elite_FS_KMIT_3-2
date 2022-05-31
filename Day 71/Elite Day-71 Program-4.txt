@@ -1,0 +1,84 @@
+Keerthilal wants to try his luck in Diamonds business. 
+He decides to buy and sell diamonds. 
+
+He is given the prices of one diamond for N days by his friend.
+Initially, it is assumed that he has no diamonds.
+
+You need to help Keerthilal in making the maximum profit that is possible. 
+He can sell a diamond only after he buys a diamond. 
+
+Note: 
+    - He is allowed to do any number of transactions
+      but, he can buy and sell only one diamond per transaction.
+    
+    - He must complete one transaction before the next transaction.
+    
+    - After each transaction completed, there is a break day.
+    i.e After he sells his diamond, he cannot buy diamond on next day.
+
+		
+Input Format:
+-------------
+Space separated integers, price of the diamond for N days.
+
+Output Format:
+--------------
+Print an integer, maximum profit.
+
+
+Sample Input-1:
+---------------
+7 1 5 3 6 4
+
+Sample Output-1:
+----------------
+5
+
+Explanation: 
+------------
+Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.
+
+
+Sample Input-2:
+---------------
+1 2 3 1 3
+
+Sample Output-2:
+----------------
+3
+
+Explanation: 
+------------
+Buy on day 1 (price = 1) and sell on day 2 (price = 2), profit = 2-1 = 1.
+Buy on day 4 (price = 1) and sell on day 5 (price = 3), profit = 3-1 = 2.
+Total Maximum Profit = 1+2 = 3
+
+import java.util.*;
+
+class Solution{
+    static int arr[],DP[],n;
+    static int findMaxProfit(int i){
+        if(i>=n)
+            return 0;
+        if(DP[i]!=-1)
+            return DP[i];
+        int a = findMaxProfit(i+1);
+        int b = Integer.MIN_VALUE;
+        for(int itr=i+1;itr<n;itr++){
+            if(arr[itr]>arr[i]){
+                int x = arr[itr]-arr[i]+findMaxProfit(itr+2);
+                b = Math.max(b,x);
+            }
+        }
+        return DP[i]=Math.max(a,b);
+    }
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        arr = Arrays.stream(sc.nextLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        n = arr.length;
+        DP = new int[n];
+        Arrays.fill(DP,-1);
+        int res = findMaxProfit(0);
+        System.out.print(res);
+    }
+}
