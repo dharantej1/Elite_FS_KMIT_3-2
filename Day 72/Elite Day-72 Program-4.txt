@@ -46,12 +46,4 @@ Explanation-2:
 ----------------
 The resultant string is "abababcabababcabababcabababc"
 The 9th character in the string is "b".
-import java.util.*;
-class Solutions{
-    public static void main(String args[]){
-        Scanner sc=new Scanner(System.in);
-        String s=sc.next();
-        int n=sc.nextInt();
-        
-    }
-}
+import java.util.*;class Solution{    public static void main(String[] args){        Scanner sc = new Scanner(System.in);        String str = sc.next();        int k = sc.nextInt();        int totalLength = 0;        for(int i=0;i<str.length();i++){            if(str.charAt(i)>='0' && str.charAt(i)<='9')                totalLength *= str.charAt(i)-'0';            else                totalLength++;        }        int a = str.length()-1;        for(int i=a;i>=0;i--){            k %= totalLength;            if(k==0 && Character.isLetter(str.charAt(i))){                System.out.println(str.charAt(i));                return;            }            if(str.charAt(i)>='0' && str.charAt(i)<='9'){                totalLength /= str.charAt(i)-'0';            }            else{                totalLength--;            }        }    }}

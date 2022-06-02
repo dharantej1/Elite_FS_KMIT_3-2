@@ -34,6 +34,7 @@ Sample Input:
 Sample Output:
 --------------
 1 2 3 4 5 6 7
+
 import java.util.*;
 
 /*
@@ -51,7 +52,41 @@ class Node {
 */
 
 class Solution {
+    Node addAtEnd(Node head,Node cur){
+        if(head==null){
+            cur.left=null;
+            return cur;
+        }
+        Node temp = head;
+        //System.out.println(head.data+" "+cur.data);
+        while(temp.right!=null){
+            temp = temp.right;
+        }
+        temp.right=cur;
+        if(cur!=null)
+            cur.left=temp;
+        return head;
+    }
+    public Node postorder(Node root){
+        if(root==null)
+            return null;
+        Node leftDLL = postorder(root.left);
+        Node rightDLL = postorder(root.right);
+        Node toReturn = addAtEnd(leftDLL,root);
+        root.right = rightDLL;
+        return toReturn;
+    }
+    
 	public Node treeToCircularList(Node root) {
         //implement your code here.
+        
+        Node head = postorder(root);
+        Node temp = head;
+        while(temp.right!=null){
+            temp=temp.right;
+        }
+        temp.right = head;
+        head.left = temp;
+        return head;
 	}
 }
