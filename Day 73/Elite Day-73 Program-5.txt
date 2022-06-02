@@ -43,24 +43,37 @@ Explanation:
 ------------
 For the pages diplaying the number 0: The sum of descendants is 0,
 since they have no descendant pages.
-import java.util.*;
-
-/*
-// Node sturcture for your reference.
-
-class BinaryTreeNode{
-	public int data; 
-	public BinaryTreeNode left, right; 
-	public BinaryTreeNode(int data){
-		this.data = data; 
-		left = null; 
-		right = null; 
-	}
-}
-*/
-
-class Solution {
-    public int numEqualToSumOfDescendants(BinaryTreeNode root) {
-       // implement your code here.
-    }
-}
+import java.util.*;
+
+/*
+// Node sturcture for your reference.
+
+class BinaryTreeNode{
+	public int data; 
+	public BinaryTreeNode left, right; 
+	public BinaryTreeNode(int data){
+		this.data = data; 
+		left = null; 
+		right = null; 
+	}
+}
+*/
+
+class Solution {
+    int c=0;
+    public int Descendants(BinaryTreeNode root){
+        if(root==null || root.data==-1)
+            return 0;
+        
+        int left=Descendants(root.left);
+        int right=Descendants(root.right);
+        if(left+right==root.data)
+            c++;
+        return left+right+root.data;
+    }
+    public int numEqualToSumOfDescendants(BinaryTreeNode root) {
+       // implement your code here.
+        Descendants(root);
+        return c;
+    }
+}
