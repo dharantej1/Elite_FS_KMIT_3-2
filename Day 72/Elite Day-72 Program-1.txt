@@ -51,7 +51,7 @@ class Solution {
         //Implement your code here
         Node cur= head;
         while(cur!=null && cur.next!=null){
-            if(cur.next.data<0){
+            if(cur.next.data<=0){
                 Node temp=cur.next;
                 cur.next=cur.next.next;
                 temp.next=head;
