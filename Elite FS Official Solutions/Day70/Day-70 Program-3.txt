@@ -1,0 +1,137 @@
+/*
+Problem Statement:
+-----------------
+There are some soldiers formed in a line from Kunthala and Mahishmathi 
+together, the soldiers from Kunthala indiacted with 0's and from Mahishmathi 
+indiacted with 1's. 
+
+You are given the order of soldiers as an array soldiers[], 
+consist of 0's an 1's only. Your task is to find out the number of contiguous
+arrays can be formed, which contains more number of the soldiers 
+from Mahishmathi than the soldiers from Kunthala.
+
+Input Format:
+-------------
+Space separated integers, 0's and 1's only, soldiers[]
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+1 0 1 1 0
+
+Sample Output-1:
+----------------
+9
+
+Explanation:
+------------
+The Contiguous subarrays having more ones than zeros are as follows:
+with size-1: [1], [1], [1]
+With size-2: [1,1]
+With size-3: [1,0,1], [0,1,1], [1,1,0]
+With size-4: [1,1,0,1]
+With size-5: [1,1,0,1,0]
+
+ 
+Test Cases:
+----------
+case =1
+input =1 0 1 1 0
+output =9
+
+case =2
+input =0 1 1 0 1 0 1 1 1 0
+output =40
+
+case =3
+input =1 1 1 1 0 0 0 1 0 1 1 1 1 1 1
+output =85
+
+case =4
+input =1 1 0 1 1 1 0 1 1 0 0 0 1 0 0 0 1 1 0 0
+output =74
+
+case =5
+input =1 1 0 1 0 0 0 1 1 0 0 0 0 1 1 1 1 0 0 1
+output =51
+
+case =6
+input =1 1 1 1 1 1 0 1 0 0 1 0 0 1 1 1 1 0 1 1 1 1 1 1 1 0 1 0 1 0
+output =392
+
+case =7
+input =1 0 0 0 0 1 0 0 0 1 1 1 1 0 1 0 1 1 1 0 1 0 1 1 0 0 0 0 0 0
+output =236
+
+case =8
+input =1 0 1 1 0 0 0 1 0 1 0 1 1 0 0 1 0 0 1 1 1 0 0 0 0 1 0 1 1 0 0 0 1 1 0 0 0 1 1 1 0 1 0 0 0 1 1 0 1 1
+output =153
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        String sarr[] = sc.nextLine().split(" ");
+        
+        int n = sarr.length;
+        FenwickTree ft = new FenwickTree(n);
+        ft.set(0,1);
+        
+        int pref = 0,ans=0;
+        for(int i=0;i<n;i++){
+            if(sarr[i].equals("1")){
+                pref++;
+            }
+            else{
+                pref--;
+            }
+
+            ans += ft.get(pref-1);
+            // System.out.println(ft.get(-pref+1) + " " +(-pref+1));
+            ft.set(pref, 1);
+        }
+        
+        System.out.println(ans);
+    }
+}
+
+class FenwickTree{
+    int n,offset;
+    ArrayList<Integer> tree = new ArrayList<>();
+    FenwickTree(int n){
+        this.n = 2*n+10;
+        offset=n;
+        for(int i=0;i<=this.n;i++){
+            tree.add(0);
+        }
+    }
+    void set(int i,int v){
+        i=offset+i+2;
+        while(i<=n){
+            tree.set(i, tree.get(i)+v);
+            i += i & -i;
+        }
+    }
+    int get(int i){
+        i=offset+i+2;
+        int res = 0;
+        while(i>=1){
+            res += tree.get(i);
+            i -= i & -i;
+        }
+        
+        return res;
+    }
+    int get(int L,int R){
+        return get(R) - get(L-1);
+    }
+}

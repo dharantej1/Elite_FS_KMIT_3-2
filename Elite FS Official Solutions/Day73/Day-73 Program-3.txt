@@ -1,0 +1,118 @@
+/*
+Problem Statement:
+-----------------
+Vimal and Kamal are pals. They're attempting to play a word game.
+The following are the game's rules:
+- There will be two terms in the game: w1 and w2.
+- One of the words must be chosen by Kamal.
+- If Kamal picks w1, w1[i] should be greater than w2[i], for every 'i' 
+  in 0 <= i < w1.length OR vice versa, for some shuffle of w1 and w2.
+- Kamal is the winner if the preceding step is true; else, Kamal is the loser.
+
+Your task is to assist Kamal in selecting the winning word.
+If feasible, print 'winner,' if not, 'loser.'
+
+Input Format:
+-------------
+Two space separated strings, two words w1 and w2.
+
+Output Format:
+--------------
+Print a boolean result.
+
+
+Sample Input-1:
+---------------
+break class
+
+Sample Output-1:
+----------------
+winner
+
+Explanation:
+------------
+Kamal chooses w2="class", and the shuffle of w1 is "beark", 
+so that Kamal wins the word game. 
+
+
+Sample Input-2:
+---------------
+kmit ngit
+
+Sample Output-2:
+----------------
+loser
+
+ 
+Test Cases:
+----------
+case =1
+input =break class
+output =winner
+
+case =2
+input =kmit ngit
+output =loser
+
+case =3
+input =raemupgijmjjclrvvece onegrpyqdvnmikakssxw
+output =winner
+
+case =4
+input =mjcvohhhcmhkukmenwvy xsnqyrzjavwfelvxihnw
+output =loser
+
+case =5
+input =cqlgubptbfoenbzzmlfxcigesocmdzpdcmtnzcnduirccmmndq cezktkudreiciequistwruxeehquzmmxhzzqtupvgpdozrtnml
+output =winner
+
+case =6
+input =ukjhlzmmqgqykujpfmcoqruogqhpzayirhnjbcogtdvclbbmqi abllymglgcqmvrdkqkrbsrvrleievyjnrrrpbcxvayeqbvonel
+output =loser
+
+case =7
+input =xdksrjfxduqxwqeuztwwolgrzpkcmeljoyldhhzgoxgbicljewnxukuupqrswdlqqasdylmujxvpsqzkjbnjyhexbgfzkljoyvbz hppdswrokhnpgmogtrfydedzbiuptmfgqagojhptewupsijmcvdbzfbddfvqowqlcasjnlqehlphvyzebwrfkbcjabdiswkkzmce
+output =winner
+
+case =8
+input =wziyodmqfizpvtexzodlroltmumemxfqptxspisovqlmzxkgxpbxkkhchzpnbhmntforgjrpfwuvkdqzjubdaxjgsbdfxombtfnx jiygxwsljmzroiwgqntwdbxwiuusiguclrsyfvtfvsexqpakefprfexlhsijjnuqypmxowtqjjimjvfjbxyspdzartvmejjqsfoe
+output =loser
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Solution {
+    public boolean checkIfCanBreak(String s1, String s2) {
+        int n = s1.length();
+        int[] arr = new int[26], brr = new int[26];
+        for(int i = 0; i < n; i++) arr[s1.charAt(i) - 97]++;
+        for(int i = 0; i < n; i++) brr[s2.charAt(i) - 97]++;
+        int count1 = 0, count2 = 0;
+        boolean f1 = false, f2 = false;
+        for(int i = 0; i < 26; i++) {
+            count1 += arr[i];
+            count2 += brr[i];
+            if(count1 > count2) {
+                if(f2) return false;
+                f1 = true;
+            } else if(count2 > count1) {
+                if(f1) return false;
+                f2 = true;
+            }
+        }
+        return true;
+    }
+	
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		String s1=sc.next();
+		String s2=sc.next();
+		if(new Solution().checkIfCanBreak(s1,s2))
+		    System.out.println("winner");
+		else
+		    System.out.println("loser");
+	}
+}

@@ -1,0 +1,142 @@
+/*
+Problem Statement:
+-----------------
+Mr. Crazy Robert is in a Mall, There are N stalls which are interconnected.
+i.e., you can visit a stall-'i',if you visit stall-'i-1' only.
+
+Mr. Robert can start at stall-0 and visit stall-1, stall-2,...,so on.
+
+He is given an array of integers amount[], he need to pay amount[i] to visit 
+stall-'i'. And also he is given a coupon worth amount C INR. 
+Mr. Crazy Robert can use the coupon atmost once, to pay atmost an amount C INR.
+
+Now, Mr. Crazy Robert task is to visit all the stalls in the mall. He must have 
+atleast an amount 1$ with him all the time.
+
+Your task is to find the minimum amount that Crazy Robert need to visit 
+all the stalls in the Mall.
+
+
+Input Format:
+-------------
+Line-1: Two space separated integers, N and C.
+Line-2: N comma separated integers, 
+
+Output Format:
+--------------
+Print an integer, the minimum amount.
+
+
+
+Sample Input-1:
+---------------
+6 4
+1,5,10,8,6,4
+
+Sample Output-1:
+----------------
+31
+
+Explanation:
+------------
+One optimal way to visit all the stalls is to start with an amount 31 INR:
+At stall-1, pay 1 INR. He has 31 - 1 = 30 INR left.
+At stall-2, pay 5 INR. He has 30 - 5 = 25 INR left.
+At stall-3, pay 10 INR. He has 25 - 10 = 15 INR left.
+At stall-4, pay 8 INR. He has 15 - 8 = 7 INR left.
+At stall-5, pay 6 INR. He uses coupon worth 4 and pay 4 INR.
+            So, 7 + 4 - 6 = 5 INR left.
+At stall-6, pay 4 INR. He has 5 - 4 = 1 INR left.
+So, the minimum amount is 31 INR he need to start with.
+
+
+Sample Input-2:
+---------------
+6 12
+7,7,9,6,2,6
+
+Sample Output-2:
+----------------
+29
+
+
+Sample Input-2:
+---------------
+6 0
+7,7,9,6,2,6
+
+Sample Output-2:
+----------------
+38
+
+ 
+Test Cases:
+----------
+case =1
+input =6 4
+1,5,10,8,6,4
+output =31
+
+case =2
+input =6 0
+7,7,9,6,2,6
+output =38
+
+case =3
+input =15 13
+5,4,1,5,4,16,16,9,4,5,10,10,20,16,20
+output =133
+
+case =4
+input =15 8
+18,14,7,17,2,8,17,3,12,1,13,19,3,20,14
+output =161
+
+case =5
+input =30 25
+11,7,13,2,6,8,12,9,10,15,9,17,6,10,5,2,16,8,6,19,17,18,3,8,4,16,2,8,18,7
+output =274
+
+case =6
+input =30 20
+11,14,8,1,11,6,8,11,8,4,12,6,14,15,14,1,8,3,1,7,9,7,6,5,14,9,13,7,9,7
+output =235
+
+case =7
+input =50 30
+46,22,38,7,8,32,28,12,33,7,16,13,50,27,18,3,10,29,47,11,29,46,15,45,43,43,7,21,2,19,39,32,2,14,31,48,3,32,50,49,41,1,30,3,33,49,25,15,29,38
+output =1262
+
+case =8
+input =50 35
+49,40,31,30,29,24,19,5,10,5,47,12,38,31,14,46,39,26,28,37,49,20,3,27,27,37,5,25,16,12,33,46,20,45,26,49,50,3,47,21,24,10,40,47,36,36,15,38,8,22
+output =1363
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class Solution{
+    
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int c=sc.nextInt();
+        sc.nextLine();
+        String s1[]=sc.nextLine().split(",");
+        int arr[]=new int[n];
+        int sum=0;
+        int i=0;
+        int m=0;
+        for(String t:s1){
+            arr[i]=Integer.parseInt(t);
+            sum+=arr[i];
+            m=Math.max(m,arr[i]);
+            i++;
+        }
+        Arrays.sort(arr);           
+        System.out.println(sum-Math.min(c,m)+1);
+        
+    }
+}

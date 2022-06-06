@@ -1,0 +1,984 @@
+Java Questionnaires(JavaConceptoftheDay)
+=======================================
+
+Increment/Decrement Operators:
+-----------------------------
+1. Guess the value of p in the below program?
+
+1. public class IncrementDecrementQuiz {
+2.    public static void main(String[] args){
+3.        int m = 0, n = 0;         
+4.        int p = --m * --n * n-- * m--;         
+5.        System.out.println(p);
+6.    }
+7. }
+
+Answer: 1
+Given, m=0 and n=0
+p = –m * –n * n– * m–
+p = (m is used after decrement) * (n is used after decrement) * (n is used before decrement) * (m is used before decrement)
+p = -1(m=-1, n=0) * -1(m=-1, n=-1) * -1(m=-1, n=-2) * -1(m=-2, n=-2)
+p = -1 * -1 * -1 * -1 = 1
+
+2. What will be the output of the following program?
+
+1. public class IncrementDecrementQuiz{
+2.    public static void main(String[] args){
+3.        int m=1010, n=1010;         
+4.        System.out.println(m++ / ++n * n-- / --m); 
+5.    }
+6.}
+
+Answer: 0
+m=1010 and n=1010
+m++ / ++n * n– / –m
+= (m is used before increment) / (n is used after increment) * (n is used before decrement) / (m is used after decrement)
+= 1010(m=1011, n=1010) / 1011(m=1011, n=1011) * 1011(m=1011, n=1010) / 1010(m=1010, n=1010)
+= 1010 / 1011 * 1011 / 1010 = 0
+
+3. What will be the output of the following program?
+
+1. public class JavaIncrementDecrementQuiz {
+2.    public static void main(String[] args){
+3.        char ch = "123".charAt(1);      
+4.        System.out.println(ch++ + ++ch);
+5.    }
+6. }
+
+Answer: 102
+
+
+Nested Classes:
+---------------
+1. What will be the output of the following program?
+
+1. class X{
+2.    static int x = 3131;     
+3.    static class Y    {
+4.        static int y = x++;         
+5.        static class Z{
+6.            static int z = y++;
+7.        }
+8.    }
+9.  }
+10. public class MainClass{
+11.    public static void main(String[] args){
+12.        System.out.println(X.x);         
+13.        System.out.println(X.Y.y);         
+14.        System.out.println(X.Y.Z.z);
+15.    }
+16. }
+
+Answer :
+3131
+3131
+3131
+
+2. Is the below code written correctly?
+
+1. class A{
+2.    String s = "AAA";     
+3.    void methodA(){
+4.        System.out.println(s);
+5.    }     
+6.    static class B{
+7.        void methodB(){
+8.            methodA();
+9.        }
+10.    }
+11. }
+
+Answer: No. You can’t use non-static method of outer class inside a static nested class directly. You have to instantiate the outer class.
+
+3. What will be the output of the following program?
+
+1. class P{
+2.    String s = "PPP";     
+3.    {
+4.        System.out.println(s);
+5.    }     
+6.    String methodP(){
+7.        class Q{
+8.            String s = P.this.s+"QQQ";             
+9.            {
+10.                System.out.println(s);
+11.            }
+12.        }         
+13.        return new Q().s+s;
+14.    }
+15. } 
+16. public class MainClass{
+16.    public static void main(String[] args){
+17.        P p = new P();         
+18.        System.out.println(p.methodP());
+19.    }
+20. }
+
+Answer :
+PPP
+PPPQQQ
+PPPQQQPPP
+
+
+Strings
+-------
+1.What will be the output of the below program?
+1.public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        String string = "string".replace('i', '0');       
+4.        System.out.println(string.substring(2, 5));
+5.    }
+6.}
+
+Answer: r0n
+
+2.What will be the output of the below program?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        String str1 = "Java";          
+4.        String str2 = "Java";          
+5.        System.out.println(str1 == str2);         
+6.        System.out.println(str1.equals(str2));         
+7.        System.out.println(str1.hashCode() == str2.hashCode());
+8.    }
+9. }
+
+Answer:
+true
+true
+true
+
+3.Guess the output of the following program?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        String str1 = "Java";         
+4.        String str2 = new String("Java");         
+5.        System.out.println(str1 == str2);         
+6.        System.out.println(str1.equals(str2));         
+7.        System.out.println(str1.hashCode() == str2.hashCode());
+8.    }
+9. }
+
+Answer:
+false
+true
+true
+
+4.Guess the output of the following program?
+
+1. public class JavaStringsQuiz {
+2.    public static void main(String[] args){
+3.        String str1 = new String("Java");         
+4.        String str2 = new String("Java");         
+5.        System.out.println(str1 == str2);         
+6.        System.out.println(str1.equals(str2));         
+7.        System.out.println(str1.hashCode() == str2.hashCode());
+8.    }
+9.}
+
+Answer:
+false
+true
+true
+
+5.What will be the output of the following program?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        String str1 = "Java";         
+4.        String str2 = str1.intern();         
+5.        System.out.println(str1 == str2);         
+6.        System.out.println(str1.equals(str2));         
+7.        System.out.println(str1.hashCode() == str2.hashCode());
+8.    }
+9. }
+
+Answer:
+true
+true
+true
+
+6. What will be the output of the following program?
+
+public class JavaStringsQuiz{
+    public static void main(String[] args){
+        String s1 = new String("JAVA");         
+        String s2 = new String("JAVA");         
+        System.out.println(s1 == s2);         
+        System.out.println(s1.equals(s2));         
+        System.out.println(s1 == s2.intern());         
+        System.out.println(s1.intern() == s2.intern());         
+        System.out.println(s1.intern() == s2);
+    }
+}
+Answer: 
+false
+true
+false
+true
+false
+
+7. Guess the output of the following program?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        System.out.println(String.join(",", "1", "2", "3").concat(",").repeat(3).lastIndexOf(','));
+4.    }
+5. }
+
+Answer: 17
+
+8. What will be the output of the following program?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        String[] strings = "Java_Concept_Of_The_Day".split("_", 3);        
+4.        for (String string : strings){
+5.            System.out.println(string);
+6.        }
+7.    }
+8. }
+
+Answer: 
+Java
+Concept
+Of_The_Day
+
+9. What will be the output of the following code?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        String str = "JavaConceptOfTheDay";         
+4.        System.out.println(str.charAt(str.length()));
+5.    }
+6. }
+
+Answer:Exception in thread “main” java.lang.StringIndexOutOfBoundsException: String index out of range: 19
+
+10.What will be the output of the below program?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args) {
+3.        System.out.println("A".compareTo("B"));
+4.        System.out.println("B".compareTo("A"));
+5.    }
+6. }
+
+Answer: 
+-1
+1
+
+
+11.Guess the output of the following program?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        StringBuffer sb = new StringBuffer("One Two Three Four Five");         
+4.        System.out.println(sb.reverse().indexOf("Two"));
+5.    }
+6. }
+
+Answer: -1
+
+12.What will be the output of the below code?
+
+1. public class JavaStringsQuiz{
+2.    public static void main(String[] args){
+3.        StringBuffer sb = new StringBuffer("11111");         
+4.        System.out.println(sb.insert(3, false).insert(5, 3.3).insert(7, "One"));
+5.    }
+6.}
+
+Answer: 111fa3.One3lse11
+
+
+
+
+		OCA
+=======================================
+
+Chapter-1
+---------
+12. Which of the following are true? (Choose all that apply)
+
+A. A local variable of type boolean defaults to null.
+B. A local variable of type float defaults to 0.
+C. A local variable of type Object defaults to null.
+D. A local variable of type boolean defaults to false.
+E. A local variable of type boolean defaults to true.
+F. A local variable of type float defaults to 0.0.
+G. None of the above.
+
+Ans:G.
+
+Explanation:Option G is correct because local variables do not get assigned default values. The
+code fails to compile if a local variable is not explicitly initialized. If this question
+were about instance variables, options D and F would be correct. A boolean primitive
+defaults to false and a float primitive defaults to 0.0.
+
+
+Chapter-2
+---------
+13. What is the output of the following code snippet?
+
+3: int x1 = 50, x2 = 75;
+4: boolean b = x1 >= x2;
+5: if(b = true) System.out.println("Success");
+6: else System.out.println("Failure");
+
+A. Success
+B. Failure
+C. The code will not compile because of line 4.
+D. The code will not compile because of line 5.
+
+Ans:A.
+
+Explanation:The code compiles successfully, so options C and D are incorrect. The value of b
+after line 4 is false. However, the if-then statement on line 5 contains an assignment,
+not a comparison. The variable b is assigned true on line 3, and the assignment operator
+returns true, so line 5 executes and displays Success, so the answer is option A.
+
+
+Chapter-3
+---------
+23. What is the result of the following?
+
+4: List<Integer> list = Arrays.asList(10, 4, -1, 5);
+5: Collections.sort(list);
+6: Integer array[] = list.toArray(new Integer[4]);
+7: System.out.println(array[0]);
+
+A. –1
+B. 10
+C. Compiler error on line 4.
+D. Compiler error on line 5.
+E. Compiler error on line 6.
+F. An exception is thrown.
+
+Ans:A.
+
+Explanation:Line 4 creates a fixed size array of size 4. Line 5 sorts it. Line 6 converts it back to
+an array. The brackets aren’t in the traditional place, but they are still legal. Line 7
+prints the first element, which is now –1.
+
+
+24. What is the result of the following?
+
+6: String [] names = {"Tom", "Dick", "Harry"};
+7: List<String> list = names.asList();
+8: list.set(0, "Sue");
+9: System.out.println(names[0]);
+
+A. Sue
+B. Tom
+C. Compiler error on line 7.
+D. Compiler error on line 8.
+E. An exception is thrown.
+
+Ans:C.
+
+Explanation:Converting from an array to an ArrayList uses Arrays.asList(names). There is
+no asList() method on an array instance. If this code were corrected to compile, the
+answer would be option A.
+
+
+Chapter-4
+---------
+28. Which of the following lambda expressions can fill in the blank? (Choose all that apply)
+
+List<String> list = new ArrayList<>();
+list.removeIf(___________________);
+
+A. s -> s.isEmpty()
+B. s -> {s.isEmpty()}
+C. s -> {s.isEmpty();}
+D. s -> {return s.isEmpty();}
+E. String s -> s.isEmpty()
+F. (String s) -> s.isEmpty()
+
+Ans:A, D, F.
+
+Explanation: removeIf() expects a Predicate, which takes a parameter list of one parameter
+using the specified type. Options B and C are incorrect because they do not use the
+return keyword. It is required inside braces for lambda bodies. Option E is incorrect
+because it is missing the parentheses around the parameter list. This is only optional
+for a single parameter with an inferred type.
+
+29. Which lambda can replace the MySecret class to return the same value? (Choose all that apply)
+
+interface Secret {
+	String magic(double d);
+}
+class MySecret implements Secret {
+	public String magic(double d) {
+	return "Poof";
+}
+}
+
+A. caller((e) -> "Poof");
+B. caller((e) -> {"Poof"});
+C. caller((e) -> { String e = ""; "Poof" });
+D. caller((e) -> { String e = ""; return "Poof"; });
+E. caller((e) -> { String e = ""; return "Poof" });
+F. caller((e) -> { String f = ""; return "Poof"; });
+
+Ans:A, F.
+
+Explanation:Option B is incorrect because it does not use the return keyword. Options C, D,
+and E are incorrect because the variable e is already in use from the lambda and cannot
+be redefined. Additionally, option C is missing the return keyword and option E is
+missing the semicolon.
+
+Chapter-5
+---------
+1.What is the output of this code?
+class Laptop extends Computer {
+public void startup() {
+System.out.print("laptop-");
+}
+}p
+ublic class Computer {
+public void startup() {
+System.out.print("computer-");
+}
+public static void main(String[] args) {
+Computer computer = new Laptop();
+Laptop laptop = new Laptop();
+computer.startup();
+laptop.startup();
+}
+}
+A. computer-laptop-
+B. laptop-computer-
+C. laptop-laptop-
+D. None of the above
+
+Ans:C
+
+Explanation:Both objects are instances of the class Laptop. This means the startup() method in
+the Laptop class gets called both times thanks to polymorphism.
+
+2.Which method can be correctly inserted into this class to meet the contract of the equals() method? You may assume that text is not null.
+
+class Button {
+	private String text;
+	public int hashCode() {
+		return text.hashCode();
+	}
+}
+
+A.
+public boolean equals(Object o) {
+if ( o == null ) return true;
+if (! (o instanceof Button)) return false;
+return text.equals(o.text);
+}
+B.
+public boolean equals(Object o) {
+if ( o == null ) return true;
+Button b = (Button) o;
+return text.equals(b.text);
+}
+C.
+public boolean equals(Object o) {
+if (! (o instanceof Button)) return false;
+return text.equals(o.text);
+}
+D.
+public boolean equals(Object o) {
+if (! (o instanceof Button)) return false;
+Button b = (Button) o;
+return text.equals(b.text);
+}
+
+Ans:D.
+
+Explanation:We know that the variable o that equals() is called on isn’t null, since we can’t call
+instance methods on a null reference. However, a null reference could be passed as a
+method parameter. If a null is passed in, the method should return false since an
+object and a null are not equal. Options A and B are incorrect because the first line of
+those methods should return false rather than true. Option C is incorrect because the
+cast is missing. The Object class does not have a text variable available. Option D
+shows a properly implemented equals() method and is correct.
+
+
+Chapter-6
+---------
+12. What is printed by the following? (Choose all that apply)
+1: public class Mouse {
+2: public String name;
+3: public void run() {
+4: System.out.print("1");
+5: try {
+6: System.out.print("2");
+7: name.toString();
+8: System.out.print("3");
+9: } catch (NullPointerException e) {
+10: System.out.print("4");
+11: throw e;
+12: }
+13: System.out.print("5");
+14: }
+15: public static void main(String[] args) {
+16: Mouse jerry = new Mouse();
+17: jerry.run();
+18: System.out.print("6");
+19: } }
+
+A. 1
+B. 2
+C. 3
+D. 4
+E. 5
+F. 6
+G. The stack trace for a NullPointerException
+
+Ans:A, B, D, G.
+
+Explanation:The main() method invokes run on a new Mouse object. Line 4 prints 1 and
+line 6 prints 2, so options A and B are correct. Line 7 throws a NullPointerException,
+which causes line 8 to be skipped, so C is incorrect. The exception is caught on line 9
+and line 10 prints 4, so option D is correct. Line 11 throws the exception again, which
+causes run() to immediately end, so line 13 doesn’t execute and option E is incorrect.
+The main() method doesn’t catch the exception either, so line 18 doesn’t execute and
+option F is incorrect. The uncaught NullPointerException causes the stack trace to be
+printed, so option G is correct.
+
+13. Which of the following statements are true? (Choose all that apply)
+
+A. You can declare a method with Exception as the return type.
+B. You can declare any subclass of Error in the throws part of a method declaration.
+C. You can declare any subclass of Exception in the throws part of a method declaration.
+D. You can declare any subclass of Object in the throws part of a method declaration.
+E. You can declare any subclass of RuntimeException in the throws part of a method declaration.
+
+Ans:A, B, C, E.
+
+Explanation:Classes listed in the throws part of a method declaration must extend
+java.lang.Throwable. This includes Error, Exception, and RuntimeException. Arbitrary
+classes such as String can’t go there. Any Java type, including Exception, can
+be declared as the return type. However, this will simply return the object rather than
+throw an exception.
+
+
+
+		OCP
+==========================================
+
+Generics and Collection(Other Sources)
+--------------------------------------
+1. Given the proper import statement(s) and:
+13. TreeSet<String> s = new TreeSet<String>();
+14. TreeSet<String> subs = new TreeSet<String>();
+15. s.add("a"); s.add("b"); s.add("c"); s.add("d"); s.add("e");
+16.
+17. subs = (TreeSet)s.subSet("b", true, "d", true);
+18. s.add("g");
+19. s.pollFirst();
+20. s.pollFirst();
+21. s.add("c2");
+22. System.out.println(s.size() +" "+ subs.size());
+
+Which are true? (Choose all that apply.)
+A. The size of s is 4
+B. The size of s is 5
+C. The size of s is 7
+D. The size of subs is 1
+E. The size of subs is 2
+F. The size of subs is 3
+G. The size of subs is 4
+H. An exception is thrown at runtime
+
+Ans:B, F.
+
+Explanation:B and F are correct. After "g" is added, TreeSet s contains six elements and TreeSet subs
+contains three (b, c, d), because "g" is out of the range of subs. The first pollFirst()
+finds and removes only the "a". The second pollFirst() finds and removes the "b" from both
+TreeSets (remember they are backed). The final add() is in range of both TreeSets. The final
+contents are [c,c2,d,e,g] and [c,c2,d].
+
+
+13.Given:
+
+3. import java.util.*;
+4. public class Magellan {
+5. public static void main(String[] args) {
+6. TreeMap<String, String> myMap = new TreeMap<String, String>();
+7. myMap.put("a", "apple"); myMap.put("d", "date");
+8. myMap.put("f", "fig"); myMap.put("p", "pear");
+9. System.out.println("1st after mango: " + // sop 1
+10. myMap.higherKey("f"));
+11. System.out.println("1st after mango: " + // sop 2
+12. myMap.ceilingKey("f"));
+13. System.out.println("1st after mango: " + // sop 3
+14. myMap.floorKey("f"));
+15. SortedMap<String, String> sub = new TreeMap<String, String>();
+16. sub = myMap.tailMap("f");
+17. System.out.println("1st after mango: " + // sop 4
+18. sub.firstKey());
+19. }
+20. }
+Which of the System.out.println statements will produce the output 1st after mango: p?(Choose all that apply.)
+
+A. sop 1
+B. sop 2
+C. sop 3
+D. sop 4
+E. None; compilation fails
+F. None; an exception is thrown at runtime
+
+Ans:A.
+
+Explanation:A is correct. The ceilingKey() method's argument is inclusive. The floorKey() method
+would be used to find keys before the specified key. The firstKey() method's argument is also
+inclusive.
+
+14. Given:
+
+3. import java.util.*;
+4. class Business { }
+5. class Hotel extends Business { }
+6. class Inn extends Hotel { }
+7. public class Travel {
+8. ArrayList<Hotel> go() {
+9. // insert code here
+10. }
+11. }
+Which statement inserted independently at line 9 will compile? (Choose all that apply.)
+
+A. return new ArrayList<Inn>();
+B. return new ArrayList<Hotel>();
+C. return new ArrayList<Object>();
+D. return new ArrayList<Business>();
+
+Ans:B.
+
+Explanation:A is incorrect because polymorphic assignments don't apply to generic type parameters.
+C and D are incorrect because they don't follow basic polymorphism rules
+
+15. Given:
+
+3. import java.util.*;
+4. class Dog { int size; Dog(int s) { size = s; } }
+5. public class FirstGrade {
+6. public static void main(String[] args) {
+7. TreeSet<Integer> i = new TreeSet<Integer>();
+8. TreeSet<Dog> d = new TreeSet<Dog>();
+9.
+10. d.add(new Dog(1)); d.add(new Dog(2)); d.add(new Dog(1));
+11. i.add(1); i.add(2); i.add(1);
+12. System.out.println(d.size() + " " + i.size());
+13. }
+14. }
+What is the result?
+
+A. 1 2
+B. 2 2
+C. 2 3
+D. 3 2
+E. 3 3
+F. Compilation fails
+G. An exception is thrown at runtime
+
+Ans:G.
+
+Explanation:G is correct. Class Dog needs to implement Comparable in order for a TreeSet
+(which keeps its elements sorted) to be able to contain Dog objects.
+
+16. Given:
+
+3. import java.util.*;
+4. public class GeoCache {
+5. public static void main(String[] args) {
+6. String[] s = {"map", "pen", "marble", "key"};
+7. Othello o = new Othello();
+8. Arrays.sort(s,o);
+9. for(String s2: s) System.out.print(s2 + " ");
+10. System.out.println(Arrays.binarySearch(s, "map"));
+11. }
+12. static class Othello implements Comparator<String> {
+13. public int compare(String a, String b) { return b.compareTo(a); }
+14. }
+15. }
+Which are true? (Choose all that apply.)
+
+A. Compilation fails
+B. The output will contain a 1
+C. The output will contain a 2
+D. The output will contain a –1
+E. An exception is thrown at runtime
+F. The output will contain "key map marble pen"
+G. The output will contain "pen marble map key"
+
+Ans:D, G.
+
+Explanation:D and G are correct. First, the compareTo() method will reverse the normal sort.
+Second,the sort() is valid. Third, the binarySearch() gives –1 because it needs to be invoked using
+the same Comparator (o) as was used to sort the array. Note that when the binarySearch()
+returns an "undefined result," it doesn't officially have to be a –1, but it usually is, so if you
+selected only G, you get full credit!
+
+
+Chapter-4(Other Sources)
+------------------------
+1.Fill in the blanks so that both methods produce the same output for all inputs.
+
+private static void longer(Optional<Boolean> opt) {
+	if (opt.____________())
+	System.out.println("run: " + opt.get());
+}p
+rivate static void shorter(Optional<Boolean> opt) {
+	opt.map(x -> "run: " + x).____________(System.out::println);
+}
+
+A. isNotNull, isPresent
+B. ifPresent, isPresent
+C. isPresent, forEach
+D. isPresent, ifPresent
+
+Ans:D.
+
+Explanation:The Optional class has an isPresent() method that doesn’t take any parameters. It
+returns a boolean and is commonly used in if statements. There is also an ifPresent() method 
+that takes a Consumer parameter and runs it only if the Optional is non-empty. 
+The methods isNotNull() and forEach()are not declared in Optional. Therefore, Option D is correct.
+
+2.What is the output of this code?
+
+Stream<Boolean> bools = Stream.iterate(true, b -> !b);
+Map<Boolean, List<Boolean>> map = bools.limit(1)
+.collect(partitioningBy(b -> b));
+System.out.println(map);
+
+A. {true=[true]}
+B. {false=null, true=[true]}
+C. {false=[], true=[true]}
+D. None of the above
+
+Ans:C.
+
+Explanation:The first intermediate operation, limit(1), turns the infinite stream into a stream
+with one element: true. The partitioningBy() method returns a map with two keys,true and false, 
+regardless of whether any elements actually match. If there are no matches, the value is an empty list, 
+making Option C correct.
+
+3.What does the following output?
+
+Set<String> set = new HashSet<>();
+set.add("tire-");
+List<String> list = new LinkedList<>();
+Deque<String> queue = new ArrayDeque<>();
+queue.push("wheel-");
+Stream.of(set, list, queue)
+.flatMap(x -> x.stream())
+.forEach(System.out::print);
+
+A. [tire-][wheel-]
+B. tire-wheel-
+C. None of the above.
+D. The code does not compile.
+
+Ans:B.
+
+Explanation:The flatMap() method is used to turn a stream of streams into a one-dimensional
+stream. This means it gets rid of the empty list and flattens the other two. Option A is
+incorrect because this is the output you’d get using the regular map() method. Option
+B is correct because it flattens the elements. Notice how it doesn’t matter that all three
+elements are different types of Collection implementations.
+
+4.What is the output of the following?
+
+Stream<String> s = Stream.of("over the river","through the woods","to grandmother's house we go");
+	s.filter(n -> n.startsWith("t"))
+	.sorted(Comparator::reverseOrder)
+	.findFirst()
+	.ifPresent(System.out::println);
+
+A. over the river
+B. through the woods
+C. to grandmother's house we go
+D. None of the above
+
+Ans:D.
+
+Explanation:The sorted() method allows an optional Comparator to be passed as a reference.
+However, Comparator.reverseOrder() does not implement the Comparator interface. It
+takes zero parameters instead of the required two. Since it cannot be used as a method
+reference, the code does not compile, and Option D is correct.
+
+5.Which fills in the blank so the code is guaranteed to print 1?
+
+Stream<Integer> stream = Stream.of(1, 2, 3);
+System.out.println(stream.____________);
+A. findAny()
+B. first()
+C. min()
+D. None of the above
+
+Ans:D.
+
+Explanation:Option A is incorrect because the findAny() might not return 1. The result could be
+any of the three numbers. Option B is incorrect because there is no first() method
+available as a terminal operation. Option C is tempting because there is a min()
+method. However, since we are working with a Stream, this method requires a
+Comparator as a parameter. Therefore, Option D is the answer.
+
+6.Which of the following can be the type for x?
+
+private static void spot(____________ x) {
+	x.filter(y -> ! y.isEmpty())
+	.map(y -> 8)
+	.ifPresent(System.out::println);
+}
+I. List<String>
+II. Optional<Collection>
+III. Optional<String>
+IV. Stream<Collection>
+
+A. I
+B. IV
+C. II and III
+D. II and IV
+
+Ans:C.
+
+Explanation:List doesn’t have a filter() method, so Option A is incorrect. Stream does have
+filter() and map() methods. However, Stream doesn’t have an ifPresent() method.
+This makes IV incorrect, so Options B and D are incorrect. Both Collection and
+String have an isEmpty() method, so either can be used with the Optional, making
+Option C the answer.
+
+7.Which fills in the blank for this code to print 667788?
+
+IntStream ints = IntStream.empty();
+IntStream moreInts = IntStream.of(66, 77, 88);
+Stream.of(ints, moreInts).____________(x -> x).forEach(System.out::print);
+
+A. flatMap
+B. flatMapToInt
+C. map
+D. None of the above
+
+Ans:B.
+
+Explanation:Option A is incorrect because we are working with primitives rather than objects.
+Option C compiles but outputs the stream references rather than the contents. Option
+B is correct because it flattens the int primitives into one stream.
+
+8.Fill in the blank so this code prints 8.0. Note that it must not print OptionalDouble[8.0].
+
+LongStream stream = LongStream.of(6, 10);
+LongSummaryStatistics stats = stream.summaryStatistics();
+System.out.println(____________);
+
+A. stats.avg()
+B. stats.average()
+C. stats.average().get()
+D. stats.getAverage()
+
+Ans:D.
+
+Explanation:The summary statistics classes provide getters in order to access the data. The
+getAverage() method returns a double and not an OptionalDouble. Option D is the
+only option to compile.
+
+
+Chapter-5(Date and Time MCQ's Selected but not yet discussed)
+------------------------------------------------------------
+1.Most of the United States observes daylight savings time on March 12, 2017, by moving the clocks forward an hour at 2 a.m.
+What does the following code output?
+
+LocalDate localDate = LocalDate.of(2017, 3, 12);
+LocalTime localTime = LocalTime.of(1, 0);
+ZoneId zone = ZoneId.of("America/New_York");
+ZonedDateTime z = ZonedDateTime.of(localDate, localTime, zone);
+Duration duration = Duration.ofHours(3);
+ZonedDateTime later = z.plus(duration);
+System.out.println(later.getHour());
+
+A. 4
+B. 5
+C. 6
+D. None of the above
+
+Ans:B
+
+Explanation:On a normal night, adding three hours to 1 a.m. makes it 4 a.m. However, this date
+begins daylight savings time. This means we add an extra hour to skip the 2 a.m. hour.
+This makes later contain 05:00 instead of 04:00. Therefore, the code prints 5, and
+Option B is correct.
+
+3.Which correctly fills in the blank to print 2017-01-15?
+
+LocalDate hatDay = LocalDate.of(2017, Month.JANUARY, 15);
+DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
+System.out.println(_______________________);
+I. f.format(hatDay)
+II. f.formatDate(hatDay)
+III. hatDay.format(f)
+
+A. I
+B. III
+C. I and III
+D. II and III
+
+Ans:C
+
+Explanation:Both LocalDate and DateTimeFormatter have a format() method. This makes II
+incorrect. While it is tricky, you do need to know that the format() method can be
+called on either object. Since I and III are correct, Option C is the answer.
+
+5. What is the result of the following?
+
+11: LocalDate waffleDay = LocalDate.of(2017, Month.MARCH, 25);
+12: Period period = Period.of(1, 6, 3);
+13: LocalDate later = waffleDay.plus(period);
+14: later.plusDays(1);
+15: LocalDate thisOne = LocalDate.of(2018, Month.SEPTEMBER, 28);
+16: LocalDate thatOne = LocalDate.of(2018, Month.SEPTEMBER, 29);
+17: System.out.println(later.isBefore(thisOne) + " "
+18: + later.isBefore(thatOne));
+
+A. false false
+B. false true
+C. true true
+D. The code does not compile.
+
+Ans:B
+
+Explanation:Line 12 creates a Period representing a year, six months, and three days. Adding this
+to waffleDay gives us the year 2018, the month of September, and a day of 28. This
+new date is stored in later on line 13 and represents September 28, 2018. Line 14 has
+no effect as the return value is ignored. Line 17 checks that you know that isBefore()
+returns false if the value is an exact match. Since thisOne is an exact match but
+thatOne is a whole day before, the output is false true, making Option B correct.
+
+7. In the United States, daylight savings time ends on November 5th, 2017 at 02:00 a.m.
+and we repeat the previous hour. What is the output of the following?
+
+import java.time.*;
+public class FallBack {
+public static void main(String[] args) {
+LocalDate localDate = LocalDate.of(2017, Month.NOVEMBER, 5);
+LocalTime localTime = LocalTime.of(1, 0);
+ZoneId zone = ZoneId.of("America/New_York");
+ZonedDateTime z = ZonedDateTime.of(localDate, localTime, zone);
+for (int i = 0; i < 6; i++)
+z.plusHours(1);
+System.out.println(z.getHour());
+}
+}
+
+A. 5
+B. 6
+C. 7
+D. None of the above
+
+Ans:D
+
+Explanation:This question is tricky. It appears to be about daylight savings time. However, the
+result of z.plusHours(1) is never stored in a variable or used. Since ZonedDateTime is
+immutable, the time remains at 01:00. The code prints out 1, making none of these
+correct and Option D the answer.

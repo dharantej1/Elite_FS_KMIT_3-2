@@ -1,0 +1,149 @@
+/*
+Problem Statement:
+-----------------
+There are M students in a class, N students assigned with some tasks,
+and the other M-N students have no tasks to do.
+The task count of N students is given as an array, workload[], where N < M and
+workload[i] is the number of tasks assigned to Student-I. and Also given 
+an integer P, the maximum number of distribution opertions can be performed.
+
+A distriution operation is defined as follows:
+- Pick any student (Student_I), and distribute his/her workload with other 
+student (Student_J) who doesn't assigned any tasks yet in that class. 
+- e.g., if the student_I assigned 5 tasks, can be distributed as 1 task to 
+Student_I and 4 tasks to Student_J [ OR ] can be distributed as 2 tasks to 
+Student_I and 3 tasks to Student_J.
+
+Your task is to help the students of the class, to minimize their workload,
+by distributing their tasks with thier classmates, and 
+return the minimum possible workload after performing the operations.
+
+NOTE: You can assume that the number of students required to 
+distibute the workload are sufficient.
+
+Input Format:
+-------------
+Line-1: Two space separated integers, N and P
+Line-2: N space separated integers, lengths of gold bars
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+4 4
+3 6 12 3
+
+Sample Output-1:
+----------------
+3
+
+Explanation:
+------------
+- Distribute the workload of 12 tasks like, One Student with 6 tasks
+  and Other Student with 6 tasks. Workload[]=[3,6,12,3] -> [3,6,6,6,3].
+- Distribute the workload of 6 tasks like, One Student with 3 tasks
+  and Other Student with 6 tasks. Workload[]=[3,6,6,6,3] -> [3,3,3,6,6,3].
+- Distribute the workload of 6 tasks like, One Student with 3 tasks
+  and Other Student with 6 tasks. Workload[]=[3,3,3,6,6,3] -> [3,3,3,3,3,6,3].
+- Distribute the workload of 6 tasks like, One Student with 3 tasks
+  and Other Student with 6 tasks. Workload[]=[3,3,3,3,3,6,3] -> [3,3,3,3,3,3,3,3].
+So, the minimized workload is 3 tasks.
+
+
+Sample Input-2:
+---------------
+3 4
+6 15 24
+
+Sample Output-2:
+----------------
+8
+
+Explanation:
+------------
+- Distribute the workload of 24 tasks like, One Student with 8 tasks
+  and Other Student with 16 tasks. Workload[]=[6,15,24] -> [6,15,8,16].
+- Distribute the workload of 16 tasks like, One Student with 8 tasks
+  and Other Student with 8 tasks. Workload[]=[6,15,8,16] -> [6,15,8,8,8].
+- Distribute the workload of 15 tasks like, One Student with 7 tasks
+  and Other Student with 7 tasks. Workload[]=[6,15,8,8,8] -> [6,7,8,8,8,8].
+- Distribute the workload of 8 tasks like, One Student with 4 tasks
+  and Other Student with 4 tasks. Workload[]=[6,7,8,8,8,8] -> [6,7,4,4,8,8,8].
+So, the minimized workload is 8 tasks.
+
+ 
+Test Cases:
+----------
+case =1
+input =4 4
+3 6 12 3
+output =3
+
+case =2
+input =3 4
+6 15 24
+output =8
+
+case =3
+input =20 65
+45 46 29 45 87 56 24 30 47 30 11 58 86 41 66 95 18 80 89 75
+output =15
+
+case =4
+input =20 86
+67 34 45 76 44 29 40 15 51 99 76 56 58 75 17 72 98 65 50 74
+output =12
+
+case =5
+input =30 135
+99 95 30 110 154 183 83 160 71 103 197 119 176 141 129 149 24 32 116 99 81 117 133 127 142 52 80 147 137 83
+output =23
+
+case =6
+input =30 160
+56 158 19 8 135 44 12 170 140 192 69 196 190 181 31 79 38 88 197 59 165 106 87 109 178 24 178 87 191 57
+output =19
+
+case =7
+input =50 230
+76 16 72 94 137 141 136 193 159 155 164 56 35 182 99 196 173 31 20 93 39 52 37 69 26 97 81 116 182 118 187 104 167 32 183 109 138 68 49 111 180 115 194 127 135 159 78 41 121 126
+output =22
+
+case =8
+input =75 315
+96 85 144 155 175 89 50 182 177 190 32 13 190 139 24 29 81 103 136 140 32 133 23 55 164 25 167 130 143 161 123 103 196 35 42 189 55 42 123 194 86 158 56 111 81 118 170 54 158 190 175 169 169 24 99 36 70 149 158 36 82 174 57 73 47 49 168 130 44 196 95 188 174 80 134
+output =24
+
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class Solution {
+    private static boolean check(int mid,int[] arr,int n,int p) {
+        int ans=0;
+        for(int i=0;i<n;i++) ans+=(arr[i]-1)/mid;
+        return ans<=p;
+    }
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int p = sc.nextInt();
+        int arr[] = new int[n];
+        int s=1,e=Integer.MIN_VALUE;
+        for(int i=0;i<n;i++) {
+            arr[i]=sc.nextInt();
+            if(arr[i]>e) e=arr[i];
+        }
+        while(s<=e) {
+            int mid=(s+e)/2;
+            if(check(mid,arr,n,p)) e=mid-1;
+            else s=mid+1;
+        }
+        System.out.print(e+1);
+    }
+}

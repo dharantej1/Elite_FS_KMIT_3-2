@@ -1,0 +1,120 @@
+/*
+Problem Statement:
+-----------------
+Siddu wants to get some rain coats before the rainy season begins. 
+There are N rain coats in a store. He is provided an array price[], 
+where price[i] represents the dollar price of the i-th rain coat. 
+Siddu has D dollars to spend, and he wants to buy as many rain coats as 
+he can to give to his family and friends as gifts.
+Your task is to assist Siddu in purchasing the most number of rain coats 
+possible using D dollars.
+
+Note: Siddu can purchase the rain coats in any order.
+
+Input Format:
+-------------
+Line-1: Two space separated integers, N and D
+Line-2: N space separated integers, prices of N rain coats.
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+7 15
+6 12 7 5 13 10 1
+
+Sample Output-1:
+----------------
+3
+
+Explanation:
+------------
+Siddu purchases Rain coats with price [1$, 5$, 7$] or [1$, 6$, 7$] or [1$, 5$, 6$].
+
+
+Sample Input-2:
+---------------
+10 3
+15 13 11 4 11 5 9 14 14 5
+
+Sample Output-2:
+----------------
+0
+
+Explanation:
+------------
+Siddu can't purchase any rain coat, because he has only 3$s with him.
+
+ 
+Test Cases:
+----------
+case =1
+input =7 15
+6 12 7 5 13 10 1
+output =3
+
+case =2
+input =10 20
+2 15 4 10 3 5 2 1 4 11
+output =6
+
+case =3
+input =15 35
+12 11 5 14 12 9 2 9 10 6 7 1 7 11 7
+output =7
+
+case =4
+input =15 30
+1 8 6 3 5 15 1 5 1 1 15 13 15 12 15
+output =8
+
+case =5
+input =25 90
+10 14 12 14 12 9 5 7 10 10 15 10 14 12 11 4 15 12 15 14 4 9 11 8 14
+output =11
+
+case =6
+input =50 150
+47 5 21 15 18 16 19 30 37 31 46 37 43 28 18 31 2 43 50 32 27 29 17 24 23 13 34 43 19 45 40 41 34 49 34 24 11 31 3 43 28 8 38 15 5 6 5 2 4 3
+output =17
+
+case =7
+input =50 400
+21 17 27 36 4 32 13 21 12 24 42 25 16 5 49 17 18 35 33 13 50 15 27 35 37 12 39 5 21 46 41 42 50 39 7 36 30 25 29 44 34 29 26 11 13 2 29 42 34 9
+output =25
+
+case =8
+input =100 3000
+96 39 71 25 86 79 77 27 32 60 36 27 40 86 32 83 81 64 36 74 25 40 42 87 61 74 54 54 68 79 55 86 77 81 87 70 53 93 49 34 49 34 23 92 91 67 23 40 49 90 73 87 96 93 97 33 52 71 31 57 96 49 88 86 63 62 71 92 75 35 64 97 89 72 80 50 64 40 60 72 63 82 32 81 21 41 45 74 83 88 56 93 96 47 48 72 71 100 21 58
+output =61
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Solution {
+	public int maxIceCream(int[] costs, int coins) {
+		Arrays.sort(costs);
+		for (int i = 0; i < costs.length; ++i)
+			if (coins >= costs[i])
+				coins -= costs[i];
+			else
+				return i;
+		return costs.length;
+	}
+	
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		int N=sc.nextInt();
+		int coins=sc.nextInt();
+		int costs[]=new int[N];
+		for(int i=0;i<N;i++)
+			costs[i]=sc.nextInt();
+		System.out.println(new Solution().maxIceCream(costs,coins));
+	}
+}

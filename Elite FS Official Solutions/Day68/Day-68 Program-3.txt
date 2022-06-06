@@ -1,0 +1,133 @@
+/*
+Problem Statement:
+-----------------
+Mr PushpaRaj has N bottles of Spirit as bottles[], where ith-bottle contains 
+bottle[i] ltrs of Spirit. He wants to make that all the bottles contains same
+amount of Spirit. Generally, Spirit evaporates quickly, due to this, 
+P percentage of Spirit will be evaporated while pouring the Spirit from one 
+bottle to another bottle, i.e., if He poured M litres of Spirit from one bottle
+to another bottle, the amount of Spirit evaporated is P% of M.
+
+Your task is to help Mr PushpaRaj to find the maximum amount of Spirit 
+in each bottle after making that all the bottles have same amount of Spirit. 
+
+NOTE: Print the result within 10^(-5) of the actual result will be accepted.
+
+Input Format:
+-------------
+Line-1: Two space separated integers, N and P.
+Line-2: N space separated integers, bottles[].
+
+Output Format:
+--------------
+Print a double value rounded to 5 decimals. 
+
+
+
+Sample Input-1:
+---------------
+4 75
+2 8 3 12
+
+Sample Output-1:
+----------------
+4.00000
+
+Explanation:
+------------
+::-The bottles contains {2,8,3,12},Pour 4 ltrs from bottles[1] to bottles[0].
+4 * 75% = 3 ltrs are evaporated and bottles[0] only got 4 - 3 = 1 ltr of Spirit.
+::-The bottles contains {3,4,3,12}, Pour 4 ltrs from bottles[3] to bottles[0].
+4 * 75% = 3 ltrs are evaporated and bottles[0] only got 4 - 3 = 1 ltr of Spirit.
+::-The bottles contains {4,4,3,8}, Pour 4 ltrs from bottles[3] to bottles[2].
+4 * 75% = 3 ltrs are evaporated and bottles[0] only got 4 - 3 = 1 ltr of Spirit.
+::-All the bottles have 4 ltrs of Spirit in them, so return 4.
+
+
+Sample Input-2:
+---------------
+4 50
+3 5 8 10
+
+Sample Output-2:
+----------------
+5.66666
+
+ 
+Test Cases:
+----------
+case =1
+input =10 50
+2 4 6 8 10 12 14 16 18 20
+output =9.28571
+
+case =2
+input =10 25
+2 4 6 8 10 12 14 16 18 20
+output =10.28571
+
+case =3
+input =4 75
+2 8 3 12
+output =4.00000
+
+case =4
+input =4 50
+3 5 8 10
+output =5.66666
+
+case =5
+input =7 65
+20 20 20 20 20 20 20
+output =20.00000
+
+case =6
+input =20 90
+37 77 57 80 87 28 81 65 94 39 30 45 31 18 97 32 67 16 25 66
+output =32.43373
+
+case =7
+input =15 60
+50 50 50 75 75 150 125 250 250 375 600 750 1200 1500 1800
+output =312.71930
+
+case =8
+input =15 75
+250 200 150 100 75 50 300 25 1400 1200 1300 900 1100 700 500
+output =300.00000
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt(), p = sc.nextInt();
+        int arr[] = new int[n];
+        for(int i=0; i<n; i++)
+            arr[i] = sc.nextInt();
+        double s = Double.MAX_VALUE, e = 0, left = (100.0-p)/100;
+        for(int x: arr){
+            e+=x;
+            s = Math.min(s, x);
+        }
+        while(e-s>0.00001){
+            double m = (s+e)/2;
+            double sum1 = 0, sum2 = 0;
+            for(int x: arr){
+                if(x>=m)
+                    sum1+=x-m;
+                else
+                    sum2+=m-x;
+            }
+            if(sum1*left>=sum2)
+                s = m;
+            else
+                e = m;
+        }
+        System.out.printf("%.5f", s);
+    }
+}

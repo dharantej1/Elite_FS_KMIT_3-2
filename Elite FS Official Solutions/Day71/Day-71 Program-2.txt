@@ -1,0 +1,182 @@
+/*
+Problem Statement:
+-----------------
+Arjun wants to build some homes in a land of size R*C.
+He wanted to construct homes in rectangular shape.
+The place which is remained will be used for gradening.
+Accordingly he has prepared the plan and given as
+an 2d array plan[][], where 1 indicates home, and 0 indicates garden area.
+
+A home is set of cells with value 1 in rectangular shape.
+He wants to findout all the homes in the plan and store their co-ordinates in 
+the following order, coords[i] = [x1,y1,x2,y2], where (x1,y1) is the starting
+co-ordinate (top left corner), and (x2,y2) is the ending co-ordinate 
+(bottom right corner) of i-th home.
+
+Your task is to help Arjun to find all the homes and return the coords[][] of 
+all the homes from top left corner to bottom right corner.
+
+NOTE: No two homes are adjacent to each other in 4 directions,
+(left, right, top, bottom).
+
+Input Format:
+-------------
+Line-1: Two integers R and C, size of the land.
+Next R lines: C space separated integers, either 0 or 1
+0- represents garden area land and 1- represents the home.
+
+Output Format:
+--------------
+Print 2d array, the co-ordinates of all homes.
+
+
+Sample Input-1:
+---------------
+2 3
+1 0 0
+0 1 1
+ 
+Sample Output-1:
+----------------
+[0, 0, 0, 0][1, 1, 1, 2]
+
+
+Sample Input-2:
+---------------
+4 4
+1 1 0 1
+0 0 0 0
+1 1 0 1
+1 1 0 1
+ 
+Sample Output-2:
+----------------
+[0, 0, 0, 1][0, 3, 0, 3][2, 0, 3, 1][2, 3, 3, 3]
+
+
+ 
+Test Cases:
+----------
+case =1
+input =3 3
+1 0 0
+0 1 1
+0 1 1
+output ="[0, 0, 0, 0][1, 1, 2, 2]"
+
+case =2
+input =2 3
+1 0 0
+0 1 1
+output ="[0, 0, 0, 0][1, 1, 1, 2]"
+
+case =3
+input =4 4
+1 1 0 1
+0 0 0 0
+1 1 0 1
+1 1 0 1
+output ="[0, 0, 0, 1][0, 3, 0, 3][2, 0, 3, 1][2, 3, 3, 3]"
+
+case =4
+input =5 6
+1 1 1 1 1 1
+0 0 0 0 0 0
+1 1 0 0 1 1
+1 1 0 0 0 0
+0 0 1 1 1 1
+output ="[0, 0, 0, 5][2, 0, 3, 1][2, 4, 2, 5][4, 2, 4, 5]"
+
+case =5
+input =8 6
+1 1 1 1 1 1
+0 0 0 0 0 0
+1 1 0 0 1 1
+1 1 0 0 0 0
+0 0 1 1 1 1
+0 0 1 1 1 1
+1 1 0 0 0 0
+1 1 0 1 1 1
+output ="[0, 0, 0, 5][2, 0, 3, 1][2, 4, 2, 5][4, 2, 5, 5][6, 0, 7, 1][7, 3, 7, 5]"
+
+case =6
+input =8 6
+1 1 0 1 0 0
+0 0 0 0 1 0
+1 1 0 1 0 1
+1 1 0 1 0 1
+1 1 0 1 0 1
+0 0 0 0 0 1
+1 1 0 1 1 0
+1 1 0 1 1 0
+output ="[0, 0, 0, 1][0, 3, 0, 3][1, 4, 1, 4][2, 0, 4, 1][2, 3, 4, 3][2, 5, 5, 5][6, 0, 7, 1][6, 3, 7, 4]"
+
+case =7
+input =8 8
+1 0 0 0 0 0 0 1
+0 1 0 0 0 0 1 0
+0 0 1 0 0 1 0 0
+0 0 0 1 1 0 0 0
+0 0 0 1 1 0 0 0
+0 0 1 0 0 1 0 0
+0 1 0 0 0 0 1 0
+1 0 0 0 0 0 0 1
+output ="[0, 0, 0, 0][0, 7, 0, 7][1, 1, 1, 1][1, 6, 1, 6][2, 2, 2, 2][2, 5, 2, 5][3, 3, 4, 4][5, 2, 5, 2][5, 5, 5, 5][6, 1, 6, 1][6, 6, 6, 6][7, 0, 7, 0][7, 7, 7, 7]"
+
+case =8
+input =8 8
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+output =[0, 0, 7, 7]
+
+*/
+
+Solution:
+--------
+import java.util.*;
+class Solution{
+    static int r,c,x,y;
+    public static void dfs(int i,int j,int[][] arr){
+        if(i>=r || i<0 || j<0 || j>=c || arr[i][j]==0) return;
+        arr[i][j]=0;
+        x=Math.max(x,i);
+        y=Math.max(y,j);
+        dfs(i+1,j,arr);
+        dfs(i,j+1,arr);
+        dfs(i-1,j,arr);
+        dfs(i,j-1,arr);
+    }
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        r = sc.nextInt();
+        c = sc.nextInt();
+        int arr[][] = new int[r][c];
+        List<List<Integer>> list = new ArrayList<>();
+        for(int i=0;i<r;i++) for(int j=0;j<c;j++) arr[i][j]=sc.nextInt();
+        for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++) {
+            if(arr[i][j]==1){
+                List<Integer> temp=new ArrayList<>();
+                temp.add(i);
+                temp.add(j);
+                x=i;y=j;
+                dfs(i,j,arr);
+                temp.add(x);
+                temp.add(y);
+                list.add(temp);
+            }
+        }}
+        for(List<Integer> x:list){
+            System.out.print(x);
+        }
+        
+        
+        
+    }
+}

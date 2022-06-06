@@ -1,0 +1,510 @@
+Java Concepts:
+-------------
+1 What will be the outcome of the following program?
+
+1.class X{
+2. void calculate(int a, int b){
+3.	System.out.println("Class X");
+4.   }}
+5.class Y extends X {
+6.    @Override
+7.    void calculate(int a, int b) {
+8.        System.out.println("Class Y");
+9.    }
+10.} 
+11.class Z extends Y{
+12.    @Override
+13.    void calculate(int a, int b) {
+14.        System.out.println("Class Z");
+15.    }}
+17.public class MainClass{
+18.    public static void main(String[] args){
+19.        X x = new Y();
+20.        x.calculate(10, 20);
+21.        Y y = (Y) x;
+22.        y.calculate(50, 100);
+23.        Z z = (Z) y;
+24.        z.calculate(100, 200);
+25.    }
+26.}
+
+Answer:Line 23 (Z z = (Z) y) will throw java.lang.ClassCastException at run time. Because, Y cannot be cast to Z.
+
+3.What will be the output of the following program?
+
+1class ClassOne
+2{
+3    void method(String s1)
+4    {
+5        method(s1, s1+s1);
+6    }
+7 
+8   void method(String s1, String s2)
+9    {
+10        method(s1, s2, s1+s2);
+11    }
+12 
+13    void method(String s1, String s2, String s3)
+14    {
+15        System.out.println(s1+s2+s3);
+16    }
+17}
+18 
+19public class MainClass
+20{
+21    public static void main(String[] args)
+22    {
+23        ClassOne one = new ClassOne();
+24 
+25        one.method("JAVA");
+26    }
+27}
+
+Answer: JAVAJAVAJAVAJAVAJAVAJAVA
+
+2.What will be the output of the following program?
+1. abstract class A{
+2.   abstract void firstMethod();  
+3.   void secondMethod(){
+4.     System.out.println("SECOND");   
+5.     firstMethod();
+6.  }
+7.} 
+8.abstract class B extends A{
+9.    @Override
+10.    void firstMethod(){
+11.        System.out.println("FIRST");
+12.         
+13.        thirdMethod();
+14.    }    
+15.    abstract void thirdMethod();
+16.}
+17. 
+18.class C extends B{
+19.    @Override
+20.    void thirdMethod(){
+21.        System.out.println("THIRD");
+22.    }
+23.} 
+24.public class MainClass{
+25.    public static void main(String[] args){
+26.        C c = new C();         
+27.        c.firstMethod();         
+28.        c.secondMethod();         
+29.        c.thirdMethod();
+30.     }
+31.}
+
+Answer :
+FIRST
+THIRD
+SECOND
+FIRST
+THIRD
+THIRD
+
+3.Can you identify the error in the below code?
+
+1.abstract class AbstractClass
+2.{
+3.    private abstract int abstractMethod();
+4.}
+
+Answer : abstract methods can’t be private.
+
+2.What will be the output of the below program?
+
+1.class M{
+2.    int i; 
+3.    public M(int i){
+4.        this.i = i--;
+5.    }
+6.} 
+7.class N extends M{
+8.    public N(int i){
+9.        super(++i);
+10. 
+11.        System.out.println(i);
+12.    }
+13.}
+14.public class MainClass{
+15.    public static void main(String[] args){
+16.        N n = new N(26);
+17.    }
+18.}
+
+Answer : 27
+
+
+OCA
+===
+
+21. What is the result of the following statements?
+3: ArrayList<Integer> values = new ArrayList<>();
+4: values.add(4);
+5: values.add(5);
+6: values.set(1, 6);
+7: values.remove(0);
+8: for (Integer v : values) System.out.print(v);
+A. 4
+B. 5
+C. 6
+D. 46
+E. 45
+F. An exception is thrown.
+G. The code does not compile.
+
+Ans:C
+
+26. What is the result of the following class?
+1: import java.util.function.*;
+2:
+3: public class Panda {
+4: int age;
+5: public static void main(String[] args) {
+6: Panda p1 = new Panda();
+7: p1.age = 1;
+8: check(p1, p -> p.age < 5);
+9: }
+10: private static void check(Panda panda, Predicate<Panda> pred) {
+11: String result = pred.test(panda) ? "match" : "not match";
+12: System.out.print(result);
+13: } }
+A. match
+B. not match
+C. Compiler error on line 8.
+D. Compiler error on line 10.
+E. Compiler error on line 11.
+F. A runtime exception is thrown.
+
+Ans:A
+
+Explanation:This code is correct. Line 8 creates a lambda expression that checks if the age is less
+than 5. Since there is only one parameter and it does not specify a type, the parentheses
+around the type parameter are optional. Line 10 uses the Predicate interface, which
+declares a test() method.
+
+27. What is the result of the following code?
+1: interface Climb {
+2: boolean isTooHigh(int height, int limit);
+3: }
+4:
+5: public class Climber {
+6: public static void main(String[] args) {
+7: check((h, l) -> h.append(l).isEmpty(), 5);
+8: }
+9: private static void check(Climb climb, int height) {
+10: if (climb.isTooHigh(height, 10))
+11: System.out.println("too high");
+12: else
+13: System.out.println("ok");
+14: }
+15: }
+A. ok
+B. too high
+C. Compiler error on line 7.
+D. Compiler error on line 10.
+E. Compiler error on a different line.
+F. A runtime exception is thrown.
+
+Ans:C
+
+Explanation:The interface takes two int parameters. The code on line 7 attempts to use them as
+if one is a StringBuilder. It is tricky to use types in a lambda when they are implicitly
+specified. Remember to check the interface for the real type.
+
+20. What is the result of the following code?
+1: public abstract class Bird {
+2: private void fly() { System.out.println("Bird is flying"); }
+3: public static void main(String[] args) {
+4: Bird bird = new Pelican();
+5: bird.fly();
+6: }
+7: }
+8: class Pelican extends Bird {
+9: protected void fly() { System.out.println("Pelican is flying"); }
+10: }
+A. Bird is flying
+B. Pelican is flying
+C. The code will not compile because of line 4.
+D. The code will not compile because of line 5.
+E. The code will not compile because of line 9.
+
+Ans:A
+
+Explanation:The code compiles and runs without issue, so options C, D, and E are incorrect.
+The trick here is that the method fly() is marked as private in the parent class Bird,
+which means it may only be hidden, not overridden. With hidden methods, the specific
+method used depends on where it is referenced. Since it is referenced within the Bird
+class, the method declared on line 2 was used, and option A is correct. Alternatively,
+if the method was referenced within the Pelican class, or if the method in the parent
+class was marked as protected and overridden in the subclass, then the method on line
+9 would have been used.
+
+10. What is the output of the following program?
+1: public class Dog {
+2: public String name;
+3: public void parseName() {
+4: System.out.print("1");
+5: try {
+6: System.out.print("2");
+7: int x = Integer.parseInt(name);
+8: System.out.print("3");
+9: } catch (NumberFormatException e) {
+10: System.out.print("4");
+11: }
+12: }
+13: public static void main(String[] args) {
+14: Dog leroy = new Dog();
+15: leroy.name = "Leroy";
+16: leroy.parseName();
+17: System.out.print("5");
+18: } }
+A. 12
+B. 1234
+C. 1235
+D. 124
+E. 1245
+F. The code does not compile.
+G. An uncaught exception is thrown.
+
+Ans:E
+
+Explanation:The parseName method is invoked within main() on a new Dog object. Line 4 prints
+1. The try block executes and 2 is printed. Line 7 throws a NumberFormatException, so
+line 8 doesn’t execute. The exception is caught on line 9, and line 10 prints 4. Because the
+exception is handled, execution resumes normally. parseName runs to completion, and
+line 17 executes, printing 5. That’s the end of the program, so the output is 1245.
+
+OCP
+===
+Generics and Collections(Other Sources)
+---------------------------------------
+3. Given the proper import statement(s) and
+13. PriorityQueue<String> pq = new PriorityQueue<String>();
+14. pq.add("2");
+15. pq.add("4");
+16. System.out.print(pq.peek() + " ");
+17. pq.offer("1");
+18. pq.add("3");
+19. pq.remove("1");
+20. System.out.print(pq.poll() + " ");
+21. if(pq.remove("2")) System.out.print(pq.poll() + " ");
+22. System.out.println(pq.poll() + " " + pq.peek());
+What is the result?
+A. 2 2 3 3
+B. 2 2 3 4
+C. 4 3 3 4
+D. 2 2 3 3 3
+E. 4 3 3 3 3
+F. 2 2 3 3 4
+G. Compilation fails
+H. An exception is thrown at runtime
+
+Ans:B
+
+Explanation:B is correct.  add() and offer() both add to (in this case) naturally sorted queues. 
+The calls to poll() both return and then remove the first item from the queue, so the test fails.
+
+4. Given:
+3. import java.util.*;
+4. public class Mixup {
+5. public static void main(String[] args) {
+6. Object o = new Object();
+7. // insert code here
+8. s.add("o");
+9. s.add(o);
+10. }
+11. }
+And these three fragments:
+I. Set s = new HashSet();
+II. TreeSet s = new TreeSet();
+III. LinkedHashSet s = new LinkedHashSet();
+When fragments I, II, or III are inserted independently at line 7, which are true? (Choose all that apply.)
+A. Fragment I compiles
+B. Fragment II compiles
+C. Fragment III compiles
+D. Fragment I executes without exception
+E. Fragment II executes without exception
+F. Fragment III executes without exception
+
+Ans:A, B, C, D, F.
+
+Explanation:A, B, C, D, and F are all correct.
+E is incorrect,Elements of a TreeSet must in some way implement Comparable
+
+5. Given:
+3. import java.util.*;
+4. class Turtle {
+5. int size;
+6. public Turtle(int s) { size = s; }
+7. public boolean equals(Object o) { return (this.size == ((Turtle)o).size); }
+8. // insert code here
+9. }
+10. public class TurtleTest {
+11. public static void main(String[] args) {
+12. LinkedHashSet<Turtle> t = new LinkedHashSet<Turtle>();
+13. t.add(new Turtle(1)); t.add(new Turtle(2)); t.add(new Turtle(1));
+14. System.out.println(t.size());
+15. }
+16. }
+And these two fragments:
+I. public int hashCode() { return size/5; }
+II. // no hashCode method declared
+If fragment I or II is inserted independently at line 8, which are true? (Choose all that apply.)
+A. If fragment I is inserted, the output is 2
+B. If fragment I is inserted, the output is 3
+C. If fragment II is inserted, the output is 2
+D. If fragment II is inserted, the output is 3
+E. If fragment I is inserted, compilation fails
+F. If fragment II is inserted, compilation fails
+
+Ans:A, D.
+
+Explanation:A and D are correct. While fragment II wouldn't fulfill the hashCode() contract (as
+you can see by the results), it is legal Java. For the purpose of the exam, if you don't override
+hashCode(), every object will have a unique hashcode.
+
+Chapter-4(Other Sources)
+------------------------
+1. Which of the following are true? (Choose all that apply.)
+private static void magic(Stream<Integer> s) {
+Optional o = s.filter(x -> x < 5).limit(3).max((x, y) -> x-y);
+System.out.println(o.get());
+}
+A. magic(Stream.empty()); runs infinitely.
+B. magic(Stream.empty()); throws an exception.
+C. magic(Stream.iterate(1, x ->> x++)); runs infinitely.
+D. magic(Stream.iterate(1, x ->> x++)); throws an exception.
+E. magic(Stream.of(5, 10)); runs infinitely.
+F. magic(Stream.of(5, 10)); throws an exception.
+G. The method does not compile.
+
+Ans:B, F.
+
+3.Which can fill in the blank to have the code print true?
+Stream<Integer> stream = Stream.iterate(1, i > i+1);
+boolean b = stream.____________(i -> i > 5);
+System.out.println(b);
+A. anyMatch
+B. allMatch
+C. noneMatch
+D. None of the above
+
+Ans:A
+
+Explanation:This code generates an infinite stream of integers: 1, 2, 3, 4, 5, 6, 7, etc. The
+Predicate checks if the element is greater than 5. With anyMatch(), the stream
+pipeline ends once element 6 is hit and the code prints true. For both the allMatch()
+and noneMatch() operators, they see that the first element in the stream does not
+match and the code prints false. Therefore, Option A is correct.
+
+7.What is the output of the following?
+      Stream<String> s = Stream.of("speak", "bark", "meow", "growl");
+      BinaryOperator<String> merge = (a, b) -> a;
+      Map<Integer, String> map = s.collect(Collectors.toMap(String::length, k -> k, merge));
+      System.out.println(map.size() + " " + map.get(4));
+A. 2 bark
+B. 2 meow
+C. 4 bark
+D. None of the above
+
+Ans:A
+
+Explanation:This code does compile. Remember that imports are implied, including the static
+import for Collectors. The collector tries to use the number of characters in each
+stream element as the key in a map. This works fine for the first two elements, speak
+and bark, because they are of length 5 and 4, respectively. When it gets to meow, it sees
+another key of 4. The merge function says to use the first one, so it chooses bark for
+the value. Similarly, growl is 5 characters, but the first value of speak is used. There
+are only two distinct lengths, so Option A is correct.
+
+Chapter-5(Other sources)
+------------------------
+1.Most of the United States observes daylight savings time on March 12, 2017, by moving the clocks forward an hour at 2 a.m.
+What does the following code output?
+LocalDate localDate = LocalDate.of(2017, 3, 12);
+LocalTime localTime = LocalTime.of(1, 0);
+ZoneId zone = ZoneId.of("America/New_York");
+ZonedDateTime z = ZonedDateTime.of(localDate, localTime, zone);
+Duration duration = Duration.ofHours(3);
+ZonedDateTime later = z.plus(duration);
+System.out.println(later.getHour());
+A. 4
+B. 5
+C. 6
+D. None of the above
+
+Ans:B
+
+Explanation:On a normal night, adding three hours to 1 a.m. makes it 4 a.m. However, this date
+begins daylight savings time. This means we add an extra hour to skip the 2 a.m. hour.
+This makes later contain 05:00 instead of 04:00. Therefore, the code prints 5, and
+Option B is correct.
+
+3.Which correctly fills in the blank to print 2017-01-15?
+LocalDate hatDay = LocalDate.of(2017, Month.JANUARY, 15);
+DateTimeFormatter f = DateTimeFormatter.ISO_DATE;
+System.out.println(_______________________);
+I. f.format(hatDay)
+II. f.formatDate(hatDay)
+III. hatDay.format(f)
+A. I
+B. III
+C. I and III
+D. II and III
+
+Ans:C
+
+Explanation:Both LocalDate and DateTimeFormatter have a format() method. This makes II
+incorrect. While it is tricky, you do need to know that the format() method can be
+called on either object. Since I and III are correct, Option C is the answer.
+
+5. What is the result of the following?
+11: LocalDate waffleDay = LocalDate.of(2017, Month.MARCH, 25);
+12: Period period = Period.of(1, 6, 3);
+13: LocalDate later = waffleDay.plus(period);
+14: later.plusDays(1);
+15: LocalDate thisOne = LocalDate.of(2018, Month.SEPTEMBER, 28);
+16: LocalDate thatOne = LocalDate.of(2018, Month.SEPTEMBER, 29);
+17: System.out.println(later.isBefore(thisOne) + " "
+18: + later.isBefore(thatOne));
+A. false false
+B. false true
+C. true true
+D. The code does not compile.
+
+Ans:B
+
+Explanation:Line 12 creates a Period representing a year, six months, and three days. Adding this
+to waffleDay gives us the year 2018, the month of September, and a day of 28. This
+new date is stored in later on line 13 and represents September 28, 2018. Line 14 has
+no effect as the return value is ignored. Line 17 checks that you know that isBefore()
+returns false if the value is an exact match. Since thisOne is an exact match but
+thatOne is a whole day before, the output is false true, making Option B correct.
+
+7. In the United States, daylight savings time ends on November 5th, 2017 at 02:00 a.m.
+and we repeat the previous hour. What is the output of the following?
+import java.time.*;
+public class FallBack {
+public static void main(String[] args) {
+LocalDate localDate = LocalDate.of(2017, Month.NOVEMBER, 5);
+LocalTime localTime = LocalTime.of(1, 0);
+ZoneId zone = ZoneId.of("America/New_York");
+ZonedDateTime z = ZonedDateTime.of(localDate, localTime, zone);
+for (int i = 0; i < 6; i++)
+z.plusHours(1);
+System.out.println(z.getHour());
+}
+}
+A. 5
+B. 6
+C. 7
+D. None of the above
+
+Ans:D
+
+Explanation:This question is tricky. It appears to be about daylight savings time. However, the
+result of z.plusHours(1) is never stored in a variable or used. Since ZonedDateTime is
+immutable, the time remains at 01:00. The code prints out 1, making none of these
+correct and Option D the answer.

@@ -1,0 +1,128 @@
+/*
+Problem Statement:
+-----------------
+Rancho, Farhan and Raju also known as '3 Idiots' are good friends. 
+They found a treasure, which has 3N boxes and each box has some gold biscuits.
+
+They have decided to share the treasure as follows:
+    - Rancho selects 3 boxes each time, Among the boxes, he gives the box with 
+      more gold biscuits to Farhan and the onw with less gold biscuits given 
+      to Raju and the remaining box will be retained for himself.
+    - This will be repeated until all boxes are completed.
+
+You are given an array of integers as boxes[], where box[i] is the number of 
+gold bisucits in the ith box. Your mission is to assist Rancho in obtaining 
+the greatest number of gold biscuits possible before the treasure is shared.
+
+
+Input Format:
+-------------
+Line-1: an integer N represents the number of boxes.
+Line-2: N space seperated integers, the amount of gold biscuits in each box
+
+Output Format:
+--------------
+Print an integer, maximum amount of gold he can obtain.
+
+
+Sample Input-1:
+---------------
+6
+3 5 1 2 4 7
+
+
+Sample Output-1:
+----------------
+8
+
+Explanation:
+------------
+Step-1:selection will be (7,5,2) so Srikanth takes 5.
+Step-2: Selection will be (4,3,1) so srikanth takes 3.
+Total = 5+3=8
+
+
+Sample Input-2:
+---------------
+9
+3 1 5 4 2 8 10 12 15
+
+Sample Output-2:
+----------------
+24
+
+Explanation:
+-------------
+Step-1:selection will be (15,12,2) so Srikanth takes 12.
+Step-2: Selection will be (10,8,1) so srikanth takes 8.
+Step-3: Selection will be (5,4,3) so srikanth takes 4.
+Total = 12+8+4=24
+
+ 
+Test Cases:
+----------
+case =1
+input =3
+2 4 6
+output =4
+
+case =2
+input =12
+1 2 3 4 5 6 7 8 9 10 11 12
+output =32
+
+case =3
+input =6
+2 123 254 123 128 129
+output =252
+
+case =4
+input =15
+5 10 25 125 1000 1200 2500 5000 124 300 234 12 50 136 124 900
+output =3983
+
+case =5
+input =6
+10000 20000 2300 12 2356 50001
+output =22356
+
+case =6
+input =3
+15 6 29
+output =15
+
+case =7
+input =9
+20 30 12 12 13 1 3 4 56
+output =55
+
+case =8
+input =6
+300 500 200 1200 34 1
+output =700
+
+*/
+
+Solution:
+--------
+import java.util.*;
+
+class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        
+        int n = sc.nextInt();
+        int a[] = new int[n];
+        
+        for(int i=0;i<n;i++){
+            a[i] = sc.nextInt();
+        }
+        Arrays.sort(a);
+        int ans = 0;
+        for(int i=0;i<n/3;i++){
+            ans += a[n-2*(i+1)];
+        }
+        
+        System.out.println(ans);
+    }
+}
