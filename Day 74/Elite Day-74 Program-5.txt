@@ -41,24 +41,44 @@ Sample Output-2:
 4
 
 For explanation look at the hint.
-import java.util.*;
-
-/*
-
-class BinaryTreeNode{
-	public int data; 
-	public BinaryTreeNode left, right; 
-	public BinaryTreeNode(int data){
-		this.data = data; 
-		left = null; 
-		right = null; 
-	}
-}
-
-*/
-
-class Solution {
-    public int countSubtrees(BinaryTreeNode root) {
-        //implement your code here
-    }
+
+import java.util.*;
+
+/*
+
+class BinaryTreeNode{
+	public int data; 
+	public BinaryTreeNode left, right; 
+	public BinaryTreeNode(int data){
+		this.data = data; 
+		left = null; 
+		right = null; 
+	}
+}
+
+*/
+
+class Solution {
+    int count = 0;
+    boolean areAllSameDown(BinaryTreeNode root){
+        if(root==null || root.data==-1)
+            return true;
+        boolean x = true;
+        if(root.left!=null && root.left.data!=-1)
+            x = root.data==root.left.data;
+        boolean y = true;
+        if(root.right!=null && root.right.data!=-1)
+            y = root.data==root.right.data;
+        boolean a = areAllSameDown(root.left);
+        boolean b = areAllSameDown(root.right);
+        boolean res = x && y && a && b;
+        if(res)
+            count++;
+        return res;
+    }
+    public int countSubtrees(BinaryTreeNode root) {
+        //implement your code here
+        boolean dummy = areAllSameDown(root);
+        return count;
+    }
 }
