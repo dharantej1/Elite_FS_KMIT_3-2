@@ -52,7 +52,7 @@ class Solution{
         Scanner sc=new Scanner(System.in);
         String p=sc.next();
         String q=sc.next();
-        System.out.print(get_res(0,p,q) || get_res(0,q,p));
+        System.out.print(find(0,p,q) || find(0,q,p));
     }
     public static boolean isPalindrome(String s){
         int l=0,r=s.length()-1;
@@ -64,11 +64,11 @@ class Solution{
         }
         return true;
     }
-    public static boolean get_res(int loc,String p,String q){
+    public static boolean find(int loc,String p,String q){
         if(loc>=p.length())
             return false;
         if(isPalindrome(p.substring(0,loc+1)+q.substring(loc+1))||isPalindrome(q.substring(0,loc+1)+p.substring(loc+1)))
             return true;
-        return get_res(loc+1,p,q);
+        return find(loc+1,p,q);
     }
 }
