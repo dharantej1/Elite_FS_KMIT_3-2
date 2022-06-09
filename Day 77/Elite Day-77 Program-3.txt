@@ -53,3 +53,48 @@ Saroornagar
 Sample Output-2:
 ----------------
 Telangana
+import java.util.*;
+
+class Solution{
+    public static void main(String[] args){
+        Scanner s = new Scanner(System.in);
+        int n = Integer.parseInt(s.nextLine());
+        String[] conns = new String[n];
+        for(int i=0;i<n;i++){
+            conns[i] = s.nextLine();
+        }
+        String p1 = s.nextLine();
+        String p2 = s.nextLine();
+        System.out.println(getSmallestCommonPlace(conns,p1,p2,n));
+    }
+    
+    static String getSmallestCommonPlace(String[] conns,String p1,String p2,int n){
+        Map<String,String> map = new HashMap<>();
+        for(int i=0;i<n;i++){
+            String[] dis = conns[i].split("-");
+            for(int j=1;j<dis.length;j++){
+                map.put(dis[j],dis[0]);
+            }
+        }
+        return getCommonAncestor(map,p1,p2);
+    }
+    
+    static String getCommonAncestor(Map<String,String> map,String p1,String p2){
+        List<String> p1a = new ArrayList<>();
+        List<String> p2a = new ArrayList<>();
+        while(map.containsKey(p1)){
+            p1 = map.get(p1);
+            p1a.add(p1);
+        }
+        while(map.containsKey(p2)){
+            p2 = map.get(p2);
+            p2a.add(p2);
+        }
+        int id1=p1a.size()-1,id2=p2a.size()-1;
+        while(id1>=0 && id2>=0 && p1a.get(id1).equals(p2a.get(id2))){
+            id1--;
+            id2--;
+        }
+        return p1a.get(id1+1);
+    }
+}
