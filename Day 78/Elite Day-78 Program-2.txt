@@ -1,0 +1,109 @@
+In an online magazine, every day they will ask their readers a puzzle.
+The puzzle has to be solved using the following rule set:
+	- The puzzle is an 9*9 matrix, and consist of 9 -> 3*3 sub-matrices.
+	- Each row in the puzzle should be filled with 1-9digits with out repetition
+	- Each column in the puzzle should be filled with 1-9digits with out repetition.
+	- Each 3*3 sub-matrix should be filled with 1-9 digits with out repetition.
+
+You will be given the puzzle in the form of 9 strings, each string length is 9.
+Your task is check whether the puzzle can be solved or not.
+If it is possible to solve, print "true". Otherwise print "false".
+
+
+Input Format:
+-------------
+9 Lines: Each line consists of a string  length-9, consist of digits[1-9] and '.' only
+
+Output Format:
+--------------
+Print a boolean value.
+
+
+Sample Input-1:
+---------------
+53..7....
+6..195...
+.98....6.
+8...6...3
+4..8.3..2
+7...2...6
+.6....28.
+...419..5
+....8..79
+
+Sample Output-1:
+----------------
+true
+
+
+Sample Input-2:
+---------------
+83..7....
+6..195...
+.98....1.
+8...6...3
+4..8.3..1
+7...2...6
+.6....28.
+...419..5
+....8..79
+
+Sample Output-2:
+----------------
+false
+
+import java.util.*;
+
+class Solution{
+    static StringBuilder[] arr;
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        arr = new StringBuilder[9];
+        for(int i=0;i<9;i++){
+            arr[i] = new StringBuilder(sc.nextLine());
+        }
+        System.out.print(isGoodSudoku());
+    }
+    static boolean isGoodSudoku(){
+        HashSet<Character> rowSets[] = new HashSet[9];
+        HashSet<Character> colSets[] = new HashSet[9];
+        HashSet<Character> boxSets[][] = new HashSet[3][3];
+        for(int i=0;i<9;i++){
+            rowSets[i] = new HashSet<Character>();
+            colSets[i] = new HashSet<Character>();
+        }
+        for(int i=0;i<3;i++){
+            for(int j=0;j<3;j++){
+                boxSets[i][j] = new HashSet<>();
+            }
+        }
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                char c = arr[i].charAt(j);
+                if(c!='.'){
+                    if(rowSets[i].contains(c)){
+                        return false;
+                    }
+                    else{
+                        rowSets[i].add(c);
+                    }
+                    
+                    if(colSets[j].contains(c)){
+                        return false;
+                    }
+                    else{
+                        colSets[j].add(c);
+                    }
+                    
+                    if(boxSets[i/3][j/3].contains(c)){
+                        return false;
+                    }
+                    else{
+                        boxSets[i/3][j/3].add(c);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
