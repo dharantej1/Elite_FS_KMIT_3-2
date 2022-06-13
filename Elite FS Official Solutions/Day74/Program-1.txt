@@ -1,0 +1,442 @@
+/*
+Keshav Memorial Group of Institutions, planning to conduct Mock-Interviews 
+for Finishing School Students in KMIT and NGIT Colleges.
+
+There are N students to participate in the interview,where N is an even number. 
+You will be given an array of tariffs as fare[], 
+where fare[a]=[fareToReachKmit-a, fareToReachNgit-a],
+ - fareToReachKmit-a indicates cab fare for Student-a to reach KMIT campus.
+ - fareToReachNgit-a indicates cab fare for Student-a to reach NGIT campus.
+
+Keshav Memorial Management decided to refund the cab fare to every student. 
+
+Your task is to help the management to find the minimum total fare to be paid 
+by all the students to attend the interviews in KMIT and NGIT, such that both 
+the colleges should conduct interviews for equal number of students.
+
+Input Format:
+-------------
+Line-1: An integer N, number of students.
+Next N lines: Two space separated integers, fares to reach KMIT and NGIT. 
+
+Output Format:
+--------------
+Print an integer, minimum fare paid by N students(to be refunded).
+
+
+Sample Input-1:
+---------------
+6
+10 75
+35 120
+105 45
+80 110
+125 85
+65 100
+
+Sample Output-1:
+----------------
+350
+
+Explanation:
+------------
+Student-1 attended interview in KMIT with fare - 10.
+Student-2 attended interview in KMIT with fare - 35.
+Student-3 attended interview in NGIT with fare - 45.
+Student-4 attended interview in NGIT with fare - 110.
+Student-5 attended interview in NGIT with fare - 85.
+Student-6 attended interview in KMIT with fare - 65.
+3 students attended in KMIT and 3 students attended in NGIT.
+So, the total minimum fare is to be refunded 350.
+
+
+Sample Input-2:
+---------------
+6
+159 635
+495 67
+784 571
+221 243
+783 134
+524 476
+
+Sample Output-2:
+----------------
+1676
+
+
+
+==== Testcases ====
+case =1
+input =20
+685 807
+224 951
+117 919
+277 710
+467 631
+700 977
+720 618
+439 946
+788 678
+901 883
+496 116
+428 619
+125 933
+128 630
+995 393
+912 628
+913 710
+750 588
+324 178
+840 652
+output =9034
+
+case =2
+input =20
+838 843
+970 371
+564 252
+229 207
+391 430
+566 145
+832 879
+243 605
+487 439
+900 625
+208 369
+290 285
+684 544
+159 135
+142 496
+381 242
+558 639
+797 278
+535 267
+977 900
+output =7953
+
+case =3
+input =10
+965 230
+151 201
+675 270
+646 179
+894 434
+792 863
+784 653
+769 698
+586 109
+748 477
+output =4466
+
+case =4
+input =30
+286 583
+539 370
+874 435
+987 388
+662 435
+180 252
+862 419
+928 527
+707 488
+325 526
+718 647
+119 359
+818 696
+905 578
+798 654
+374 316
+367 457
+430 133
+464 884
+162 366
+419 964
+391 802
+956 241
+975 261
+267 849
+597 786
+446 182
+844 473
+497 333
+850 717
+output =12254
+
+case =5
+input =30
+673 213
+977 792
+63 74
+246 432
+987 260
+63 891
+648 215
+174 533
+969 399
+848 510
+180 86
+960 108
+870 72
+46 430
+760 741
+66 207
+878 96
+683 365
+752 14
+795 299
+415 839
+742 42
+888 363
+642 344
+216 772
+592 22
+617 556
+203 154
+387 602
+422 273
+output =8157
+
+case =6
+input =50
+26 315
+832 656
+689 454
+809 15
+24 523
+524 213
+136 606
+239 624
+587 483
+178 429
+774 269
+609 738
+319 300
+831 329
+589 397
+779 977
+82 88
+27 356
+83 94
+769 847
+929 203
+317 798
+207 26
+127 581
+49 98
+353 869
+988 304
+504 657
+464 926
+804 631
+752 14
+235 422
+463 275
+932 807
+912 616
+932 599
+101 579
+408 740
+727 674
+197 306
+756 825
+84 589
+899 356
+278 871
+456 526
+475 82
+995 197
+655 256
+993 845
+297 607
+output =16585
+
+case =7
+input =50
+77 676
+449 559
+420 416
+360 296
+474 604
+146 134
+515 224
+626 943
+37 72
+100 443
+757 161
+52 416
+732 208
+258 210
+194 449
+36 927
+350 414
+201 182
+295 139
+777 51
+715 527
+902 513
+682 822
+961 321
+737 966
+285 710
+409 904
+353 673
+254 111
+427 803
+330 760
+278 340
+491 924
+299 837
+422 862
+640 918
+557 879
+447 790
+357 762
+834 978
+307 53
+850 941
+292 245
+459 427
+926 535
+882 717
+762 801
+560 398
+717 599
+853 765
+output =18923
+
+case =8
+input =100
+9558 7110
+7010 9034
+9080 4758
+4164 1478
+4738 1527
+444 3260
+5392 5407
+5884 8061
+6692 779
+4666 3639
+7921 2348
+3033 5105
+8001 6702
+8784 1666
+1417 8819
+622 9521
+2308 2812
+3990 7097
+8786 6447
+703 6476
+6961 5903
+1148 4756
+1681 1158
+7276 6261
+1199 9987
+5274 3419
+1996 2854
+1100 7900
+1854 3301
+5229 4392
+1494 7355
+945 1571
+7567 4670
+1756 2729
+7750 4150
+9799 60
+5542 6387
+4339 1001
+4089 3066
+6569 8539
+8704 2305
+4661 8291
+8088 3606
+694 1662
+5231 4911
+4842 643
+9848 2356
+3801 1653
+6794 6490
+9159 4184
+2936 9000
+5638 9486
+4962 637
+5085 8916
+9567 1560
+6378 2123
+8234 3608
+2588 3349
+3684 5875
+2204 941
+1542 4357
+1432 3656
+8209 8836
+3876 3385
+5145 2617
+7861 1028
+8468 2625
+5236 9015
+515 2591
+4369 7462
+7908 8276
+66 5555
+4356 8946
+5560 7925
+795 7925
+3534 2317
+2121 5056
+2558 6157
+3397 6915
+4332 8889
+6207 6706
+1514 4600
+7194 7798
+8950 7840
+5450 4742
+3505 6474
+8041 9004
+6087 6320
+2982 9595
+5643 2191
+9826 788
+6490 123
+3516 6207
+4245 6861
+1457 3216
+5864 8996
+7104 2876
+1568 5081
+4453 1721
+8984 407
+output =323594
+
+
+*/
+import java.util.*;
+
+class Solution {
+    public int twoCitySchedCost(int[][] costs) {
+        int N = costs.length/2;
+        int[] refund = new int[N * 2];
+        int minCost = 0, index = 0;
+        for(int[] cost : costs){
+            refund[index++] = cost[1] - cost[0];
+            minCost += cost[0];
+        }
+        Arrays.sort(refund);
+        for(int i = 0; i < N; i++){
+            minCost += refund[i];
+        }
+        return minCost;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int schedule[][]=new int[n][2];
+		for(int i=0;i<n;i++)
+			for(int j=0;j<2;j++)
+				schedule[i][j]=sc.nextInt();
+		System.out.println(new Solution().twoCitySchedCost(schedule));
+	}
+}

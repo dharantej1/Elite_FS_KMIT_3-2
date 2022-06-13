@@ -1,0 +1,118 @@
+/*
+Sumanth has an idea to calculate the ABD value of a string.
+An ABD value is defined as the absolute diffrence between
+the most occurance count of a charcter and the least occurance count 
+of another character in the given string.
+
+Sumanth is given a string S,
+He wants to find out, the sum of ABD values of all the substrings of S,
+where ABD > 0.
+
+Your task is to help Sumanth to find total ABD value of substrings of S.
+
+Input Format:
+-------------
+A String S
+
+Output Format:
+--------------
+Print an integer, sum of ABD of all the strings of S
+
+
+Sample Input-1:
+---------------
+abbcc
+
+Sample Output-1:
+----------------
+5
+
+Explanation: 
+------------
+The substrings with non-zero ABD are as follows:
+Substring and ABD value -> "abb"-1,"abbc"-1,"abbcc"-1,"bbc"-1,"bcc"-1
+The total sum of ABD is, 5
+
+
+Sample Input-2:
+---------------
+abcbabc
+
+Sample Output-2:
+----------------
+15
+
+Explanation: 
+------------
+The substrings with non-zero ABD are as follows:
+substring and ABD value -> "abcb"-1,"abcba"-1,"abcbab"-2,"abcbabc"-1,"bcbabc"-2
+"bcbab"-2, "bcba"-1, "bcb"-1, "cbab"-1,"cbabc"-1,"bab"-1, "babc"-1.
+The total sum of ABD is, 15
+
+
+=== testcases ===
+case =1
+input =abcbabc
+output =15
+
+case =2
+input =abbcc
+output =5
+
+case =3
+input =mississippi
+output =64
+
+case =4
+input =floccinaucinihilipilification
+output =1302
+
+case =5
+input =pneumonoultramicroscopicsilicovolcanoconiosis
+output =2596
+
+case =6
+input =abvbsvbnbnasvnbabnvbdvbaccdbdcbcabssc
+output =1998
+
+case =7
+input =abbcccddddeeeeeffffffggggggghhhhhhhhiiiiiiiiijjjjjjjjjjjkkkkkkkkkkllllllllllllmmmmmmmmmmmmmm
+output =24757
+
+case =8
+input =abbaabbbaaabbbbaaaabbbbbaaaaabbbbbbaaaaaabbbbbbbaaaaaaabbbbbbbbaaaaaaaabbbbbbbbbaaaaaaaaabbbbbbbbbbaaaaaaaaabbbbbbbbbbbb
+output =21450
+
+
+*/
+
+import java.util.*;
+
+class Solution {
+    public int beautySum(String s) {
+        int result = 0;
+        int[] frequencies = new int[26];
+        for(int i=0;i<s.length();i++) {
+            frequencies[s.charAt(i)-'a']++;
+            result += helper(frequencies);
+        }
+        if(s.length()>1) result += beautySum(s.substring(1));
+        return result;
+    }
+    private int helper(int[] frequencies) {
+        int max =0, min =Integer.MAX_VALUE;
+        for(int i=0;i<26;i++) {
+            max = Math.max(max, frequencies[i]);
+            if(frequencies[i]!=0) min = Math.min(min, frequencies[i]);
+        }
+        return max - min;
+    }
+	
+		
+	public static void main(String args[])
+	{
+		Scanner sc= new Scanner(System.in);
+		String s=sc.next();
+		System.out.println(new Solution().beautySum(s));
+	}
+}

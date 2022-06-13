@@ -1,0 +1,126 @@
+/*
+Mr Toronto working with operators in programming language.
+He is given statement S, which is a valid statement and consist of digits [0-9] 
+and characters '?', ':', 'Y', 'N', where Y indiactes true and N indicates false.
+And the statement conatins only numbers with single digits.
+(>=10 value is not allowed)
+
+The operator '?' works as follows:
+	- if S="Y?1:2" - as Y means true, it will return 1.
+	- if S="N?1:2" - as N means false, it will return 2.
+
+Your task is to help Mr Toronto to execute the statement S and return the result.
+The result must be either a digit [0-9] or "Y" or "N".
+
+Input Format:
+-------------
+A string S, a valid statement.
+
+Output Format:
+--------------
+Print a string, the result of the statement S.
+
+
+Sample Input-1:
+---------------
+Y?N?3:4:2
+
+Sample Output-1:
+----------------
+4
+
+Explanation:
+------------
+Given statement is Y?N?3:4:2 -> Y?(N?3:4):2 
+Y means "true", So you have to execute N?3:4
+N means "false", So the answer is 4.
+
+
+Sample Input-2:
+---------------
+N?Y?N?N:Y:N:Y
+
+Sample Output-2:
+----------------
+Y
+
+Explanation:
+------------
+Given statement is N?Y?N?N:Y:N:Y -> N?(Y?(N?N:Y):N):Y
+N means "false", So the answer is Y.
+
+
+=== testcases ===
+case =1
+input =Y?N?Y?1:N?6:7:Y?8:9:4
+output =8
+
+case =2
+input =N?N?Y?N?1:2:Y?3:4:N?N?5:6:Y?7:8:N?Y?9:N?Y:N:0
+output =0
+
+case =3
+input =Y?Y?N?3:4:N?3:2:1
+output =4
+
+case =4
+input =Y?N?Y?3:4:Y?3:2:1
+output =3
+
+case =5
+input =Y?N?Y?Y:N:N?N:Y:Y
+output =Y
+
+case =6
+input =Y?N?Y?Y:N:N?Y:N:Y
+output =N
+
+case =7
+input =N?Y?N?5:6:Y?8:7:N?N?1:2:Y?7:5
+output =7
+
+case =8
+input =N?N?Y?N?1:2:Y?3:4:N?N?5:6:Y?7:8:Y?Y?9:N?Y:N:0
+output =9
+
+case =9
+input =N?Y?N?N:Y:N:6
+output =6
+
+case =10
+input =Y?N?3:5:2
+output =5
+
+
+*/
+import java.util.*;
+public class Solution {
+	public static String parseTernary(String expression) {
+	    if (expression == null || expression.length() == 0) return "";
+	    Deque<Character> stack = new LinkedList<>();
+
+	    for (int i = expression.length() - 1; i >= 0; i--) {
+		char c = expression.charAt(i);
+		if (!stack.isEmpty() && stack.peek() == '?') {
+
+		    stack.pop(); //pop '?'
+		    char first = stack.pop();
+		    stack.pop(); //pop ':'
+		    char second = stack.pop();
+
+		    if (c == 'T') stack.push(first);
+		    else stack.push(second);
+		} else {
+		    stack.push(c);
+		}
+	    }
+
+	    return String.valueOf(stack.peek());
+	}
+
+	public static void main(String args[] ) {
+		 Scanner sc = new Scanner(System.in);
+			String expression=sc.next();
+		    System.out.println(parseTernary(expression));
+	}
+}

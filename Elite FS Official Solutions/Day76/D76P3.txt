@@ -1,0 +1,121 @@
+/*
+Mr Robert is working with strings.
+He selected two strings S1 and S2, may differ in length,
+consists of lowercase alphabets only.
+
+Mr Robert has to update the strings S1, S2 to meet any one of the criteria:
+	- All the alphabets in S1 should be less than all the alphabets in S2.
+	- All the alphabets in S2 should be less than all the alphabets in S1.
+	- Both S1 and S2 should have only one distinct alphabet in it.
+To Achieve, one of the criteria, you are allowed to replace any one letter in 
+the string with any other lowercase alphabet.
+
+Your task is to help Mr Robert, to find the minimum replacements to be done to 
+update the strings S1 and S2 to meet one of the criteria mentioned above.
+
+
+Input Format:
+-------------
+Two space separated strings S1 and S2.
+
+Output Format:
+--------------
+Print an integer, minimum number of replacements.
+
+
+Sample Input-1:
+---------------
+apple ball
+
+Sample Output-1:
+----------------
+3
+
+Explanation:
+------------
+Consider the best way to make the criteria true:
+- Update S2 to "baaa" in 2 replacements, and Update S1 to "cpple" in 1 replacement
+then every alphabet in S2 is less than every alphabet in S1.
+        (OR)
+- Update S1 to "ppppp" in 3 replacements, then every alphabet in S2 is less 
+than every alphabet in S1.
+
+
+Sample Input-2:
+---------------
+kmit kmec
+
+Sample Output-2:
+----------------
+2
+
+
+=== testcases ===
+case =1
+input =abababbsdbababbabbbdfbsbsbfb ndbfbbababababdbbbaba
+output =21
+
+case =2
+input =pneumonoultramicroscopicsilicovolcanoconiosis pseudopseudohypoparathyroidism
+output =28
+
+case =3
+input =floccinaucinihilipilification pseudopseudohypoparathyroidism
+output =17
+
+case =4
+input =pneumonoultramicroscopicsilicovolcanoconiosis floccinreducinihilipilification
+output =27
+
+case =5
+input =antidisestablishmentarianism floccinaucinihilipilification
+output =22
+
+case =6
+input =aaaaaaaaaaaaaaaaaaaa supercalifragilisticexpialidocious
+output =3
+
+case =7
+input =aaaaaaaaaaaaaaaaa aaaaaaaaaaaaaaaaaaaaaaaaaa
+output =0
+
+case =8
+input =supercalifragilisticexpialidocious honorificabilitudinitatibus
+output =26
+
+*/
+
+import java.util.*;
+
+class Solution {
+        public int minCharacters(String a, String b) {
+        int m = a.length(), n = b.length(), res = m + n;
+        int[] c1 = new int[26], c2 = new int[26];
+        for (int i = 0; i < m; ++i)
+            c1[a.charAt(i) - 'a']++;
+        for (int i = 0; i < n; ++i)
+            c2[b.charAt(i) - 'a']++;
+
+        for (int i = 0; i < 26; ++i) {
+            res = Math.min(res, m + n - c1[i] - c2[i]); // condition 3
+            if (i > 0) {
+                c1[i] += c1[i - 1];
+                c2[i] += c2[i - 1];
+            }
+            if (i < 25) {
+                res = Math.min(res, m - c1[i] + c2[i]); // condition 1
+                res = Math.min(res, n - c2[i] + c1[i]); // condition 2
+            }
+        }
+        return res;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String A=sc.next();
+		String B=sc.next();
+		
+		System.out.println(new Solution().minCharacters(A,B));
+	}
+}

@@ -1,0 +1,163 @@
+/*
+In the world, some places are part of some other places like
+Hyderabad is part of Telangana, Telangana is part of India, etc.
+ 
+You are given the list of N such combination of places.
+Where each combination includes places like X-Y-Z
+Where Y is part of X and Z is part of Y. So, X is bigger than Y
+and Y is bigger than Z. So Z is also part of X and X is part of itself.
+
+If you given the places like X1, X2, X3, such that X3 is part of X1,  
+It is guaranteed there is no X2 such that X3 is part of X2.
+
+You are also given another two places P1 and P2, Your task is to 
+find the smallest common place that conatains both P1 and P2 as part of it.
+
+NOTE:
+It is guaranteed that always a solution exists.
+
+Input Format:
+-------------
+Line-1: An integer N.
+Next N lines: '-' separated strings, one combination of places.
+
+Output Format:
+--------------
+Print a string, the smallest common place.
+
+
+Sample Input-1:
+---------------
+4
+Bharath-Telangana-Hyderabad-Dilshukhnagar
+Telangana-Rangareddy-Lbnagar
+Hyderabad-Dilshukhnagar-Gaddiannaram
+Rangareddy-Lbnagar-Saroornagar
+Gaddiannaram
+Saroornagar
+
+Sample Output-1:
+----------------
+Bharath
+
+
+Sample Input-2:
+---------------
+4
+India-Telangana-Hyderabad
+Telangana-Rangareddy-Lbnagar
+Telangana-Dilshukhnagar-Gaddiannaram
+Rangareddy-Lbnagar-Saroornagar
+Gaddiannaram
+Saroornagar
+
+Sample Output-2:
+----------------
+Telangana
+
+
+=== testcases ===
+case =1
+input =4
+Bharath-Telangana-Hyderabad-Dilshukhnagar
+Telangana-Rangareddy-Lbnagar
+Hyderabad-Dilshukhnagar-Gaddiannaram
+Rangareddy-Lbnagar-saroornagar
+Gaddiannaram
+saroornagar
+output =Bharath
+
+case =2
+input =4
+India-Telangana-Hyderabad
+Telangana-Rangareddy-Lbnagar
+Telangana-Dilshukhnagar-Gaddiannaram
+Rangareddy-Lbnagar-saroornagar
+Gaddiannaram
+saroornagar
+output =Telangana
+
+case =3
+input =5
+Earth-Asia-China-Biejing
+Asia-India-New Delhi-Red fort-India Gate
+India-Telangana-Hyderabad-Charminar
+Telangana-Secunderbad-Paradise
+Hyderabad-Narayanaguda-Kmit
+Kmit
+Charminar
+output =India
+
+case =4
+input =5
+Earth-North America-South America
+South America-United States-Canada-West Indies
+United States-New York-Boston-WHO
+Canada-Ontario-Quebec
+South America-Brazil-Federal District
+Ontario
+Federal District
+output =South America
+ 
+
+case =5
+input =5
+Asia-China-Biejing
+Asia-India-New Delhi-Red fort-India Gate
+India-Telangana-Hyderabad-Charminar
+Telangana-Secunderbad-Paradise
+Hyderabad-Narayanaguda-Kmit
+Paradise
+India Gate
+output =Asia
+
+case =6
+input =5
+Earth-North America-South America
+North America-United States-Canada
+United States-New York-Boston
+Canada-Ontario-Quebec
+South America-Brazil
+Quebec
+New York
+output =North America
+
+
+*/
+import java.io.*;
+import java.util.*;
+
+class Solution {
+	public static String findSmallestArea(List<List<String>> areas, String area1, String area2) {
+        Map<String, String> parents = new HashMap<>();
+        Set<String> ancestryHistory = new HashSet<>();
+        for (List<String> area : areas)
+            for (int i = 1; i < area.size(); ++i)
+                parents.put(area.get(i), area.get(0));
+        while (area1 != null) {
+            ancestryHistory.add(area1);
+            area1 = parents.get(area1);
+        }
+        while (!ancestryHistory.contains(area2))
+            area2 = parents.get(area2);
+        return area2;
+    }
+	
+	public static void main(String args[] ) {
+		 Scanner sc = new Scanner(System.in);
+			int n=Integer.parseInt(sc.nextLine());
+			List<List<String>> areas = new ArrayList<List<String>>();
+		       for(int i=0; i<n; i++)
+		       {
+					List<String> combi = new ArrayList<String>();
+					String line=sc.nextLine();
+					String words[]=line.split("-");
+					for(String s:words)
+					combi.add(s);
+					areas.add(combi);
+		       }
+		      String area1 =sc.nextLine();
+		      String area2 =sc.nextLine();
+		      System.out.println(findSmallestRegion(areas,area1,area2));
+	}
+}

@@ -1,0 +1,299 @@
+/*
+Jason Statham is a well known transporter.
+He transports goods from one place to other place using his container.
+The container is divided into M*N slots, you can place M*N items in it.
+In the container few slots are closed, you can't use them.
+No other item can move from it.
+
+When the items are loaded the container looks like an M*N grid, 
+but to unload the items from the container it is turned 90-derees clockwise.
+So, the Items in the container moves through the empty slots and set one on one.
+If there is an closed slot, the items will be fall on the closed slot.
+
+You will be given a matrix of size M*N, consists of 3 letters [I,O,S]
+Where I indicates item, O indicates closed slot, S indicates empty slot.
+
+Your task is to help Jason Stathamto know the positions of items, empty slots and 
+closed slots after turning the container 90-degree clockwise.
+
+Input Format:
+-------------
+Line-1: Two space separated integers M and N, size of the container
+Next M lines: A string of length N, consists only 3 characters [I, O, S]
+
+Output Format:
+--------------
+Print a charcter matrix of size N*M as described in sample.
+
+
+Sample Input-1:
+---------------
+2 3
+ISI
+ISO
+
+Sample Output-1:
+----------------
+SS
+II
+OI
+
+Explanation:
+------------
+Look at hint for explanation.
+
+
+Sample Input-2:
+---------------
+3 6
+IIOSOS
+IIIOSS
+IIISIS
+
+Sample Output-2:
+----------------
+SII
+SII
+IIO
+IOS
+ISO
+ISS
+
+Explanation:
+------------
+Look at hint for explanation.
+
+=== testcases ===
+case =1
+input =3 6
+IIOSOS
+IIIOSS
+IIISIS
+output =SII
+SII
+IIO
+IOS
+ISO
+ISS
+
+case =2
+input =2 3
+ISI
+ISO
+output =SS
+II
+OI
+
+case =3
+input =1 5
+ISIIS
+output =S
+S
+I
+I
+I
+
+
+case =4
+input =5 8
+SIIOISSO
+ISISOISO
+OIIISSSI
+SSISISOS
+ISISOISO
+output =SSOSS
+SSSSI
+ISSII
+ISSIO
+OIIOS
+SIISS
+IOIII
+OSIOO
+
+case =5
+input =9 6
+ISOISO
+OSIOSI
+IOSIOS
+ISOIIS
+IISIOS
+ISSSIO
+ISIISI
+IIIIII
+SSSISS
+output =SISSSSIOS
+SISSIIOSI
+SIISIOSIO
+SIIIISIOS
+SIIIOIOSI
+IIIOSISIO
+
+case =6
+input =10 20
+OIISOSISSIOSSIOOOSOI
+IOOIOSOOOOSOOOSOISOI
+OOSOOOSISSIISSSOOOSS
+OIOSOOISSISISSIOSOIO
+IISISSOIOIIOIOSSSOOO
+OSIOIIIIOOIOSSOOSSII
+SOOIOIOOISSIIOOOOIOS
+OIOSOSOIISIOIIISIIII
+IOSSIOOIOIIOIOISOIII
+OIIISIIOOSSOSSSOOIOO
+output =OIOSOSOOIO
+SOIOSSIOOS
+ISOOISOSOI
+ISSIOISOII
+IIOOIIOOOO
+IOSIIIOOSS
+IOOOIOSSOS
+OISOIISSOS
+OOISOOSSOI
+SIISOISSOI
+SIIIIISSSO
+OOOIOOISOS
+SISISIIIOS
+SOIOSOIIOI
+SSIOOSIISO
+OIIOOSOOOO
+OOIOSSSOSO
+IIIISOOOIS
+OIIOIOISOO
+OIISIOOSII
+
+case =7
+input =15 35
+ISISOISISOOIIOOIIISSISSSIIOOISSOSOO
+OSSSOOISOSSIISSSSISSOIOIOSSSISSSOIO
+IOSSOISOOIISIOSSSOIOOISSSOOOIOISOSI
+IIISOOOOOISOSSOOISOSOOOOOSSSOIOSIOS
+SSOSSOSSOSSIOISISOIOIISISSIIIOOIOOS
+SIOSOSSOIOIOSSIOOSISSIIOIOIOSOSSISO
+IOISSOSSOISOISSSIISSOOIOSOOOSISSIOI
+SSIOOSOIIOIOIIIOSIIOSOSSIOOIIOOOISI
+IIIIISSIIOSOIOOOSOIOOSSIIIIOOOOSIIS
+OSOOSIIISIOIOSIIOOSISISISIIIOSSOISO
+OIOIISSOOSIOISOISISSOOSOIOOOOIISIOI
+ISSOSSIIIIOIIOOSSOOOSSIOSOOOSIIIIIO
+SSIOOISIISOOSSIOOIOSSOSIISSSIIOOOSO
+ISSSOSSSIISIOIOOIOIOSIISSSISIOIIOIO
+OOIIOIOSIIISISIOOIIOOIISSOSSOIIOSOI
+output =OSSSOOSSISSSIOS
+OSSSISSSOISIOSS
+ISIIOOIISOOISSI
+IIOOSOIOSSSISSI
+OOOSSSIOIOSOOOO
+ISSSISISOSOOSOS
+OSSIIIIOSSSOISS
+SSIIOIIISOSOOII
+SSIIOIIIOIOOOOI
+SIIISIOOSOSSSSO
+IIOOIOSIIISIISO
+IIOIOIOOOOIOISI
+IOSISOIISSOSISI
+IISOISOISSSSOSO
+IOIOOIOISISOSSO
+OOOSSIOOSOIOSSS
+OIOSSOSSSOISSSS
+IOIOSOOIISOIOIS
+IIOOISIIISIOIIS
+OOSOISOOISOSOIS
+OSSSOSOSOISOOOI
+SSOSOSSOOISOSII
+SSSISISSIISOSOI
+ISSOOIISOOIOSII
+ISSSIIIISIIOIOI
+OISOOIIOOOISOSI
+SIIOOIIOOIISOSO
+SIIOOIOIOOISOSO
+OIISOOOISSIOISS
+IOIISSOOSOOIOSS
+IIOIISOOSSOOSSI
+OIOIIOSOISISIIO
+SOOIISSSISOIOOS
+OISIOIIIOIOOSIO
+IOOOIOIIIOSSIOO
+
+case =8
+input =40 10
+OISSOSSISI
+SSOISOOOOS
+IOIOOSISOS
+ISOSOISOOI
+ISOOSOSISO
+SOIIISSSSO
+IIISOOSIOO
+IOOIISOOOS
+SSOOISOOIS
+ISOOIIOSSI
+OOSIOIIOII
+SIOSIIOOSI
+OOOOSSISIO
+ISISISIOIS
+ISSSIIOSSI
+OSIIIISOIS
+OIIIOIISIS
+SOSIOOSSIO
+SOSIIOOSSO
+IISOSIIIOI
+SISISIOSOO
+ISIOIIIIOS
+SSOIOSOOIO
+SSOOOIISOS
+IISOIIIOOS
+IIIOIOIOOI
+ISISOSOOSI
+SIOIOSIOOI
+OSSIOSSIIO
+SIOIOISISS
+SSOOSSSIOS
+OOSOISIIOO
+ISIISOSSIO
+ISSSSSSIIO
+SISSOISSIS
+IOSISISSSO
+OSSSSSIOSO
+ISOOISOSOI
+ISSSOIIOSS
+IISOOSSOSO
+output =SSSOISSSOSSOSSISSSSSSSSOOSSOSOSSISSSSISO
+ISISOSSSOSISISIISSISIOOISSSOIOISOIOIIOSS
+ISOSSSSISOOSOIIIOOISISSISSSOOSOOOISOOIOS
+OIOSSISIOOIIIIOOOIOIOIIIIIIOSIOOSISOSOSI
+OOSSSOSISSOOOOIIOOIISIOOIIISIOISIOSSOOIO
+SIISSSSOISSSSSOISSIIIOOSIIISIIIIIOSOSSOS
+SIOISSISISSSIOIIIOIOIOSSIOISOIOOOSISISOS
+OOSOISISIISIOOOOIOISISSIOSOIOOSOOIISOIOS
+SSOSIIIIOOIIOSOOOIOOOSIISSSISISSOOIIOOOI
+OSIOOIOOOSIOIIISSOSOIOOIIIIOIIIISOOOISSI
+
+*/
+
+import java.util.*;
+
+class Solution {
+    public char[][] rotateTheBox(char[][] box) {
+        int m = box.length, n = box[0].length;
+        char [][] res = new char[n][m];
+        for (int i = 0; i < m; ++i)
+            for (int j = n - 1, k = n - 1; j >= 0; --j) {
+                res[j][m - i - 1] = '.';
+                if (box[i][j] != '.') {
+                    k = box[i][j] == '*' ? j : k;
+                    res[k--][m - i - 1] = box[i][j];
+                }
+            }
+        return res;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int m=sc.nextInt();
+		int n=sc.nextInt();
+		char box[][]=new char[m][n];
+		for(int i=0;i<m;i++)
+			box[i]=sc.next().toCharArray();
+		System.out.println(new Solution().rotateTheBox(box));
+	}
+}

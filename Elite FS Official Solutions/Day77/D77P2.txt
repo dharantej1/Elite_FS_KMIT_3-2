@@ -1,0 +1,185 @@
+/*
+Mr Nagireddy working with statements.
+Each statement consists of only lowercase alphabets and whitespaces, 
+and each statement neither starts nor ends with a whitespace
+and each word in the statement separated by a single whitespace only.
+
+Mr Nagireddy's task is to perform the join operation on these statements:
+The joining operations is performed as follows:
+	- If the last word of a statement-1 and first word of statement-2 are same,
+	then you can join the statements-1 & statement-2 and 
+	the joining word will appears once in the result statement.
+	- It is not allowed to join the statements with itself.
+Note that the order of joining the statements matters.
+
+You will be given N statements.
+Your task is to help Mr Nagireddy to join the statements, and 
+return them as a list of distinct statements in lexicographic order.
+
+
+Input Format:
+-------------
+Line-1: An integer N, number of statements.
+Next N lines: Single line String, the statement with one or more words.
+
+Output Format:
+--------------
+Print the list of strings, the joined statements.
+
+
+Sample Input-1:
+---------------
+3
+write the code
+code in java
+java code
+
+Sample Output-1:
+----------------
+[code in java code, java code in java, write the code in java]
+
+
+Sample Input-2:
+---------------
+4
+programming language
+language is java
+language is python
+java is based on oops concepts
+
+Sample Output-2:
+----------------
+[language is java is based on oops concepts, 
+programming language is java, 
+programming language is python]
+
+
+Sample Input-3:
+---------------
+3
+A B C
+B C A
+C A B
+
+Sample Output-3:
+----------------
+[A B C A B, B C A B C, C A B C A]
+
+NOTE: You have to print the list in a single line.
+
+
+=== testcases ===
+case =1
+input =9
+mission statement
+a quick bite to eat
+a chip off the old block
+chocolate bar
+mission impossible
+a man on a mission
+block party
+eat my words
+bar of soap
+output =[a chip off the old block party, a man on a mission impossible, a man on a mission statement, a quick bite to eat my words, chocolate bar of soap]
+
+case =2
+input =4
+programming language
+language is java
+language is python
+java is based on oops concepts
+output =[language is java is based on oops concepts, programming language is java, programming language is python]
+
+case =3
+input =3
+write the code
+code in java
+java code
+output =[code in java code, java code in java, write the code in java]
+
+case =4
+input =6
+a b c
+c d e
+c d f
+c e g
+e f g
+g f e
+output =[a b c d e, a b c d f, a b c e g, c d e f g, c e g f e, e f g f e, g f e f g]
+
+case =5
+input =6
+ramu solving the puzzle
+puzzle is a brainstormer
+puzzle is a game
+brainstormer is a game
+game is playing by ramu
+ramu belongs to kmit
+output =[brainstormer is a game is playing by ramu, game is playing by ramu belongs to kmit, game is playing by ramu solving the puzzle, puzzle is a brainstormer is a game, puzzle is a game is playing by ramu, ramu solving the puzzle is a brainstormer, ramu solving the puzzle is a game]
+
+case =6
+input =9
+kmit is a college
+ngit is a college
+kmec is a college
+college offers technical courses
+courses are cse and aiml and datascience
+college has a huge library
+library contains books
+datascience course offfered by kmit
+datascience course offfered by ngit
+output =[college has a huge library contains books, college offers technical courses are cse and aiml and datascience, courses are cse and aiml and datascience course offfered by kmit, courses are cse and aiml and datascience course offfered by ngit, datascience course offfered by kmit is a college, datascience course offfered by ngit is a college, kmec is a college has a huge library, kmec is a college offers technical courses, kmit is a college has a huge library, kmit is a college offers technical courses, ngit is a college has a huge library, ngit is a college offers technical courses]
+
+
+*/
+import java.util.*;
+
+class Solution {
+	public List<String> beforeAndAfterPuzzles(String[] phrases) {
+		 Map<String, List<Integer>> map = new HashMap<>();
+		int i = 0;
+		for(String str: phrases){
+			String first = str.split(" ")[0];
+			if(map.containsKey(first)==false){
+				map.put(first, new ArrayList<>());
+			}
+			
+			map.get(first).add(i);
+			i++;
+		}
+		
+		i = 0;
+		Set<String> res = new HashSet<>();
+		for(String str: phrases){
+			int ind = str.lastIndexOf(" ");
+			String last = ind>=0?str.substring(ind+1):str;
+			if(map.containsKey(last)){
+				for(int index: map.get(last)){
+					if(index == i){
+						continue;
+					}
+					
+					res.add(str + phrases[index].substring(last.length()));
+				}
+			}
+			
+			i++;
+		}
+		
+		List<String> ans = new ArrayList<>(res);
+		
+		Collections.sort(ans);
+		
+		return ans;
+	}
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		String phrases[]=new String[n];
+		for(int i=0;i<n;i++)
+			phrases[i]=sc.nextLine();
+		System.out.println(new Solution().beforeAndAfterPuzzles(phrases));
+	}
+}
