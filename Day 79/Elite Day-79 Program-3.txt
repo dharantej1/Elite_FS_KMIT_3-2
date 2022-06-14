@@ -1,0 +1,84 @@
+Mr. Parandamayya is working with Strings.
+He is given a String S. He has to find the palindromes in S, 
+A palindrome can be a substring of S (Strictly substrings only, not subsequences).
+
+Your task is to find the count the number of palindromes can be formed from S.
+
+NOTE: Count each occurence of palindromes if duplicate substrings found. 
+
+Input Format:
+-------------
+A string S
+
+Output Format:
+--------------
+Print an integer, number of palindromes.
+
+
+Sample Input-1:
+---------------
+divider
+
+Sample Output-1:
+----------------
+9
+
+Explanation:
+-------------
+Palindromes are d, i, v, i, d, e, r, ivi, divid
+
+Sample Input-2:
+---------------
+abcdef
+
+Sample Output-2:
+----------------
+6
+
+Explanation:
+-------------
+Palindromes are a, b, c, d, e, f.
+
+import java.util.*;
+
+class Solution{
+    static int[][] DP;
+    static String str;
+    static int count;
+    static boolean isPalindrome(int i,int j){
+        if(i>j)
+            return true;
+        if(DP[i][j]!=0){
+            if(DP[i][j]==-1)
+                return false;
+            return true;
+        }
+        if(i==j){
+            count++;
+            DP[i][j] = 1;
+            return true;
+        } 
+        boolean res = false;
+        if(str.charAt(i)==str.charAt(j)){
+            boolean x = isPalindrome(i+1,j-1);
+            res = x;
+        }
+            isPalindrome(i+1,j);
+            isPalindrome(i,j-1);
+        if(res){
+            DP[i][j] = 1;
+            count++;
+        }
+        else
+            DP[i][j] = -1;
+        return res;
+    }
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        str = sc.next();
+        DP = new int[str.length()][str.length()];
+        count = 0;
+        isPalindrome(0,str.length()-1);
+        System.out.print(count);
+    }
+}
