@@ -52,10 +52,36 @@ Sample Input-2:
 Sample Output-2:
 ----------------
 [0, 0, 0, 1, 1, 0, 0, 0]
-import java.util.*;
-
-class Solution {
-    public int[] boxesAfterSsteps(int[] cells, int N) {
-        //implement your code here
-    }
+// import java.util.*;
+
+// class Solution {
+//     public int[] boxesAfterSsteps(int[] cells, int n) {
+//         //implement your code here
+        
+//     }
+// }
+
+import java.util.*;
+
+class Solution {
+    public int[] boxesAfterSsteps(int[] cells, int N) {
+        //implement your code here
+        N = N % cells.length;
+        while(N-->0){
+            int[] temp;
+            temp = new int[8];
+            temp[0] = 0;
+            temp[7] = 0;
+            for(int i = 1; i < 7; i++){
+                if(cells[i-1] == cells[i+1]){
+                    temp[i] = 1;
+                }
+                else{
+                    temp[i] = 0;
+                }
+            }
+            cells = temp;
+        }
+        return cells;
+    }
 }

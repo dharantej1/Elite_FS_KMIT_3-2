@@ -55,3 +55,36 @@ Sample Input-2:
 Sample Output-2:
 ----------------
 3
+import java.util.*;
+
+class Solution{
+    static Integer[][]dp;
+    public static int func(int[]arr,int[]brr,int i,int j){
+        if(i<0||j<0){
+            return 0;
+        }
+        if(dp[i][j]!=null){
+            return dp[i][j];
+        }
+        if(arr[i]==brr[j]){
+            return dp[i][j]=1+func(arr,brr,i-1,j-1);
+        }
+        return dp[i][j]=Math.max(func(arr,brr,i-1,j),func(arr,brr,i,j-1));
+    }
+    
+    public static void main(String[]args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt(),m=sc.nextInt();
+        int[]arr=new int[n];
+        int[]brr=new int[m];
+        dp=new Integer[n][m];
+        for(int i=0;i<n;i++){
+            arr[i]=sc.nextInt();
+        }
+        for(int i=0;i<m;i++){
+            brr[i]=sc.nextInt();
+        }
+        int ans=func(arr,brr,n-1,m-1);
+        System.out.println(ans);
+    }
+}
