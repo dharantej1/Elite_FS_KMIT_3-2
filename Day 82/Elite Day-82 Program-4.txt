@@ -40,3 +40,33 @@ true
 Explanation:
 ------------
 He can purchase two plots with sides as 12 and 5 (12^2 + 5^2 = 169).
+import java.util.*;
+class Solution{
+    public static void main(String []args){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int m=(int)Math.sqrt(n);
+        int l=1,h=m;
+        while(l<h){
+            int a=l*l;
+            int b=h*h;
+            if(a+b==n){
+                System.out.println("true");
+                return;
+                
+            }
+            else if(a+b<n){
+                l++;
+                
+            }
+            else{
+                h--;
+                
+            }
+            
+        }
+        System.out.println("false");
+        
+    }
+    
+}
