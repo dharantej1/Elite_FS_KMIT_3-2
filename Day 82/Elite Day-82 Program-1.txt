@@ -70,11 +70,11 @@ class Solution{
         }
         Arrays.sort(v,new java.util.Comparator<int[]>(){
             public int compare(int a[],int b[]){
-                if(a[1]<b[1]){
-                    return -1;
+                if(a[1]>=b[1]){
+                    return 1;
                 }
                 else{
-                    return 1;
+                    return -1;
                 }
             }
         });
