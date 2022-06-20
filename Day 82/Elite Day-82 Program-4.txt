@@ -13,7 +13,7 @@ Line-1: An integer a, represents area of the plot.
 
 Output Format:
 --------------
-return true or false
+return true (or) false
 
 
 Sample Input-1:
