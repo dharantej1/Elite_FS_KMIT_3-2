@@ -53,3 +53,30 @@ Explanation:
 ------------
 You can play 16 game rounds from 20:00 to 00:00 and 24 game rounds from 00:00 to 06:00. 
 
+import java.util.*;
+
+class Solution{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        String st = sc.next();
+        String ed = sc.next();
+        int shr = Integer.parseInt(st.substring(0,2));
+        int smin = Integer.parseInt(st.substring(3));
+        int ehr = Integer.parseInt(ed.substring(0,2));
+        int emin = Integer.parseInt(ed.substring(3));
+        emin-=(emin%15);
+        if(smin%15!=0) smin+=(15 - smin%15);
+        if(smin == 60){
+            shr++;
+            smin=0;
+            
+        }
+        int hr = 0;
+        int min = 0;
+        hr += (ehr < shr) ? (24-shr)+(ehr) : ehr - shr;
+        min += (emin-smin)/15;
+        System.out.println(hr*4+min);
+        
+    }
+    
+}
