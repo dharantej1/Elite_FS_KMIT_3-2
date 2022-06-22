@@ -1,0 +1,71 @@
+Math Challenge(str) take the str parameter being passed and determine if there
+is some substring K that can be repeated N > 1 times to produce the input string
+exactly as it appears. Your program should return the longest substring K, and
+if there is none it should return "Not Possible".
+
+Input Format:
+-------------
+A string str, consists of lowercase alphabet.
+
+Output Format:
+--------------
+Print the longest substring K.
+
+
+Sample Input-1:
+---------------
+abcababcababcab
+
+Sample Output-1:
+----------------
+abcab
+
+
+Sample Input-2:
+---------------
+ababababababababab
+
+Sample Output-2:
+----------------
+ababab
+
+
+Sample Input-3:
+---------------
+abcxabc
+
+Sample Output-3:
+----------------
+Not Possible
+
+
+
+import java.util.*;
+
+class Solution{
+    static boolean isGood(String pattern,String str){
+        if(str.length()%pattern.length()!=0)
+            return false;    
+        int idx = pattern.length();
+        while(idx<str.length()){
+            if(!str.substring(idx,idx+pattern.length()).equals(pattern))
+                return false;
+            idx += pattern.length();
+        }
+        return true;
+    }
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        for(int i=str.length()/2;i>0;i--){
+            String sub = str.substring(0,i);
+            //System.out.println(sub);
+            if(isGood(sub,str)){
+                System.out.print(sub);
+                //System.out.print(i);
+                return;
+            }
+        }
+        System.out.print("Not Possible");
+    }
+}

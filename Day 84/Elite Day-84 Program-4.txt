@@ -1,0 +1,73 @@
+Mr Malhotra is given a word W consisting of lowercase alhpabest,and an integer I.
+A substring S of W is said to be an ECS string, if S obeys the following rule:
+    - each distinct alphabet in S, appears exactly I times in S.
+
+Your task is to help Mr Malhotra to return the number of ECS strings in W.
+
+Input Format:
+-------------
+Line-1: A String W
+Line-2: An integer I
+
+Output Format:
+--------------
+Print an integer result
+
+
+Sample Input-1:
+---------------
+abbabbaba
+2
+
+Sample Output-1:
+----------------
+5
+
+Explanation: 
+------------
+The ECS strings are 'abba' for 2 times, 'bb' for 2 times and 'baba' for 1 time
+
+
+Sample Input-2:
+---------------
+pqrs
+1
+
+Sample Output-2:
+----------------
+0
+
+
+import java.util.*;
+
+class Solution{
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        int target = sc.nextInt();
+        int count = 0;
+        for(int i=0;i<str.length();i++){
+            int[] freq = new int[26];
+            for(int j=i;j<str.length();j+=target){
+                if(str.length()<j+target)
+                    break;
+                for(int k=j;k<j+target;k++){
+                    int idx = str.charAt(k)-'a';
+                    freq[idx]++;
+                    if(freq[idx]>target)
+                        break;
+                }
+                boolean flag = true;
+                for(int k=0;k<26;k++){
+                    if(freq[k]!=0 && freq[k]!=target){
+                        flag = false;
+                        break;
+                    }    
+                }
+                if(flag)
+                    count++;
+            }
+        }
+        System.out.print(count);
+    }
+}
