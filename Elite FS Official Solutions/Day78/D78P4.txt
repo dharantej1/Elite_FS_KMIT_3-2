@@ -1,0 +1,139 @@
+/*
+Abdul Bari, a DSA trainer, assigns an assignment to his student Manoj.
+There are N people in a row, numbered from 1 to N, and all of them are sleeping 
+at the start. Abdul Bari is given the people's awakening order as order[], 0-indexed.
+
+Manoj must take the following actions:
+- At Step-i, he must awaken the order[i]-th person, where 0 <= i < N
+- If no one is sleeping between the people from the Person-1 to the rightmost 
+  person who woken up, Manoj will play one song for them to dance to.
+
+Manoj must return count the total number of songs played at the end of the order[].
+
+Input Format:
+-------------
+Line-1: An integer N.
+Line-2: N space separated integers, between [1 to N]
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+5
+1 2 3 4 5
+
+Sample Output-1:
+----------------
+5
+
+Explanation:
+------------
+At step-0: awaken Person-1, he dances for one song.
+
+At step-1: awaken Person-2, and there is no person sleeping before 
+person-2, Manoj play one song.
+
+At step-2: awaken Person-3, and there is no person sleeping before 
+person-3, Manoj play one song.
+
+At step-3: awaken Person-4, and there is no person sleeping before 
+person-4, Manoj play one song.
+
+At step-4: awaken Person-5, and there is no person sleeping before 
+person-5, Manoj play one song.
+
+So, total songs played are 5.
+
+
+Sample Input-2:
+---------------
+5
+4 2 1 3 5
+
+Sample Output-2:
+----------------
+2
+
+Explanation:
+------------
+At step-0: awaken Person-4, the persons 1,2,3 are sleeping.
+
+At step-1: awaken Person-2, and the persons 1,3 are sleeping.
+
+At step-2: awaken Person-1, and the person 3 is sleeping.
+
+At step-3: awaken Person-3, and there is no person sleeping before 
+person-4, Manoj play one song.
+
+At step-4: awaken Person-5, and there is no person sleeping before 
+person-5, Manoj play one song.
+
+So, total songs played are 2.
+
+
+=== testcases ===
+case =1
+input =5
+4 2 1 3 5
+output =2
+
+case =2
+input =5
+1 2 3 4 5
+output =5
+
+case =3
+input =10
+5 3 7 1 2 4 6 9 8 10
+output =3
+
+case =4
+input =10
+5 3 1 2 4 6 9 7 8 10
+output =4
+
+case =5
+input =15
+3 1 2 4 5 6 9 7 8 10 12 13 11 14 15
+output =9
+
+case =6
+input =15
+3 1 2 4 5 6 8 10 12 13 9 7 11 14 15
+output =7
+
+case =7
+input =20 
+3 1 2 4 5 12 6 8 10 13 9 17 7 16 11 14 18 15 19 20
+output =6
+
+case =8
+input =20
+13 9 17 7 16 11 14 18 15 19 20 3 1 2 4 5 12 6 8 10
+output =1
+
+*/
+import java.util.*;
+
+class Solution{
+    public int numTimesAllBlue(int[] A) {
+        int right = 0, res = 0, n = A.length;
+        for (int i = 0; i < n; ++i) {
+            right = Math.max(right, A[i]);
+            if (right == i + 1) ++res;
+        }
+        return res;
+    }
+    
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        int arr[]=new int[n];
+        for(int i=0;i<n;i++)
+            arr[i]=sc.nextInt();
+        System.out.println(new Solution().numTimesAllBlue(arr));
+    }
+}

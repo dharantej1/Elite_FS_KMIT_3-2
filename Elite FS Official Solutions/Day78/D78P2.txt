@@ -1,0 +1,91 @@
+/*
+In an online magazine, every day they will ask their readers a puzzle.
+The puzzle has to be solved using the following rule set:
+	- The puzzle is an 9*9 matrix, and consist of 9 -> 3*3 sub-matrices.
+	- Each row in the puzzle should be filled with 1-9digits with out repetition
+	- Each column in the puzzle should be filled with 1-9digits with out repetition.
+	- Each 3*3 sub-matrix should be filled with 1-9 digits with out repetition.
+
+You will be given the puzzle in the form of 9 strings, each string length is 9.
+Your task is check whether the puzzle can be solved or not.
+If it is possible to solve, print "true". Otherwise print "false".
+
+
+Input Format:
+-------------
+9 Lines: Each line consists of a string  length-9, consist of digits[1-9] and '.' only
+
+Output Format:
+--------------
+Print a boolean value.
+
+
+Sample Input-1:
+---------------
+53..7....
+6..195...
+.98....6.
+8...6...3
+4..8.3..2
+7...2...6
+.6....28.
+...419..5
+....8..79
+
+Sample Output-1:
+----------------
+true
+
+
+Sample Input-2:
+---------------
+83..7....
+6..195...
+.98....1.
+8...6...3
+4..8.3..1
+7...2...6
+.6....28.
+...419..5
+....8..79
+
+Sample Output-2:
+----------------
+false
+
+=== testcases ===
+
+
+*/
+import java.util.*;
+
+class Solution {
+    public boolean isValidSudoku(char[][] board) {
+		for(int i = 0; i<9; i++){
+			HashSet<Character> rows = new HashSet<Character>();
+			HashSet<Character> columns = new HashSet<Character>();
+			HashSet<Character> cube = new HashSet<Character>();
+			for (int j = 0; j < 9;j++){
+				if(board[i][j]!='.' && !rows.add(board[i][j]))
+					return false;
+				if(board[j][i]!='.' && !columns.add(board[j][i]))
+					return false;
+				int RowIndex = 3*(i/3);
+				int ColIndex = 3*(i%3);
+				if(board[RowIndex + j/3][ColIndex + j%3]!='.' && !cube.add(board[RowIndex + j/3][ColIndex + j%3]))
+					return false;
+			}
+		}
+		return true;
+	}
+
+	public static void main(String args[])
+	{
+		char board[][]=new char[9][9];
+		Scanner sc=new Scanner(System.in);
+		for(int i=0;i<9;i++)
+			board[i]=sc.next().toCharArray();
+		
+		System.out.println(new Solution().isValidSudoku(board));
+	}
+}
