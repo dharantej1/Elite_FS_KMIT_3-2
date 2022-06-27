@@ -1,0 +1,78 @@
+Mr Bilahari is working with Binary String BS,
+He is given an integer D.
+Your task is to find the length of the subsequence of BS whose decimal value is 
+less than or equal to D, whihc is maximum in length.
+
+Note: The subsequence can contain leading zeroes
+
+
+Input Format:
+-------------
+Line-1: A binary string, bs
+Line-2: An integer, D
+
+Output Format:
+--------------
+An integer result.
+
+
+Sample Input-1:
+---------------
+1000110010
+5
+
+Sample Output-1:
+----------------
+7
+
+Explanation: 
+------------
+The longest binary sub sequence is 0000010 which is 2 less than 5
+
+
+Sample Input-2:
+---------------
+1001010
+6
+
+Sample Output-2:
+----------------
+5
+
+Explanation: 
+------------
+The longest binary sub sequence are 00010, 00100, or 00101 the values are less than 6.
+
+
+
+import java.util.*;
+
+class main{
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        int n = sc.nextInt();
+        int zeros = 0;
+        for(int i=0;i<str.length();i++){
+            zeros += str.charAt(i)=='0'?1:0;
+        }
+        int i=str.length()-1;
+        int num = 0;
+        int base = 1;
+        int consideredFromLast = 0;
+        while(i>=0 && num<n){
+            if(num+base>n)
+                break;
+            if(str.charAt(i)=='1'){
+                num += base;
+            }
+            else{
+                zeros--;
+            }
+            i--;
+            consideredFromLast++;
+            base *= 2;
+        }
+        System.out.print(consideredFromLast+zeros);
+    }
+}
