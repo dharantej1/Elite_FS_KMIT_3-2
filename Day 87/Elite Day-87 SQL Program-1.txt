@@ -9,3 +9,6 @@ empno   ename   hiredate        curr_date       exp
 7934    FORD    2000-01-21      2022-06-22      22 
 
 */
+
+
+select empno,ename,hiredate,curdate() as curr_date,(floor(datediff(curdate(),hiredate)/365)) as exp from emp order by exp;
