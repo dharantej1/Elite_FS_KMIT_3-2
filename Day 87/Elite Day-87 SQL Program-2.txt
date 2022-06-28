@@ -1,0 +1,11 @@
+/* 
+Write an SQL query to list the empno,ename,annual_sal,daily_sal of all 
+the salesmen in the ascending order of their annual_sal
+
+Sample Output:
+-------------
+empno   ename   annual_sal      daily_sal                                                                               
+7521    ALLEN   15000.00        41.095890                                                                               
+7654    MARTIN  15000.00        41.095890
+
+*/
