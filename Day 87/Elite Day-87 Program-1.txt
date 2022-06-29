@@ -37,3 +37,28 @@ Sample Input-2:
 Sample Output-2:
 ----------------
 -1
+
+
+
+import java.util.*;
+
+class main{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        String s[] = sc.nextLine().split(" ");
+        int t = sc.nextInt();
+        int n = s.length;
+        int[] arr = new int[n];
+        for(int i=0;i<n;i++) arr[i] = Integer.parseInt(s[i]);
+        
+        int[] dp = new int[t+1];
+        Arrays.fill(dp,t+1);
+        dp[0] = 0;
+        for(int i=0;i<n;i++){
+            for(int coins = arr[i];coins <= t;coins++){
+                dp[coins] = Math.min(dp[coins],dp[coins-arr[i]]+1);
+            }
+        }
+        System.out.println(dp[t]>t ? -1 : dp[t]);
+    }
+}
