@@ -1,0 +1,63 @@
+Vihaan is given a list of words[]. 
+He is asked to create a method which returns the numbers of characters in a word 
+formed from long lasting frequent posteriority.
+
+Posteriority is the word formed from the original word with few characters removed
+without modifying the corresponding order of the left over characters.
+
+An uncommon posteriority between the list of words is a word that is a posteriority
+of one word but not the others.
+
+Your task is to find the longest uncommon posteriority of the list of words.
+Return 0 if no uncommon posteriority.
+
+
+Input Format:
+-------------
+Space separated strings words[]
+
+Output Format:
+--------------
+Print an integer, the length of longest uncommon prosperity.
+
+
+Sample Input-1:
+---------------
+mom rar ama
+
+Sample Output-1:
+----------------
+3
+
+
+Sample Input-2:
+---------------
+ppp ppp pp
+
+Sample Output-2:
+----------------
+-1
+
+
+
+from collections import Counter
+def posterior(words):
+    def isSubseq(a, b):
+        j = 0
+        for i in range(len(b)):
+            if a[j] == b[i]:
+                j += 1
+                if j == len(a):
+                    return True
+        return False
+    c = Counter(words)
+    s = sorted(c.keys(), key=len, reverse=True)
+    for i in range(len(s)):
+        if c[s[i]] > 1:
+            continue
+        if i == 0 or not any(isSubseq(s[i], s[j]) for j in range(i)):
+            return len(s[i])
+    return -1
+        
+words=list(map(str,input().split()))
+print(posterior(words))
