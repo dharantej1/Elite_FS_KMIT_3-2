@@ -63,3 +63,60 @@ Sample Output-3:
 
 
 
+import java.util.*;
+
+class Box{
+    int v;
+    int roadType;
+    Box(int a,int b){
+        v = a;
+        roadType = b;
+    }
+}
+class main{
+    static int n,c,a;
+    static boolean visited[],adj[][][];
+    public static void main(String... args){
+        //input
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        c = sc.nextInt();
+        a = sc.nextInt();
+        adj = new boolean[2][n][n];
+        visited = new boolean[n];
+        for(int i=0;i<c;i++){
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+            adj[0][x][y]  = true;
+        }
+        for(int i=0;i<a;i++){
+            int x = sc.nextInt();
+            int y = sc.nextInt();
+            adj[1][x][y]  = true;
+        }
+        Queue<Box> queue = new LinkedList<>();
+        int[] res = new int[n];
+        queue.add(new Box(0,0));
+        queue.add(new Box(0,1));
+        int level = 0;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i=0;i<size;i++){
+                Box front = queue.remove();
+                    visited[front.v]=true;
+                    res[front.v] = level;
+                    for(int j=0;j<n;j++){
+                        if(adj[front.roadType][front.v][j] && !visited[j]){
+                            queue.add(new Box(j,front.roadType^1));    
+                        }
+                    }
+            }
+            level++;
+        }
+        for(int i=1;i<n;i++){
+            if(res[i]==0)
+                res[i]=-1;
+        }
+        System.out.print(Arrays.toString(res));
+    }
+}
