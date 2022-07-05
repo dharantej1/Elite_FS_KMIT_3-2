@@ -1,0 +1,102 @@
+A transitive law is "If a == b and b == c, then a == c"
+Which also says "If a == b and b != c, then a != c"
+
+You will be given a list of strings relations[], i.e, like p==q or p!=q.
+Your task is to find out whether all the relations follow the transitive law or not.
+If all of them followed return true, otherwise return false.
+
+Input Format:
+-------------
+Space separated strnigs, list of relations
+
+Output Format:
+--------------
+Print a boolean value, whether transitive law is obeyed or not.
+
+
+Sample Input-1:
+---------------
+a==b c==d c!=e e==f
+
+Sample Output-1:
+----------------
+true
+
+
+Sample Input-2:
+---------------
+a==b b!=c c==a
+
+Sample Output-2:
+----------------
+false
+
+
+Sample Input-3:
+---------------
+a==b b==c c!=d d!=e f==g g!=d
+
+Sample Output-3:
+----------------
+true
+
+
+
+import java.util.*;
+
+class main{
+    static int findParent(int v,int[] parent){
+        if(parent[v]==v)
+        return v;
+        return parent[v] = findParent(parent[v],parent);
+        
+    }
+    static void union(int a,int b,int[] parent){
+        a = findParent(a,parent);
+        b = findParent(b,parent);
+        if(a!=b){
+            parent[a] = b;
+            
+        }
+        
+    }
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        String[] relations = sc.nextLine().split(" ");
+        ArrayList<String> equals = new ArrayList<>();
+        ArrayList<String> notEquals = new ArrayList<>();
+        for(String str:relations){
+            if(str.indexOf("==")!=-1){
+                equals.add(str);
+                
+            }
+            else{
+                notEquals.add(str);
+                
+            }
+            
+        }
+        int[] parent = new int[26];
+        for(int i=0;i<26;i++)
+        parent[i] = i;
+        for(int i=0;i<equals.size();i++){
+            String str = equals.get(i);
+            union(str.charAt(0)-'a',str.charAt(str.length()-1)-'a',parent);
+            
+        }
+        for(int i=0;i<notEquals.size();i++){
+            String str = notEquals.get(i);
+            int a = str.charAt(0)-'a';
+            int b = str.charAt(str.length()-1)-'a';
+            if(findParent(a,parent)==findParent(b,parent)){
+                System.out.print(false);
+                return;
+                
+            }
+            
+        }
+        System.out.print(true);
+        
+    }
+    
+}
