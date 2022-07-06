@@ -1,0 +1,96 @@
+Naresh is working on expression of words.
+If you give him an expression like, [p,q,r]s[t,u],
+Naresh will form the words like as follows : [pst, psu, qst,qsu, rst, rsu]
+Another example, [a,b]c[d,e] will be converted as: [acd, ace, bcd, bce].
+
+Naresh will be given an expression as a string EXP, like the above format.
+He needs to return all words that can be formed in like mentioned above, 
+Can you help Naresh to convert iven expression into a list of words, in lexicographical order.
+
+NOTE: 
+Expression consist of lowercase alphabets, comma, and square brackets only.
+
+Input Format:
+-------------
+A string EXP, expression.
+
+Output Format:
+--------------
+Print list of words, formed from the expression.
+
+
+Sample Input-1:
+---------------
+[b]c[e,g]k
+
+Sample Output-1:
+----------------
+[bcek, bcgk]
+
+
+Sample Input-2:
+---------------
+[a,b][c,d]
+
+Sample Output-2:
+----------------
+[ac, ad, bc, bd]
+
+
+Sample Input-3:
+---------------
+[xyz]a[b,c]
+
+Sample Output-3:
+----------------
+[xyzab, xyzac]
+
+
+
+import java.util.*;
+
+public class main {
+    public static  String[] expand(String S) {
+        TreeSet<String> set = new TreeSet<>();
+        if (S.length() == 0) {
+            return new String[]{""};
+        } 
+        else if (S.length() == 1) {
+            return new String[]{S};
+        }
+        if (S.charAt(0) == '[') {
+            int i = 0; 
+            while (S.charAt(i) != ']') {
+                i++;
+            }
+            String sub = S.substring(1, i);
+            String[] subs = sub.split(",");
+            String[] strs = expand(S.substring(i + 1));
+            for (int j = 0; j < subs.length; j++) {
+                for (String str : strs) {
+                    set.add(subs[j] + str);
+                }
+            }
+        }
+        else {
+            String[] strs = expand(S.substring(1));
+            for (String str : strs) {
+                set.add(S.charAt(0) + str);
+                
+            }
+        }
+        return set.toArray(new String[0]);
+    }    
+        
+        
+        public static void main(String args[] ) {
+            Scanner sc = new Scanner(System.in);
+            String str=sc.next();
+            System.out.println(Arrays.deepToString(expand(str)));
+            
+        }
+        
+    }
+
+    
+        

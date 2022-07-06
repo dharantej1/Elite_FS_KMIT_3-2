@@ -1,0 +1,83 @@
+You are given a set of releases of a software and you are asked to find the most
+recent release. There may be multiple checkins of the software in a given branch. 
+Each branch may also have sub branches. For example release 3-5-4 refers to the 
+fourth checkin in the fifth sub branch of the third main branch. 
+This hierarchy can go upto any number of levels. 
+
+If a level is missing it is considered as level 0 in that hierarchy. 
+For example 3-5-7 is  same as 3-5-7-0 or even same as 3-5-7-0-0. 
+The higher numbers denote more recent releases. 
+
+For example 3-5-7-1 is more recent than 3-5-7 but less recent than 3-6.
+
+Input Format:
+-------------
+A single line space separated strings, list of releases 
+
+Output Format:
+--------------
+Print the latest release of the software.
+
+
+Sample Input-1:
+---------------
+1-2 1-2-3-0-0 1-2-3
+
+Sample Output-1:
+----------------
+1-2-3
+
+Sample Input-2:
+---------------
+3-5-4 3-5-7 3-5-7-1 3-5-7-0-0 3-6
+
+Sample Output-2:
+----------------
+3-6
+
+
+
+
+100/100 passed
+def helper(version1, version2):
+    v1 = list(map(int, version1.split('-')))
+    v2 = list(map(int, version2.split('-')))
+    i = 0
+    while i < (min(len(v1), len(v2))):
+        if v1[i] > v2[i]:
+            return 1
+        elif v1[i] < v2[i]:
+            return -1
+        i += 1
+    if i < len(v1) and sum(v1[i:]) > 0:
+        return 1
+    if i < len(v2) and sum(v2[i:]) > 0:
+        return -1
+    return 0
+
+l = input().split()
+ans = l[0]
+for i in range(1, len(l)):
+    res = helper(ans, l[i])
+    if res == -1:
+        ans = l[i]
+    elif res == 0:
+        ans = ans if len(ans) < len(l[i]) else l[i]
+print(ans)
+
+
+
+75/100 passed
+l=list(map(str,input().split(" ")))
+l1=[]
+
+for i in l:
+    l1.append(list(i.split("-")))
+
+for i in l1:
+    while i[-1]=="0":
+        i.pop()
+
+l1.sort()
+print(l1)
+print(*l1[-1],sep="-")
