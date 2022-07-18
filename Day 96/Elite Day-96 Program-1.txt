@@ -43,3 +43,54 @@ Sample Output-1:
 Explanation: 
 ------------
 Look at the hint for understanding.
+
+
+
+import java.util.*;
+
+class CountSquares{
+    static int[][] dirs = {{1,1},{1,-1},{-1,1},{-1,-1}};
+    HashMap<String,Integer> map = new HashMap<>();
+    String makeString(int[] c){
+        return c[0]+" "+c[1];
+    }
+    public void record(int[] hit){
+        String s = makeString(hit);
+        map.put(s,map.getOrDefault(s,0)+1);
+    }
+    int get(int[] cur,int side,int a,int b){
+        int[] od = {cur[0]+(a*side),cur[1]+(b*side)};
+        if(od[0]<0 || od[0]>99 || od[1]<0 || od[1]>99 || !map.containsKey(makeString(od)))
+            return 0;
+        int[] c1 = {cur[0],od[1]};
+        int[] c2 = {od[0],cur[1]};
+        return map.getOrDefault(makeString(c1),0)*map.getOrDefault(makeString(c2),0)*map.getOrDefault(makeString(od),0);
+    }
+    public int count(int[] check){
+        int res = 0;
+        for(int i=1;i<100;i++){
+            for(int[] dir:dirs){
+                res += get(check,i,dir[0],dir[1]);
+            }
+        }
+        return res;   
+    }
+}
+class main{
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        String[] operations = sc.nextLine().split(" ");
+        String[] pairs = sc.nextLine().split(",");
+        CountSquares obj = new CountSquares();
+        for(int i=0;i<operations.length;i++){
+            int[] cur = Arrays.stream(pairs[i].split(" ")).mapToInt(Integer::parseInt).toArray();
+            if(operations[i].equals("1")){
+                obj.record(cur);  
+            }
+            else{
+                int x = obj.count(cur);
+                System.out.print(x+" ");
+            }
+        }
+    }
+}
