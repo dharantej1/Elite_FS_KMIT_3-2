@@ -1,0 +1,121 @@
+/*
+Sukumar is a mathematics teacher.
+Sukumar is always intersted to create logical problems.
+He has given a problem to the students to solve it.
+Students are given sentence with set of words, students has to find two words
+W1 and W2, such that there should be no common letters between W1 and W2, 
+and return the product of W1.length and W2.length.
+If there are no such words in the sentence return 0.
+
+Your task is to solve the problem given by Sukumar and help the students.
+
+Input Format:
+-------------
+Space separated strings, the sentence with set of words[].
+
+Output Format:
+--------------
+Print an integer, maximum product of two max length words.
+
+
+Sample Input-1:
+---------------
+there is an wondeful event going to happen in the school
+
+Sample Output-1:
+----------------
+30
+
+Explanation: 
+------------
+The two words will be "there", "school".
+or "going", "happen"..etc
+
+
+Sample Input-2:
+---------------
+elegant jewels are made here
+
+Sample Output-2:
+----------------
+0
+
+Explanation: 
+------------
+All words have atleast one letter in common.
+
+
+==== testcases ====
+case =1
+input =there is an wondeful event going to happen in the school
+output =30
+
+case =2
+input =elegant jewels are made here
+output =0
+
+case =3
+input =subramanya sastri is good in solving the problems on numerics
+output =40
+
+case =4
+input =there is an wondeful event going to happen in the college
+output =25
+
+case =5
+input =to older children offers a great method to teach in a way that they will addiction
+output =24
+
+case =6
+input =some with simple definitions some with beautifully precise meanings and some that just simply sound more beautiful when spoken
+output =28
+
+case =7
+input =like an idyll extremely happy peaceful or picturesque example the blossom growing in the courtyard created such an idyllic setting
+output =56
+
+case =8
+input =grammarly can save you from misspellings grammatical and punctuation mistakes and other writing issues on all your favorite websites
+output =72
+
+
+*/
+import java.util.*;
+
+class MaxProduct {
+	public int bitNumber(char ch) {
+		return (int)ch - (int)'a';
+	}
+
+	public int maxProduct(String[] words) {
+		int n = words.length;
+		int[] masks = new int[n];
+		int[] lens = new int[n];
+
+		int bitmask = 0;
+		for (int i = 0; i < n; ++i) {
+			bitmask = 0;
+			for (char ch : words[i].toCharArray()) {
+				// add bit number bit_number in bitmask
+				bitmask |= 1 << bitNumber(ch);
+			}
+			masks[i] = bitmask;
+			lens[i] = words[i].length();
+		}
+
+		int maxVal = 0;
+		for (int i = 0; i < n; ++i)
+		for (int j = i + 1; j < n; ++j)
+		if ((masks[i] & masks[j]) == 0)
+		maxVal = Math.max(maxVal, lens[i] * lens[j]);
+
+		return maxVal;
+	}
+
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String[] sarr=sc.nextLine().split(" ");
+		System.out.println(new MaxProduct().maxProduct(sarr));
+	}
+}

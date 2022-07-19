@@ -1,0 +1,101 @@
+/*
+Mr Shravan is given a word W, and W is a palindrome. Mr Shravan is 
+allowed to replace only one letter in W, with any lowercase alphabet, 
+such that the word W is not a palindrome again and which is the 
+lexicographically smallest among all the possible options.
+
+Examples of Lexicographical order are:
+	- aaa is smaller than aab
+	- abb is smaller than abc.
+
+Return the lexicographically smallest string among all the possible options.
+
+Input Format:
+-------------
+A String P, palindrome.
+
+Output Format:
+--------------
+A String result.
+
+
+Sample Input-1:
+---------------
+abcdcba
+
+Sample Output-1:
+----------------
+aacdcba
+
+
+Sample Input-2:
+---------------
+aaaa
+
+Sample Output-2:
+----------------
+aaab
+
+
+Sample Input-3:
+---------------
+aaabaaa
+
+Sample Output-3:
+----------------
+aaabaab
+
+
+==== testcases ====
+case =1
+input =abcdcba
+output =aacdcba
+
+case =2
+input =aaaa
+output =aaab
+
+case =3
+input =aaacaaa
+output =aaacaab
+
+case =4
+input =ababababababa
+output =aaabababababa
+
+case =5
+input =abcdefghijklmlkjihgfedcba
+output =aacdefghijklmlkjihgfedcba
+
+case =6
+input =aaabbbcccbbbaaa
+output =aaaabbcccbbbaaa
+
+*/
+import java.util.*;
+class Solution {
+    public String breakPalindrome(String palindrome) {
+        int length = palindrome.length();
+        if (length == 1) { 
+            return "";
+        }
+        // Strings are immutable in Java, convert it into a char array
+        char[] palindromeArray = palindrome.toCharArray();
+        
+        for (int i = 0; i < length / 2; i++) {
+            if (palindromeArray[i] != 'a') {
+                palindromeArray[i] = 'a';
+                return String.valueOf(palindromeArray);
+            }
+        }
+        
+        palindromeArray[length - 1] = 'b';
+        return String.valueOf(palindromeArray);
+    }
+    public static void main(String args[])
+    {
+        Scanner sc=new Scanner(System.in);
+        String S=sc.next();
+		System.out.println(new Solution().breakPalindrome(S));
+    }
+}

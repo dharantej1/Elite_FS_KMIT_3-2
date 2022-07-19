@@ -1,0 +1,213 @@
+/*
+There are N cities in a state.
+The cities are connected with two types of roadways:
+1) concrete roadway 2) asphalt roadway.
+The roadways may be parallel.
+
+You are given the lists of concrete roadways and asphalt roadways
+between the cities. All roadways are unidirectional.
+Concrete_Roadway[i,j] indiactes: a concrete road from city-i to city-j. Similarly,
+Asphalt[i,j] indiactes: an asphalt road from city-i to city-j. Similarly,
+
+Your task is to find and return the list of lengths of the shortest paths from 
+city-0 to city-P, where P start from 0 to N-1. And the path should contains 
+alternative roadways like as follows: concrete - asphalt - concrete -asphalt --etc
+or vice versa. If there is no such shortest path exist print -1.
+
+Input Format:
+-------------
+Line-1: 3 space separated integers N, C & A, Number of cities, routes between the cities.
+		number of concrete roads and number of asphalt roads
+Next C lines: Two space separated integers, concrete road between city-i to city-j.		
+Next A lines: Two space separated integers, asphalt road between city-i to city-j.		
+
+Output Format:
+--------------
+Print the list of lengths, the shortest paths.
+
+
+Sample Input-1:
+---------------
+4 2 1
+0 1
+2 3
+1 2
+
+Sample Output-1:
+----------------
+0 1 2 3
+
+Sample Input-2:
+---------------
+4 2 1
+1 0
+2 3
+1 2
+
+Sample Output-2:
+----------------
+0 -1 -1 -1
+
+
+Sample Input-3:
+---------------
+4 3 2
+1 0
+1 2
+2 3
+0 1
+1 2
+
+Sample Output-3:
+----------------
+0 1 2 -1
+
+
+==== testcases ====
+case =1
+input =4 2 1
+0 1
+2 3
+1 2
+output =0 1 2 3
+
+case =2
+input =4 2 1
+1 0
+2 3
+1 2
+output =0 -1 -1 -1
+
+case =3
+input =4 3 2
+1 0
+1 2
+2 3
+0 1
+1 2
+output =0 1 2 -1
+
+case =4
+input =3 1 1
+0 1
+2 1
+output =0 1 -1
+
+case =5
+input =5 2 2
+0 1
+3 4
+1 2
+2 3
+output =0 1 2 -1 -1 
+
+case =6
+input =6 3 3
+0 1
+2 3
+4 5
+1 2
+2 3
+3 4
+output =0 1 2 3 4 5
+
+case =7
+input =6 4 5
+0 1
+2 3
+3 4
+4 5
+1 0
+3 2
+4 5
+2 1
+4 3
+output =0 1 -1 -1 -1 -1
+
+case =8
+input =6 4 5
+0 1
+2 3
+3 4
+4 5
+1 0
+2 3
+3 5
+1 2
+4 3
+output =0 1 2 3 -1 4
+
+
+*/
+import java.util.*;
+
+class ShortestPath {
+    public int[] shortestAlternatingPaths(int n, int[][] red_edges, int[][] blue_edges) {
+        // Two sets one for blu and another for red
+        Set<Integer>[][] graph = new HashSet[2][n];
+        for (int i = 0; i < n; i++) {
+            graph[0][i] = new HashSet<>();
+            graph[1][i] = new HashSet<>();
+        }
+        // red edges in 0 - col
+        for (int[] re : red_edges) {
+            graph[0][ re[0] ].add(re[1]);
+        }
+        // blu edges in 1 - col
+        for (int[] blu : blue_edges) {
+            graph[1][ blu[0] ].add(blu[1]);
+        }
+        int[][] res = new int[2][n];
+        // Zero edge is always accessible to itself - leave it as 0
+        for (int i = 1; i < n; i++) {
+            res[0][i] = 2 * n;
+            res[1][i] = 2 * n;
+        }
+        // Q entries are vert with a color (up to that point)
+        Queue<int[]> q = new LinkedList<>();
+        q.offer(new int[] {0, 0}); // either with red
+        q.offer(new int[] {0, 1}); // or with blue
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+            int vert = cur[0];
+            int colr = cur[1];
+            // No need to keep track of level up to now
+            // only need to keep what color - and the length
+            // is automatically derived from previous node
+            for (int nxt : graph[1 - colr][vert]) {
+                if (res[1 - colr][nxt] == 2 * n) {
+                    res[1 - colr][nxt] = 1 + res[colr][vert];
+                    q.offer(new int[] {nxt, 1 - colr});
+                }
+            }
+        }
+        int[] ans = new int[n];
+        for (int i = 0; i < n; i++) {
+            int t = Math.min(res[0][i], res[1][i]);
+            ans[i] = (t == 2 * n) ? -1 : t;
+        }
+        return ans;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		int red=sc.nextInt();
+		int blue=sc.nextInt();
+		int redges[][]=new int[red][2];
+		int bedges[][]=new int[blue][2];
+		for(int i=0;i<red;i++){
+			redges[i][0]=sc.nextInt();
+			redges[i][1]=sc.nextInt();
+		}
+
+		for(int i=0;i<blue;i++){
+			bedges[i][0]=sc.nextInt();
+			bedges[i][1]=sc.nextInt();
+		}
+		int[] res=new ShortestPath().shortestAlternatingPaths(n,redges,bedges);
+		for(int i=0;i<n;i++)
+			System.out.print(res[i]+" ");
+	}
+}

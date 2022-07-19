@@ -1,0 +1,177 @@
+/*
+You have given flatland in the form of m*n grid,
+The land conatins some ponds represented as 0,
+and the land represented as 1.
+
+Your task is to find the number of square-grids which contains no pond. 
+
+
+Input Format:
+-------------
+Line-1: Two integers M and N.
+Next M lines: N space separated integers.
+
+Output Format:
+--------------
+Print an integer, number of square-grids.
+
+
+Sample Input-1:
+---------------
+3 4
+0 1 1 1
+1 1 1 1
+0 1 1 1
+
+Sample Output-1:
+----------------
+15
+
+Explanation:
+------------
+There are 10 square-grids of side length 1.
+There are 4 square-grids of side length 2.
+There is 1 square-grid of side length 3.
+
+Total number of square-grids without a pond in it = 10 + 4 + 1 = 15.
+
+
+Sample Input-2:
+---------------
+3 3
+1 0 1
+1 1 0
+1 1 0
+
+Sample Output-2:
+----------------
+7
+
+Explanation:
+------------
+There are 6 square-grids of side length 1.
+There is 1 square-grid of side length 2.
+Total number of square-grids without a pond in it = 6 + 1 = 7.
+
+
+==== testcases ====
+case =1
+input =3 4
+0 1 1 1
+1 1 0 1
+0 1 1 1
+output =9
+
+case =2
+input =3 4
+0 1 1 1
+1 1 1 1
+0 1 1 1
+output =15
+
+case =3
+input =3 3
+1 0 1
+1 1 0
+1 1 0
+output =7
+
+case =4
+input =5 8
+0 0 1 1 1 1 0 1
+1 1 1 1 1 1 1 1
+1 1 1 0 1 1 0 1
+1 1 1 1 0 0 1 0
+1 0 1 0 0 1 0 1
+output =37
+
+case =5
+input =8 8
+1 1 1 1 1 1 1 1
+0 1 1 1 1 1 0 0
+1 0 1 1 1 1 0 0
+0 1 1 0 1 1 0 0
+1 0 0 0 1 1 1 0
+0 1 1 0 0 0 1 1
+0 1 0 1 0 0 0 0
+1 0 0 0 0 1 1 0
+output =46
+
+case =6
+input =10 10
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1
+output =385
+
+case =7
+input =10 15
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 0 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 0 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 0 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 0 1 1 1
+1 1 0 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+output =368
+
+case =8
+input =15 15
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 0 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 0 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 0 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 0 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 0 1 1 1
+1 1 0 1 1 1 0 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 0 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 0 1 1 1 1
+1 1 1 1 1 0 1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+0 1 1 1 1 1 1 1 1 1 1 0 1 1 1
+output =509
+
+
+*/
+import java.util.*;
+
+class Solution {
+    public int countSquares(int[][] A) {
+        int res = 0;
+        for (int i = 0; i < A.length; ++i) {
+            for (int j = 0; j < A[0].length; ++j) {
+                if (A[i][j] > 0 && i > 0 && j > 0) {
+                    A[i][j] = Math.min(A[i - 1][j - 1], Math.min(A[i - 1][j], A[i][j - 1])) + 1;
+                }
+                res += A[i][j];
+            }
+        }
+        return res;
+    }
+	
+	public static void main(String[] args) 
+	{ 
+		Scanner sc=new Scanner(System.in);
+		int m=sc.nextInt();
+		int n=sc.nextInt();
+		int arr[][] = new int[m][n];
+		for(int i=0;i<m;i++)
+			for(int j=0;j<n;j++)
+				arr[i][j]=sc.nextInt();
+		
+		System.out.println(new Solution().countSquares(arr)); 
+	}
+}

@@ -1,0 +1,133 @@
+/*
+Babylonian working on numbers, got a task to do. 
+The task is, given two integers S, and X,
+and S is the sum of (N pow X), where N > 0, 
+0 < S < 1000 and 0< X < =10.
+
+Please help Babylonian to find the number of ways to get S.
+
+Input Format:
+-------------
+Two integers S and X.
+
+Output Format:
+--------------
+Print an integer, the number of ways.
+
+Sample Input-1:
+---------------
+10 2
+
+Sample Output-1:
+----------------
+1
+
+Explanation:
+--------------
+given x=2,
+pow(1,2) + pow(3,2) = 1 + 9 = 10
+
+
+Sample Input-2:
+---------------
+100 2
+
+Sample Output-2:
+----------------
+3
+
+Explanation:
+--------------
+given x=2,
+pow(1,2) + pow(3,2) + pow(4,2) + pow(5,2) + pow(7,2) = 1 + 9 + 16 + 25 + 49 =100
+pow(6,2) + pow(8,2) = 36 + 64 = 100
+pow(10,2) = 100
+
+Sample Input-3:
+---------------
+8 2
+
+Sample Output-3:
+----------------
+0
+
+
+Sample Input-4:
+---------------
+8 3
+
+Sample Output-4:
+----------------
+1
+
+Explanation: pow(2,3) = 8
+
+
+==== testcases ====
+case =1
+input =10 2
+output =1
+
+case =2
+input =100 2
+output =3
+
+case =3
+input =800 2
+output =561
+
+case =4
+input =675 2
+output =302
+
+case =5
+input =625 4
+output =1
+
+case =6
+input =337 2
+output =18
+
+case =7
+input =576 2
+output =158
+
+case =8
+input =900 2
+output =847
+
+
+*/
+import java.io.*; 
+import java.util.*; 
+  
+public class Solution { 
+  
+    static int res = 0; 
+    static int checkRecursive(int num, int x, int k, int n) 
+    { 
+        if (x == 0)  
+            res++; 
+          
+        int r = (int)Math.floor(Math.pow(num, 1.0 / n)); 
+  
+        for (int i = k + 1; i <= r; i++) { 
+            int a = x - (int)Math.pow(i, n); 
+          if (a >= 0) 
+            checkRecursive(num,  
+                   x - (int)Math.pow(i, n), i, n); 
+        } 
+        return res; 
+    } 
+ 
+    static int check(int x, int n) 
+    { 
+        return checkRecursive(x, x, 0, n); 
+    } 
+  
+    public static void main(String[] args) 
+    {  
+        Scanner sc = new Scanner(System.in);
+        System.out.println(check(sc.nextInt(), sc.nextInt())); 
+    } 
+} 

@@ -1,0 +1,111 @@
+/*
+Math Challenge(str) take the str parameter being passed and determine if there
+is some substring K that can be repeated N > 1 times to produce the input string
+exactly as it appears. Your program should return the longest substring K, and
+if there is none it should return "Not Possible".
+
+Input Format:
+-------------
+A string str, consists of lowercase alphabet.
+
+Output Format:
+--------------
+Print the longest substring K.
+
+
+Sample Input-1:
+---------------
+abcababcababcab
+
+Sample Output-1:
+----------------
+abcab
+
+
+Sample Input-2:
+---------------
+ababababababababab
+
+Sample Output-2:
+----------------
+ababab
+
+
+Sample Input-3:
+---------------
+abcxabc
+
+Sample Output-3:
+----------------
+Not Possible
+
+
+
+==== testcases ====
+case =1
+input =abcababcababcab
+output =abcab
+
+case =2
+input =ababababababababab
+output =ababab
+
+case =3
+input =abcxabc
+output =Not Possible
+
+case =4
+input =abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
+output =abcabcabcabcabcabcabcabcabcabcabcabc
+
+case =5
+input =abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdef
+output =abcdefabcdefabcdef
+
+case =6
+input =noneisnoneismynenoneisnoneismynenoneisnoneismynenoneisnoneismynenoneisnoneismyne
+output =noneisnoneismyne
+
+case =7
+input =thereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogram
+output =thereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogramthereisaneedtotestthisprogram
+
+case =8
+input =redividerredividerredividerredividerredividerredividerredividerredividerredividerredividerredividerredivider
+output =redividerredividerredividerredividerredividerredivider
+
+case =9
+input =aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+output =aaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+case =10
+input =aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+output =a
+
+
+*/
+import java.util.*;
+
+class Solution {
+	public String Solution(String str) {
+		int l = str.length();
+		for(int i=l/2;i>=1;i--) {
+			if(l%i==0) {
+				int m = l/i;
+				String subS = str.substring(0,i);
+				StringBuilder sb = new StringBuilder();
+				for(int j=0;j<m;j++) {
+					sb.append(subS);
+				}
+				if(sb.toString().equals(str)) return subS;
+			}
+		}
+		return "Not Possible";
+	}
+	
+	public static void main(String args[]){
+		Scanner sc=new Scanner(System.in);
+		String org=sc.next();
+		System.out.println(new Solution().Solution(org));
+	}
+}

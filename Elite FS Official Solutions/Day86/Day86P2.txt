@@ -1,0 +1,114 @@
+/*
+Mr Bilahari is working with Binary String BS,
+He is given an integer D.
+Your task is to find the length of the subsequence of BS whose decimal value is 
+less than or equal to D, whihc is maximum in length.
+
+Note: The subsequence can contain leading zeroes
+
+
+Input Format:
+-------------
+Line-1: A binary string, bs
+Line-2: An integer, D
+
+Output Format:
+--------------
+An integer result.
+
+
+Sample Input-1:
+---------------
+1000110010
+5
+
+Sample Output-1:
+----------------
+7
+
+Explanation: 
+------------
+The longest binary sub sequence is 0000010 which is 2 less than 5
+
+
+Sample Input-2:
+---------------
+1001010
+6
+
+Sample Output-2:
+----------------
+5
+
+Explanation: 
+------------
+The longest binary sub sequence are 00010, 00100, or 00101 the values are less than 6.
+
+
+==== testcases ====
+case =1
+input =1000110010
+5
+output =7
+
+case =2
+input =1001010
+6
+output =5
+
+case =3
+input =0110110101110011001100011000101010011110100000110001011000110010111101111100000101101101010011000101
+32
+output =52
+
+case =4
+input =0110110101110011001100011000101010011110100000110001011000110010111101111100000101101101010011000101
+100
+output =53
+
+case =5
+input =00110001110100000111010010011001010010001011101110110101111110111001001110010110010100001110110010110100110010001101111110001111011101001000011001001011001001100111001000011000001101001101001000011100
+5436
+output =107
+
+case =6
+input =00110001110100000111010010011001010010001011101110110101111110111001001110010110010100001110110010110100110010001101111110001111011101001000011001001011001001100111001000011000001101001101001000011100
+356
+output =105
+
+case =7
+input =01111001101011110011000011110001111111001001011111110010000001110100100110011111001110011011011010110101100110010101110010110101111001000111010000001101011001001011001001101111101101000101101011000100
+5436
+output =97
+
+case =8
+input =01111001101011110011000011110001111111001001011111110010000001110100100110011111001110011011011010110101100110010101110010110101111001000111010000001101011001001011001001101111101101000101101011000100
+654354
+output =100
+
+
+*/
+import java.util.*;
+
+class Solution {
+    public int longestSubsequence(String s, int k) {
+        int dp[] = new int[s.length() + 1], j = 0;
+        for (char c : s.toCharArray()) {
+            if (dp[j] * 2 + c - '0' <= k) {
+                dp[j + 1] = dp[j] * 2 + c - '0';
+                j++;
+            }
+            for (int i = j; i > 0; --i)
+                dp[i] = Math.min(dp[i], dp[i - 1] * 2 + c - '0');
+        }
+        return j;
+    }
+	
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		String str=sc.next();
+		int a=sc.nextInt();
+		System.out.println(new Solution().longestSubsequence(str,a));
+	}
+}

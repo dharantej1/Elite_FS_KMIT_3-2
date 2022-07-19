@@ -1,0 +1,103 @@
+/*
+There are a series of balloons, wehre few balloons are colored blue(indicated by 1) 
+and others are colored white(indicated by 0).
+
+Return the count of sub-series of balloon which are colored blue.
+
+for example:
+1101 -> sub-series are 1,1,1(subseries of length-1),11(sub-series of length-2).
+Total=4
+
+Since the answer may be too large, return it modulo 10^9 + 7.
+
+Note: input is given as a string.
+ 
+Input Format:
+-------------
+A string represents the status of series of balloons.
+
+Output Format:
+--------------
+Print an integer
+
+Sample Input-1:
+---------------
+11101
+
+Sample Output-1:
+----------------
+7
+
+Explanation:
+------------
+subseries are 1,1,1,1,11,11,111.
+
+
+Sample Input-2:
+---------------
+101
+
+Sample Output-2:
+----------------
+2
+
+Explanation:
+-------------
+sub-series are: 1,1.
+
+
+==== testcases ====
+case =1
+input =10000111101
+Output =12
+
+case =2
+input =10101010101
+Output =6
+
+case =3
+input =0
+Output =0
+
+case =4
+input =10
+Output =1
+
+case =5
+input =1111111111111111111
+Output =190
+
+case =6
+input =100000000000001
+Output =2
+
+case =7
+input =11111110000001111111
+Output =56
+
+case =8
+input =101010101010101010
+Output =9
+
+
+*/
+import java.util.*;
+
+class Test5 {
+	public int numSub(String s) {
+        int res = 0, count = 0, mod = (int)1e9 + 7;
+        for (int i = 0; i < s.length(); ++i) {
+            count = s.charAt(i) == '1' ? count + 1 : 0;
+            res = (res + count) % mod;
+        }
+        return res;
+    }
+	
+	public static void main(String[] args)
+    {
+   	 Scanner sc=new Scanner(System.in);
+      String s=sc.next();    
+     
+      System.out.println(new Test5().numSub(s));
+    }
+}

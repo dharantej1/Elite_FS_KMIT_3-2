@@ -1,0 +1,129 @@
+/*
+Gopal would like to go on Tour, and planned a schedule.
+Airport authority has created a new way of issuing tickets.
+Gopal purchased a set of airline tickets, 
+each ticket contains the 'departure from' and 'arrival to'.
+
+Redesign the Gopal's tour schedule in an order.
+Gopal intially must begin his tour from BZA.
+Hence the tour schedule's start point should begin with BZA. 
+
+You are given a list of flight tickets which Gopal has purchased.
+Your task is to find out and return the tour schedule that has the least 
+lexical order. Gopal must use all the tickets once and only once.
+
+Note:
+------
+If there are multiple valid schedules, you should return the schedule 
+that has the smallest lexical order when read as a single string. 
+For example, the schedule ["BZA", "LGA"] has a smaller lexical order than ["BZA", "LGB"].
+
+All airports are represented by three capital letters.
+You may assume all tickets form at least one valid schedule.
+
+Input Format:
+-------------
+Single Line of tickets separated by comma, and each ticket separated by space, 
+Gopal's flight tickets.
+
+Output Format:
+--------------
+Print the schedule, which is smallest lexical order of tour schedule.
+
+
+Sample Input-1:
+----------------
+DEL HYD,BZA DEL,BLR MAA,HYD BLR
+
+Sample Output-1:
+--------------------
+[BZA, DEL, HYD, BLR, MAA]
+
+
+Sample Input-2:
+------------------
+BZA BLR,BZA CCU,BLR CCU,CCU BZA,CCU BLR
+
+Sample Output-2:
+------------------
+[BZA, BLR, CCU, BZA, CCU, BLR]
+
+
+==== testcases ====
+case =1
+input =DEL HYD,BZA DEL,BLR MAA,HYD BLR
+output =[BZA, DEL, HYD, BLR, MAA]
+
+case =2
+input =BZA BLR,BZA CCU,BLR CCU,CCU BZA,CCU BLR
+output =[BZA, BLR, CCU, BZA, CCU, BLR]
+
+case =3
+input =MUC LHR,BZA MUC,SFO SJC,LHR SFO
+output =[BZA, MUC, LHR, SFO, SJC]
+
+case =4
+input =BZA SFO,BZA ATL,SFO ATL,ATL BZA,ATL SFO
+output =[BZA, ATL, BZA, SFO, ATL, SFO]
+
+case =5
+input =BZA SFO,BZA ATL,SFO ATL,ATL BZA,ATL SFO,MUC LHR,BZA MUC,SFO SJC,LHR SFO,SFO BZA
+output =[BZA, ATL, BZA, MUC, LHR, SFO, ATL, SFO, BZA, SFO, SJC]
+
+
+*/
+import java.util.*;
+
+class Itinerary {
+    public ArrayList<String> findItinerary(ArrayList<ArrayList<String>> tickets) {
+//1.to have the adjacency list in sorted order we have used a priority queue.. this will resolve the problem of     lexographical order. you can dry run any tc in you will get it.
+        HashMap<String,PriorityQueue<String>> map=new HashMap<>();
+   
+  //2. I have make the adjaceny list. I have add all the from(source) in my hashmap and corrosponding to that added to(destination) also..     
+       for(ArrayList<String> ticket:tickets){
+           String from=ticket.get(0);
+           String to=ticket.get(1);
+           
+           if(map.containsKey(from)){
+               map.get(from).add(to);
+           }else{
+               PriorityQueue<String> pq=new PriorityQueue<>();
+               pq.add(to);
+               map.put(from,pq);
+           }
+       }
+        
+      //3. I have used ArrayList here to return the list. can use linkedlist also to avoid the collection.reverse in line after topological sort(can use addFirst in linkedlist to avoid reverse).. but i have used arraylist here
+        ArrayList<String> list=new ArrayList<>();
+        topological_sort(map,"BZA",list);
+        
+        Collections.reverse(list);
+        return list;
+    }
+    
+    public static void topological_sort(HashMap<String,PriorityQueue<String>> map,String src,ArrayList<String> list){
+  
+            PriorityQueue<String> pq=map.get(src);
+ //4. we know that if there is something not present in map then map return null value.. so i have used pq!=null and if the size==0 means we have iterated all the neighbours..      
+            while(pq!=null && pq.size()>0){
+                String nbr=pq.remove();
+                topological_sort(map,nbr,list);
+            }
+   //5.adding here (in post area of code ==> read topological sort if u not got it) because know i cannot visit anyplace from here.
+         list.add(src);
+    }
+	
+	public static void main(String args[]) {
+		Scanner sc = new Scanner(System.in);
+		String[] str = sc.nextLine().split(",");
+		ArrayList<ArrayList<String>> flights= new ArrayList<ArrayList<String>>();
+		for(String s: str){
+			String val[]=s.split(" ");
+			ArrayList<String> flight=new ArrayList<String>();
+			flight.add(val[0]);
+			flight.add(val[1]);
+			flights.add(flight);
+		}
+		System.out.println(new Itinerary().findItinerary(flights));
+	}
+}

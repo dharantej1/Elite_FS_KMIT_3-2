@@ -1,0 +1,108 @@
+/*
+Konda reddy purchased a plot with area 'a' in "Suvarna bhoomi infra developers 
+project". After 2 years he wants to sell this property and want to purchase
+same area  in "Sai surya developers project". 
+In the new project there are plots only in square space and he can only choose
+2 plots.
+
+Your task is to help Konda reddy whether there exist 2 plots with sides 
+as p1,p2 such that p1^2 + p2^2 =a.
+
+Input Format:
+-------------
+Line-1: An integer a, represents area of the plot.
+
+Output Format:
+--------------
+return true or false
+
+
+Sample Input-1:
+---------------
+25
+
+Sample Output-1:
+----------------
+true
+
+Explanation:
+------------
+He can purchase two plots with sides as 5 each.
+
+
+Sample Input-2:
+---------------
+169
+
+Sample Output-2:
+----------------
+true
+
+Explanation:
+------------
+He can purchase two plots with sides as 12 and 5 (12^2 + 5^2 = 169).
+
+
+==== testcases ====
+case =1
+input =25
+output =true
+
+case =2
+input =50
+output =true
+
+case =3
+input =60
+output =false
+
+case =4
+input =1225
+output =true
+
+case =5
+input =10000
+output =true
+
+case =6
+input =2064
+output =false
+
+case =7
+input =15000
+output =false
+
+case =8
+input =33
+output =false
+
+
+*/
+import java.util.*;
+
+class Solution {
+	public boolean judgeSquareSum(int c) {
+		for (long a = 0; a * a <= c; a++) {
+			int b = c - (int)(a * a);
+			if (binary_search(0, b, b))
+				return true;
+		}
+		return false;
+	}
+	public boolean binary_search(long s, long e, int n) {
+		if (s > e)
+			return false;
+		long mid = s + (e - s) / 2;
+		if (mid * mid == n)
+			return true;
+		if (mid * mid > n)
+			return binary_search(s, mid - 1, n);
+		return binary_search(mid + 1, e, n);
+	}
+    public static void main(String[] args)
+    {
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		System.out.println(new Solution().judgeSquareSum(n));
+	}
+}

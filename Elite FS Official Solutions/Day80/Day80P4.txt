@@ -1,0 +1,118 @@
+/*
+There are few people are in a queue. They are given some boxes of gold coins, 
+where coins[i] is number of gold coins in i-th box.
+
+They have planned an idea to share the gold coins in the boxes. 
+Each time, the person in the front of the queue, choose any two boxes and grab 
+the gold as follows, Suppose the boxes have M and N coins, with M <= N :
+- If M == N, the person takes away both the boxes.
+- If M != N, the person takes the box with M coins and the M coins from the box
+    with N coins, N - M.
+- the person leaves the queue.
+At the end, there is at most one box left.
+
+Your task is to return the minimum possible coins left in the box. 
+If there are no boxes left, return 0.
+
+
+Input Format:
+-------------
+A single line comma separated integers, the coins[] array.
+
+Output Format:
+--------------
+Print an integer result.
+
+
+
+Sample Input-1:
+---------------
+2,7,7,10,2,2
+
+Sample Output-1:
+----------------
+2
+
+Explanation:
+------------
+Initially the boxes contains, 2,7,7,10,2,2
+- Choose the two boxes with 2 and 7 coins, and left 5 coins in one box, 
+  now the boxes are [5,7,10,2,2].
+- Choose the two boxes with 5 and 10 coins, and left 5 coins in one box, 
+  now the boxes are [7,5,2,2] 
+- Choose the two boxes with 5 and 7 coins, and left 2 coins in one box, 
+  now the boxes are [2,2,2] 
+- Choose the two boxes with 2 and 2 coins, and took both the boxes, 
+now the boxes are [2]. They are left with only one box with least coins 2. 
+
+
+Sample Input-2:
+---------------
+57,34,43,42,46,36,47
+
+Sample Output-2:
+----------------
+5
+
+
+
+==== testcases ====
+case =1
+input =83,49,72,95,27,95,86,99,20,7
+output =1
+
+case =2
+input =52,3,46,95,59,42,98,5,44,86
+output =4
+
+case =3
+input =38,69,73,33,1,82,45,3,79,87,87,77,61,40,50,85,87,81,25,51
+output =0
+
+case =4
+input =57,34,43,42,46,36,47
+output =5
+
+case =5
+input =50,58,57,44,53,44,46
+output =16
+
+case =6
+input =33,54,55,49,50,34,51
+output =6
+
+case =7
+input =41,46,32,40,46,49,47,46,48
+output =15
+
+case =8
+input =31,37,41,44,42,34,49,46,34
+output =2
+
+
+*/
+import java.util.*;
+
+class Solution {
+    public int lastStoneWeightII(int[] A) {
+        boolean[] dp = new boolean[1501];
+        dp[0] = true;
+        int sumA = 0;
+        for (int a : A) {
+            sumA += a;
+            for (int i = Math.min(1500, sumA); i >= a; --i)
+                dp[i] |= dp[i - a];
+        }
+        for (int i = sumA / 2; i >= 0; --i)
+            if (dp[i]) return sumA - i - i;
+        return 0;
+    }
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        String str[]=sc.nextLine().split(",");
+        int arr[]=new int[str.length];
+        for(int i=0;i<str.length;i++)
+            arr[i]=Integer.parseInt(str[i]);
+        System.out.println(new Solution().lastStoneWeightII(arr));
+    }
+}

@@ -1,0 +1,120 @@
+/*
+Mr Malhotra is given a word W consisting of lowercase alhpabest,and an integer I.
+A substring S of W is said to be an ECS string, if S obeys the following rule:
+    - each distinct alphabet in S, appears exactly I times in S.
+
+Your task is to help Mr Malhotra to return the number of ECS strings in W.
+
+Input Format:
+-------------
+Line-1: A String W
+Line-2: An integer I
+
+Output Format:
+--------------
+Print an integer result
+
+
+Sample Input-1:
+---------------
+abbabbaba
+2
+
+Sample Output-1:
+----------------
+5
+
+Explanation: 
+------------
+The ECS strings are 'abba' for 2 times, 'bb' for 2 times and 'baba' for 1 time
+
+
+Sample Input-2:
+---------------
+pqrs
+1
+
+Sample Output-2:
+----------------
+0
+
+
+==== testcases ====
+case =1
+input =abaacccbcbcbcbbabcaaabacbaacaababbbbcbcabbaaabccca
+3
+output =12
+
+case =2
+input =abbabbaba
+2
+output =5
+
+case =3
+input =qpacrqbabbbbppbrqrbbrbbqbqapappcrarcaqaqrqprccqabarapabbpqbpcbbccapbaqcqprpqaapbqrbbcpbcpqcaaapbarrbrqppbcpaaqqqqarpcbbcrarcbbapqbrqqrqcaccbcrqpabqccb
+2
+output =45
+
+case =4
+input =qpprppprrpqpsprprssssrpqprpsrpssqpppprssprsprrrrqssqpqrsprspspprrrsrppqqssqssrsqppsrpqrqrpssrpssssqrrpqpqqrpqppqqsqssrqprpqrpsrqrrrrqrsqsrsrqsrrrpsqss
+4
+output =8
+
+case =5
+input =qpprppprrpqpsprprssssrpqprpsrpssqpppprssprsprrrrqssqpqrsprspspprrrsrppqqssqssrsqppsrpqrqrpssrpssssqrrpqpqqrpqppqqsqssrqprpqrpsrqrrrrqrsqsrsrqsrrrpsqss
+3
+output =24
+
+case =6
+input =rqqsqrpqqpqspppsrsqrssppqqsspprsqppsqrqrrqrrqrsqpsqrqprrssspsrrpsqrqsqsrqqssppqppspppssrprqpqrqqppsprqqssrssqprqrpqqrrqpqqsqqqqpssssrssspssqspspsssrprsppprprsrsrrrpqqsqssprrqqsqqrprsssqsspssrrrspqrprprpqqrrrrsrsqqpqsqprsqrqrqsrpsqrsprqsppssrpppqqrqppprpqsrsppsrsrqpsrsqrpsqsqsrrpsppprqprqppssqrrssrpqsqrpqpsrsprppppqrqpqrprrpqspqqqrqqsqsrrsqsqpspqqqrpqqrpqqssqqpqrrpqqsqsrqppppssrqsrspsrqpqprrsrsssspppqqrqsprprprrsrrsqpqsrqsppqqsrpqqrsrssrsssrpssqqrrqrrsrprqpprspsrqqsssqqppqrssppqrrqsppprrssqrpqqsp
+6
+output =9
+
+case =7
+input =prppqpqrqprsrqsrqrsrqsqqrsppprpsqpqrsqprpqqqrpprrsqrrssqqsrpqqpsqrpqspsprrqprqssqqsprrrqpsrrqpqrsqsspqpspssqqqpqprrqsrpqqrssqpssrrppqsqprqprppsqqqrsrrssqqsqpsspqpsqqpqrqssrsppsqsrsqrrrsssppqppqsqrsrqprpsppqqspsprqsprqqppppqsppprppqrsrpsprsprpssqqprpqqpspprssqprsqsrpprrrrsrqrqqpprsrqrrrrrpsrpqprspqqssssprqsqprrsppqsrrssrrqsprsssrsssrpqqqqsppqpssrrqrqrqsrqsrssqssrrqpqpqssrsrqrrrpprssqqrrprssrssrrqssssrpppsrsrqsspssqrsrrrssqpsssqqsrqsrqpsqspqprqqrrpqqqsrsqsrrqrqqrrspqsqprpqpqprqpqspssrpqpqpprpsqrrp
+3
+output =76
+
+case =8
+input =abaaccbcbbcaacbbccccccaabcbcbabacbacacccbacacbbbbaabcbccababbcacaabcabbbbcabcacacabcccabaacaabababacbcbbbaccbaccbacaccbbbbacacbaacbacaaaaccbcbaaaabaaacbcacbccbcaacbaccabcabcabbcbbcacacabbbbccacbcbaabbccaccbaacbcccaccacbbaacabcacaccccccbcacacaabccbcbbbcacbcabaacbabccacacbcbaaacabbbcaacbacbbbbccaacabacccbabccacbbabaaaabbbcccccabaabbbaaaaabacacbcaccbbbbbbbcaabaacbbbcabaacababaaaaccbbbbbaaaabbabababcbbbbaaccacacbcccbcabcbacbccabbbcacacbbbababbccbcbabcccababcabbacbbcbcaaacbacbbccaaaaccbbbcabbbccbcaac
+6
+output =39
+
+case =9
+input =abaaccbcbbcaacbbccccccaabcbcbabacbacacccbacacbbbbaabcbccababbcacaabcabbbbcabcacacabcccabaacaabababacbcbbbaccbaccbacaccbbbbacacbaacbacaaaaccbcbaaaabaaacbcacbccbcaacbaccabcabcabbcbbcacacabbbbccacbcbaabbccaccbaacbcccaccacbbaacabcacaccccccbcacacaabccbcbbbcacbcabaacbabccacacbcbaaacabbbcaacbacbbbbccaacabacccbabccacbbabaaaabbbcccccabaabbbaaaaabacacbcaccbbbbbbbcaabaacbbbcabaacababaaaaccbbbbbaaaabbabababcbbbbaaccacacbcccbcabcbacbccabbbcacacbbbababbccbcbabcccababcabbacbbcbcaaacbacbbccaaaaccbbbcabbbccbcaac
+8
+output =19
+
+case =10
+input =abaaccbcbbcaacbbccccccaabcbcbabacbacacccbacacbbbbaabcbccababbcacaabcabbbbcabcacacabcccabaacaabababacbcbbbaccbaccbacaccbbbbacacbaacbacaaaaccbcbaaaabaaacbcacbccbcaacbaccabcabcabbcbbcacacabbbbccacbcbaabbccaccbaacbcccaccacbbaacabcacaccccccbcacacaabccbcbbbcacbcabaacbabccacacbcbaaacabbbcaacbacbbbbccaacabacccbabccacbbabaaaabbbcccccabaabbbaaaaabacacbcaccbbbbbbbcaabaacbbbcabaacababaaaaccbbbbbaaaabbabababcbbbbaaccacacbcccbcabcbacbccabbbcacacbbbababbccbcbabcccababcabbacbbcbcaaacbacbbccaaaaccbbbcabbbccbcaac
+7
+output =28
+
+
+*/
+import java.util.stream.Collectors;  
+import java.util.*;
+
+class Solution {
+    public int equalCountSubstrings(String s, int count) {
+        int n = s.length(), res = 0, uniqueMax = s.chars().mapToObj(i -> (char)i).collect(Collectors.toSet()).size();
+        for(int i = 1; i <= uniqueMax; i++) {
+            int windowSize = i * count, match = 0; // fix-size window with every freq(character) == count problem
+            int[] freq = new int[26];
+            for(int j = 0; j < n; j++) {
+                match += (++freq[s.charAt(j) -'a'] == count) ? 1 : 0;
+                if(j >= windowSize - 1) {
+                    if(match == i) res++;
+                    match -= freq[s.charAt(j - windowSize + 1) -'a']-- == count ? 1 : 0;
+                }
+            }
+        }
+        return res;
+    }
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        String w=sc.next();
+        int i=sc.nextInt();
+        System.out.println(new Solution().equalCountSubstrings(w,i));
+    }
+}

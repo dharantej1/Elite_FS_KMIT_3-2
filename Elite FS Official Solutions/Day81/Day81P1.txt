@@ -1,0 +1,165 @@
+/*
+In a room there are 8 boxes in a row and each box is either locked or unlocked.
+In each step, status of the boxes, modifies according to the following rules:
+	- if the adjacent boxes of the box[i] (i.e., box[i-1] and box[i+1] ) are 
+	  either both locked or both unlocked, then the box[i] becomes locked.
+	- Otherwise box[i] is unlocked.
+	- The first and the last boxes in the row can't have two adjacent boxes.
+
+You are given the initial status of 8-boxes status[] array and an integer S, 
+consist of either 0 or 1. where 1 indiactes locked status, 
+0 indiactes unlocked status, and S is the number of steps.
+
+Your task is to find and return the final status of the boxes after S steps,
+either locked or unlocked.
+
+
+Input Format:
+-------------
+Line-1: Eight space separated integers, initial status of the 8-boxes, 0 or 1 only
+Line-2: An integer S, numebr of steps.
+
+Output Format:
+--------------
+Print the list of integers, final status of the 8-boxes.
+
+
+Sample Input-1:
+---------------
+1 1 0 0 1 0 0 1
+6
+
+Sample Output-1:
+----------------
+[0, 1, 0, 1, 1, 1, 1, 0]
+
+Explanation:
+------------
+Initial status is Step-0:
+Step-0: [1, 1, 0, 0, 1, 0, 0, 1]
+Step-1: [0, 0, 0, 0, 1, 0, 0, 0]
+Step-2: [0, 1, 1, 0, 1, 0, 1, 0]
+Step-3: [0, 0, 0, 1, 1, 1, 1, 0]
+Step-4: [0, 1, 0, 0, 1, 1, 0, 0]
+Step-5: [0, 1, 0, 0, 0, 0, 0, 0]
+Step-6: [0, 1, 0, 1, 1, 1, 1, 0]
+Final status is Step-6.
+
+
+Sample Input-2:
+---------------
+1 0 0 1 0 1 1 0
+8
+
+Sample Output-2:
+----------------
+[0, 0, 0, 1, 1, 0, 0, 0]
+
+
+==== testcases ====
+case =1
+input =1 0 0 1 0 1 1 0
+8
+output =/[0, 0, 0, 1, 1, 0, 0, 0]/
+
+case =2
+input =1 1 0 0 1 0 0 1
+6
+output =/[0, 1, 0, 1, 1, 1, 1, 0]/
+
+case =3
+input =1 1 1 1 1 1 1 1
+653
+output =/[0, 0, 1, 1, 1, 1, 0, 0]/
+
+case =4
+input =1 0 1 1 0 1 0 0
+7342
+output =/[0, 1, 0, 1, 0, 1, 1, 0]/
+
+case =5
+input =1 0 1 0 1 1 1 0
+98765
+output =/[0, 0, 1, 1, 0, 1, 0, 0]/
+
+case =6
+input =0 1 0 1 1 0 0 1
+987354
+output =/[0, 0, 0, 0, 0, 1, 0, 0]/
+
+case =7
+input =0 0 0 0 0 0 0 0
+23435434
+output =/[0, 1, 1, 1, 1, 1, 1, 0]/
+
+case =8
+input =0 1 1 1 1 0 0 1
+94832748
+output =/[0, 0, 0, 0, 1, 1, 1, 0]/
+
+
+*/
+import java.util.*;
+import java.io.*;
+
+class Solution {
+    public int[] boxesAfterSsteps(int[] cells, int N) {
+
+        HashMap<Integer, Integer> seen = new HashMap<>();
+        boolean isFastForwarded = false;
+
+        // step 1). convert the cells to bitmap
+        int stateBitmap = 0x0;
+        for (int cell : cells) {
+            stateBitmap <<= 1;
+            stateBitmap = (stateBitmap | cell);
+        }
+
+        // step 2). run the simulation with hashmap
+        while (N > 0) {
+            if (!isFastForwarded) {
+                if (seen.containsKey(stateBitmap)) {
+                    // the length of the cycle is seen[state_key] - N
+                    N %= seen.get(stateBitmap) - N;
+                    isFastForwarded = true;
+                } else
+                    seen.put(stateBitmap, N);
+            }
+            // check if there is still some steps remained,
+            // with or without the fast forwarding.
+            if (N > 0) {
+                N -= 1;
+                stateBitmap = this.nextDay(stateBitmap);
+            }
+        }
+
+        // step 3). convert the bitmap back to the state cells
+        int ret[] = new int[cells.length];
+        for (int i = cells.length - 1; i >= 0; i--) {
+            ret[i] = (stateBitmap & 0x1);
+            stateBitmap = stateBitmap >> 1;
+        }
+        return ret;
+    }
+
+    protected int nextDay(int stateBitmap) {
+        stateBitmap = ~(stateBitmap << 1) ^ (stateBitmap >> 1);
+        // set the head and tail to zero
+        stateBitmap = stateBitmap & 0x7e;
+        return stateBitmap;
+    }
+}
+
+public class Main {
+    public static void main(String args[])  throws IOException 
+    {
+        Scanner scan = new Scanner(System.in);
+        int[] nums = new int[8];// declaring 10000 records to read from the input.txt file 
+        for (int i = 0; i < 8; i++)
+            nums[i] = scan.nextInt(); //  reading input into nums array 
+        int S=scan.nextInt();
+        Solution sol=new Solution(); // Fenwick Tree Approch Class Object Creation
+        int[] result=sol.boxesAfterSsteps(nums,S);
+        System.out.println(Arrays.toString(result));
+    }
+}

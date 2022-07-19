@@ -1,0 +1,130 @@
+/*
+A new online video game has been released, and in this video game, there are 
+15-minute rounds scheduled every quarter-hour period. This means that at HH:00,
+HH:15, HH:30 and HH:45, a new round starts, where HH represents an integer 
+number from 00 to 23. A 24-hour clock is used, so the earliest time in the day 
+is 00:00 and the latest is 23:59.
+
+Given two strings startTime and finishTime in the format "HH:MM" representing 
+the exact time you started and finished playing the game, respectively, 
+calculate the number of full rounds that you played during your game session.
+
+For example, if startTime = "05:20" and finishTime = "05:59" this means you 
+played only one full round from 05:30 to 05:45. You did not play the full round 
+from 05:15 to 05:30 because you started after the round began, and you did not 
+play the full round from 05:45 to 06:00 because you stopped before the round 
+ended. If finishTime is earlier than startTime, this means you have played 
+overnight (from startTime to the midnight and from midnight to finishTime).
+
+Return the number of full rounds that you have played if you had started 
+playing at startTime and finished at finishTime.
+
+
+Input Format:
+-------------
+Two space separated strings, startTime and finishTime.
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+12:01 12:44
+
+Sample Output-1:
+----------------
+1
+
+Explanation: 
+------------
+You can play 1 game round from 12:15 to 12:30 from 12:01 to 12:44
+
+
+Sample Input-2:
+---------------
+20:00 06:00
+
+Sample Output-2:
+----------------
+40
+
+Explanation:
+------------
+You can play 16 game rounds from 20:00 to 00:00 and 24 game rounds from 00:00 to 06:00. 
+
+
+
+==== testcases ====
+case =1
+input =04:31 01:44
+output =83
+
+case =2
+input =04:31 12:44
+output =31
+
+case =3
+input =14:11 16:06
+output =7
+
+case =4
+input =01:00 22:44
+output =86
+
+case =5
+input =05:56 12:44
+output =26
+
+case =6
+input =23:59 06:49
+output =27
+
+case =7
+input =23:59 23:58
+output =95
+
+case =8
+input =23:04 21:59
+output =90
+
+
+*/
+import java.util.*;
+
+class Solution {
+    public int numberOfRounds(String startTime, String finishTime) {
+        int start = toMinutes(startTime);
+        int end = toMinutes(finishTime);
+        
+        int roundedStart = toNextQuarter(start);
+        int roundedEnd = toPreviousQuarter(end);
+        
+        if (start < end) {
+            return Math.max(0, (roundedEnd - roundedStart) / 15);
+        }
+        
+        return (24 * 60 - roundedStart + roundedEnd) / 15;
+    }
+    
+    public static int toMinutes(String s) {
+        return Integer.parseInt(s.substring(0, 2)) * 60
+            + Integer.parseInt(s.substring(3, 5));
+    }
+    
+    public static int toNextQuarter(int time) {
+        return ((time + 14) / 15) * 15;
+    }
+
+    public static int toPreviousQuarter(int time) {
+        return (time / 15) * 15;
+    }
+    
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        String start=sc.next();
+        String end=sc.next();
+        System.out.println(new Solution().numberOfRounds(start,end));
+    }
+}

@@ -1,0 +1,115 @@
+/*
+Mr. Parandamayya is working with Strings.
+He is given a String S. He has to find the palindromes in S, 
+A palindrome can be a substring of S (Strictly substrings only, not subsequences).
+
+Your task is to find the count the number of palindromes can be formed from S.
+
+NOTE: Count each occurence of palindromes if duplicate substrings found. 
+
+Input Format:
+-------------
+A string S
+
+Output Format:
+--------------
+Print an integer, number of palindromes.
+
+
+Sample Input-1:
+---------------
+divider
+
+Sample Output-1:
+----------------
+9
+
+Explanation:
+-------------
+Palindromes are d, i, v, i, d, e, r, ivi, divid
+
+Sample Input-2:
+---------------
+abcdef
+
+Sample Output-2:
+----------------
+6
+
+Explanation:
+-------------
+Palindromes are a, b, c, d, e, f.
+
+
+
+==== testcases ====
+case =1
+input =radarracecar
+output =19
+
+case =2
+input =tattarrattat
+output =24
+
+case =3
+input =nolemonnomelon
+output =21
+
+case =4
+input =wasitcatisawinmygymmadam
+output =29
+
+case =5
+input =wasitcatisawinmygymmadammadamitsaradarborroworrob
+output =74
+
+case =6
+input =indeedyouneedstresseddesserts
+output =44
+
+case =7
+input =civicradarrefersteponnopets
+output =40
+
+case =8
+input =civicradarrefersteponnopetsindeedyouneedstresseddessertsmadamitsaradarborroworrob
+output =123
+
+case =9
+input =aaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+output =989
+
+case =10
+input =aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+output =3160
+
+
+*/
+import java.util.*;
+
+public class Solution{
+    int count =1;
+	public int countSubstrings(String s) {
+		if(s.length()==0) 
+			return 0;
+		for(int i=0; i<s.length()-1; i++){
+			checkPalindrome(s,i,i);     //To check the palindrome of odd length palindromic sub-string
+			checkPalindrome(s,i,i+1);   //To check the palindrome of even length palindromic sub-string
+		}
+		return count;
+	}    
+
+	private void checkPalindrome(String s, int i, int j) {
+		while(i>=0 && j<s.length() && s.charAt(i)==s.charAt(j)){    //Check for the palindrome string 
+			count++;    //Increment the count if palindromin substring found
+			i--;    //To trace string in left direction
+			j++;    //To trace string in right direction
+		}
+	}
+	
+	public static void main(String args[])
+	{
+		String S=new Scanner(System.in).next();
+		System.out.println(new Solution().countSubstrings(S));
+	}
+}
