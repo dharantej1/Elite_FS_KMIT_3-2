@@ -59,3 +59,21 @@ def maxScore(l):
 
 l=list(map(int,input().split(",")))
 print(maxScore(l))
+
+(OR)
+
+def maxScore(l):
+    l1=[]
+    for i in range(len(l)):
+        l1.extend([sum(l[:i+1]),sum(l[i:len(l)])])
+    return max(l) if max(l1)<0 else max(l1)
+
+l=list(map(int,input().split(",")))
+print(maxScore(l))
+
+(OR)
+
+def maxScore(l,l1):
+    for i in range(len(l)):l1.extend([sum(l[:i+1]),sum(l[i:len(l)])])
+    return max(l) if max(l1)<0 else max(l1)
+l=list(map(int,input().split(","))); print(maxScore(l,[]))
