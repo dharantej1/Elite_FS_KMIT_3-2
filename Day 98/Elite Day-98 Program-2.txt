@@ -1,0 +1,88 @@
+Cards Castle is a structure created by stacking cards on top of each other.
+
+You are given a set of N cards, using them you have to build a Card Castle, by 
+the following ruleset:
+ - A Card Castle made up of cards arranged in rows of '/\'(triangle shape)
+   and placing the cards horizontally on the triangles.
+ - A '/\' shape can be achieved by leaning two cards against each other.
+ - A card must be placed horizontally, between all adjacent triangles in a row.
+ - Any triangle on a row higher than the first must be placed on a 
+   horizontal card from the previous row.
+ - Each triangle is placed in the leftmost available spot in the row.
+
+Your taskis to find the number of unique Card Castles you can build using all N 
+cards. 
+
+NOTE: Two Card Castles are considered unique, if there exists a row 
+where the two castles contain a different number of cards.
+
+
+Input Format:
+-------------
+An integer N, number of cards
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+7
+
+Sample Output-1:
+----------------
+1
+
+
+Sample Input-2:
+---------------
+19
+
+Sample Output-2:
+----------------
+3
+
+
+Sample Input-3:
+---------------
+6
+
+Sample Output-3:
+----------------
+0
+
+
+Look hint for the explanation of the sample testcases.
+
+
+
+import java.util.*;
+
+class main{
+    static int UniqueTriangles(int n,int prev,int cards,int[][] dp){
+        if(cards>n) return 0;
+        if(cards==n) return 1;
+        if(dp[cards][prev]!=-1) return dp[cards][prev];
+        
+        int count = 0;
+        
+        for(int triangles=1;triangles<=prev;triangles++){
+            count+=UniqueTriangles(n,triangles-1,cards + 3*triangles-1,dp);
+            
+        }
+        
+        return dp[cards][prev] = count;
+        
+        
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[][] dp = new int[n+1][n+1];
+        for(int i[] : dp) Arrays.fill(i,-1);
+        System.out.println(UniqueTriangles(n,1 + n/3,0,dp));
+        
+    }
+    
+}
