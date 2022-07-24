@@ -1,0 +1,121 @@
+/*
+Mr Gnanesh is working with words. He has given a list of words. 
+Each word in the list contains only two lowercase letters [a-z].
+
+He wants to create biggest word BW, by concatenating words from the list, which 
+is a palindrome too. He is allowed to use each word from the list atmost once.
+
+Return the length of the biggest word can be formed using the list.
+If it is impossible to create such word, return 0.
+
+Input Format:
+-------------
+Space separated strings, words[], two letter words.
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+ab ba dd
+
+Sample Output-1:
+----------------
+6
+
+Explanation: 
+------------
+The biggest word is, ab,dd,ba => abddba, which is a palindrome.
+
+
+Sample Input-2:
+---------------
+pq rs sr mk km pq
+
+Sample Output-2:
+----------------
+8
+
+Explanation: 
+------------
+The biggest word is, rs,sr,mk,km => rsmkkmsr or mkrssrkm..etc, 
+which is a palindrome.
+
+
+Sample Input-3:
+---------------
+aa bb cc
+
+Sample Output-3:
+----------------
+2
+
+
+
+==== testcases ====
+case =1
+input =ab ba dd
+output =6
+
+case =2
+input =pq rs sr mk km pq
+output =8
+
+case =3
+input =aa bb cc
+output =2
+
+case =4
+input =ab ba dd pq rs sr mk km pq aa bb cc
+output =14
+
+case =5
+input =ab bc cd de ef fg gh hi ij jk kj ji hg fe ed dc bc ab rr tt uu yy
+output =26
+
+case =6
+input =ab bc cd de ef fg gh hi ij pq rs sr mk km pq jk kj ji hg fe ed dc bc ab rr tt uu yy
+output =34
+
+case =7
+input =aa bb cc dd ee ff gg hh ii jj kk ll mm nn oo pp qq rr ss tt uu vv ww xx yy zz ab cd de ed dc cb ba xy yz yx zy
+output =22
+
+case =8
+input =aa bb cc dd ee ff gg hh ii jj kk ll mm nn oo pp qq rr ss tt uu vv ww xx yy zz ab cd de ed dc cb ba xy yz yx zy ab bc cd de ef fg gh hi ij pq rs sr mk km pq jk kj ji hg fe ed dc bc ab rr tt uu yy
+output =74
+
+
+
+*/
+
+import java.util.*;
+class LongestPalindrome{
+	public int longestPalindrome(String[] words) {
+		int counter[][] = new int[26][26];
+		int ans = 0;
+		for (String w: words) {
+			int a = w.charAt(0) - 'a', b = w.charAt(1) - 'a';
+			if (counter[b][a] > 0) {
+				ans += 4; 
+				counter[b][a]--; 
+			}
+			else counter[a][b]++;
+		}
+		for (int i = 0; i < 26; i++) {
+			if (counter[i][i] > 0) {
+				ans += 2;
+				break;
+			}
+		}
+		return ans;
+	}
+	
+	public static void main(String args[]){
+		Scanner sc= new Scanner(System.in);
+		String words[]=sc.nextLine().split(" ");
+		System.out.println(new LongestPalindrome().longestPalindrome(words));
+	}
+}

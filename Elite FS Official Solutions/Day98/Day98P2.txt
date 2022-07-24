@@ -1,0 +1,116 @@
+/*
+Cards Castle is a structure created by stacking cards on top of each other.
+
+You are given a set of N cards, using them you have to build a Card Castle, by 
+the following ruleset:
+ - A Card Castle made up of cards arranged in rows of '/\'(triangle shape)
+   and placing the cards horizontally on the triangles.
+ - A '/\' shape can be achieved by leaning two cards against each other.
+ - A card must be placed horizontally, between all adjacent triangles in a row.
+ - Any triangle on a row higher than the first must be placed on a 
+   horizontal card from the previous row.
+ - Each triangle is placed in the leftmost available spot in the row.
+
+Your taskis to find the number of unique Card Castles you can build using all N 
+cards. 
+
+NOTE: Two Card Castles are considered unique, if there exists a row 
+where the two castles contain a different number of cards.
+
+
+Input Format:
+-------------
+An integer N, number of cards
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+7
+
+Sample Output-1:
+----------------
+1
+
+
+Sample Input-2:
+---------------
+19
+
+Sample Output-2:
+----------------
+3
+
+
+Sample Input-3:
+---------------
+6
+
+Sample Output-3:
+----------------
+0
+
+
+Look hint for the explanation of the sample testcases.
+
+
+
+==== testcases ====
+case =1
+input =19
+output =3
+
+case =2
+input =65
+output =40
+
+case =3
+input =125
+output =543
+
+case =4
+input =221
+output =18134
+
+case =5
+input =327
+output =387800
+
+case =6
+input =345
+output =624853
+
+case =7
+input =476
+output =14690352
+
+case =8
+input =499
+output =24423102
+
+
+
+*/
+import java.util.*;
+
+class Solution {
+    public int houseOfCards(int n) {
+        int[] dp = new int[n+1];
+        dp[0] = 1;
+        for(int i =2;i<=n;i+=3){
+            for(int j= n;j>=i;j--){
+                dp[j] += dp[j-i];
+            }
+        }
+        return dp[n];
+    }
+    
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        int n=sc.nextInt();
+        System.out.println(new Solution().houseOfCards(n));
+    }
+}

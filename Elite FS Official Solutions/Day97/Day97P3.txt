@@ -1,0 +1,132 @@
+/*
+NOKIA company designed a special keypad.
+The keypad consist of 9 keys, numbered from 1 to 9, 
+each key is mapped to lowercase alphabet only. 
+
+The mapping of the alphabet can be arranged according to your choice as follows:
+ - All lowercase alhpabet should be mapped to the keys.
+ - Each alphabet is mapped to exactly one key only.
+ - Each ke on the keypad can be mapped with at most 3 alphabet.
+ 
+To type the first alphabet mapped to a key, press the key for one time. 
+To type the second alphabet mapped to a key, press the key for two times.
+To type the third alphabet mapped to a key, press the key for three times.
+
+You are given a word W, Your task is to find the least number of key presses 
+needed to type W using NOKIA keypad.
+
+Note that the alphabet mapped to by each key, and the order they are mapped
+in cannot be changed till you type the message completely.
+
+
+Input Format:
+-------------
+A string, the word W
+
+Output Format:
+--------------
+Print an integer result
+
+
+Sample Input-1:
+---------------
+pepla
+
+Sample Output-1:
+----------------
+5
+
+Explanation: 
+------------
+One way to arrange the mapping of alphabet in NOKIA keypad is shown in Hint.
+Type 'p' by pressing the key 6 once.
+Type 'e' by pressing the key 3 once.
+Type 'p' by pressing the key 6 once.
+Type 'l' by pressing the key 5 once.
+Type 'a' by pressing the key 1 once.
+A total of 5 key presses are needed, so return 5.
+
+
+Sample Input-2:
+---------------
+abcdefghijklmnopqr
+
+Sample Output-2:
+----------------
+27
+
+Explanation:
+------------
+One way to arrange the mapping of alphabet in NOKIA keypad is shown in Hint.
+The alphabet from 'a' to 'i' can each be typed by pressing a key once.
+Type 'j' by pressing the key 1 two times.
+Type 'k' by pressing the key 2 two times.
+Type 'l' by pressing the key 3 two times.
+Type 'm' by pressing the key 4 two times.
+Type 'n' by pressing the key 5 two times.
+Type 'o' by pressing the key 6 two times.
+Type 'p' by pressing the key 7 two times.
+Type 'q' by pressing the key 8 two times.
+Type 'r' by pressing the key 9 two times.
+
+A total of 27 key presses are needed, so return 27.
+
+
+
+==== testcases ====
+case =1
+input =pebble
+output =6
+
+case =2
+input =pneumonoultramicroscopicsilicovolcanoconiosis
+output =52
+
+case =3
+input =floccinaucinihilipilificationandantidisestablishmentarianism
+output =72
+
+case =4
+input =floccinaucinihilipilificationandantidisestablishmentarianismandpneumonoultramicroscopicsilicovolcanoconiosis
+output =129
+
+case =5
+input =floccinaucinihilipilificationandantidisestablishmentarianismandpneumonoultramicroscopicsilicovolcanoconiosisorthyroparathyroidectomized
+output =170
+
+case =6
+input =bhfyaelvkhmsdflqjxbeljlkeyxhmklvyxpodxliyrfufkqrlyueslxtpclkoafqlfbepzevtgyaxisjtvgjhfohxkqezjfdogdpcrqvkhjafhciyvskttqhyqpcyrlnhlklqysczzoumaswxvwzlartqfuucqzxwjsaqsrnrswuovmkpalknkgnentrurxfwinvteni
+output =341
+
+case =7
+input =onmorczqvexkweudhxeyenixwinddymuukspyozpxiwppcrnkipaqshuuiiosifmqvdttsnogxruxqkmqfisdidbmtahdjesykhpupllihwuhwwvndpfiupionjvtqtvgwzjwhcainmfinbyfintghnvmcmodbwreivkeajfyakwyvgjbwplscmvsntxhivehjxtgezhvxuxhubamopbwzusfxhzremdggondomerzvqxylikxhkhuszqaxqjuhcjnsuyapedgsbtbrrvpkjyysnhiraifaeveocskgfpatpuasuxatmfzvizzyshsedtbjwxnstpqbpnckcrtcrgimdgyhpqsojdjgpxndjbytaqagzeulvecejbgdptbsksjnbcybtigxwpajyxwhvnehkvzxjsbrenmevqblrljjdysxyfakomsahdiikocbubddvdrwysfadmxrpyrivmigfgvnogprikkrnijsapdnkgnggwqlpeakamocxiuswwdsexnkcjwdaliodcdynzlgluttufjchfkvjtqoupiduluoptxgnqcihkwimhwldryjgtvonlhiloityorlsvbzlodepcegfdxmbbwbvdplcmshmwozqfqoqoviijlstweuguilyzrebxemvjknhubeobcczjukkyupisoeubrtcuipqmkxmobcpbpuurysjqfyfjhggvfhasithopettglldnihrmmcydwdrrzftevgkqtyxebdrokrgdowuqzsooiqhsfdpqkalwhfoyvuufsqgcjpgurtebstuhwqpqkvgswpfednqmigteghmrdenzyyrmxkrchbxdumcmenrxzdvbuabcnuzgelletnvxvppbpyespgujjoabcvfihomzgcnjquixyocchdbxjvrpmjuqmazffqdutqrporskabxczdnhyuehveiiiktrulittruqqyocyophivvcvibnqnreiuasootpksgrug
+output =1836
+
+case =8
+input =eqkynjlmqikeockmrsxmeiwndgwhxpztrjwzhrtlfutzdaguhenlbxzbsbonwmbvkproirjrbuscjdjmyyczxuymrqvjjknzciymgnxpuljshqzhtizjixnrpoigayealtyoyuyogifbhzyypfveeqqisfbgdsyrvimzqgruhvlrdvylbvzfunyrbphrgzompsvtbkhbpkuujucmsxcmkdydazzxkvjcfmtlvzbhlthhmhodkriwhgviwsokewwljgoxjrfbimfkbgqscgtkpombuttbtiuctepdgjiiamcagiziewqncibjqxlslkuqqsjdwkjjdenaytjhaccvkbitqdwlitkvqloozvrdzxldaitnoztyxxggvicjbvhkrghhijaqdxaimmtljhtnyeztlyoocdhrdjlkatrlrxhatmophjfjnkppeqtyrkkdrjkxisnysmceaixtgkedisfazbkslzgyknjhndmvjgngoyunakoqjspxpvxmkanqjxwhlctrtxgimbcoqqikwqjxwuwgedankucyttdyfibinjoyqmtjlbsucykoubkigprafdrvgdkzyelrpqoxyoovjausagkuwfmoljeqqknvodzsksbvrtyvtphafvcbnkdcuvzqoxsagksgbrlhslirlnqlrltcnqxevuxosfqyfhzvkuoeodduvpildbgduznuyufyomvuuzwwtqgzcrijyptqknkawygslwvqisogoyhydgjysoxbsaifbwufzenulgpiihsrbiexohwietfvguqqnegrnlujzaslnhekthbmdazndrdeokgjdwstwsfeqyfchnsthoagwaovataeiuvmdfrfduaslrdcyvfypwfwskpbbwjrpkrtlsombinrrxkyxbpirmbfxlmoafztwgmhzhjpkoblvbuofngclwnjdgxbgddgfjogqqhzbivtghjqkktlychtqrguifclomwnwvzrmfarjjxftdkygrimcllmentfxfsauxiodcovjokoeicbxcfbqghuqyvygbtwhjtlxkefizcluimmxzkjmdlrtacqnfrcsqjfrojadxdmbbrrvnxkedtgdbfdexxwrmqoybzrulyvoiwwclqwdhqjltxxmudtcfpegprmirtjzryydcskinbyhswwocqykemvtoafychjcfojenzrbstltayitvjrrlaeziitxlqfwieprtctnzhvrofsllsveoqnvvghtlloopeyxxuieitwibqdcjzinfqeqhcidpyukhkwnjpyyjyxyimgdhzlbkqhzivrfgnjczizhrqfhacxuxuovzunjcjncuonfmdytgeuqxcptmbocvosonwahlbyzdhpyftnobimmnooarhkfhdumekgomyuxaawtsfomfslbdobzaebytnohjrhlensmgltdnvlvntjfsceolrbsfslwoygknthdrqqliiwzujfccdiygxznphytbfdanrutwnmwgazvmcfrkjxgeppabknmkulvqqyfnqgbcmszszidiiabxsioirptuvrbbbvcquyamayuvjbooutzedsqojyhtvugozqdyfcryyeqyhxrnpdxbckbbqjbxqkeggdmcspduxywswkyqrsokobzwgadtaitnmumgfzhzzyfckqqsnalnelolgghkizaspejhstdgjzeokfwlbllxrxmjmptgvcpinhnpkzhtkkrwzlyrmpajoveohieluchhhffwyizigicbbogcfzlazldrpvdscsfcgzbmpwsrmpyamvxkmwunzritcnugarqijqymdsphjjxwipcewwiqiebzqqxbgwqycwxhoejigamwxowwgfylfaecrspwiqpljnfzcdqvuknczczeryzzswcmcmxmmjohkvpqsgejaclamccdwnuuczzonlshkdhpxixjvtdpyhdklzlgyvjpiwlfevvndprwdtcbtfopcxewuiuxhdgwxigmvulnhaxzsclxyjietbysvyapcieyvdxxcmwiiswlxolkmsmfzhomwhmrqtbkbrcikrtddrdtdimzhgylpczsfhlqnlakaakmtwdhpcnvoqwnekvobtqlmltkdzhljwmcnichjjsbaqykbzblqebjmafyodrflacgwjluarlhvgclckbfjlhciacgbqzxsnnyszbezcifgcwgugxtexyvxuwlkpskuuaftdbpwluwgxpeysjlwhgvqfpnxynqqjyhucileaokgnndczmhwwbnpvzpqreacvpxmlcrzqyqnrssmrdyrrypmgcphdpvowqecjhkzztjqszcwxjgaluczfpvtsviwrzgtplzitssxxvolzpjviiuuvwebnyihynpclmpvpjfcukwszmsjmiurvpgmrgdrfgtfhkhoxurisqcbvxmvylklkbwdminakwwdlsksbzaiebpouxnnnaohiulpxlqhwgppfawcwuuoyhjjdmutacgdmqpbttfkjqosyjacuzyhkkwfzpwicmewgertuedhhtohlnjawjsuushfxridtufhjajgahhvdnyhgmkjuehelwokhwxpajkjnwaqpfqcueqiboeiqroiwujfefdgdcxafjboekddcjbdtxrnbxvvaaetdvjcqeowsqlorjcseqjazyfkwhcwmnwwfuzzmztdkaeagfvinqvdhhobsxwqdsjerlbnpofpkveqzwxmmngotipybrinlapradrnphubyuavrazxrrtwecphwpwahokrdmnkjsjptenjmufenijypsqetyorrgvjmwbxlraqpptixwreifyinqnnngutvgxequfqtyemsjxvpeoovbjmtdbqgkhhwhvvilgiictzlycixcemwcdibazikkralucpvwrqrcvmcjcamwngaceqflnznirydkgbgxtgbyochakbztfazbcxqlqayjmwsqohckjuqspbkfkhmnfdbwodo
+output =5710
+
+
+
+*/
+
+import java.util.*;
+
+class Solution {
+    public int minimumKeypresses(String str) {
+        Integer[] freq = new Integer[26];
+        Arrays.fill(freq, 0);
+        for(int i = 0; i < str.length(); i++)
+            freq[str.charAt(i) - 'a']++;
+        Arrays.sort(freq, (x, y) -> y - x);
+        int result = 0;
+        for(int i = 0 ;i < 26; i++)
+            result += freq[i] * ((i + 9)/9);
+        return result;
+    }
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        String W=sc.next();
+        System.out.println(new Solution().minimumKeypresses(W));
+    }
+}
