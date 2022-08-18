@@ -56,3 +56,52 @@ Explanation:
 ------------
 There is no path as they both live in the same house 4.
 So answer = -1.
+
+
+
+#include<bits/stdc++.h>
+using namespace std;
+int ans;
+void dfs(int p,int node,int par,vector<int> &vis,vector<int> &tin,vector<int> &low,vector<vector<int>> &v,int tm){
+    vis[node]=1;
+    tin[node]=low[node]=tm++;
+    if(node==p) return;
+    for(auto it:v[node]){
+        if(it==par) continue;
+        if(!vis[it]){
+            dfs(p,it,node,vis,tin,low,v,tm);
+            low[node]=min(low[node],low[it]);
+            if(low[it]>tin[node]){
+                ans++;
+                
+            }
+            
+        }
+        else{
+            low[node]=min(low[node],tin[it]);
+            
+        }
+        
+    }
+    
+}
+int main(){
+    int n,m,p;
+    cin>>n>>m;
+    vector<vector<int>> v(n+1);
+    for(int i=0;i<m;i++){
+        int u,v1;
+        cin>>u>>v1;
+        v[u].push_back(v1);
+        v[v1].push_back(u);
+        
+    }
+    vector<int> tin(n+1,-1),low(n+1,-1),vis(n+1,0);
+    ans=0;
+    int tm=0;
+    cin>>p;
+    dfs(p,n,-1,vis,tin,low,v,tm);
+    if(ans==0) cout<<-1;
+    else cout<<ans;
+    
+}

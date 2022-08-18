@@ -59,3 +59,49 @@ Sample Input-2:
 Sample Output-2:
 ----------------
 false
+
+
+
+import java.util.*;
+
+class main{
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int m = sc.nextInt();
+        int n = sc.nextInt();
+        int[][] grid = new int[m][n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                grid[i][j] = sc.nextInt();
+                
+            }
+            
+        }
+        
+        int req = grid[0][0];
+        for(int j=1;j<grid[0].length;j++){
+            if(grid[0][j]==req) continue;
+            for(int i=0;i<grid.length;i++){
+                grid[i][j]^=1;
+                
+            }
+            
+        }
+        
+        for(int i=1;i<grid.length;i++){
+            for(int j=1;j<grid[0].length;j++){
+                if(grid[i][j]!=grid[i][j-1]){
+                    System.out.println(false);
+                    return;
+                    
+                }
+                
+            }
+            
+        }
+        
+        System.out.println(true);
+        
+    }
+    
+}
