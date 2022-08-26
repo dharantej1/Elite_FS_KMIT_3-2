@@ -1,0 +1,127 @@
+Venkatesh is a maths teacher.
+He is teaching matrices concept to his students.
+He is given a matrix of size m*n, and it contains only positive numbers.
+He has given a task to his students to find the number of special matrices 
+in the given matrix A[m][n].
+
+A special matrix has following property:
+	- The size of matrix should be 3*3,
+	- The sum of elements in each row, each column and 
+	  the two diagonals are equal.
+	- The 3*3 matrix should contains all the numbers from 1 to 9.
+	
+Your task is to help the students to find the number of speical matrices
+in the given matrix.
+
+Input Format:
+-------------
+Line-1: Two space separated integers M and N, size of the matrix.
+Next M lines: N space separated integers m and n.
+
+Output Format:
+--------------
+Print an integer, number of the special matrices.
+
+
+Sample Input-1:
+---------------
+4 5
+6 8 1 6 8
+7 3 5 7 3
+2 4 9 2 4
+6 8 1 6 8
+
+Sample Output-1:
+----------------
+1
+
+Explanation:
+------------
+The special square is:
+8 1 6
+3 5 7
+4 9 2
+
+
+Sample Input-2:
+---------------
+3 5
+2 7 6 7 2
+9 5 1 5 9
+4 3 8 3 4
+
+Sample Output-2:
+----------------
+2
+
+Explanation:
+------------
+The special squares are:
+2 7 6
+9 5 1
+4 3 8
+-----
+6 7 2
+1 5 9
+8 3 4
+
+
+
+import java.util.*;
+
+class main{
+    static boolean checkTotal(int[][] total,int i,int j){
+        int x = total[i][j] - getCell(total,i-3,j) - getCell(total,i,j-3) + getCell(total,i-3,j-3);
+        return x==45;
+    }
+    static int getCell(int[][] arr,int i,int j){
+        if(i<0 || i>=arr.length || j<0 || j>=arr[0].length)
+            return 0;
+        return arr[i][j];
+    }
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int m = sc.nextInt();
+        int n = sc.nextInt();
+        int[][] arr = new int[m][n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                arr[i][j] = sc.nextInt();
+            }
+        }
+        int res = 0;
+        int[][] diag=new int[m][n],antiDiag = new int[m][n],row = new int[m][n],col = new int[m][n],total = new int[m][n];
+        for(int i=0;i<m;i++){
+            for(int j=0;j<n;j++){
+                diag[i][j] = arr[i][j] + getCell(diag,i-1,j-1);
+                antiDiag[i][j] = arr[i][j] + getCell(antiDiag,i-1,j+1);
+                row[i][j] = arr[i][j] + getCell(row,i,j-1);
+                col[i][j] = arr[i][j] + getCell(col,i-1,j);
+                total[i][j] = arr[i][j] + getCell(total,i-1,j)-getCell(total,i-1,j-1)+getCell(total,i,j-1);
+                
+                
+                if(i>=2 && j>=2){// start checking
+                    if(!checkTotal(total,i,j))
+                        continue;
+                    int d = diag[i][j] - getCell(diag,i-3,j-3);
+                    int ad = antiDiag[i][j-2] - getCell(antiDiag,i-3,j+1);
+                    if(d!=ad)
+                        continue;
+                    boolean flag = true;
+                    for(int k=0;k<3;k++){
+                        int x = row[i-k][j]-getCell(row,i-k,j-3);
+                        int y = col[i][j-k]-getCell(col,i-3,j-k);
+                        if(x!=d || y!=d){
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if(flag)
+                        res++;
+                    
+                }
+            }
+        }
+        System.out.print(res);
+    }
+}
