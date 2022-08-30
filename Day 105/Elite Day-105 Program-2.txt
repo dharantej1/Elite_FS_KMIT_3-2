@@ -1,0 +1,58 @@
+Mr. James professor at MIT, as a part of assignment,
+He created a problem statement related to words.
+
+He gave a word W to his student, and asked them to design 
+a method to return the longest subsequence W1 in word W, 
+where reverse of W1 is equals to W1.
+
+Your task is to help the students to find W1 from W and print the length of it.
+
+Input Format:
+-------------
+A string S, the word W consist of lowercase letters only
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+abaababba
+
+Sample Output-1:
+----------------
+7
+
+Explanation:
+------------
+One possible longest subsequence is "abababa"
+
+
+Sample Input-2:
+---------------
+thedivideriswide
+
+Sample Output-2:
+----------------
+9
+
+Explanation:
+------------
+One possible longest subsequence is "ediidiide"
+
+
+
+s=str(input())
+n=len(s)
+dp=[[1]*n for _ in range(n)]
+for i in range(n-2,-1,-1):
+    for j in range(i+1,n):
+        if s[i]==s[j]:
+            if j==i+1:    
+                dp[i][j]=2
+            else:
+                dp[i][j]=2+dp[i+1][j-1]
+        else:
+            dp[i][j]=max(dp[i][j-1],dp[i+1][j])
+print(dp[0][-1])

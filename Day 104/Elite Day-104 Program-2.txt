@@ -1,0 +1,69 @@
+Kiran is given a string S, and an integer N.
+Kiran wants to find the longest substring which has following properties:
+	- the substring of S should be maximum in length, and 
+	- should contains maximum of N unique characters in it.
+Your task is to help Kiran to find the longest substring 'ls' with 
+above properties and return the length of the substring 'ls'.
+
+Input Format:
+-------------
+Line-1: A string S
+Line-2: An integer N, number of distinct characters.
+
+Output Format:
+--------------
+Print an integer, length of longest substring with a max of N unique characters.
+
+
+Sample Input-1:
+---------------
+philippines
+3
+
+Sample Output-1:
+----------------
+6
+
+Sample Input-2:
+---------------
+abaccdbcca
+2
+
+Sample Output-2:
+----------------
+3
+
+
+
+
+import java.util.*;
+
+class main{
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        String str = sc.next();
+        int k = sc.nextInt();
+        int[] freq = new int[26];
+        int i=0,j=0,windowCount=0,res=-1;
+        while(j<str.length()){
+            int idx = str.charAt(j)-'a';
+            if(freq[idx]==0)
+                windowCount++;
+            freq[idx]++;
+            if(windowCount>k){
+                while(windowCount>k){
+                    freq[str.charAt(i)-'a']--;
+                    if(freq[str.charAt(i)-'a']==0){
+                        windowCount--;
+                    }
+                    i++;
+                }
+            }
+            if(windowCount<=k){
+                res = Math.max(res,j-i+1);
+            }
+            j++;
+        }
+        System.out.print(res);
+    }
+}
