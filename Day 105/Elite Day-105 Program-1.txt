@@ -45,3 +45,52 @@ Sample Output-3:
 
 
 
+import java.util.*;
+
+class main{
+    static Set<List<Integer>> res;
+    static void find(int cur,int i,int n,ArrayList<Integer> current,ArrayList<Integer> factors){
+        if(i>=factors.size() || cur>n)
+            return;
+        if(cur==n){
+            res.add(new ArrayList<>(current));
+            return;
+        }
+        current.add(factors.get(i));
+        find(cur*factors.get(i),i,n,current,factors);
+        current.remove(current.size()-1);
+        find(cur,i+1,n,current,factors);
+    }
+    public static void main(String... args){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        
+        //generate factors
+        ArrayList<Integer> factors = new ArrayList<>();
+        for(int i=2;i<=Math.sqrt(n);i++){
+            if(n%i==0){
+                factors.add(i);
+                if(n/i!=i){
+                    factors.add(n/i);
+                }
+            }
+        }
+        
+        //TreeSet with comparator
+        res = new TreeSet<List<Integer>>((a,b)->{
+            int i=0,j=0;
+            while(i<a.size() && j<b.size()){
+                if(a.get(i)>b.get(j))
+                    return 1;
+                else if(a.get(i)<b.get(j))
+                    return -1;
+                i++;
+                j++;
+            }
+            return b.size()-a.size();
+        });
+        
+        find(1,0,n,new ArrayList<>(),factors);
+        System.out.print(res);
+    }
+}

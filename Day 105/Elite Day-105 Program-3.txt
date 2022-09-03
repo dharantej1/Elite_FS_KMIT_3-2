@@ -54,3 +54,33 @@ Sample Output-2:
 
 
 
+import java.util.*;
+
+class main{
+    static void generate(int i,String[] st,Map<String,String> map,List<String> l){
+        l.add(String.join(" ",st));
+        if(i>=st.length) return;
+        for(int k=i;k<st.length;k++){
+            if(map.containsKey(st[k])){
+                String temp = st[k];
+                st[k] = map.get(st[k]);
+                generate(k,st,map,l);
+                st[k] = temp;
+            }
+        }
+    }
+    public static void main(String args[]){
+        Scanner sc = new Scanner(System.in);
+        int n = Integer.parseInt(sc.nextLine());
+        Map<String,String> map = new HashMap<>();
+        for(int i=0;i<n;i++){
+            String[] words = sc.nextLine().split(" ");
+            map.put(words[0],words[1]);
+        }
+        String[] st = sc.nextLine().split(" ");
+        List<String> l = new ArrayList<>();
+        generate(0,st,map,l);
+        Collections.sort(l);
+        System.out.println(l);
+    }
+}
