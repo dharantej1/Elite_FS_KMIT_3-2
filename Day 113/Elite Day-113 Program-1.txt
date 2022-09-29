@@ -1,0 +1,46 @@
+In a team of N players, each player's jersey has a number printed on it.
+Jersey numbers may be repeated.
+
+You will be given the list of jersey numbers of N players. 
+You need to find out  number of subgroups of jersey numbers 
+that are in strictly ascending order.
+
+A subgroup is defined as the continuous list of jersey numbers.
+
+Input Format:
+-------------
+Line-1: An integer N, number of players
+Line-2: N space separated integers, jersey numbers
+
+Output Format:
+--------------
+Print a long value as the result.
+
+
+Sample Input-1:
+---------------
+6
+2 4 6 5 5 7
+
+Sample Output-1:
+----------------
+10
+
+Explanation:
+------------
+The strictly ascending subgroups are the following:
+- Subgroups of length 1: [2], [4], [6], [5], [5], [7].
+- Subgroups of length 2: [2,4], [4,6], [5,7].
+- Subgroups of length 3: [2,4,6].
+The total number of subgroups is 6 + 3 + 1 = 10.
+
+
+Sample Input-2:
+---------------
+5
+2 4 6 8 10
+
+Sample Output-2:
+----------------
+15
+

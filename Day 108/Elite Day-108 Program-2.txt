@@ -1,0 +1,58 @@
+N students stands in a line consist of both girls and boys, and the arrangement 
+is given as line[], where girl indicated as 0 and boy indicated as 1.
+
+Your task is to find the least number of exchanges required 
+to group all the boys together.
+
+NOTE: An exchange indiactes exchanging their positions.
+Initially, if A is at 3 and B is at 8, after exchnage,
+A will be at 8 and B will be at 3.
+
+
+Input Format:
+-------------
+Line-1 : An integer N, number of persons
+Line-2 : N space separated integers, line[].
+
+Output Format:
+--------------
+Print an integer result.
+
+
+Sample Input-1:
+---------------
+6
+0 0 1 1 0 1
+
+Sample Output-1:
+----------------
+1
+
+Explanation:
+------------
+One possible solution is, exchange the position of boy at last index with 
+the girl at lastindex-1.
+
+
+Sample Input-2:
+---------------
+5
+0 0 1 0 0
+
+Sample Output-2:
+----------------
+0
+
+Explanation:
+------------
+No exchange required.
+
+
+Sample Input-3:
+---------------
+14
+0 0 0 1 1 0 0 1 0 0 0 1 1 1
+
+Sample Output-3:
+----------------
+3
